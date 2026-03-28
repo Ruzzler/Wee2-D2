@@ -2,9 +2,9 @@
 
 Welcome to the official repository for **Wee2-D2**, a custom-built astromech droid designed for 501st Legion events. This repository tracks the electrical architecture, firmware configurations, and hardware documentation for the droid's decentralized control system.
 
-## 🛰️ LIVE Imperial Databank
-To view the documented system with a premium, interactive "Mission Control" interface, visit the official databank:
-👉 **[https://ruzzler.github.io/Wee2-D2/](https://ruzzler.github.io/Wee2-D2/)**
+## 🛰️ Technical Wiki: Imperial Databank
+To view the documented system with a premium, interactive "Mission Control" interface, visit the official Technical Wiki:
+👉 **[Wee2-D2 Databank (Wiki)](https://ruzzler.github.io/Wee2-D2/)**
 
 ---
 
