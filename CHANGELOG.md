@@ -8,6 +8,7 @@ All notable changes to the Wee2-D2 project will be documented in this file. This
 ### Added
 - **goBILDA Hardware Manual**: Created `docs/electrical/gobilda-motor-manual.md` with detailed 15A ESC and 5203 Yellow Jacket specs.
 - **Node READMEs**: Added dedicated technical explainers for **Node 1 (Body Brain)** and **Node 3 (Dome Motion)** firmware.
+- **AI Agent SOP Update**: Formally updated `AGENTS.md` to require localized technical READMEs for all firmware nodes.
 - **Component Synchronization**: Unified **PEMENOL 60W (DY-HL50T)** and **ESP32D** naming across BoM and technical manuals.
 
 ### Changed

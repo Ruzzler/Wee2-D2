@@ -60,6 +60,7 @@ The droid operates on a **Master-Slave Serial Bus** model called the **UDNS**.
 *   **Markdown First**: New technical manuals must be placed in `docs/electrical/` or `docs/maintenance/`.
 *   **Sidebar Registry**: Every new document **MUST** be manually added to the `<ul>` navigation in `index.html` with a unique `data-path`.
 *   **Industrial Formatting**: Use GitHub-style alerts (`> [!IMPORTANT]`, `> [!TIP]`) to highlight critical safety and calibration steps.
+*   **Firmware Explainers**: Every firmware node directory `firmware/node-x/` MUST contain a `README.md` that explains the PINOUT, logic (e.g., voltage clamping), and calibration steps for that specific node to ensure readability within the Databank UI.
 
 ### 2. Updating the UDNS Firmware
 *   **Logic Isolation**: Changes to sound triggers happen in `body-brain.yaml`. Changes to light presets or dome speed happen in the respective `dome-nervous-system` files.
