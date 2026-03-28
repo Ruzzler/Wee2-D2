@@ -44,14 +44,21 @@ graph TD
         WLED --> PSIS["GrnWave PSI Disks"]:::lights
     end
 
-    subgraph SIGNAL_INTERCONNECTS [SIGNAL & TRIGGERS]
+    subgraph SIGNAL_INTERCONNECTS [NEXUS SERIAL BUS]
         TX1 -. "2.4GHz" .-> RC1
         TX2 -. "2.4GHz" .-> RC2
         RC1 -- "CH3/4/5 PWM" --> ESP1
         ESP1 -- "9-Wire Trigger" --> AUDIO
         RC2 -- "CH1 PWM" --> ESP3
         ESP3 -- "PWM" --> ESC3
-        ESP1 -- "Angry/Red Link" --> WLED
+        ESP1 <== "Nexus UART (Serial)" ==> WLED
+        ESP1 <== "Nexus UART (Serial)" ==> ESP3
+    end
+
+    subgraph HUD_INTERFACES [MOBILE COMMAND]
+        PHONE["Mobile/Tablet"] -- "Web Server / HA" --> ESP1
+        PHONE -- "Web Server / HA" --> WLED
+        PHONE -- "Web Server / HA" --> ESP3
     end
 
     %% Direct Markdown-Relative Links for Interactivity
@@ -82,37 +89,37 @@ graph TD
 
 ## 📌 Pinout Lookup Tables
 
-### **Node 1: Body Brain (ESP32)**
-Used for RC input interpretation and soundboard triggering.
+### **Node 1: Body Brain (ESP32-WROOM)**
+Master controller for sounds and inter-node coordination.
 
 | Component | Pin (GPIO) | Mode | Notes |
 | :--- | :---: | :---: | :--- |
 | **Status LED** | GPIO2 | Output | Heartbeat Blinker |
-| **RC CH3 Input** | GPIO25 | Input | From Receiver #1 (Drive) |
-| **RC CH4 Input** | GPIO32 | Input | From Receiver #1 (Turn) |
-| **RC CH5 Input** | GPIO33 | Input | Bank Cycle Switch |
+| **RC Inputs** | 25, 32, 33 | Input | CH3, CH4, CH5 (PWM) |
 | **Sound S1-S9** | 4,5,16,17,18,19,21,22,23 | Output | **Active LOW** (Trigger) |
-| **Angry Link** | GPIO13 | Output | To Node 2 Button Input |
+| **Nexus TX** | GPIO17 | Output | Serial to Dome (Slip Ring Point 3) |
+| **Nexus RX** | GPIO16 | Input | Serial from Dome (Slip Ring Point 4) |
+| **Web UI** | N/A | WiFi | Port 80 (ESPHome Dashboard) |
 
 ### **Node 3: Dome Motion (ESP32-S3 Super Mini)**
 Dedicated controller for 360° dome rotation.
 
 | Component | Pin (GPIO) | Mode | Notes |
 | :--- | :---: | :---: | :--- |
-| **Status LED** | GPIO48 | Output | Onboard RGB LED (Diagnostic) |
 | **RC CH1 Input** | GPIO1 | Input | From Receiver #2 (Dome Rotation) |
 | **Dome ESC** | GPIO2 | Output | PWM Signal (50Hz) to goBILDA ESC |
+| **Nexus TX** | GPIO44 | Output | Serial to Body (via Slip Ring) |
+| **Nexus RX** | GPIO43 | Input | Serial from Body (via Slip Ring) |
 
-### **Node 2: Dome Lights (ESP32-S3 Super Mini - WLED)**
-Runs **WLED Firmware** for high-fidelity light control.
+### **Node 2: Dome Lights (ESP32-S3 Super Mini - ESPHome)**
+Addressable LEDs using **ESPHome Light Interface**.
 
 | Component | Pin (GPIO) | Mode | Notes |
 | :--- | :---: | :---: | :--- |
-| **Status LED** | GPIO48 | Output | Onboard RGB LED (Diagnostic) |
-| **Front Logic** | GPIO1 | Output | Data Pin - Front Logics |
-| **Rear Logic** | GPIO2 | Output | Data Pin - Rear Logics |
-| **PSI Units** | GPIO3 | Output | Data Pin - PSI Disks |
-| **Angry Link** | GPIO5 | Input | **WLED External Trigger** (From Body) |
+| **Logics / PSI** | 1, 2, 3 | Output | Neopixel Data Lines |
+| **Nexus TX** | GPIO44 | Output | Shared Serial Bus |
+| **Nexus RX** | GPIO43 | Input | Shared Serial Bus |
+| **Web UI** | N/A | WiFi | Port 80 (Pattern selection) |
 
 ---
 
