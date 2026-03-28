@@ -258,6 +258,27 @@ main {
 ::-webkit-scrollbar-thumb { background: var(--accent-cyan); border-radius: 4px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--accent-amber); }
 
+/* --- GITHUB ALERTS --- */
+.alert {
+    padding: 15px 20px;
+    margin: 20px 0;
+    border-radius: 8px;
+    border-left: 5px solid transparent;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.alert-tip { border-left-color: #3fb950; background: rgba(63, 185, 80, 0.1); }
+.alert-important { border-left-color: #a371f7; background: rgba(163, 113, 247, 0.1); }
+.alert-warning { border-left-color: #d29922; background: rgba(210, 153, 34, 0.1); }
+.alert-caution { border-left-color: #f85149; background: rgba(248, 81, 73, 0.1); }
+.alert-note { border-left-color: #58a6ff; background: rgba(88, 166, 255, 0.1); }
+
+.alert strong {
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
 /* --- INTERACTIVE MERMAID HUD --- */
 .mermaid {
     background: rgba(0, 0, 0, 0.4);

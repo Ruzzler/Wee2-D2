@@ -2,23 +2,29 @@ document.addEventListener('DOMContentLoaded', () => {
     const contentDiv = document.getElementById('content');
     const navLinks = document.querySelectorAll('#sidebar-nav a');
 
-    // Configure marked options with custom renderer for Mermaid
-    const renderer = new marked.Renderer();
-    renderer.code = function(code, language) {
-        if (language === 'mermaid') {
-            return `<div class="mermaid">${code}</div>`;
-        }
-        return `
-            <pre><code class="language-${language}">${escapeHtml(code)}</code></pre>
-        `;
-    };
-
-    marked.setOptions({
-        renderer: renderer,
+    // Configure marked with custom rendering for Mermaid and GitHub Alerts
+    marked.use({
+        renderer: {
+            code(token) {
+                if (token.lang === 'mermaid') {
+                    return `<div class="mermaid">${token.text}</div>`;
+                }
+                // Default code block rendering
+                return `<pre><code class="language-${token.lang}">${escapeHtml(token.text)}</code></pre>`;
+            },
+            blockquote(token) {
+                // Support [!TIP], [!IMPORTANT], etc.
+                const alertMatch = token.text.match(/^\[!(TIP|IMPORTANT|WARNING|CAUTION|NOTE)\]\n?([\s\S]*)$/i);
+                if (alertMatch) {
+                    const type = alertMatch[1].toUpperCase();
+                    const content = marked.parse(alertMatch[2]);
+                    return `<div class="alert alert-${type.toLowerCase()}"><strong>${type}</strong><br>${content}</div>`;
+                }
+                return `<blockquote>${marked.parse(token.text)}</blockquote>`;
+            }
+        },
         gfm: true,
-        breaks: true,
-        headerIds: true,
-        mangle: false
+        breaks: true
     });
 
     // Define a global function that Mermaid can call
