@@ -22,16 +22,16 @@ A comprehensive list of hardware used in the Wee2-D2 droid project.
 ## 🔊 Audio & Lights
 | Component | Qty | Description |
 | :--- | :---: | :--- |
-| **DY-HL50T** | 1 | Soundboard w/ 60W Amp [Manual](../electrical/dy-hl50t-manual.md) |
+| **DY-HL50T** | 1 | Soundboard w/ 60W Amp [Manual](electrical/dy-hl50t-manual.md) |
 | **Pyle 3.5" Car Speaker**| 1 | 60W RMS / 4 Ohm |
 | **WS2812B Front Logic** | 1 | 12 x 2 Addressable LED matrix |
 | **WS2812B Rear Logic** | 1 | 10 x 2 Addressable LED matrix (5x2 x 2) |
-| **GrnWave Circular PSI** | 2 | 76x WS2812B-2020 LEDs (**5V ONLY**) [Manual](../electrical/grnwave-psi-manual.md) |
+| **GrnWave Circular PSI** | 2 | 76x WS2812B-2020 LEDs (**5V ONLY**) [Manual](electrical/grnwave-psi-manual.md) |
 
 ## ⚙️ Mechanical / Drive
 | Component | Qty | Description |
 | :--- | :---: | :--- |
-| **Flipsky Mini FSESC 6.7 Pro** | 2 | 70A Cont / 200A Peak, [Manual](../electrical/flipsky-fsesc-67-pro-manual.md) |
+| **Flipsky Mini FSESC 6.7 Pro** | 2 | 70A Cont / 200A Peak, [Manual](electrical/flipsky-fsesc-67-pro-manual.md) |
 | **E-Scooter Hub Motor** | 2 | Drive Motors |
 | **goBILDA 1x15A Motor Controller** | 1 | 41g, 12-24VDC (9-30V Limit), 15A Cont / 25A Throttle, 6V/3A BEC, 1050-1950μsec PWM, Reverse-Voltage/Over-Current/Heat Protection |
 | **goBILDA 5203 Motor** | 1 | 117 RPM (12V), 50.9:1 Ratio, 68.4 kg.cm Torque, 9.2A Stall |

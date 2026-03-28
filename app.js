@@ -10,11 +10,14 @@ document.addEventListener('DOMContentLoaded', () => {
         mangle: false
     });
 
+    let currentPath = '';
+
     /**
      * Fetch and render a markdown file
-     * @param {string} path - Path to the .md file (relative to wiki root)
+     * @param {string} path - Path to the .md file (relative to root)
      */
     async function loadContent(path) {
+        currentPath = path;
         contentDiv.innerHTML = '<div class="loading-text" style="font-family: var(--font-mono); color: var(--accent-cyan);">Decrypting datastream... [' + path + ']</div>';
         
         try {
@@ -51,6 +54,44 @@ document.addEventListener('DOMContentLoaded', () => {
             `;
         }
     }
+
+    /**
+     * Resolve a relative path against a base path
+     */
+    function resolvePath(base, relative) {
+        const stack = base.split('/');
+        const parts = relative.split('/');
+        stack.pop(); // remove current file
+        for (let i = 0; i < parts.length; i++) {
+            if (parts[i] === '.') continue;
+            if (parts[i] === '..') stack.pop();
+            else stack.push(parts[i]);
+        }
+        return stack.join('/');
+    }
+
+    // Intercept clicks in the content area for relative links
+    contentDiv.addEventListener('click', (e) => {
+        const target = e.target.closest('a');
+        if (!target) return;
+
+        const href = target.getAttribute('href');
+        
+        // Only intercept relative markdown/yaml links
+        if (href && !href.startsWith('http') && !href.startsWith('#')) {
+            if (href.endsWith('.md') || href.endsWith('.yaml') || href.endsWith('.yml')) {
+                e.preventDefault();
+                const newPath = resolvePath(currentPath, href);
+                
+                // Update Sidebar Active State (Optional but nice)
+                navLinks.forEach(l => {
+                    l.classList.toggle('active', l.getAttribute('data-path') === newPath);
+                });
+
+                loadContent(newPath);
+            }
+        }
+    });
 
     function escapeHtml(unsafe) {
         return unsafe
