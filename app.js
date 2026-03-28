@@ -64,25 +64,49 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Trigger Mermaid rendering for any new diagrams
                 setTimeout(async () => {
                     try {
-                        // Reset mermaid for clean state logic
-                        mermaid.initialize({ 
-                            startOnLoad: false, 
-                            theme: 'dark',
-                            securityLevel: 'loose',
-                            flowchart: { useMaxWidth: true, htmlLabels: true, curve: 'basis' }
-                        });
-                        
-                        // Force render on all .mermaid divs in the new content
                         const nodes = contentDiv.querySelectorAll('.mermaid');
                         if (nodes.length > 0) {
-                            await mermaid.run({
-                                nodes: nodes,
+                            // Reset mermaid for clean state logic
+                            mermaid.initialize({ 
+                                startOnLoad: false, 
+                                theme: 'dark',
+                                securityLevel: 'loose',
+                                flowchart: { useMaxWidth: false, htmlLabels: true, curve: 'basis' }
+                            });
+                            
+                            await mermaid.run({ nodes: nodes });
+
+                            // After rendering, initialize pan-zoom on each SVG
+                            nodes.forEach((node, index) => {
+                                const svg = node.querySelector('svg');
+                                if (svg) {
+                                    // Give the container a defined height for pan-zoom viewport
+                                    node.style.height = '60vh';
+                                    node.style.border = '1px solid var(--accent-cyan)';
+                                    node.style.background = 'rgba(0,0,0,0.5)';
+                                    node.style.marginBottom = '20px';
+                                    node.style.borderRadius = '4px';
+
+                                    svg.style.width = '100%';
+                                    svg.style.height = '100%';
+
+                                    // Initialize pan-zoom
+                                    svgPanZoom(svg, {
+                                        zoomEnabled: true,
+                                        controlIconsEnabled: true,
+                                        fit: true,
+                                        center: true,
+                                        minZoom: 0.1,
+                                        maxZoom: 10,
+                                        zoomScaleSensitivity: 0.1
+                                    });
+                                }
                             });
                         }
                     } catch (e) {
                         console.error("Mermaid Decryption Error:", e);
                     }
-                }, 100);
+                }, 200);
             }
 
             // Scroll to top
