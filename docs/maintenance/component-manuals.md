@@ -6,18 +6,18 @@ Welcome to the centralized Technical Manuals Registry. This page contains all th
 ---
 
 ## ⚡ Energy & Distribution
-*   [MgcSTEM LVP-R1.5 (40A Cutoff)](../hardware/mgcstem-lvp-r15-manual.md)
+*   [MgcSTEM LVP-R1.5 (40A Cutoff)](../hardware/mgcstem-lvp-r15-manual.md) — [[Source PDF](../hardware/mgcstem-lvp-r15-manual.pdf)]
 *   [CNBTR 6-Circuit Slip Ring](../hardware/cnbtr-slip-ring-manual.md)
 
 ## 🛞 Motive Drives
-*   [Flipsky Mini FSESC 6.7 Pro](../hardware/flipsky-fsesc-67-pro-manual.md)
+*   [Flipsky Mini FSESC 6.7 Pro](../hardware/flipsky-fsesc-67-pro-manual.md) — [[Source PDF](../hardware/flipsky-fsesc-67-pro-manual.pdf)]
 *   [L-faster FLD-5 Hub Motor](../hardware/hub-motor-manual.md)
 *   [goBILDA 1x15A PWM ESC](../hardware/gobilda-motor-manual.md)
 *   [goBILDA 5203 Yellow Jacket Gearmotor](../hardware/gobilda-motor-manual.md)
 
 ## 📡 Signal & Audio
-*   [HOTRC DS-600 Transmitter](../hardware/hotrc-ds600-manual.md)
-*   [HOTRC F-06A PWM Receiver](../hardware/hotrc-f06a-manual.pdf) (PDF)
+*   [HOTRC DS-600 Transmitter](../hardware/hotrc-ds600-manual.md) — [[Source PDF](../hardware/hotrc-ds600-manual.pdf)]
+*   [HOTRC F-06A PWM Receiver (PDF Only)](../hardware/hotrc-f06a-manual.pdf)
 *   [PEMENOL 60W Soundboard (DY-HL50T)](../hardware/pemenol-60w-voice-manual.md)
 *   [GrnWave Circular PSI Logic](../hardware/grnwave-psi-manual.md)
 
