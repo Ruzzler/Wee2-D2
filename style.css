@@ -440,18 +440,23 @@ main {
 
 }
 
-/* Interactive Diagrams (Global) */
+/* GitHub-Style Interactive Diagrams */
 .mermaid {
     position: relative;
     width: 100%;
-    height: 60vh;
-    min-height: 400px;
-    background: rgba(0, 5, 15, 0.8) !important;
-    border: 1px solid var(--accent-cyan);
-    border-radius: 4px;
+    height: 70vh;
+    min-height: 500px;
+    background: rgba(13, 17, 23, 0.4) !important;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
     margin-bottom: 2rem;
     overflow: hidden;
-    box-shadow: 0 0 20px rgba(0, 255, 255, 0.05);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    transition: border-color 0.2s ease;
+}
+
+.mermaid:hover {
+    border-color: var(--accent-cyan);
 }
 
 .mermaid svg {
@@ -466,16 +471,24 @@ main {
 
 .diagram-toolbar {
     position: absolute;
-    top: 10px;
-    right: 10px;
-    display: flex;
-    gap: 8px;
+    bottom: 15px;
+    right: 15px;
+    display: grid;
+    grid-template-columns: repeat(3, 32px);
+    grid-template-rows: repeat(3, 32px);
+    gap: 4px;
     z-index: 1000;
-    background: rgba(13, 17, 23, 0.8);
-    padding: 4px;
+    padding: 6px;
+    background: rgba(22, 27, 34, 0.8);
     border: 1px solid var(--border-color);
     border-radius: 8px;
-    backdrop-filter: blur(4px);
+    backdrop-filter: blur(8px);
+    opacity: 0.3;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.mermaid:hover .diagram-toolbar {
+    opacity: 1;
 }
 
 .toolbar-btn {
@@ -488,13 +501,22 @@ main {
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    font-size: 1.1rem;
-    font-weight: bold;
-    transition: all 0.2s ease;
-    border-radius: 4px;
+    transition: all 0.1s ease;
+    border-radius: 6px;
+    padding: 0;
 }
 
 .toolbar-btn:hover {
-    background: var(--accent-cyan);
-    color: var(--bg-primary);
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+}
+
+.toolbar-btn svg {
+    width: 16px;
+    height: 16px;
+    fill: currentColor;
+}
+
+.toolbar-spacer {
+    pointer-events: none;
 }
