@@ -7,7 +7,9 @@ All notable changes to the Wee2-D2 project will be documented in this file. This
 ## [1.1.0-WikiSync] - 2026-03-28
 ### Added
 - **goBILDA Hardware Manual**: Created `docs/electrical/gobilda-motor-manual.md` with detailed 15A ESC and 5203 Yellow Jacket specs.
-- **Node READMEs**: Added dedicated technical explainers for **Node 1 (Body Brain)** and **Node 3 (Dome Motion)** firmware.
+- **Hardware Photo Integration**: Migrated 6 real-world photos from `Photos to import/` to `assets/` with optimized metadata and standardized naming.
+- **Enhanced Documentation**: Integrated hardware photos into the BoM, goBILDA Manual, UDNS Guide, and Node Firmware READMEs.
+- **UX Refinement**: Fixed the Databank navigation logic so the Hero droid image only appears on the Project Overview (README.md) page.
 - **AI Agent SOP Update**: Formally updated `AGENTS.md` to require localized technical READMEs for all firmware nodes.
 - **Component Synchronization**: Unified **PEMENOL 60W (DY-HL50T)** and **ESP32D** naming across BoM and technical manuals.
 
