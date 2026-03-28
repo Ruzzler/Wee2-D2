@@ -59,6 +59,11 @@ document.addEventListener('DOMContentLoaded', () => {
      * Resolve a relative path against a base path
      */
     function resolvePath(base, relative) {
+        // If it already looks like a root-relative path (docs/... firmware/...), just use it
+        if (relative.startsWith('docs/') || relative.startsWith('firmware/') || relative.startsWith('archive/')) {
+            return relative;
+        }
+
         const stack = base.split('/');
         const parts = relative.split('/');
         stack.pop(); // remove current file
