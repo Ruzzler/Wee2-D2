@@ -6,6 +6,15 @@ The **HOTRC DS-600** is a 6-channel, one-handed "trigger style" 2.4GHz transmitt
 > [!NOTE]
 > **Owner Mod (Silent Mode)**: The internal speakers have been physically removed from these units to eliminate beeping. Always rely on the **Status LEDs** on the front panel for pairing and mixing mode confirmation.
 
+## ⚡ Technical Specifications
+*   **Channels**: 6 Channels
+*   **Frequency**: 2.4GHz ISM (2.4005 – 2.4835 GHz)
+*   **Spread Spectrum**: FHSS
+*   **Response Speed**: PWM ≤ 20ms
+*   **Control Range**: 300 – 500m (Water/Ground)
+*   **Transmitter Power**: Built-in 3.7V / 1200mAh Lithium Battery (USB 5V Charging)
+*   **Manual**: [Download Local PDF Manual](hotrc-ds600-manual.pdf)
+
 ## 🕹️ Control Layout
 *   **Trigger (CH2)**: Forward / Backward.
 *   **Thumb Joystick (CH1)**: Left / Right Steering.

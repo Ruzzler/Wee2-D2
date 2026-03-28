@@ -67,7 +67,9 @@ The droid operates on a **Master-Slave Serial Bus** model called the **UDNS**.
 *   **OTA Expectation**: Always remind the user that firmware can be pushed wirelessly via the ESPHome dashboard once the initial USB flash is complete.
 
 ### 3. Asset & Image Management
-*   **Photos to Import**: Always check the `Photos to import/` directory first for new hardware photos provided by the user. Evaluate each photo to determine if it should be optimized and moved to the permanent `assets/` folder for use in the wiki.
+*   **Import Folder**: Always check the `Import/Photos/` and `Import/Manuals/` directories first for new raw assets provided by the user.
+*   **Document Processing**: New technical manuals (PDFs) should be moved and renamed to a professional engineering standard within `docs/electrical/`.
+*   **Photo Processing**: Evaluate each photo to determine if it should be optimized and moved to the permanent `assets/` folder.
 *   **EXIF Stripping**: AI assistants MUST strip all metadata from user photos before moving them to the permanent `/assets` folder.
 *   **Optimization**: Prefer WebP/Lossy JPEG for the web interface to keep the "Databank" fast.
 *   **Naming**: Use lowercase, hyphenated names (e.g., `esp32d-wiring-v1.webp`).

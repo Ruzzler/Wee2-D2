@@ -5,9 +5,9 @@ A comprehensive list of hardware used in the Wee2-D2 droid project.
 ## 🧠 Brains & Control
 | Component | Qty | Description |
 | :--- | :---: | :--- |
-| **ESP32 Dev Board** | 3 | Node 1 (Audio), Node 2 (Lights), Node 3 (Motion) |
-| **HOTRC DS-600** | 2 | 6-CH Transmitters (**1x Body Drive, 1x Dome Motion**) [Manual](docs/electrical/hotrc-ds600-manual.md) |
-| **HOTRC F-06A** | 2 | RC Receivers (One for body, one for dome) |
+| **Node 1/2/3 Logic** | 3 | ESP32-WROOM (Node 1) & ESP32-S3 Mini (Nodes 2/3) |
+| [HOTRC DS-600](docs/electrical/hotrc-ds600-manual.md) | 2 | 6-CH Transmitter (Silent Mod), [Local Manual (PDF)](docs/electrical/hotrc-ds600-manual.pdf) |
+| [HOTRC F-06A](docs/electrical/hotrc-f06a-manual.pdf) | 2 | RC Receivers (One for body, one for dome), [Local Manual (PDF)](docs/electrical/hotrc-f06a-manual.pdf) |
 
 ## 🔋 Power & Protection
 | Component | Qty | Description |
@@ -36,7 +36,7 @@ A comprehensive list of hardware used in the Wee2-D2 droid project.
 ## ⚙️ Mechanical / Drive
 | Component | Qty | Description |
 | :--- | :---: | :--- |
-| **Flipsky Mini FSESC 6.7 Pro** | 2 | 70A Cont / 200A Peak, [Manual](docs/electrical/flipsky-fsesc-67-pro-manual.md) |
-| **E-Scooter Hub Motor** | 2 | Drive Motors |
+| [Flipsky Mini FSESC 6.7 Pro](docs/electrical/flipsky-fsesc-67-pro-manual.pdf) | 2 | 70A Cont / 200A Peak, [Local Manual (PDF)](docs/electrical/flipsky-fsesc-67-pro-manual.pdf) ![Flipsky ESC](../../assets/flipsky-fsesc-67-pro.jpg) |
+| **E-Scooter Hub Motor** | 2 | **L-faster FLD-5 5" Hub Motor** | 200W, 24V, 900 RPM | [Manual](docs/electrical/hub-motor-manual.md) |
 | **goBILDA 1x15A Motor Controller** | 1 | 12-24VDC, 15A Cont, 6V BEC [Manual](docs/electrical/gobilda-motor-manual.md) |
 | **goBILDA 5203 Motor** | 1 | 117 RPM (12V) Yellow Jacket [Manual](docs/electrical/gobilda-motor-manual.md) |
