@@ -6,18 +6,18 @@ A comprehensive list of hardware used in the Wee2-D2 droid project.
 | Component | Qty | Description |
 | :--- | :---: | :--- |
 | **ESP32 Dev Board** | 3 | Node 1 (Audio), Node 2 (Lights), Node 3 (Motion) |
-| **HOTRC DS-600** | 1 | 6-CH Transmitter (**Silent Mode Mod / No Beeps**) [Manual](../electrical/hotrc-ds600-manual.md) |
+| **HOTRC DS-600** | 1 | 6-CH Transmitter (**Silent Mode Mod / No Beeps**) [Manual](docs/electrical/hotrc-ds600-manual.md) |
 | **HOTRC F-06A** | 2 | RC Receivers (One for body, one for dome) |
 
 ## 🔋 Power & Protection
 | Component | Qty | Description |
 | :--- | :---: | :--- |
 | **DeWalt 20V Battery** | 1 | Main Power Source |
-| **MgcSTEM LVP-R1.5** | 1 | 40A LVC ([Manual PDF](../electrical/mgcstem-lvc-manual.pdf)) |
+| **MgcSTEM LVP-R1.5** | 1 | 40A LVC ([Manual PDF](docs/electrical/mgcstem-lvc-manual.pdf)) |
 | **Fuse Bus Bar** | 1 | Safety/Distribution |
 | **Mini560 5V Buck** | 1 | 20V to 5V Regulator for Dome Lights |
 | **5V Buck Converter** | 1 | 20V to 5V Regulator for Body Brain |
-| **CNBTR Through-Hole Slip Ring** | 1 | 12.7mm Bore, 6-Circuit @ 10A/each, [Manual](../electrical/cnbtr-slip-ring-manual.md) |
+| **CNBTR Through-Hole Slip Ring** | 1 | 12.7mm Bore, 6-Circuit @ 10A/each, [Manual](docs/electrical/cnbtr-slip-ring-manual.md) |
 
 ## 🔊 Audio & Lights
 | Component | Qty | Description |
