@@ -19,7 +19,7 @@ A comprehensive list of hardware used in the Wee2-D2 project, organized by syste
 | **MgcSTEM LVP-R1.5** | 1 | 40A LVC; **17.5V** Safety Floor | [PDF](hardware/mgcstem-lvp-r15-manual.pdf) |
 | **Fuse Bus Bar** | 1 | Multi-circuit safety distribution | - |
 | **Buck Converters** | 2 | Mini560 (Dome) & Standard (Body) 5V Units | - |
-| [CNBTR Slip Ring](hardware/cnbtr-slip-ring-manual.md) | 1 | 12.7mm Bore, 6-Circuit @ 10A/ch | ![Slip Ring](../assets/cnbtr-slip-ring.jpg) |
+| [CNBTR Slip Ring](hardware/cnbtr-slip-ring-manual.md) | 1 | 12.7mm Bore, 6-Circuit @ 10A/ch | ![Slip Ring](../assets/slip-ring-cnbtr.jpg) |
 
 ## 🔊 Audio & Lights
 | Component | Qty | Specifications | Visual ID |
