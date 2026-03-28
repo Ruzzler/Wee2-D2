@@ -42,6 +42,13 @@ document.addEventListener('DOMContentLoaded', () => {
      */
     async function loadContent(path) {
         currentPath = path;
+        
+        // Show hero only on Project Overview (README.md)
+        const heroSection = document.getElementById('hero');
+        if (heroSection) {
+            heroSection.style.display = (path === 'README.md') ? 'flex' : 'none';
+        }
+
         contentDiv.innerHTML = '<div class="loading-text" style="font-family: var(--font-mono); color: var(--accent-cyan);">Decrypting datastream... [' + path + ']</div>';
         
         try {

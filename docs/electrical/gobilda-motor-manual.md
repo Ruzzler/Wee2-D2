@@ -6,6 +6,9 @@ This entry covers the high-torque dome rotation motor and its dedicated speed co
 ## ⚙️ goBILDA 1x15A Speed Controller
 The **goBILDA 1x15A** is a compact, high-reliability brushed DC motor controller used for precise dome positioning.
 
+![goBILDA 1x15A ESC Top](../../assets/gobilda-esc-top.png)
+![goBILDA 1x15A ESC Side](../../assets/gobilda-esc-side.png)
+
 ### 📊 Technical Specifications
 | Feature | Value |
 | :--- | :--- |

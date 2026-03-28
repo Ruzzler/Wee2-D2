@@ -3,6 +3,8 @@
 
 The **Dome Motion** node provides high-torque, non-blocking control of the 5203 Yellow Jacket motor via a goBILDA 15A ESC. It translates RC receiver signals into brushed motor throttle commands with integrated safety clamping.
 
+![ESP32-S3 Super Mini](../../assets/esp32-s3-super-mini.jpg)
+
 ## 🚀 Core Features
 *   **RC Steering Input**: Decodes CH1 from the dome's secondary HOTRC receiver.
 *   **Voltage Clamping**: Limits maximum throttle to 60% (-0.6 to 0.6) to effectively step down the 20V battery input to a safe **12V limit** for the motor.

@@ -17,14 +17,14 @@ A comprehensive list of hardware used in the Wee2-D2 droid project.
 | **Fuse Bus Bar** | 1 | Safety/Distribution |
 | **Mini560 5V Buck** | 1 | 20V to 5V Regulator for Dome Lights |
 | **5V Buck Converter** | 1 | 20V to 5V Regulator for Body Brain |
-| **CNBTR Through-Hole Slip Ring** | 1 | 12.7mm Bore, 6-Circuit @ 10A/each, [Manual](docs/electrical/cnbtr-slip-ring-manual.md) |
+| **CNBTR Through-Hole Slip Ring** | 1 | 12.7mm Bore, 6-Circuit @ 10A/each, [Manual](docs/electrical/cnbtr-slip-ring-manual.md) ![Slip Ring](../../assets/cnbtr-slip-ring.jpg) |
 
 ## 🔊 Audio & Lights
 | **MICROCONTROLLERS** | | | | |
 | :--- | :--- | :--- | :--- | :--- |
-| **Node 1: Body Brain** | 1 | ESP32D Dev Board | Primary logic, sound triggers | [Amazon](https://www.amazon.ca/dp/B0718T2ZK6) |
-| **Node 2: Dome Lights** | 1 | ESP32-S3 Super Mini | **WLED** Controller (Form-Factor: 22x18mm) | [Aliexpress](https://www.aliexpress.com/item/1005005967641933.html) |
-| **Node 3: Dome Motion** | 1 | ESP32-S3 Super Mini | Dedicated Dome Rotation controller | [Aliexpress](https://www.aliexpress.com/item/1005005967641933.html) |
+| **Node 1: Body Brain** | 1 | ESP32D Dev Board | Primary logic, sound triggers | ![ESP32D](../../assets/esp32d-dev-board.png) | [Amazon](https://www.amazon.ca/dp/B0718T2ZK6) |
+| **Node 2: Dome Lights** | 1 | ESP32-S3 Super Mini | **WLED** Controller ![S3 Mini](../../assets/esp32-s3-super-mini.jpg) | [Aliexpress](https://www.aliexpress.com/item/1005005967641933.html) |
+| **Node 3: Dome Motion** | 1 | ESP32-S3 Super Mini | Dedicated Dome Rotation controller ![S3 Mini](../../assets/esp32-s3-super-mini.jpg) | [Aliexpress](https://www.aliexpress.com/item/1005005967641933.html) |
 | Component | Qty | Description |
 | :--- | :---: | :--- |
 | [PEMENOL 60W Soundboard](docs/electrical/pemenol-60w-voice-manual.md) | 1 | Soundboard w/ 60W Amp ([Amazon](https://www.amazon.ca/dp/B0CGRN3JKF)) |
