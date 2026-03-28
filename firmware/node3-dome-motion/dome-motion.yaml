@@ -1,0 +1,83 @@
+substitutions:
+  name: "wee2d2-dome-motion"
+  friendly_name: "Wee2-D2 Dome Motion"
+
+esphome:
+  name: ${name}
+  friendly_name: ${friendly_name}
+  platform: ESP32
+  board: esp32dev
+
+# --- NETWORK ---
+wifi:
+  ssid: "PLACEHOLDER_SSID"
+  password: "PLACEHOLDER_PASSWORD"
+
+api:
+  password: "api_password"
+
+ota:
+  password: "ota_password"
+
+logger:
+
+# --- MOTOR HARDWARE ---
+# Motor: goBILDA 5203 Yellow Jacket (117 RPM @ 12V)
+# ESC: goBILDA 15A ESC (12V-24V rating)
+# Power: 20V Battery Input to ESC
+
+# --- RC RECEIVER INPUT (HOTRC DS-600 Receiver #2) ---
+sensor:
+  - platform: pulse_width
+    pin: GPIO4
+    id: rc_ch1_steering
+    name: "RC Channel 1 Steering"
+    update_interval: 0.05s # Faster update for smooth motion
+    filters:
+      # Deadband Logic: Prevent stick drift around 1500us center
+      - lambda: |-
+          if (x > 1.48e-3 && x < 1.52e-3) return 1.5e-3;
+          return x;
+    on_value:
+      then:
+        - servo.set_level:
+            id: dome_esc
+            # --- VOLTAGE CLAMP LOGIC ---
+            # Input: 1.0ms to 2.0ms (1000us to 2000us)
+            # Standard Servo range is -1.0 to 1.0
+            # To simulate 12V from a 20V source: 12 / 20 = 0.6 (60%)
+            # We map the input range to -0.6 to 0.6
+            level: !lambda |-
+                float val = (x - 1.5e-3) / 0.5e-3; // Normalize to -1.0 to 1.0
+                return val * 0.6; // Clamp to 60% power
+
+# --- ESC PWM OUTPUT ---
+servo:
+  - id: dome_esc
+    output: esc_pwm
+    transition_length: 0.1s
+
+output:
+  - platform: ledc
+    id: esc_pwm
+    pin: GPIO18
+    frequency: 50Hz # Standard ESC PWM frequency
+    # Ensure 0% power on startup
+    min_power: 0.05
+    max_power: 0.10
+    zero_position: 0.075
+
+esphome:
+  name: ${name}
+  friendly_name: ${friendly_name}
+  on_boot:
+    priority: 100.0
+    then:
+      - servo.set_level:
+          id: dome_esc
+          level: 0.0 # Force STOP on boot
+  on_shutdown:
+    then:
+      - servo.set_level:
+          id: dome_esc
+          level: 0.0 # Force STOP on shutdown

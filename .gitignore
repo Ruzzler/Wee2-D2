@@ -1,0 +1,6 @@
+# Local Development Exclusions
+local_server_guide.md
+firmware/secrets.yaml
+.vs/
+.vscode/
+*.log

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WEE2-D2 | Imperial Databank</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+    <div class="scan-bar"></div>
+
+    <header>
+        <div class="logo-container">
+            <div class="logo-text">Wee2-D2 // Databank</div>
+            <div class="status-badge">System: Active</div>
+        </div>
+        <div class="header-info" style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-secondary);">
+            COORDINATES: OUTER RIM // SECTOR 7G
+        </div>
+    </header>
+
+    <aside>
+        <nav id="sidebar-nav">
+            <h3>Mission Overview</h3>
+            <ul>
+                <li><a href="#" class="active" data-path="README.md">Project Overview</a></li>
+            </ul>
+
+            <h3>Hardware Specs</h3>
+            <ul>
+                <li><a href="#" data-path="docs/components/bill-of-materials.md">Bill of Materials</a></li>
+                <li><a href="#" data-path="docs/electrical/power-architecture.md">Power Architecture</a></li>
+                <li><a href="#" data-path="docs/electrical/maintenance-guide.md">Maintenance Guide</a></li>
+            </ul>
+
+            <h3>Component Manuals</h3>
+            <ul>
+                <li><a href="#" data-path="docs/electrical/lvp-r15-manual.md">LVP-R1.5 Power Cutoff</a></li>
+                <li><a href="#" data-path="docs/electrical/flipsky-fsesc-67-pro-manual.md">Flipsky FSESC 6.7</a></li>
+                <li><a href="#" data-path="docs/electrical/dy-hl50t-manual.md">DY-HL50T Soundboard</a></li>
+                <li><a href="#" data-path="docs/electrical/grnwave-psi-manual.md">GrnWave PSI Logic</a></li>
+                <li><a href="#" data-path="docs/electrical/hotrc-ds600-manual.md">HOTRC DS-600 Remote</a></li>
+                <li><a href="#" data-path="docs/electrical/cnbtr-slip-ring-manual.md">CNBTR Slip Ring</a></li>
+            </ul>
+
+            <h3>Firmware Nodes</h3>
+            <ul>
+                <li><a href="#" data-path="firmware/node1-body-brain/body-brain.yaml">Node 1: Body Brain</a></li>
+                <li><a href="#" data-path="firmware/node2-dome-lights/README.md">Node 2: Dome Lights</a></li>
+                <li><a href="#" data-path="firmware/node3-dome-motion/dome-motion.yaml">Node 3: Dome Motion</a></li>
+                <li><a href="#" data-path="archive/dome-s3-test-legacy.yaml">Legacy S3 Archive</a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <main>
+        <section id="hero">
+            <img src="assets/droid_hero.png" alt="Wee2-D2 Droid" class="droid-render">
+        </section>
+
+        <div class="content-panel">
+            <div id="content">
+                <div class="loading-text" style="font-family: var(--font-mono); color: var(--accent-cyan);">Decrypting datastream...</div>
+            </div>
+        </div>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>
