@@ -86,8 +86,8 @@ header {
 
 .logo-text {
   font-family: var(--font-mono);
-  font-size: 1.8rem;
-  letter-spacing: 4px;
+  font-size: 1.5rem;
+  letter-spacing: 3px;
   color: var(--accent-cyan);
   text-transform: uppercase;
   text-shadow: 0 0 10px var(--accent-cyan);
@@ -133,9 +133,9 @@ nav li {
 nav a {
   text-decoration: none;
   color: var(--text-primary);
-  font-size: 1rem;
+  font-size: 0.9rem;
   display: block;
-  padding: 10px 15px;
+  padding: 8px 12px;
   border-radius: 4px;
   transition: all 0.3s ease;
   border-left: 2px solid transparent;
@@ -161,7 +161,7 @@ main {
   max-width: 900px;
   margin: 0 auto;
   background: var(--panel-bg);
-  padding: 50px;
+  padding: 40px;
   border: 1px solid var(--border-glow);
   border-radius: 8px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
@@ -184,11 +184,11 @@ main {
 #content h1 {
   font-family: var(--font-mono);
   color: var(--accent-cyan);
-  font-size: 2.5rem;
-  margin-bottom: 30px;
+  font-size: 2rem;
+  margin-bottom: 25px;
   text-transform: uppercase;
   border-bottom: 1px solid rgba(0, 242, 255, 0.2);
-  padding-bottom: 10px;
+  padding-bottom: 8px;
   overflow-wrap: break-word;
 }
 
