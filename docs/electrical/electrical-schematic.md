@@ -30,8 +30,8 @@ graph TD
 
     subgraph LOGIC_RAIL [5V LOGIC & AUDIO]
         FUSE --> BUCK1["Mini560 Buck #1 (5.1V)"]:::logic
-        BUCK1 --> ESP1["Node 1: Body Brain"]:::brain
-        BUCK1 --> ESP3["Node 3: Dome Motion"]:::brain
+        BUCK1 --> ESP1["Node 1: Body (ESP32-WROOM)"]:::brain
+        BUCK1 --> ESP3["Node 3: Dome (ESP32-S3 Mini)"]:::brain
         BUCK1 --> AUDIO["PEMENOL 60W Soundboard"]:::audio
         BUCK1 --> RC1["RC Receiver #1 (Body)"]:::signal
         BUCK1 --> RC2["RC Receiver #2 (Dome)"]:::signal
@@ -39,7 +39,7 @@ graph TD
 
     subgraph LIGHT_RAIL [5V LIGHTING SYSTEM]
         SLIP --> BUCK2["Mini560 Buck #2 (5.0V)"]:::logic
-        BUCK2 --> WLED["Node 2: Dome Lights (WLED)"]:::lights
+        BUCK2 --> WLED["Node 2: Lights (ESP32-S3 Mini)"]:::lights
         WLED --> LOGICS["Front/Rear Logics"]:::lights
         WLED --> PSIS["GrnWave PSI Disks"]:::lights
     end
@@ -94,22 +94,22 @@ Used for RC input interpretation and soundboard triggering.
 | **Sound S1-S9** | 4,5,16,17,18,19,21,22,23 | Output | **Active LOW** (Trigger) |
 | **Angry Link** | GPIO13 | Output | To Node 2 Button Input |
 
-### **Node 3: Dome Motion (ESP32)**
+### **Node 3: Dome Motion (ESP32-S3 Super Mini)**
 Controls the 360° dome rotation motor.
 
 | Component | Pin (GPIO) | Mode | Notes |
 | :--- | :---: | :---: | :--- |
-| **RC Steering** | GPIO4 | Input | From Receiver #2 (Steer) |
-| **Dome ESC** | GPIO18 | Output | PWM Signal (50Hz) |
+| **RC Steering** | GPIO1 | Input | From Receiver #2 (Steer) |
+| **Dome ESC** | GPIO2 | Output | PWM Signal (50Hz) |
 
-### **Node 2: Dome Lights (WLED)**
+### **Node 2: Dome Lights (ESP32-S3 Super Mini - WLED)**
 Addressable LEDs for logics and PSIs.
 
 | Component | Pin (GPIO) | Mode | Notes |
 | :--- | :---: | :---: | :--- |
-| **Front Logic** | GPIO16 | Output | Data Pin A |
-| **Rear Logic** | GPIO2 | Output | Data Pin B |
-| **Angry Link** | GPIO4 | Input | From Node 1 Trigger |
+| **Front Logic** | GPIO3 | Output | Data Pin A |
+| **Rear Logic** | GPIO4 | Output | Data Pin B |
+| **Angry Link** | GPIO5 | Input | From Node 1 Trigger |
 
 ---
 
