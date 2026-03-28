@@ -1,0 +1,78 @@
+esphome:
+  name: dome-nexus-controller
+  friendly_name: Dome Nexus Controller
+
+esp32:
+  board: esp32-s3-devkitc-1 # Standard S3-Sdev target
+  framework:
+    type: arduino
+
+# Web Server for mobile control
+web_server:
+  port: 80
+
+# Home Assistant API
+api:
+
+# OTA Updates
+ota:
+  platform: esphome
+
+# Logging
+logger:
+  level: DEBUG
+  baud_rate: 0 # Disable serial logging to free up UART0 if needed
+
+# Inter-Node Communication (The Nexus Bus)
+uart:
+  id: nexus_bus
+  tx_pin: GPIO44
+  rx_pin: GPIO43
+  baud_rate: 9600
+  debug:
+    direction: BOTH
+    dummy_receiver: true
+    after:
+      delimiter: "\n"
+    sequence:
+      - lambda: |-
+          std::string cmd(x.begin(), x.end());
+          if (cmd == "ANGRY_START") {
+            id(angry_mode_preset).execute();
+          } else if (cmd == "ANGRY_STOP") {
+            id(idle_mode_preset).execute();
+          }
+
+# LIGHTING CONFIGURATION (NODE 2)
+light:
+  - platform: neopixelbus
+    type: GRB
+    variant: WS2812
+    pin: GPIO1
+    num_leds: 40
+    name: "Front Logics"
+    id: front_logics
+    effects:
+      - wled:
+          name: "Droid Idle"
+      - wled:
+          name: "Angry Strobe"
+
+# SCRIPTS FOR SERIAL COMMANDS
+script:
+  - id: angry_mode_preset
+    then:
+      - light.turn_on:
+          id: front_logics
+          effect: "Angry Strobe"
+          brightness: 100%
+          red: 100%
+          green: 0%
+          blue: 0%
+  
+  - id: idle_mode_preset
+    then:
+      - light.turn_on:
+          id: front_logics
+          effect: "Droid Idle"
+          brightness: 50%
