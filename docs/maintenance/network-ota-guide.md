@@ -1,6 +1,6 @@
-# 🌐 Network & OTA Guide: Wee2-D2 Nexus
+# 🌐 Network & OTA Guide: UDNS
 
-This guide explains how to connect your droid to your local Wi-Fi, manage the "Droid Hub" (Home Assistant), and perform wireless firmware updates (OTA).
+This guide explains how to connect your droid to your local Wi-Fi, manage the "Droid Hub" (Home Assistant), and perform wireless firmware updates (OTA) across the **Unified Droid Nervous System (UDNS)**.
 
 ---
 

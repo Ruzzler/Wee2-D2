@@ -44,15 +44,15 @@ graph TD
         WLED --> PSIS["GrnWave PSI Disks"]:::lights
     end
 
-    subgraph SIGNAL_INTERCONNECTS [NEXUS SERIAL BUS]
+    subgraph SIGNAL_INTERCONNECTS [UNIFIED DROID NERVOUS SYSTEM (UDNS)]
         TX1 -. "2.4GHz" .-> RC1
         TX2 -. "2.4GHz" .-> RC2
         RC1 -- "CH3/4/5 PWM" --> ESP1
         ESP1 -- "9-Wire Trigger" --> AUDIO
         RC2 -- "CH1 PWM" --> ESP3
         ESP3 -- "PWM" --> ESC3
-        ESP1 <== "Nexus UART (Serial)" ==> WLED
-        ESP1 <== "Nexus UART (Serial)" ==> ESP3
+        ESP1 <== "Nervous System UART" ==> WLED
+        ESP1 <== "Nervous System UART" ==> ESP3
     end
 
     subgraph HUD_INTERFACES [MOBILE COMMAND]
@@ -90,15 +90,15 @@ graph TD
 ## 📌 Pinout Lookup Tables
 
 ### **Node 1: Body Brain (ESP32-WROOM)**
-Master controller for sounds and inter-node coordination.
+Master controller for sounds and UDNS coordination.
 
 | Component | Pin (GPIO) | Mode | Notes |
 | :--- | :---: | :---: | :--- |
 | **Status LED** | GPIO2 | Output | Heartbeat Blinker |
 | **RC Inputs** | 25, 32, 33 | Input | CH3, CH4, CH5 (PWM) |
 | **Sound S1-S9** | 4,5,16,17,18,19,21,22,23 | Output | **Active LOW** (Trigger) |
-| **Nexus TX** | GPIO17 | Output | Serial to Dome (Slip Ring Point 3) |
-| **Nexus RX** | GPIO16 | Input | Serial from Dome (Slip Ring Point 4) |
+| **UDNS TX** | GPIO17 | Output | Serial to Dome (Slip Ring Point 3) |
+| **UDNS RX** | GPIO16 | Input | Serial from Dome (Slip Ring Point 4) |
 | **Web UI** | N/A | WiFi | Port 80 (ESPHome Dashboard) |
 
 ### **Node 3: Dome Motion (ESP32-S3 Super Mini)**
@@ -108,17 +108,17 @@ Dedicated controller for 360° dome rotation.
 | :--- | :---: | :---: | :--- |
 | **RC CH1 Input** | GPIO1 | Input | From Receiver #2 (Dome Rotation) |
 | **Dome ESC** | GPIO2 | Output | PWM Signal (50Hz) to goBILDA ESC |
-| **Nexus TX** | GPIO44 | Output | Serial to Body (via Slip Ring) |
-| **Nexus RX** | GPIO43 | Input | Serial from Body (via Slip Ring) |
+| **UDNS TX** | GPIO44 | Output | Serial to Body (via Slip Ring) |
+| **UDNS RX** | GPIO43 | Input | Serial from Body (via Slip Ring) |
 
 ### **Node 2: Dome Lights (ESP32-S3 Super Mini - ESPHome)**
-Addressable LEDs using **ESPHome Light Interface**.
+Addressable LEDs using the **UDNS Light Interface**.
 
 | Component | Pin (GPIO) | Mode | Notes |
 | :--- | :---: | :---: | :--- |
 | **Logics / PSI** | 1, 2, 3 | Output | Neopixel Data Lines |
-| **Nexus TX** | GPIO44 | Output | Shared Serial Bus |
-| **Nexus RX** | GPIO43 | Input | Shared Serial Bus |
+| **UDNS TX** | GPIO44 | Output | Shared Serial Bus |
+| **UDNS RX** | GPIO43 | Input | Shared Serial Bus |
 | **Web UI** | N/A | WiFi | Port 80 (Pattern selection) |
 
 ---

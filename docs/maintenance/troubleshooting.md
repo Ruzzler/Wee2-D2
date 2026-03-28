@@ -12,7 +12,7 @@ If your droid begins exhibiting non-compliant behavior, use this matrix to diagn
 | **Sound is Distorted** | Poor Grounding | Ensure common ground is tied to the soundboard amp GND. |
 | **LEDs Flickering** | Data Noise | Increase wire thickness; add 470-ohm resistor to data line. |
 | **Cannot Connect to IP** | DHCP Lease Expired | Check router; use static IP in `secrets.yaml`. |
-| **"Angry Mode" Fails** | Nexus Link Fault | Check GPIO 13-to-5 serial connection. |
+| **"Angry Mode" Fails** | UDNS Link Fault | Check GPIO 13-to-5 serial connection (UDNS). |
 
 ---
 
@@ -25,7 +25,7 @@ The most powerful tool at your disposal is the **ESPHome Logger**.
 3.  Click **Logs** on the problematic node.
 4.  **Watch for Errors**: UART timeouts, Wi-Fi disconnects, or I2C bus failures will appear in RED text.
 
-### **2. Serial Bus Test**
+### **2. Unified Droid Nervous System (UDNS) Serial Bus Test**
 To verify communication across the slip ring:
 1.  Open the **Body Brain (Node 1)** Logs.
 2.  Trigger a sound.

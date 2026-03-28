@@ -4,12 +4,13 @@ All notable changes to the Wee2-D2 project will be documented in this file. This
 
 ---
 
-## [1.0.0-Nexus] - 2026-03-28
+## [1.0.0-UDNS] - 2026-03-28
 ### Added
-- **Nexus Serial Architecture**: Implemented a 3-node master-slave communication bus using ESPHome.
+- **Unified Droid Nervous System (UDNS)**: Implemented a high-bandwidth master-slave serial architecture across all 3 nodes.
+- **UDNS Technical Documentation**: Created a dedicated explainer and wiring guide for the droid's integrated nervous system.
 - **Hardware Profile**: Integrated the **PEMENOL 60W (DY-HL50T)** soundboard into the technical manuals.
 - **Interactive HUD**: Added professional `svg-pan-zoom` capabilities to all technical schematics with a GitHub-style control cluster.
-- **S3 Mini Support**: Formalized the use of ESP32-S3 Super Mini (HW-747) for Dome logic (Nodes 2 & 3).
+- **S3 Mini Support**: Formalized the use of ESP32-S3 Super Mini (HW-747) for Dome logic.
 - **Wiring Manual**: Created a dedicated high-fidelity wiring guide for the 6-circuit slip ring and serial interconnects.
 - **Imperial Databank UI**: Launched the custom SPA (Single Page Application) for technical documentation.
 
