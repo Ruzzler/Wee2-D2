@@ -65,48 +65,82 @@ document.addEventListener('DOMContentLoaded', () => {
                 setTimeout(async () => {
                     try {
                         const nodes = contentDiv.querySelectorAll('.mermaid');
-                        if (nodes.length > 0) {
-                            // Reset mermaid for clean state logic
-                            mermaid.initialize({ 
-                                startOnLoad: false, 
-                                theme: 'dark',
-                                securityLevel: 'loose',
-                                flowchart: { useMaxWidth: false, htmlLabels: true, curve: 'basis' }
+                        if (nodes.length === 0) return;
+
+                        // Configuration for Mermaid
+                        mermaid.initialize({ 
+                            startOnLoad: false, 
+                            theme: 'dark',
+                            securityLevel: 'loose',
+                            flowchart: { useMaxWidth: false, htmlLabels: true, curve: 'basis' }
+                        });
+                        
+                        // Run Mermaid rendering
+                        await mermaid.run({ nodes: nodes });
+
+                        // Initialize each diagram with a custom toolbar and pan-zoom
+                        nodes.forEach((container, index) => {
+                            const svg = container.querySelector('svg');
+                            if (!svg || container.dataset.initialized) return;
+
+                            // Mark as initialized to avoid duplicates
+                            container.dataset.initialized = 'true';
+
+                            // 1. Initialize PAN-ZOOM
+                            const pz = svgPanZoom(svg, {
+                                zoomEnabled: true,
+                                controlIconsEnabled: false, // We will build our own GitHub-style ones
+                                fit: true,
+                                center: true,
+                                minZoom: 0.1,
+                                maxZoom: 10,
+                                zoomScaleSensitivity: 0.2
                             });
+
+                            // 2. Create GitHub-Style Toolbar
+                            const toolbar = document.createElement('div');
+                            toolbar.className = 'diagram-toolbar';
                             
-                            await mermaid.run({ nodes: nodes });
+                            const btnConfigs = [
+                                { label: '+', title: 'Zoom In', action: () => pz.zoomIn() },
+                                { label: '-', title: 'Zoom Out', action: () => pz.zoomOut() },
+                                { label: 'Reset', title: 'Reset View', action: () => pz.reset() },
+                                { label: '⛶', title: 'Toggle Fullscreen', action: () => toggleFullscreen(container) }
+                            ];
 
-                            // After rendering, initialize pan-zoom on each SVG
-                            nodes.forEach((node, index) => {
-                                const svg = node.querySelector('svg');
-                                if (svg) {
-                                    // Give the container a defined height for pan-zoom viewport
-                                    node.style.height = '60vh';
-                                    node.style.border = '1px solid var(--accent-cyan)';
-                                    node.style.background = 'rgba(0,0,0,0.5)';
-                                    node.style.marginBottom = '20px';
-                                    node.style.borderRadius = '4px';
-
-                                    svg.style.width = '100%';
-                                    svg.style.height = '100%';
-
-                                    // Initialize pan-zoom
-                                    svgPanZoom(svg, {
-                                        zoomEnabled: true,
-                                        controlIconsEnabled: true,
-                                        fit: true,
-                                        center: true,
-                                        minZoom: 0.1,
-                                        maxZoom: 10,
-                                        zoomScaleSensitivity: 0.1
-                                    });
-                                }
+                            btnConfigs.forEach(cfg => {
+                                const btn = document.createElement('button');
+                                btn.className = 'toolbar-btn';
+                                btn.innerText = cfg.label;
+                                btn.title = cfg.title;
+                                btn.onclick = (e) => {
+                                    e.preventDefault();
+                                    e.stopPropagation();
+                                    cfg.action();
+                                };
+                                toolbar.appendChild(btn);
                             });
-                        }
+
+                            container.appendChild(toolbar);
+
+                            // Handle resize events
+                            window.addEventListener('resize', () => pz.resize());
+                        });
                     } catch (e) {
                         console.error("Mermaid Decryption Error:", e);
                     }
-                }, 200);
+                }, 300);
+            }
+
+            // Helper for Fullscreen Toggle
+            function toggleFullscreen(element) {
+                if (!document.fullscreenElement) {
+                    element.requestFullscreen().catch(err => {
+                        console.error(`Error attempting to enable fullscreen mode: ${err.message}`);
+                    });
+                } else {
+                    document.exitFullscreen();
+                }
             }
 
             // Scroll to top
