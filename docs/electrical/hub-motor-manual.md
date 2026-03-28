@@ -18,6 +18,10 @@ The **FLD-5** provides silent, high-efficiency direct-drive power with integrate
 | **Max Loading Capacity**| 70 KG (per unit) |
 | **Weight** | 1.9 KG |
 | **Wheel Diameter** | 5 inch (Solid Rubber) |
+| **Power Source** | **20V DeWalt (5S)** (System Nominal: 18.5V) |
+
+> [!TIP]
+> **Performance Scaling**: Running a 24V rated motor at 20V (18.5V nominal) will reduce the no-load speed from 900 RPM to approximately **700-750 RPM**. This is a tactical advantage for a heavy droid, as it provides a naturally lower "crawl" speed and more consistent current delivery without sacrificing essential torque.
 
 ---
 
@@ -53,10 +57,10 @@ To ensure the **Unified Nervous System** remains stable and responsive, the foll
 | :--- | :---: | :--- |
 | **Motor Max** | 25.0 A | Allows for high-torque bursts during starts. |
 | **Motor Max Brake** | -18.0 A | Strong regenerative braking. |
-| **Battery Max** | 12.0 A | Synchronized with 200W @ 24V (x2). |
-| **Battery Max Regen**| -8.0 A | Safe charge back into the DeWalt battery. |
-| **Voltage Cutoff Start** | 21.0 V | Safe floor for 24V/20V operation. |
-| **Voltage Cutoff End**| 20.0 V | Critical system shutdown to protect battery cells. |
+| **Battery Max** | 15.0 A | Balanced for 20V DeWalt source capacity. |
+| **Battery Max Regen**| -8.0 A | Safe charge back into the DeWalt battery cells. |
+| **Voltage Cutoff Start** | 17.5 V | Warning zone for 20V DeWalt (5S @ 3.5V/cell). |
+| **Voltage Cutoff End**| 16.0 V | Hard stop to protect 20V DeWalt (5S @ 3.2V/cell). |
 
 ### **3. Drive Smoothness**
 *   **Startup Boost**: 0.01 (Minimum for FOC to avoid jerky starts).
