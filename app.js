@@ -2,8 +2,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const contentDiv = document.getElementById('content');
     const navLinks = document.querySelectorAll('#sidebar-nav a');
 
-    // Configure marked options
+    // Configure marked options with custom renderer for Mermaid
+    const renderer = new marked.Renderer();
+    renderer.code = function(code, language) {
+        if (language === 'mermaid') {
+            return `<div class="mermaid">${code}</div>`;
+        }
+        return `
+            <pre><code class="language-${language}">${escapeHtml(code)}</code></pre>
+        `;
+    };
+
     marked.setOptions({
+        renderer: renderer,
         gfm: true,
         breaks: true,
         headerIds: true,
