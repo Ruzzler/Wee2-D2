@@ -24,7 +24,7 @@ To switch between Charging and Discharging modes:
 
 | Parameter | Name | Description | Recommended |
 | :--- | :--- | :--- | :--- |
-| **`dn`** | Lower Limit | **Relay Opens** (Power Off) at this voltage | **16.5V - 17.0V** |
+| **`dn`** | Lower Limit | **Relay Opens** (Power Off) at this voltage | **17.5V (Extreme Safety)** <br> **17.0V (Standard Safe)** |
 | **`UP`** | Upper Limit | **Relay Closes** (Power On) at this voltage | **20.0V** |
 | **`OP`** | Timer | Auto-disconnect after X time (00:00 = Off) | **00:00** |
 | **`dOP`** | Delay | Re-connect delay after reaching `UP` voltage | **10 seconds** |
