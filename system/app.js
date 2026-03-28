@@ -39,8 +39,12 @@ document.addEventListener('DOMContentLoaded', () => {
     /**
      * Fetch and render a markdown file
      * @param {string} path - Path to the .md file (relative to root)
+     * @param {boolean} pushHistory - Whether to push the path to browser history
      */
-    async function loadContent(path) {
+    async function loadContent(path, pushHistory = true) {
+        if (pushHistory) {
+            window.history.pushState({ path: path }, '', '#' + path);
+        }
         currentPath = path;
         
         // Show hero only on Project Overview (README.md)
@@ -232,6 +236,14 @@ document.addEventListener('DOMContentLoaded', () => {
         return stack.join('/');
     }
 
+    // Helper for updating active state and navigating
+    function navigateToPath(path, pushHistory = true) {
+        navLinks.forEach(l => {
+            l.classList.toggle('active', l.getAttribute('data-path') === path);
+        });
+        loadContent(path, pushHistory);
+    }
+
     // Intercept clicks in the content area for relative links (Standard and SVG)
     contentDiv.addEventListener('click', (e) => {
         // Support standard <a> and SVG <a> tags (Mermaid links)
@@ -246,13 +258,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (href.endsWith('.md') || href.endsWith('.yaml') || href.endsWith('.yml')) {
                 e.preventDefault();
                 const newPath = resolvePath(currentPath, href);
-                
-                // Update Sidebar Active State
-                navLinks.forEach(l => {
-                    l.classList.toggle('active', l.getAttribute('data-path') === newPath);
-                });
-
-                loadContent(newPath);
+                navigateToPath(newPath);
             }
         }
     });
@@ -270,13 +276,8 @@ document.addEventListener('DOMContentLoaded', () => {
     navLinks.forEach(link => {
         link.addEventListener('click', (e) => {
             e.preventDefault();
-            
-            // Update Active State
-            navLinks.forEach(l => l.classList.remove('active'));
-            link.classList.add('active');
-            
             const path = link.getAttribute('data-path');
-            loadContent(path);
+            navigateToPath(path);
 
             // Close mobile menu after click
             document.body.classList.remove('sidebar-open');
@@ -328,10 +329,31 @@ document.addEventListener('DOMContentLoaded', () => {
         if (e.key === 'Escape') closeTheModal();
     });
 
+    // Handle Pop State (Browser Back/Forward Buttons)
+    window.addEventListener('popstate', (e) => {
+        if (e.state && e.state.path) {
+            navigateToPath(e.state.path, false);
+        } else {
+            const hash = window.location.hash.slice(1);
+            if (hash) {
+                navigateToPath(hash, false);
+            } else {
+                navigateToPath('README.md', false);
+            }
+        }
+    });
+
     // Initial Load
-    const activeLink = document.querySelector('nav a.active');
-    if (activeLink) {
-        const defaultPath = activeLink.getAttribute('data-path');
-        loadContent(defaultPath);
+    const initialHash = window.location.hash.slice(1);
+    if (initialHash) {
+        navigateToPath(initialHash, false);
+    } else {
+        const activeLink = document.querySelector('nav a.active');
+        if (activeLink) {
+            const defaultPath = activeLink.getAttribute('data-path');
+            // Using replaceState to correctly anchor the first page into history
+            window.history.replaceState({ path: defaultPath }, '', '#' + defaultPath);
+            navigateToPath(defaultPath, false);
+        }
     }
 });
