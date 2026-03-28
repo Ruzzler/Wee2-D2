@@ -1,37 +1,42 @@
 # ⚡ Droid Electrical Schematic
 
-This document provides a high-fidelity map of the Wee2-D2 electrical system, including power distribution and signal routing.
+This document provides a high-fidelity visual and technical map of the Wee2-D2 electrical system. 
+
+## 🗺️ Visual HUD Block Diagram
+![Imperial HUD Schematic](assets/schematic_hero.png)
+
+---
 
 ## 🧠 System Architecture (Mermaid)
 
 ```mermaid
 graph TD
-    subgraph POWER_SOURCE [20V DC POWER]
-        BAT["DeWalt 20V Battery"] --> LVC["MgcSTEM LVP-R1.5 (40A)"]
-        LVC --> FUSE["Main Fuse Bus Bar"]
+    subgraph POWER_SOURCE [20V DC POWER CORE]
+        BAT["DeWalt 20V Battery"]:::power --> LVC["MgcSTEM LVP-R1.5 (40A)"]:::power
+        LVC --> FUSE["Main Fuse Bus Bar"]:::power
     end
 
-    subgraph HIGH_POWER_RAIL [20V DRIVE RAIL]
-        FUSE --> ESC1["Flipsky FSESC 6.7 (Left Drive)"]
-        FUSE --> ESC2["Flipsky FSESC 6.7 (Right Drive)"]
-        FUSE --> SLIP["Slip Ring (Through-Hole)"]
-        SLIP --> ESC3["goBILDA 15A ESC (Dome Motor)"]
+    subgraph HIGH_POWER_RAIL [20V DRIVE SYSTEM]
+        FUSE --> ESC1["Flipsky FSESC 6.7 (Left Drive)"]:::drive
+        FUSE --> ESC2["Flipsky FSESC 6.7 (Right Drive)"]:::drive
+        FUSE --> SLIP["Slip Ring (Through-Hole)"]:::power
+        SLIP --> ESC3["goBILDA 15A ESC (Dome Motor)"]:::drive
     end
 
-    subgraph LOGIC_RAIL [5V LOGIC RAIL]
-        FUSE --> BUCK1["Mini560 Buck #1 (5.1V)"]
-        BUCK1 --> ESP1["Node 1: Body Brain"]
-        BUCK1 --> ESP3["Node 3: Dome Motion"]
-        BUCK1 --> AUDIO["DY-HL50T Soundboard"]
-        BUCK1 --> RC1["RC Receiver (Body)"]
-        BUCK1 --> RC2["RC Receiver (Dome)"]
+    subgraph LOGIC_RAIL [5V LOGIC & AUDIO]
+        FUSE --> BUCK1["Mini560 Buck #1 (5.1V)"]:::logic
+        BUCK1 --> ESP1["Node 1: Body Brain"]:::brain
+        BUCK1 --> ESP3["Node 3: Dome Motion"]:::brain
+        BUCK1 --> AUDIO["DY-HL50T Soundboard"]:::audio
+        BUCK1 --> RC1["RC Receiver (Body)"]:::signal
+        BUCK1 --> RC2["RC Receiver (Dome)"]:::signal
     end
 
-    subgraph LIGHT_RAIL [5V LIGHTING RAIL]
-        SLIP --> BUCK2["Mini560 Buck #2 (5.0V)"]
-        BUCK2 --> WLED["Node 2: Dome Lights (WLED)"]
-        WLED --> LOGICS["Front/Rear Logics"]
-        WLED --> PSIS["GrnWave PSI Disks"]
+    subgraph LIGHT_RAIL [5V LIGHTING SYSTEM]
+        SLIP --> BUCK2["Mini560 Buck #2 (5.0V)"]:::logic
+        BUCK2 --> WLED["Node 2: Dome Lights (WLED)"]:::lights
+        WLED --> LOGICS["Front/Rear Logics"]:::lights
+        WLED --> PSIS["GrnWave PSI Disks"]:::lights
     end
 
     subgraph SIGNAL_INTERCONNECTS [SIGNAL & TRIGGERS]
@@ -42,14 +47,13 @@ graph TD
         ESP1 -- "Angry/Red Link" --> WLED
     end
 
-    style BAT fill:#ff9900,stroke:#333,stroke-width:2px
-    style LVC fill:#ffcc00,stroke:#333
-    style FUSE fill:#cc3300,stroke:#fff
-    style BUCK1 fill:#00cccc,stroke:#333
-    style BUCK2 fill:#00cccc,stroke:#333
-    style WLED fill:#6600cc,stroke:#fff
-    style ESP1 fill:#0066cc,stroke:#fff
-    style ESP3 fill:#0066cc,stroke:#fff
+    classDef power fill:#ff9900,stroke:#333,stroke-width:2px,color:#000
+    classDef drive fill:#cc3300,stroke:#fff,color:#fff
+    classDef logic fill:#00cccc,stroke:#333,color:#000
+    classDef brain fill:#0066cc,stroke:#fff,color:#fff
+    classDef audio fill:#99cc00,stroke:#000,color:#000
+    classDef signal fill:#ffcc00,stroke:#333,color:#000
+    classDef lights fill:#6600cc,stroke:#fff,color:#fff
 ```
 
 ---
@@ -83,7 +87,7 @@ Addressable LEDs for logics and PSIs.
 | :--- | :---: | :---: | :--- |
 | **Front Logic** | GPIO16 | Output | Data Pin A |
 | **Rear Logic** | GPIO2 | Output | Data Pin B |
-| **Angry Link**| GPIO4 | Input | From Node 1 Trigger |
+| **Angry Link** | GPIO4 | Input | From Node 1 Trigger |
 
 ---
 

@@ -10,6 +10,14 @@ document.addEventListener('DOMContentLoaded', () => {
         mangle: false
     });
 
+    // Initialize Mermaid
+    mermaid.initialize({ 
+        startOnLoad: false, 
+        theme: 'dark',
+        securityLevel: 'loose',
+        flowchart: { useMaxWidth: true, htmlLabels: true, curve: 'basis' }
+    });
+
     let currentPath = '';
 
     /**
@@ -36,6 +44,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 contentDiv.innerHTML = '<h1>' + path.split('/').pop() + '</h1><pre><code>' + escapeHtml(markdown) + '</code></pre>';
             } else {
                 contentDiv.innerHTML = marked.parse(markdown);
+                
+                // Trigger Mermaid rendering for any new diagrams
+                setTimeout(async () => {
+                    await mermaid.run({
+                        nodes: document.querySelectorAll('.mermaid'),
+                    });
+                }, 10);
             }
 
             // Scroll to top
