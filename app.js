@@ -18,8 +18,8 @@ document.addEventListener('DOMContentLoaded', () => {
         contentDiv.innerHTML = '<div class="loading-text" style="font-family: var(--font-mono); color: var(--accent-cyan);">Decrypting datastream... [' + path + ']</div>';
         
         try {
-            // Adjust path to go up to project root from wiki/
-            const fullPath = '../' + path;
+            // Adjust path to root since app.js is now in root
+            const fullPath = './' + path;
             const response = await fetch(fullPath);
             
             if (!response.ok) {
