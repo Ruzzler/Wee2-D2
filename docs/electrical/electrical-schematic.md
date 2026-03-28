@@ -2,8 +2,6 @@
 
 This document provides a high-fidelity visual and technical map of the Wee2-D2 electrical system. 
 
-## 🗺️ Visual HUD Block Diagram
-![Imperial HUD Schematic](assets/schematic_hero.png)
 
 ---
 
