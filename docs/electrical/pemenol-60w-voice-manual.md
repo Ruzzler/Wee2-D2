@@ -5,20 +5,9 @@
 
 The **PEMENOL 60W** (DY-HL50T) is the primary voice playback module for Wee2-D2. It features a powerful 60W Class D mono amplifier.
 
-> [!CAUTION]
-> **NO UART CONTROL**: After evaluating the technical specifications of the **DY-HL50T** module currently in use, it is confirmed that this specific hardware **DOES NOT support UART / Serial control**. Control is achieved exclusively via the 9 segmented trigger pins (S1-S9) and the 3-bit DIP switch modes.
-
-## ⚡ Power & Audio
-*   **Operating Voltage**: DC 9V – 24V.
-*   **Amplifier**: 60W Mono Class D.
-*   **Volume**: Adjusted via the onboard blue potentiometer.
-
-![Features & Specs](../../assets/soundboard-features.jpg)
-
-## 🕹️ Trigger Modes (DIP Switch)
-The module uses a 3-bit DIP switch to set the trigger behavior. **Power cycle the module after changing switches.**
-
-![DIP Switch Modes](../../assets/soundboard-modes.jpg)
+![DIP Switch Modes 1](../../assets/soundboard-modes.jpg)
+![DIP Switch Modes 2](../../assets/soundboard-modes-2.jpg)
+![DIP Switch Modes 3](../../assets/soundboard-modes-3.jpg)
 
 ### Common Droid Configurations:
 | Switch 1 | Switch 2 | Switch 3 | Mode | Behavior |
@@ -26,6 +15,7 @@ The module uses a 3-bit DIP switch to set the trigger behavior. **Power cycle th
 | **OFF** | **OFF** | **OFF** | Level Non-Interr. | Plays once; cannot be interrupted. |
 | **ON** | **OFF** | **OFF** | Level Interr. | Plays once; restarts if triggered again. |
 | **ON** | **ON** | **OFF** | Pulse Non-Interr. | Plays once; plays in order if multiple triggers. |
+| **OFF** | **OFF** | **ON** | MP3 Mode 2 | Automatic loop all folder files after Power ON. |
 
 ## 🔌 Pinout & Wiring
 ![Pinout Diagram](../../assets/soundboard-labels.webp)
