@@ -14,6 +14,7 @@ All notable changes to the Wee2-D2 project will be documented in this file. This
 - **UX Refinement**: Fixed the Databank navigation logic so the Hero droid image only appears on the **Droid Overview (README.md)** page.
 - **Hero Image Upgrade**: Switched the primary project overview image to `droid_actual.jpg` for higher fidelity.
 - **Sidebar Navigation**: Renamed "Mission Overview" to "Droid Overview" for consistent droid documentation.
+- **Imperial Lightbox**: Implemented a "Click-to-Enlarge" modal system for all hardware photos. Table-based images are now automatically scaled to 120px thumbnails for better readability.
 - **AI Agent SOP Update**: Formally updated `AGENTS.md` to require localized technical READMEs for all firmware nodes.
 - **Component Synchronization**: Unified **PEMENOL 60W (DY-HL50T)** and **ESP32D** naming across BoM and technical manuals.
 

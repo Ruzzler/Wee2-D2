@@ -85,6 +85,18 @@ document.addEventListener('DOMContentLoaded', () => {
                         // Run Mermaid rendering
                         await mermaid.run({ nodes: nodes });
 
+                        // Define Icons Object
+                        const icons = {
+                            up: '<svg viewBox="0 0 16 16"><path d="M3.47 10.53a.75.75 0 001.06 0L8 7.06l3.47 3.47a.75.75 0 101.06-1.06l-4-4a.75.75 0 00-1.06 0l-4 4a.75.75 0 000 1.06z"/></svg>',
+                            down: '<svg viewBox="0 0 16 16"><path d="M12.53 5.47a.75.75 0 00-1.06 0L8 8.94 4.53 5.47a.75.75 0 00-1.06 1.06l4 4a.75.75 0 001.06 0l4-4a.75.75 0 000-1.06z"/></svg>',
+                            left: '<svg viewBox="0 0 16 16"><path d="M9.53 12.53a.75.75 0 01-1.06 0l-4-4a.75.75 0 010-1.06l4-4a.75.75 0 011.06 1.06L6.06 8l3.47 3.47a.75.75 0 010 1.06z"/></svg>',
+                            right: '<svg viewBox="0 0 16 16"><path d="M6.47 3.47a.75.75 0 011.06 0l4 4a.75.75 0 010 1.06l-4 4a.75.75 0 01-1.06-1.06L9.94 8 6.47 4.53a.75.75 0 010-1.06z"/></svg>',
+                            plus: '<svg viewBox="0 0 16 16"><path d="M7.75 2a.75.75 0 01.75.75V7h4.25a.75.75 0 010 1.5H8.5v4.25a.75.75 0 01-1.5 0V8.5H2.75a.75.75 0 010-1.5H7V2.75A.75.75 0 017.75 2z"/></svg>',
+                            minus: '<svg viewBox="0 0 16 16"><path d="M2 7.75A.75.75 0 012.75 7h10.5a.75.75 0 010 1.5H2.75A.75.75 0 012 7.75z"/></svg>',
+                            sync: '<svg viewBox="0 0 16 16"><path d="M1.705 8.005a.75.75 0 01.834.656 5.5 5.5 0 009.592 2.97l-1.204-1.204a.25.25 0 01.177-.427h3.646a.25.25 0 01.25.25v3.646a.25.25 0 01-.427.177l-1.38-1.38A7.001 7.001 0 011.05 8.84a.75.75 0 01.656-.834zM1.05 1.705v3.646a.25.25 0 00.25.25h3.646a.25.25 0 00.177-.427L3.744 3.793a5.5 5.5 0 019.592 2.97.75.75 0 101.498-.12 7.001 7.001 0 00-11.874-4.836l-1.38-1.38a.25.25 0 00-.427.177z"/></svg>',
+                            expand: '<svg viewBox="0 0 16 16"><path d="M3.75 2a.75.75 0 01.75.75V4.5h1.75a.75.75 0 010 1.5H3.5a.75.75 0 01-.75-.75v-2.75A.75.75 0 013.75 2zM12.25 2a.75.75 0 01.75.75v2.75a.75.75 0 01-.75.75H9.75a.75.75 0 010-1.5h1.75V2.75a.75.75 0 01.75-.75zM3.75 14a.75.75 0 01-.75-.75v-2.75a.75.75 0 01.75-.75h2.75a.75.75 0 010 1.5H4.5v1.75a.75.75 0 01-.75-.75zM12.25 14a.75.75 0 01-.75-.75V11.5h-1.75a.75.75 0 010-1.5h2.75a.75.75 0 01.75.75v2.75a.75.75 0 01-.75.75z"/></svg>'
+                        };
+
                         // Initialize each diagram with a custom toolbar and pan-zoom
                         nodes.forEach((container, index) => {
                             const svg = container.querySelector('svg');
@@ -104,19 +116,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                 zoomScaleSensitivity: 0.2
                             });
 
-                            // 2. Create GitHub-Style Icons
-                            const icons = {
-                                up: '<svg viewBox="0 0 16 16"><path d="M3.47 10.53a.75.75 0 001.06 0L8 7.06l3.47 3.47a.75.75 0 101.06-1.06l-4-4a.75.75 0 00-1.06 0l-4 4a.75.75 0 000 1.06z"/></svg>',
-                                down: '<svg viewBox="0 0 16 16"><path d="M12.53 5.47a.75.75 0 00-1.06 0L8 8.94 4.53 5.47a.75.75 0 00-1.06 1.06l4 4a.75.75 0 001.06 0l4-4a.75.75 0 000-1.06z"/></svg>',
-                                left: '<svg viewBox="0 0 16 16"><path d="M9.53 12.53a.75.75 0 01-1.06 0l-4-4a.75.75 0 010-1.06l4-4a.75.75 0 011.06 1.06L6.06 8l3.47 3.47a.75.75 0 010 1.06z"/></svg>',
-                                right: '<svg viewBox="0 0 16 16"><path d="M6.47 3.47a.75.75 0 011.06 0l4 4a.75.75 0 010 1.06l-4 4a.75.75 0 01-1.06-1.06L9.94 8 6.47 4.53a.75.75 0 010-1.06z"/></svg>',
-                                plus: '<svg viewBox="0 0 16 16"><path d="M7.75 2a.75.75 0 01.75.75V7h4.25a.75.75 0 010 1.5H8.5v4.25a.75.75 0 01-1.5 0V8.5H2.75a.75.75 0 010-1.5H7V2.75A.75.75 0 017.75 2z"/></svg>',
-                                minus: '<svg viewBox="0 0 16 16"><path d="M2 7.75A.75.75 0 012.75 7h10.5a.75.75 0 010 1.5H2.75A.75.75 0 012 7.75z"/></svg>',
-                                sync: '<svg viewBox="0 0 16 16"><path d="M1.705 8.005a.75.75 0 01.834.656 5.5 5.5 0 009.592 2.97l-1.204-1.204a.25.25 0 01.177-.427h3.646a.25.25 0 01.25.25v3.646a.25.25 0 01-.427.177l-1.38-1.38A7.001 7.001 0 011.05 8.84a.75.75 0 01.656-.834zM1.05 1.705v3.646a.25.25 0 00.25.25h3.646a.25.25 0 00.177-.427L3.744 3.793a5.5 5.5 0 019.592 2.97.75.75 0 101.498-.12 7.001 7.001 0 00-11.874-4.836l-1.38-1.38a.25.25 0 00-.427.177z"/></svg>',
-                                expand: '<svg viewBox="0 0 16 16"><path d="M3.75 2a.75.75 0 01.75.75V4.5h1.75a.75.75 0 010 1.5H3.5a.75.75 0 01-.75-.75v-2.75A.75.75 0 013.75 2zM12.25 2a.75.75 0 01.75.75v2.75a.75.75 0 01-.75.75H9.75a.75.75 0 010-1.5h1.75V2.75a.75.75 0 01.75-.75zM3.75 14a.75.75 0 01-.75-.75v-2.75a.75.75 0 01.75-.75h2.75a.75.75 0 010 1.5H4.5v1.75a.75.75 0 01-.75.75zM12.25 14a.75.75 0 01-.75-.75V11.5h-1.75a.75.75 0 010-1.5h2.75a.75.75 0 01.75.75v2.75a.75.75 0 01-.75.75z"/></svg>'
-                            };
-
-                            // 3. Create Navigation Cluster (Bottom-Right)
+                            // 2. Create Navigation Cluster (Bottom-Right)
                             const navCluster = document.createElement('div');
                             navCluster.className = 'diagram-nav-cluster';
                             
@@ -151,7 +151,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                 }
                             });
 
-                            // 4. Create Fullscreen Button (Top-Right)
+                            // 3. Create Fullscreen Button (Top-Right)
                             const fsBtn = document.createElement('button');
                             fsBtn.className = 'diagram-fs-btn';
                             fsBtn.innerHTML = icons.expand;
@@ -178,17 +178,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 }, 300);
             }
 
-            // Helper for Fullscreen Toggle
-            function toggleFullscreen(element) {
-                if (!document.fullscreenElement) {
-                    element.requestFullscreen().catch(err => {
-                        console.error(`Error attempting to enable fullscreen mode: ${err.message}`);
-                    });
-                } else {
-                    document.exitFullscreen();
-                }
-            }
-
             // Scroll to top
             window.scrollTo({ top: 0, behavior: 'smooth' });
 
@@ -203,6 +192,17 @@ document.addEventListener('DOMContentLoaded', () => {
                     </p>
                 </div>
             `;
+        }
+    }
+
+    // Helper for Fullscreen Toggle
+    function toggleFullscreen(element) {
+        if (!document.fullscreenElement) {
+            element.requestFullscreen().catch(err => {
+                console.error(`Error attempting to enable fullscreen mode: ${err.message}`);
+            });
+        } else {
+            document.exitFullscreen();
         }
     }
 
@@ -291,7 +291,47 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    /* --- LIGHTBOX MODAL LOGIC --- */
+    const modal = document.getElementById('image-modal');
+    const modalImg = document.getElementById('modal-img');
+    const modalCaption = document.getElementById('modal-caption');
+    const closeModal = document.querySelector('.close-modal');
+
+    // Content area delegated click event
+    contentDiv.addEventListener('click', (e) => {
+        if (e.target.tagName === 'IMG' && !e.target.classList.contains('droid-render')) {
+            openModal(e.target);
+        }
+    });
+
+    function openModal(imgElement) {
+        modal.style.display = 'flex';
+        modalImg.src = imgElement.src;
+        modalCaption.innerText = imgElement.alt || 'Technical Specification View';
+        document.body.style.overflow = 'hidden'; // Prevent background scroll
+    }
+
+    function closeTheModal() {
+        modal.style.display = 'none';
+        document.body.style.overflow = '';
+    }
+
+    // Close on click outside or close button
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal || e.target === closeModal) {
+            closeTheModal();
+        }
+    });
+
+    // Close on ESC
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeTheModal();
+    });
+
     // Initial Load
-    const defaultPath = document.querySelector('nav a.active').getAttribute('data-path');
-    loadContent(defaultPath);
+    const activeLink = document.querySelector('nav a.active');
+    if (activeLink) {
+        const defaultPath = activeLink.getAttribute('data-path');
+        loadContent(defaultPath);
+    }
 });
