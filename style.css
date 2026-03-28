@@ -452,7 +452,7 @@ main {
     margin-bottom: 2rem;
     overflow: hidden;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-    transition: border-color 0.2s ease;
+    transition: all 0.3s ease;
 }
 
 .mermaid:hover {
@@ -469,51 +469,80 @@ main {
     cursor: grabbing !important;
 }
 
-.diagram-toolbar {
+/* Bottom-Right Navigation Cluster */
+.diagram-nav-cluster {
     position: absolute;
-    bottom: 15px;
-    right: 15px;
+    bottom: 12px;
+    right: 12px;
     display: grid;
-    grid-template-columns: repeat(3, 32px);
-    grid-template-rows: repeat(3, 32px);
+    grid-template-columns: repeat(3, 28px);
+    grid-template-rows: repeat(3, 28px);
     gap: 4px;
     z-index: 1000;
     padding: 6px;
-    background: rgba(22, 27, 34, 0.8);
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    backdrop-filter: blur(8px);
-    opacity: 0.3;
-    transition: opacity 0.3s ease, transform 0.3s ease;
+    background: #21262d;
+    border: 1px solid rgba(240, 246, 252, 0.1);
+    border-radius: 6px;
+    opacity: 0;
+    transform: translateY(5px);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
 }
 
-.mermaid:hover .diagram-toolbar {
+.mermaid:hover .diagram-nav-cluster,
+.mermaid:hover .diagram-fs-btn {
     opacity: 1;
+    transform: translateY(0);
 }
 
 .toolbar-btn {
-    width: 32px;
-    height: 32px;
+    width: 28px;
+    height: 28px;
     background: transparent;
     border: none;
-    color: var(--text-secondary);
+    color: #c9d1d9;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: all 0.1s ease;
-    border-radius: 6px;
-    padding: 0;
+    transition: background 0.1s ease;
+    border-radius: 4px;
 }
 
 .toolbar-btn:hover {
     background: rgba(255, 255, 255, 0.1);
-    color: var(--text-primary);
 }
 
-.toolbar-btn svg {
-    width: 16px;
-    height: 16px;
+/* Top-Right Fullscreen Button */
+.diagram-fs-btn {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    z-index: 1000;
+    width: 32px;
+    height: 32px;
+    background: #21262d;
+    border: 1px solid rgba(240, 246, 252, 0.1);
+    border-radius: 6px;
+    color: #c9d1d9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    opacity: 0;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+}
+
+.diagram-fs-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--accent-cyan);
+    color: var(--accent-cyan);
+}
+
+.toolbar-btn svg, .diagram-fs-btn svg {
+    width: 14px;
+    height: 14px;
     fill: currentColor;
 }
 
