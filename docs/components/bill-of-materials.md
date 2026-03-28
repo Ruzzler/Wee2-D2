@@ -22,7 +22,7 @@ A comprehensive list of hardware used in the Wee2-D2 droid project.
 ## 🔊 Audio & Lights
 | Component | Qty | Description |
 | :--- | :---: | :--- |
-| **DY-HL50T** | 1 | Soundboard w/ 60W Amp [Manual](docs/electrical/dy-hl50t-manual.md) |
+| [PEMENOL 60W Soundboard](docs/electrical/pemenol-60w-voice-manual.md) | 1 | Soundboard w/ 60W Amp ([Amazon](https://www.amazon.ca/dp/B0CGRN3JKF)) |
 | **Pyle 3.5" Car Speaker**| 1 | 60W RMS / 4 Ohm |
 | **WS2812B Front Logic** | 1 | 12 x 2 Addressable LED matrix |
 | **WS2812B Rear Logic** | 1 | 10 x 2 Addressable LED matrix (5x2 x 2) |

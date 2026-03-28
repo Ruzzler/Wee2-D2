@@ -32,7 +32,7 @@ graph TD
         FUSE --> BUCK1["Mini560 Buck #1 (5.1V)"]:::logic
         BUCK1 --> ESP1["Node 1: Body Brain"]:::brain
         BUCK1 --> ESP3["Node 3: Dome Motion"]:::brain
-        BUCK1 --> AUDIO["DY-HL50T Soundboard"]:::audio
+        BUCK1 --> AUDIO["PEMENOL 60W Soundboard"]:::audio
         BUCK1 --> RC1["RC Receiver #1 (Body)"]:::signal
         BUCK1 --> RC2["RC Receiver #2 (Dome)"]:::signal
     end
@@ -60,7 +60,7 @@ graph TD
     click ESC1 "docs/electrical/flipsky-fsesc-67-pro-manual.md" "Left Drive ESC Manual"
     click ESC2 "docs/electrical/flipsky-fsesc-67-pro-manual.md" "Right Drive ESC Manual"
     click SLIP "docs/electrical/cnbtr-slip-ring-manual.md" "Slip Ring Manual"
-    click AUDIO "docs/electrical/dy-hl50t-manual.md" "Soundboard Manual"
+    click AUDIO "docs/electrical/pemenol-60w-voice-manual.md" "Soundboard Specs"
     click PSIS "docs/electrical/grnwave-psi-manual.md" "PSI Logic Manual"
     click ESP1 "firmware/node1-body-brain/body-brain.yaml" "Node 1 Configuration"
     click ESP3 "firmware/node3-dome-motion/dome-motion.yaml" "Node 3 Configuration"

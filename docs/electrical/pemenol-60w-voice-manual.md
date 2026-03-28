@@ -1,7 +1,9 @@
-# 🏛️ IMPERIAL DATABANK: DY-HL50T AUDIO
-> **DECRYPTED DATA REPOSITORY** | **SERIAL: DY-HL50T-60W**
+# 🏛️ IMPERIAL DATABANK: PEMENOL 60W AUDIO
+> **DECRYPTED DATA REPOSITORY** | **SERIAL: PEMENOL-DY-HL50T**
 
-The **DY-HL50T** is the primary voice playback module for Wee2-D2. It features a powerful 60W Class D mono amplifier capable of driving large speakers directly from the main 20V battery.
+![PEMENOL 60W Voice Module](../../assets/soundboard-top.jpg)
+
+The **PEMENOL 60W** (DY-HL50T) is the primary voice playback module for Wee2-D2. It features a powerful 60W Class D mono amplifier capable of driving large speakers directly from the main 20V battery.
 
 ## ⚡ Power & Audio
 *   **Operating Voltage**: DC 9V – 24V (Can be powered directly from the fused 20V bus).
@@ -18,6 +20,8 @@ The **DY-HL50T** is the primary voice playback module for Wee2-D2. It features a
 ## 🕹️ Trigger Modes (DIP Switch)
 The module uses a 3-bit DIP switch to set the trigger behavior. **Power cycle the module after changing switches.**
 
+![DIP Switch Modes](../../assets/soundboard-modes.jpg)
+
 ### Common Droid Configurations:
 | Switch 1 | Switch 2 | Switch 3 | Mode | Behavior |
 | :---: | :---: | :---: | :--- | :--- |
@@ -28,9 +32,13 @@ The module uses a 3-bit DIP switch to set the trigger behavior. **Power cycle th
 > [!TIP]
 > **NPN/GND Triggering**: The S1-S9 pins are active-low. To trigger a sound from an ESP32 (Node 1), briefly pull the corresponding GPIO to **GND**.
 
-## 🔌 Pinout
+## 🔌 Pinout & Wiring
+![Pinout Diagram](../../assets/soundboard-labels.webp)
+
 *   **VCC/GND**: 9-24V Power Input.
 *   **SPK+/SPK-**: Speaker Output.
 *   **S1 - S9**: Trigger inputs (Active Low).
 *   **COM**: Common Ground for triggers.
 *   **Micro USB**: For direct file transfer from a PC.
+
+![Reference Wiring](../../assets/soundboard-wiring.jpg)
