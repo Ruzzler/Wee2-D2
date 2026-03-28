@@ -343,14 +343,17 @@ main {
 /* --- RESPONSIVE ADJUSTMENTS --- */
 @media (max-width: 900px) {
     body {
-        grid-template-columns: 1fr;
-        grid-template-rows: 60px 1fr;
+        display: block;
         height: auto;
         min-height: 100vh;
+        overflow-y: auto;
         overflow-x: hidden;
     }
 
     header {
+        position: sticky;
+        top: 0;
+        height: 60px;
         padding: 0 20px;
     }
 
