@@ -62,19 +62,19 @@ graph TD
     end
 
     %% Direct Markdown-Relative Links for Interactivity
-    click BAT "docs/electrical/lvp-r15-manual.md" "Power Core Manual"
-    click LVC "docs/electrical/lvp-r15-manual.md" "LVC Manual"
-    click ESC1 "docs/electrical/flipsky-fsesc-67-pro-manual.md" "Left Drive ESC Manual"
-    click ESC2 "docs/electrical/flipsky-fsesc-67-pro-manual.md" "Right Drive ESC Manual"
-    click SLIP "docs/electrical/cnbtr-slip-ring-manual.md" "Slip Ring Manual"
-    click AUDIO "docs/electrical/pemenol-60w-voice-manual.md" "Soundboard Specs"
-    click PSIS "docs/electrical/grnwave-psi-manual.md" "PSI Logic Manual"
+    click BAT "docs/hardware/mgcstem-lvp-r15-manual.md" "Power Core Manual"
+    click LVC "docs/hardware/mgcstem-lvp-r15-manual.md" "LVC Manual"
+    click ESC1 "docs/hardware/flipsky-fsesc-67-pro-manual.md" "Left Drive ESC Manual"
+    click ESC2 "docs/hardware/flipsky-fsesc-67-pro-manual.md" "Right Drive ESC Manual"
+    click SLIP "docs/hardware/cnbtr-slip-ring-manual.md" "Slip Ring Manual"
+    click AUDIO "docs/hardware/pemenol-60w-voice-manual.md" "Soundboard Specs"
+    click PSIS "docs/hardware/grnwave-psi-manual.md" "PSI Logic Manual"
     click ESP1 "firmware/node1-body-brain/body-brain.yaml" "Node 1 Configuration"
     click ESP3 "firmware/node3-dome-motion/dome-motion.yaml" "Node 3 Configuration"
     click WLED "firmware/node2-dome-lights/README.md" "Node 2 Configuration"
-    click ESC3 "docs/components/bill-of-materials.md" "Dome ESC Specs"
-    click TX1 "docs/electrical/hotrc-ds600-manual.md" "Body Transmitter Manual"
-    click TX2 "docs/electrical/hotrc-ds600-manual.md" "Dome Transmitter Manual"
+    click ESC3 "docs/bill-of-materials.md" "Dome ESC Specs"
+    click TX1 "docs/hardware/hotrc-ds600-manual.md" "Body Transmitter Manual"
+    click TX2 "docs/hardware/hotrc-ds600-manual.md" "Dome Transmitter Manual"
 
     classDef power fill:#ff9900,stroke:#333,stroke-width:2px,color:#000
     classDef drive fill:#cc3300,stroke:#fff,color:#fff

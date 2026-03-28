@@ -60,7 +60,7 @@ The droid operates on a **Master-Slave Serial Bus** model called the **UDNS**.
 ## 🛠️ Operational Procedures (SOPs)
 
 ### 1. Documenting New Components
-*   **Markdown First**: New technical manuals must be placed in `docs/electrical/` or `docs/maintenance/`.
+*   **Markdown First**: New technical manuals must be placed in `docs/hardware/` or `docs/maintenance/`.
 *   **Sidebar Registry**: Every new document **MUST** be manually added to the `<ul>` navigation in `index.html` with a unique `data-path`.
 *   **Industrial Formatting**: Use GitHub-style alerts (`> [!IMPORTANT]`, `> [!TIP]`) to highlight critical safety and calibration steps.
 *   **Firmware Explainers**: Every firmware node directory `firmware/node-x/` MUST contain a `README.md` that explains the PINOUT, logic (e.g., voltage clamping), and calibration steps for that specific node to ensure readability within the Databank UI.
@@ -72,7 +72,7 @@ The droid operates on a **Master-Slave Serial Bus** model called the **UDNS**.
 
 ### 3. Asset & Image Management
 *   **Import Folder**: Always check the `Import/Photos/` and `Import/Manuals/` directories first for new raw assets provided by the user.
-*   **Document Processing**: New technical manuals (PDFs) should be moved and renamed to a professional engineering standard within `docs/electrical/`.
+*   **Document Processing**: New technical manuals (PDFs) should be moved and renamed to a professional engineering standard within `docs/hardware/`.
 *   **Photo Processing**: Evaluate each photo to determine if it should be optimized and moved to the permanent `assets/` folder.
 *   **EXIF Stripping**: AI assistants MUST strip all metadata from user photos before moving them to the permanent `/assets` folder.
 *   **Optimization**: Prefer WebP/Lossy JPEG for the web interface to keep the "Databank" fast.

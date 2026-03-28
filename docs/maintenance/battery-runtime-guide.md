@@ -4,7 +4,7 @@
 This guide provides predicted operational durations for the Wee2-D2 based on the 4Ah 20V DeWalt battery system.
 
 ## 📊 Energy Capacity (4Ah / 74Wh)
-The 20V DeWalt battery operates at **18.5V Nominal**. A 4Ah pack contains **74 Watt-Hours (Wh)** of raw energy. To protect the Lithium-ion cells, the [LVP-R1.5 Cutoff](../electrical/lvp-r15-manual.md) is set to 17.5V, leaving approximately **63Wh** of "Safe Usable" energy.
+The 20V DeWalt battery operates at **18.5V Nominal**. A 4Ah pack contains **74 Watt-Hours (Wh)** of raw energy. To protect the Lithium-ion cells, the [LVP-R1.5 Cutoff](../hardware/mgcstem-lvp-r15-manual.md) is set to 17.5V, leaving approximately **63Wh** of "Safe Usable" energy.
 
 ---
 

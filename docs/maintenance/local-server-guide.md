@@ -1,10 +1,13 @@
-# Wee2-D2 Local Server Guide (EXCLUDED FROM GIT)
+# 🌐 IMPERIAL DATABANK: LOCAL SERVER GUIDE
+> **DECRYPTED DATA REPOSITORY** | **SYSTEM: LOCALHOST**
 
-### Launch Command
+### 💻 Launch Command
+```bash
 python -m http.server 8001 --bind 127.0.0.1
+```
 
-### URL
-[http://127.0.0.1:8001/wiki/index.html](http://127.0.0.1:8001/wiki/index.html)
+### 🔗 Local URL
+[http://127.0.0.1:8001/index.html](http://127.0.0.1:8001/index.html)
 
-### Note
-Ensure you are in the project root folder. Use 127.0.0.1 to avoid Windows IPv6 issues.
+> [!NOTE]
+> Ensure you are in the project root folder before running the command. Use `127.0.0.1` to avoid Windows IPv6 resolving issues.

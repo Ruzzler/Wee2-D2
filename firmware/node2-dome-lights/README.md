@@ -1,4 +1,5 @@
-# Node 2: Dome Lights (WLED)
+# 💡 Node 2: Dome Lights (WLED)
+> **WLED Firmware** | **ESP32-S3 Super Mini**
 
 This node is dedicated to controlling the WS2812 addressable LED system in the dome using **WLED**.
 
