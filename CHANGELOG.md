@@ -4,6 +4,15 @@ All notable changes to the Wee2-D2 project will be documented in this file. This
 
 ---
 
+## [1.3.0] - 2026-03-28 (Diatáxis UX Overhaul)
+### Changed
+- **Navigation Flow**: Reorganized the Databank sidebar to follow the Builder's Journey (Overview > Architecture > Wiring > Firmware > Maintenance).
+- **Component Manuals De-clutter**: Removed the standalone 8-link component manual section from the sidebar. Users now click through via the BoM or Interactive Schematic, adhering to optimal Information Architecture.
+- **Clarified Project Scope**: Updated `README.md` to explicitly state the databank handles electronics only, not 3D printing.
+- **Architecture Consolidation**: Removed the bulky Mermaid graph from `README.md` in favor of pointing back to the dedicated `electrical-schematic.md` interface.
+- **Local Server Standardization**: Enforced port `8001` with loopback IP across all documentation to prevent Windows IPv6 binding conflicts.
+- **History API**: Rewrote navigation in `app.js` to utilize browser PopState for functional forward/back buttons and hash routing.
+
 ## [1.2.0] - 2026-03-28 (Tiered Technical Standard)
 ### Added
 - **BoM Layout Upgrade**: Transitioned to a 4-column layout with a dedicated **"Visual ID"** column. All component images are now isolated and clickable via the Imperial Lightbox.

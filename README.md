@@ -16,32 +16,15 @@ Wee2-D2 uses a decentralized architecture across three ESP32 microcontrollers to
 - **Node 2: Dome Lights (WLED)**: Dedicated WLED instance for WS2812 addressable LED light shows with safety current limiting.
 - **Node 3: Dome Motion (ESPHome)**: Precise motor control for dome rotation with safety voltage clamping (20V battery to 12V motor).
 
+> [!WARNING]
+> **PROJECT SCOPE**: This repository exclusively documents the custom **Electrical Architecture** and **Firmware** ecosystem. It does **not** contain the 3D-printable STL files or mechanical assembly instructions for the droid chassis itself. Please refer to the official Mr. Baddeley Patreon or Group for structural files.
+
 ## 🔋 Master Power Architecture
 
-```mermaid
-graph TD
-    A[DeWalt 20V Battery] --> B[LVP-R1.5 40A Cutoff]
-    B --> C[6-Way Fuse Bus]
-    
-    C --> D[Flipsky ESCs x2]
-    C --> E[DY-HL50T Audio]
-    C --> F[Body 5V Buck] --> G[Node 1: Body Brain]
-    C --> RC1[HOTRC RC Receiver #1] --> G
-    
-    C --> H[12.7mm Slip Ring]
-    
-    subgraph DOME
-    H --> I[goBILDA 15A ESC] --> J[Dome Motor]
-    I -- 6V BEC --o K[Node 3: Motion]
-    I -- 6V BEC --o L[HOTRC RC Receiver #2]
-    H --> M[Mini560 5V Buck] --> N[Node 2: Lights]
-    M --> O[LED Logics/PSIs]
-    end
-```
+The Wee2-D2 is natively powered by **DeWalt 20V Batteries** running through an LVP-R1.5 low-voltage cutoff to a primary distribution bus.
 
-*   **Main Source**: DeWalt 20V Batteries.
-*   **Protection**: [MgcSTEM LVP-R1.5](./docs/hardware/mgcstem-lvp-r15-manual.md) ➔ Main Fuse Bus Bar.
-*   **Mission Control**: See the interactive [Electrical Schematic](https://ruzzler.github.io/Wee2-D2/#docs/architecture/electrical-schematic.md).
+👉 **[View the Interactive Electrical Schematic](#docs/architecture/electrical-schematic.md)**
+👉 **[View the Power Architecture Deep-Dive](#docs/architecture/power-architecture.md)**
 
 ## 📁 Repository Structure
 ```text
@@ -69,7 +52,7 @@ graph TD
 ---
 
 ## 🏛️ Local Deployment
-To run the Databank engine locally:
+To run the Databank engine locally via Python:
 1.  Open a terminal in the project root.
-2.  Run the local server: `python -m http.server 8000`
-3.  Navigate to [http://localhost:8000](http://localhost:8000).
+2.  Run the local server: `python -m http.server 8001 --bind 127.0.0.1`
+3.  Navigate to [http://127.0.0.1:8001](http://127.0.0.1:8001).
