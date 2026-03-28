@@ -60,8 +60,8 @@ graph TD
 ## 🦿 Hardware Ecosystem
 *   **Control**: 2x [HOTRC DS-600](./docs/electrical/hotrc-ds600-manual.md) (Silent Mode mod).
 *   **Drive System**: 2x [Flipsky Mini FSESC 6.7 Pro](./docs/electrical/flipsky-fsesc-67-pro-manual.md) ➔ E-Scooter Hub Motors.
-*   **Dome Motion**: [goBILDA 5203 Yellow Jacket](./docs/electrical/cnbtr-slip-ring-manual.md) ➔ [1x15A Motor Controller](./docs/electrical/cnbtr-slip-ring-manual.md).
-*   **Audio**: [DY-HL50T Sound Module](./docs/electrical/dy-hl50t-manual.md) (60W Mono).
+*   **Dome Motion**: [goBILDA 5203 Yellow Jacket](./docs/electrical/gobilda-motor-manual.md) ➔ [1x15A Motor Controller](./docs/electrical/gobilda-motor-manual.md).
+*   **Audio**: [PEMENOL 60W (DY-HL50T)](./docs/electrical/pemenol-60w-voice-manual.md) (60W Mono).
 *   **Power Protection**: [MgcSTEM LVP-R1.5](./docs/electrical/lvp-r15-manual.md) (40A Cutoff).
 *   **Lighting**: [GrnWave Circular PSI](./docs/electrical/grnwave-psi-manual.md) (76-LED Inward Spiral).
 

@@ -30,7 +30,7 @@ graph TD
 
     subgraph LOGIC_RAIL [5V LOGIC & AUDIO]
         FUSE --> BUCK1["Mini560 Buck #1 (5.1V)"]:::logic
-        BUCK1 --> ESP1["Node 1: Body (ESP32-WROOM)"]:::brain
+        BUCK1 --> ESP1["Node 1: Body (ESP32D)"]:::brain
         BUCK1 --> ESP3["Node 3: Dome (ESP32-S3 Mini)"]:::brain
         BUCK1 --> AUDIO["PEMENOL 60W Soundboard"]:::audio
         BUCK1 --> RC1["RC Receiver #1 (Body)"]:::signal
@@ -89,7 +89,7 @@ graph TD
 
 ## 📌 Pinout Lookup Tables
 
-### **Node 1: Body Brain (ESP32-WROOM)**
+### **Node 1: Body Brain (ESP32D Dev Board)**
 Master controller for sounds and UDNS coordination.
 
 | Component | Pin (GPIO) | Mode | Notes |

@@ -9,7 +9,7 @@ esphome:
           id(bank_status).publish_state("Bank " + to_string(id(current_bank) + 1));
 
 esp32:
-  board: esp32dev
+  board: esp32dev # ESP32D Dev Board
   framework:
     type: arduino
 

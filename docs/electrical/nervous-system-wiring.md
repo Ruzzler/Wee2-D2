@@ -20,7 +20,7 @@ The slip ring is the "Spinal Cord" of the droid. Every signal must be shared acr
 
 ## 🧠 Controller Interconnects
 
-### **1. Body Master (ESP32-WROOM)**
+### **1. Body Master (ESP32D Dev Board)**
 The "Body Brain" sends commands up the spine to the dome controllers.
 *   **UDNS TX (GPIO17)**: Connect to Slip Ring **Circuit 3**.
 *   **UDNS RX (GPIO16)**: Connect to Slip Ring **Circuit 4**.

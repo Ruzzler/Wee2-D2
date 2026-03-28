@@ -22,7 +22,7 @@ A comprehensive list of hardware used in the Wee2-D2 droid project.
 ## 🔊 Audio & Lights
 | **MICROCONTROLLERS** | | | | |
 | :--- | :--- | :--- | :--- | :--- |
-| **Node 1: Body Brain** | 1 | ESP32-WROOM-32D | Primary logic, sound triggers | [Amazon](https://www.amazon.ca/dp/B0718T2ZK6) |
+| **Node 1: Body Brain** | 1 | ESP32D Dev Board | Primary logic, sound triggers | [Amazon](https://www.amazon.ca/dp/B0718T2ZK6) |
 | **Node 2: Dome Lights** | 1 | ESP32-S3 Super Mini | **WLED** Controller (Form-Factor: 22x18mm) | [Aliexpress](https://www.aliexpress.com/item/1005005967641933.html) |
 | **Node 3: Dome Motion** | 1 | ESP32-S3 Super Mini | Dedicated Dome Rotation controller | [Aliexpress](https://www.aliexpress.com/item/1005005967641933.html) |
 | Component | Qty | Description |
@@ -38,5 +38,5 @@ A comprehensive list of hardware used in the Wee2-D2 droid project.
 | :--- | :---: | :--- |
 | **Flipsky Mini FSESC 6.7 Pro** | 2 | 70A Cont / 200A Peak, [Manual](docs/electrical/flipsky-fsesc-67-pro-manual.md) |
 | **E-Scooter Hub Motor** | 2 | Drive Motors |
-| **goBILDA 1x15A Motor Controller** | 1 | 41g, 12-24VDC (9-30V Limit), 15A Cont / 25A Throttle, 6V/3A BEC, 1050-1950μsec PWM, Reverse-Voltage/Over-Current/Heat Protection |
-| **goBILDA 5203 Motor** | 1 | 117 RPM (12V), 50.9:1 Ratio, 68.4 kg.cm Torque, 9.2A Stall |
+| **goBILDA 1x15A Motor Controller** | 1 | 12-24VDC, 15A Cont, 6V BEC [Manual](docs/electrical/gobilda-motor-manual.md) |
+| **goBILDA 5203 Motor** | 1 | 117 RPM (12V) Yellow Jacket [Manual](docs/electrical/gobilda-motor-manual.md) |

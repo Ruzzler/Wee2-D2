@@ -35,6 +35,6 @@ Unlike Wi-Fi-only communication (which can be unreliable at busy events/conventi
 ---
 
 ## 🛠️ Components of the System
-*   **Body Controller**: ESP32-WROOM-32D (High pin-count for sound triggers).
+*   **Body Controller**: ESP32D Dev Board (High pin-count for sound triggers).
 *   **Dome Controllers**: 2x ESP32-S3 Super Mini (Ultra-compact for internal dome mounting).
 *   **Interconnect**: 6-Circuit High-Current Slip Ring (The "Spinal Cord").
