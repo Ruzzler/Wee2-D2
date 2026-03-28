@@ -103,22 +103,28 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     /**
-     * Resolve a relative path against a base path
+     * Resolve a relative path against a base path, handling GitHub Pages subdirectories
      */
     function resolvePath(base, relative) {
-        // If it already looks like a root-relative path (docs/... firmware/...), just use it
-        if (relative.startsWith('docs/') || relative.startsWith('firmware/') || relative.startsWith('archive/')) {
+        // If it's a root-relative path within the databank project
+        if (relative.startsWith('docs/') || relative.startsWith('firmware/') || relative.startsWith('archive/') || relative.startsWith('assets/')) {
             return relative;
         }
 
+        // Logic for handling relative path traversal (../)
         const stack = base.split('/');
         const parts = relative.split('/');
-        stack.pop(); // remove current file
+        stack.pop(); // remove current filename from stack
+        
         for (let i = 0; i < parts.length; i++) {
-            if (parts[i] === '.') continue;
-            if (parts[i] === '..') stack.pop();
-            else stack.push(parts[i]);
+            if (parts[i] === '.' || parts[i] === '') continue;
+            if (parts[i] === '..') {
+                if (stack.length > 0) stack.pop();
+            } else {
+                stack.push(parts[i]);
+            }
         }
+        
         return stack.join('/');
     }
 

@@ -5,7 +5,7 @@
 
 The **PEMENOL 60W** (DY-HL50T) is the primary voice playback module for Wee2-D2. It features a powerful 60W Class D mono amplifier.
 
-> [!IMPORTANT]
+> [!CAUTION]
 > **NO UART CONTROL**: After evaluating the technical specifications of the **DY-HL50T** module currently in use, it is confirmed that this specific hardware **DOES NOT support UART / Serial control**. Control is achieved exclusively via the 9 segmented trigger pins (S1-S9) and the 3-bit DIP switch modes.
 
 ## ⚡ Power & Audio
