@@ -8,6 +8,7 @@ All notable changes to the Wee2-D2 project will be documented in this file. This
 ### Added
 - **goBILDA Hardware Manual**: Created `docs/electrical/gobilda-motor-manual.md` with detailed 15A ESC and 5203 Yellow Jacket specs.
 - **Hub Motor Specifications**: Created technical data repository for the **L-faster FLD-5 200W Hub Motors**, including VESC-tool FOC calibration guidance.
+- **Battery Endurance Estimation**: Created **`docs/maintenance/battery-runtime-guide.md`** with duty cycle calculations for 20V DeWalt (4Ah) packs.
 - **Hardware Photo Integration**: Migrated 6 real-world photos from `Photos to import/` to `assets/` with optimized metadata and standardized naming.
 - **Enhanced Documentation**: Integrated hardware photos into the BoM, goBILDA Manual, UDNS Guide, and Node Firmware READMEs.
 - **UX Refinement**: Fixed the Databank navigation logic so the Hero droid image only appears on the Project Overview (README.md) page.
