@@ -1,7 +1,7 @@
 # 🏛️ IMPERIAL DATABANK: PEMENOL 60W AUDIO
 > **DECRYPTED DATA REPOSITORY** | **SERIAL: PEMENOL-DY-HL50T**
 
-![PEMENOL 60W Voice Module](assets/soundboard-top.jpg)
+![PEMENOL 60W Voice Module](../../assets/soundboard-top.jpg)
 
 The **PEMENOL 60W** (DY-HL50T) is the primary voice playback module for Wee2-D2. It features a powerful 60W Class D mono amplifier.
 
@@ -13,12 +13,12 @@ The **PEMENOL 60W** (DY-HL50T) is the primary voice playback module for Wee2-D2.
 *   **Amplifier**: 60W Mono Class D.
 *   **Volume**: Adjusted via the onboard blue potentiometer.
 
-![Features & Specs](assets/soundboard-features.jpg)
+![Features & Specs](../../assets/soundboard-features.jpg)
 
 ## 🕹️ Trigger Modes (DIP Switch)
 The module uses a 3-bit DIP switch to set the trigger behavior. **Power cycle the module after changing switches.**
 
-![DIP Switch Modes](assets/soundboard-modes.jpg)
+![DIP Switch Modes](../../assets/soundboard-modes.jpg)
 
 ### Common Droid Configurations:
 | Switch 1 | Switch 2 | Switch 3 | Mode | Behavior |
@@ -28,14 +28,14 @@ The module uses a 3-bit DIP switch to set the trigger behavior. **Power cycle th
 | **ON** | **ON** | **OFF** | Pulse Non-Interr. | Plays once; plays in order if multiple triggers. |
 
 ## 🔌 Pinout & Wiring
-![Pinout Diagram](assets/soundboard-labels.webp)
+![Pinout Diagram](../../assets/soundboard-labels.webp)
 
 *   **VCC/GND**: 9-24V Power Input.
 *   **SPK+/SPK-**: Speaker Output.
 *   **S1 - S9**: Trigger inputs (Active Low).
 *   **COM**: Common Ground for triggers.
 
-![Reference Wiring](assets/soundboard-wiring.jpg)
+![Reference Wiring](../../assets/soundboard-wiring.jpg)
 
 ## 📐 Dimensions & PCB Layout
-![PCB Schematic](assets/soundboard-schematic.jpg)
+![PCB Schematic](../../assets/soundboard-schematic.jpg)

@@ -13,13 +13,21 @@ document.addEventListener('DOMContentLoaded', () => {
         return `<pre><code class="language-${lang}">${escapeHtml(text)}</code></pre>`;
     };
 
+    // Custom image renderer to resolve paths relative to the MD file
+    renderer.image = ({ href, title, text }) => {
+        const resolvedHref = resolvePath(currentPath, href);
+        // On GitHub Pages, we need to ensure local assets are served correctly
+        return `<img src="${resolvedHref}" alt="${text}" title="${title || ''}" class="content-image">`;
+    };
+
     // Custom blockquote renderer for GitHub Alerts [!TIP], etc.
     renderer.blockquote = ({ text }) => {
+        // Multi-line match for alerts
         const alertMatch = text.match(/^\[!(TIP|IMPORTANT|WARNING|CAUTION|NOTE)\]\s*([\s\S]*)$/i);
         if (alertMatch) {
             const type = alertMatch[1].toUpperCase();
-            const content = marked.parse(alertMatch[2]);
-            return `<div class="alert alert-${type.toLowerCase()}"><strong>${type}</strong><br>${content}</div>`;
+            const alertContent = alertMatch[2].trim();
+            return `<div class="alert alert-${type.toLowerCase()}"><strong>${type}</strong><br>${marked.parse(alertContent)}</div>`;
         }
         return `<blockquote>${marked.parse(text)}</blockquote>`;
     };
