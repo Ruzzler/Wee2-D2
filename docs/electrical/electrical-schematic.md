@@ -7,7 +7,9 @@ This document provides a high-fidelity visual and technical map of the Wee2-D2 e
 
 ---
 
-## 🧠 System Architecture (Mermaid)
+## 🧠 Interactive System Architecture (Mermaid)
+> [!TIP]
+> **INTERACTIVE INTERFACE**: Click on any component node to instantly decrypt its technical manual in the databank.
 
 ```mermaid
 graph TD
@@ -46,6 +48,19 @@ graph TD
         ESP3 -- "PWM" --> ESC3
         ESP1 -- "Angry/Red Link" --> WLED
     end
+
+    %% Click Callbacks for Interactivity
+    click BAT call loadMapContent("docs/electrical/lvp-r15-manual.md")
+    click LVC call loadMapContent("docs/electrical/lvp-r15-manual.md")
+    click ESC1 call loadMapContent("docs/electrical/flipsky-fsesc-67-pro-manual.md")
+    click ESC2 call loadMapContent("docs/electrical/flipsky-fsesc-67-pro-manual.md")
+    click SLIP call loadMapContent("docs/electrical/cnbtr-slip-ring-manual.md")
+    click AUDIO call loadMapContent("docs/electrical/dy-hl50t-manual.md")
+    click PSIS call loadMapContent("docs/electrical/grnwave-psi-manual.md")
+    click ESP1 call loadMapContent("firmware/node1-body-brain/body-brain.yaml")
+    click ESP3 call loadMapContent("firmware/node3-dome-motion/dome-motion.yaml")
+    click WLED call loadMapContent("firmware/node2-dome-lights/README.md")
+    click ESC3 call loadMapContent("docs/components/bill-of-materials.md")
 
     classDef power fill:#ff9900,stroke:#333,stroke-width:2px,color:#000
     classDef drive fill:#cc3300,stroke:#fff,color:#fff

@@ -10,13 +10,18 @@ document.addEventListener('DOMContentLoaded', () => {
         mangle: false
     });
 
-    // Initialize Mermaid
-    mermaid.initialize({ 
-        startOnLoad: false, 
-        theme: 'dark',
-        securityLevel: 'loose',
-        flowchart: { useMaxWidth: true, htmlLabels: true, curve: 'basis' }
-    });
+    // Define a global function that Mermaid can call
+    window.loadMapContent = (path) => {
+        // Find the node in the sidebar to update active state
+        const targetLink = Array.from(navLinks).find(l => l.getAttribute('data-path') === path);
+        
+        if (targetLink) {
+            navLinks.forEach(l => l.classList.remove('active'));
+            targetLink.classList.add('active');
+        }
+        
+        loadContent(path);
+    };
 
     let currentPath = '';
 
@@ -47,10 +52,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 
                 // Trigger Mermaid rendering for any new diagrams
                 setTimeout(async () => {
-                    await mermaid.run({
-                        nodes: document.querySelectorAll('.mermaid'),
-                    });
-                }, 10);
+                    try {
+                        // Re-initialize for every load to ensure callbacks bind
+                        mermaid.initialize({ 
+                            startOnLoad: false, 
+                            theme: 'dark',
+                            securityLevel: 'loose',
+                            flowchart: { useMaxWidth: true, htmlLabels: true, curve: 'basis' }
+                        });
+                        await mermaid.run({
+                            nodes: contentDiv.querySelectorAll('.mermaid'),
+                        });
+                    } catch (e) {
+                        console.error("Mermaid Decryption Error:", e);
+                    }
+                }, 50);
             }
 
             // Scroll to top

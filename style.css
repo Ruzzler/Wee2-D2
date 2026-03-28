@@ -257,3 +257,40 @@ main {
 ::-webkit-scrollbar-track { background: var(--bg-color); }
 ::-webkit-scrollbar-thumb { background: var(--accent-cyan); border-radius: 4px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--accent-amber); }
+
+/* --- INTERACTIVE MERMAID HUD --- */
+.mermaid {
+    background: rgba(0, 0, 0, 0.4);
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid rgba(0, 242, 255, 0.2);
+    box-shadow: inset 0 0 20px rgba(0, 242, 255, 0.05);
+}
+
+.mermaid .node rect, .mermaid .node circle, .mermaid .node polygon {
+    stroke-width: 2px !important;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+/* Hover effects for interactive nodes */
+.mermaid .node:hover rect, .mermaid .node:hover circle, .mermaid .node:hover polygon {
+    filter: brightness(1.2) drop-shadow(0 0 8px var(--accent-cyan));
+    stroke: var(--accent-cyan) !important;
+}
+
+.mermaid .label {
+    font-family: var(--font-mono) !important;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    pointer-events: none;
+}
+
+.mermaid .edgePath path {
+    stroke: rgba(0, 242, 255, 0.4) !important;
+    stroke-width: 2px !important;
+}
+
+.mermaid .marker {
+    fill: rgba(0, 242, 255, 0.4) !important;
+}
