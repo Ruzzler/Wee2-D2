@@ -4,25 +4,31 @@ All notable changes to the Wee2-D2 project will be documented in this file. This
 
 ---
 
-## [1.1.0-WikiSync] - 2026-03-28
+## [1.2.0] - 2026-03-28 (Tiered Technical Standard)
 ### Added
-- **goBILDA Hardware Manual**: Created `docs/electrical/gobilda-motor-manual.md` with detailed 15A ESC and 5203 Yellow Jacket specs.
-- **Hub Motor Specifications**: Created technical data repository for the **L-faster FLD-5 200W Hub Motors**, including VESC-tool FOC calibration guidance.
-- **Battery Endurance Estimation**: Created **`docs/maintenance/battery-runtime-guide.md`** with duty cycle calculations for 20V DeWalt (4Ah) packs.
-- **Hardware Photo Integration**: Migrated 6 real-world photos from `Photos to import/` to `assets/` with optimized metadata and standardized naming.
-- **Enhanced Documentation**: Integrated hardware photos into the BoM, goBILDA Manual, UDNS Guide, and Node Firmware READMEs.
+- **BoM Layout Upgrade**: Transitioned to a 4-column layout with a dedicated **"Visual ID"** column. All component images are now isolated and clickable via the Imperial Lightbox.
+- **Hardware Asset Enrichment**: Integrated missing hardware photos for the PEMENOL 60W Soundboard and goBILDA ESC into the primary component ledger.
+- **Architectural Subcategories**: Implemented a 3-pillar tiered hierarchy: `docs/architecture`, `docs/hardware`, and `docs/maintenance`.
+
+### Changed
+- **Folder Normalization**: Migrated all system-wide guides to `architecture/` and component manuals to `hardware/`.
+- **BoM Consolidation**: Unified the Bill of Materials to `docs/bill-of-materials.md` and updated all internal links.
+- **Asset Normalization**: Synchronized all file naming to lowercase-hyphenated (e.g., `droid-actual.jpg`).
+- **Sidebar Revamp**: Redesigned the Imperial HUD to reflect the new tiered categorization.
 - **UX Refinement**: Fixed the Databank navigation logic so the Hero droid image only appears on the **Droid Overview (README.md)** page.
-- **Hero Image Upgrade**: Switched the primary project overview image to `droid_actual.jpg` for higher fidelity.
-- **Sidebar Navigation**: Renamed "Mission Overview" to "Droid Overview" for consistent droid documentation.
-- **Imperial Lightbox**: Implemented a "Click-to-Enlarge" modal system for all hardware photos. Table-based images are now automatically scaled to 120px thumbnails for better readability.
-- **AI Agent SOP Update**: Formally updated `AGENTS.md` to require localized technical READMEs for all firmware nodes.
-- **Component Synchronization**: Unified **PEMENOL 60W (DY-HL50T)** and **ESP32D** naming across BoM and technical manuals.
+- **Hero Image Upgrade**: Switched the primary project overview image to `droid-actual.jpg` for higher fidelity.
+- **Sidebar Navigation**: Renamed "Mission Overview" to "Droid Overview" for consistent documentation.
+
+## [1.1.0] - 2026-03-28 (WikiSync & PDFAssist)
+### Added
+- **Battery Endurance Estimation**: Created **`docs/maintenance/battery-runtime-guide.md`** with duty cycle calculations.
+- **Hardware Photo Integration**: Migrated and optimized raw assets to permanent project directory.
+- **Enhanced Documentation**: Integrated technical photos into manuals and the BoM.
 
 ### Changed
 - **Databank Navigation**: Updated `index.html` sidebar to link to Firmware READMEs instead of raw YAML files for enhanced readability.
 - **BoM Corrections**: Fixed incorrect hardware links and updated technical descriptions for goBILDA components.
 
-### Fixed
 - **Broken Links**: Resolved dead links in `README.md` and BoM cross-references.
 - **Structure Cleanup**: Removed redundant/empty `wiki/` directory to standardize on the `docs/` architecture.
 

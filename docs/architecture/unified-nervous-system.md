@@ -10,7 +10,7 @@ In a standard hobbyist build, parts often work in isolation. In the **UDNS** mod
 *   **The Master (Body Brain)**: Interprets RC signals and manages the soundboard. It acts as the "Central Cortex."
 *   **The Slaves (Dome Nodes)**: High-performance S3 Mini nodes that listen on a shared **Command Bus**. They react instantly to instructions sent from the body (e.g., "Rotate dome 90°," "Switch lights to Angry Mode").
 
-![Droid Internal Electronics](../../assets/body-electronics-layout.png)
+![Wiring Diagram](../../assets/chassis-electronics-layout.png)
 
 ---
 

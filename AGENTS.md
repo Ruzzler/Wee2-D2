@@ -82,5 +82,15 @@ The droid operates on a **Master-Slave Serial Bus** model called the **UDNS**.
 *   **Cache-Busting**: When verifying changes on the live GitHub Pages site, assistants **MUST** use a unique version query string (e.g., `index.html?v=v20_refresh`) to bypass the CDN cache.
 *   **Interactive Audit**: Use the browser subagent to hover over Mermaid diagrams to ensure the pan-zoom HUD controls are functional after any CSS/JS change.
 
-### 5. Historical Record
+### 6. Project Organization (Standard)
+AI assistants MUST adhere to the 3-pillar documentation hierarchy to maintain project clarity:
+*   **Architecture (`docs/architecture/`)**: System-wide logic (Wiring, Power, UDNS, Schematics).
+*   **Hardware (`docs/hardware/`)**: Individual component manuals and their paired technical PDFs.
+*   **Maintenance (`docs/maintenance/`)**: Operational guides, safety standards, and calibration tables.
+*   **Bill of Materials**: Maintained at the root `docs/bill-of-materials.md` for immediate decryption.
+*   **Assets**: All images MUST reside in the flat `/assets` folder using `lowercase-hyphenated-naming.webp/jpg`.
+
+---
+
+## 📜 Historical Record
 *   **Changelog**: Every session resulting in technical changes **MUST** conclude with an update to `CHANGELOG.md` following the established UDNS versioning scheme.

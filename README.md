@@ -40,14 +40,16 @@ graph TD
 ```
 
 *   **Main Source**: DeWalt 20V Batteries.
-*   **Protection**: [MgcSTEM LVP-R1.5](./docs/electrical/lvp-r15-manual.md) ➔ Main Fuse Bus Bar.
-*   **Mission Control**: See the interactive [Electrical Schematic](https://ruzzler.github.io/Wee2-D2/#docs/electrical/electrical-schematic.md).
+*   **Protection**: [MgcSTEM LVP-R1.5](./docs/hardware/mgcstem-lvp-r15-manual.md) ➔ Main Fuse Bus Bar.
+*   **Mission Control**: See the interactive [Electrical Schematic](https://ruzzler.github.io/Wee2-D2/#docs/architecture/electrical-schematic.md).
 
 ## 📁 Repository Structure
 ```text
 ├── docs/               # Technical Documentation
-│   ├── components/     # Bill of Materials (BoM)
-│   └── electrical/     # Component Manuals & Power Routing
+│   ├── architecture/   # System-wide logic (Wiring, Power, UDNS)
+│   ├── hardware/       # Component Manuals (Manuals & PDFs)
+│   ├── maintenance/    # Operational & Safety standards
+│   └── bill-of-materials.md # Unified Component Ledger
 ├── firmware/           # Microcontroller Code
 │   ├── node1-body-brain/  # ESPHome: Audio & Signal Dispatch
 │   ├── node2-dome-lights/ # WLED: 2D Matrix & Effects
@@ -58,12 +60,12 @@ graph TD
 ```
 
 ## 🦿 Hardware Ecosystem
-*   **Control**: 2x [HOTRC DS-600](./docs/electrical/hotrc-ds600-manual.md) (Silent Mode mod).
-*   **Drive System**: 2x [Flipsky Mini FSESC 6.7 Pro](./docs/electrical/flipsky-fsesc-67-pro-manual.md) ➔ E-Scooter Hub Motors.
-*   **Dome Motion**: [goBILDA 5203 Yellow Jacket](./docs/electrical/gobilda-motor-manual.md) ➔ [1x15A Motor Controller](./docs/electrical/gobilda-motor-manual.md).
-*   **Audio**: [PEMENOL 60W (DY-HL50T)](./docs/electrical/pemenol-60w-voice-manual.md) (60W Mono).
-*   **Power Protection**: [MgcSTEM LVP-R1.5](./docs/electrical/lvp-r15-manual.md) (40A Cutoff).
-*   **Lighting**: [GrnWave Circular PSI](./docs/electrical/grnwave-psi-manual.md) (76-LED Inward Spiral).
+*   **Control**: 2x [HOTRC DS-600](./docs/hardware/hotrc-ds600-manual.md) (Silent Mode mod).
+*   **Drive System**: 2x [Flipsky Mini FSESC 6.7 Pro](./docs/hardware/flipsky-fsesc-67-pro-manual.md) ➔ L-faster Hub Motors.
+*   **Dome Motion**: [goBILDA 5203 Yellow Jacket](./docs/hardware/gobilda-motor-manual.md) ➔ [1x15A Motor Controller](./docs/hardware/gobilda-motor-manual.md).
+*   **Audio**: [PEMENOL 60W (DY-HL50T)](./docs/hardware/pemenol-60w-voice-manual.md) (60W Mono).
+*   **Power Protection**: [MgcSTEM LVP-R1.5](./docs/hardware/mgcstem-lvp-r15-manual.md) (40A Cutoff).
+*   **Lighting**: [GrnWave Circular PSI](./docs/hardware/grnwave-psi-manual.md) (76-LED Inward Spiral).
 
 ---
 
