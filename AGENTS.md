@@ -46,6 +46,7 @@ The droid operates on a **Master-Slave Serial Bus** model called the **UDNS**.
 4.  **Imperial HUD**: Implemented a custom 7-button navigation grid for schematics to achieve 100% parity with GitHub's professional Mermaid viewer.
 5.  **17.5V Safety Floor**: Established 17.5V (3.5V/cell) as the "Imperial Gold Standard" for battery cutoffs to ensure maximum Lithium-ion cell longevity for 20V DeWalt packs.
 6.  **Conditional Hero**: Confined the large droid hero render to `README.md` only to maintain technical focus on secondary Databank pages.
+7.  **Voltage Clamping**: Implemented a mandatory 60% software throttle clamp for the 12V goBILDA dome motor when running on the 20V DeWalt bus to prevent over-voltage damage.
 
 ---
 
@@ -63,6 +64,7 @@ The droid operates on a **Master-Slave Serial Bus** model called the **UDNS**.
 *   **Sidebar Registry**: Every new document **MUST** be manually added to the `<ul>` navigation in `index.html` with a unique `data-path`.
 *   **Industrial Formatting**: Use GitHub-style alerts (`> [!IMPORTANT]`, `> [!TIP]`) to highlight critical safety and calibration steps.
 *   **Firmware Explainers**: Every firmware node directory `firmware/node-x/` MUST contain a `README.md` that explains the PINOUT, logic (e.g., voltage clamping), and calibration steps for that specific node to ensure readability within the Databank UI.
+*   **Energy Sync**: Every major hardware or logic change (e.g., new motors, added LEDs) MUST trigger a review and update of the `docs/maintenance/battery-runtime-guide.md` to maintain accurate con-day endurance estimates.
 
 ### 2. Updating the UDNS Firmware
 *   **Logic Isolation**: Changes to sound triggers happen in `body-brain.yaml`. Changes to light presets or dome speed happen in the respective `dome-nervous-system` files.
