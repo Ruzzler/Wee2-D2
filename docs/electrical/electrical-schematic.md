@@ -56,20 +56,20 @@ graph TD
         ESP1 -- "Angry/Red Link" --> WLED
     end
 
-    %% Click Callbacks for Interactivity
-    click BAT call loadMapContent("docs/electrical/lvp-r15-manual.md")
-    click LVC call loadMapContent("docs/electrical/lvp-r15-manual.md")
-    click ESC1 call loadMapContent("docs/electrical/flipsky-fsesc-67-pro-manual.md")
-    click ESC2 call loadMapContent("docs/electrical/flipsky-fsesc-67-pro-manual.md")
-    click SLIP call loadMapContent("docs/electrical/cnbtr-slip-ring-manual.md")
-    click AUDIO call loadMapContent("docs/electrical/dy-hl50t-manual.md")
-    click PSIS call loadMapContent("docs/electrical/grnwave-psi-manual.md")
-    click ESP1 call loadMapContent("firmware/node1-body-brain/body-brain.yaml")
-    click ESP3 call loadMapContent("firmware/node3-dome-motion/dome-motion.yaml")
-    click WLED call loadMapContent("firmware/node2-dome-lights/README.md")
-    click ESC3 call loadMapContent("docs/components/bill-of-materials.md")
-    click TX1 call loadMapContent("docs/electrical/hotrc-ds600-manual.md")
-    click TX2 call loadMapContent("docs/electrical/hotrc-ds600-manual.md")
+    %% Direct Markdown-Relative Links for Interactivity
+    click BAT "docs/electrical/lvp-r15-manual.md" "Power Core Manual"
+    click LVC "docs/electrical/lvp-r15-manual.md" "LVC Manual"
+    click ESC1 "docs/electrical/flipsky-fsesc-67-pro-manual.md" "Left Drive ESC Manual"
+    click ESC2 "docs/electrical/flipsky-fsesc-67-pro-manual.md" "Right Drive ESC Manual"
+    click SLIP "docs/electrical/cnbtr-slip-ring-manual.md" "Slip Ring Manual"
+    click AUDIO "docs/electrical/dy-hl50t-manual.md" "Soundboard Manual"
+    click PSIS "docs/electrical/grnwave-psi-manual.md" "PSI Logic Manual"
+    click ESP1 "firmware/node1-body-brain/body-brain.yaml" "Node 1 Configuration"
+    click ESP3 "firmware/node3-dome-motion/dome-motion.yaml" "Node 3 Configuration"
+    click WLED "firmware/node2-dome-lights/README.md" "Node 2 Configuration"
+    click ESC3 "docs/components/bill-of-materials.md" "Dome ESC Specs"
+    click TX1 "docs/electrical/hotrc-ds600-manual.md" "Body Transmitter Manual"
+    click TX2 "docs/electrical/hotrc-ds600-manual.md" "Dome Transmitter Manual"
 
     classDef power fill:#ff9900,stroke:#333,stroke-width:2px,color:#000
     classDef drive fill:#cc3300,stroke:#fff,color:#fff
@@ -117,5 +117,5 @@ Addressable LEDs for logics and PSIs.
 
 ## 🛡️ Best Practices
 *   **Common Ground**: All ESP32 grounds and Buck Converter grounds **MUST** be tied together at a central star-ground point.
-*   **Dual-TX Binding**: Ensure the Body Transmitter and Dome Transmitter are bound to their respective receivers on separate IDs or distinct channel ranges if using a multi-receiver setup.
+*   **Dual-TX Binding**: Ensure the Body Transmitter and Dome Transmitter (HOTRC DS-600 #1 and #2) are bound to their respective receivers on separate IDs.
 *   **Signal Cleanliness**: Since the dome motor is a large DC motor, ensure logic wires are positioned away from the main motor leads to prevent EMI noise.

@@ -26,19 +26,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     marked.use({ renderer });
 
-    // Define a global function that Mermaid can call
-    window.loadMapContent = (path) => {
-        // Find the node in the sidebar to update active state
-        const targetLink = Array.from(navLinks).find(l => l.getAttribute('data-path') === path);
-        
-        if (targetLink) {
-            navLinks.forEach(l => l.classList.remove('active'));
-            targetLink.classList.add('active');
-        }
-        
-        loadContent(path);
-    };
-
     let currentPath = '';
 
     /**
@@ -127,12 +114,14 @@ document.addEventListener('DOMContentLoaded', () => {
         return stack.join('/');
     }
 
-    // Intercept clicks in the content area for relative links
+    // Intercept clicks in the content area for relative links (Standard and SVG)
     contentDiv.addEventListener('click', (e) => {
+        // Support standard <a> and SVG <a> tags (Mermaid links)
         const target = e.target.closest('a');
         if (!target) return;
 
-        const href = target.getAttribute('href');
+        // Check both href and xlink:href (for older SVG links)
+        const href = target.getAttribute('href') || target.getAttribute('xlink:href');
         
         // Only intercept relative markdown/yaml links
         if (href && !href.startsWith('http') && !href.startsWith('#')) {
@@ -140,7 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 e.preventDefault();
                 const newPath = resolvePath(currentPath, href);
                 
-                // Update Sidebar Active State (Optional but nice)
+                // Update Sidebar Active State
                 navLinks.forEach(l => {
                     l.classList.toggle('active', l.getAttribute('data-path') === newPath);
                 });
