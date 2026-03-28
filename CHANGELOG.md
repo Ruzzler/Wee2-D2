@@ -4,10 +4,27 @@ All notable changes to the Wee2-D2 project will be documented in this file. This
 
 ---
 
+## [1.1.0-WikiSync] - 2026-03-28
+### Added
+- **goBILDA Hardware Manual**: Created `docs/electrical/gobilda-motor-manual.md` with detailed 15A ESC and 5203 Yellow Jacket specs.
+- **Node READMEs**: Added dedicated technical explainers for **Node 1 (Body Brain)** and **Node 3 (Dome Motion)** firmware.
+- **Component Synchronization**: Unified **PEMENOL 60W (DY-HL50T)** and **ESP32D** naming across BoM and technical manuals.
+
+### Changed
+- **Databank Navigation**: Updated `index.html` sidebar to link to Firmware READMEs instead of raw YAML files for enhanced readability.
+- **BoM Corrections**: Fixed incorrect hardware links and updated technical descriptions for goBILDA components.
+
+### Fixed
+- **Broken Links**: Resolved dead links in `README.md` and BoM cross-references.
+- **Structure Cleanup**: Removed redundant/empty `wiki/` directory to standardize on the `docs/` architecture.
+
+---
+
 ## [1.0.0-UDNS] - 2026-03-28
 ### Added
 - **Unified Droid Nervous System (UDNS)**: Implemented a high-bandwidth master-slave serial architecture across all 3 nodes.
 - **UDNS Technical Documentation**: Created a dedicated explainer and wiring guide for the droid's integrated nervous system.
+- **AI Agent Briefing**: Created `AGENTS.md` to provide comprehensive context, hardware specs, and design guidelines for future AI engineering assistants.
 - **Hardware Profile**: Integrated the **PEMENOL 60W (DY-HL50T)** soundboard and **ESP32D Dev Board** (Body) into the technical manuals.
 - **Interactive HUD**: Added professional `svg-pan-zoom` capabilities to all technical schematics with a GitHub-style control cluster.
 - **S3 Mini Support**: Formalized the use of ESP32-S3 Super Mini (HW-747) for Dome logic.
