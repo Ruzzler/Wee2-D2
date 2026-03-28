@@ -92,6 +92,9 @@ AI assistants MUST adhere to the 3-pillar documentation hierarchy to maintain pr
 *   **Visual ID Column**: The 4th column in the BoM MUST contain a thumbnail of the localized hardware asset to support the click-to-enlarge Lightbox system.
 *   **Assets**: All images MUST reside in the flat `/assets` folder using `lowercase-hyphenated-naming.webp/jpg`.
 
+### 7. Autonomous Maintenance
+*   **Dossier Review**: AI assistants MUST periodically and autonomously review and update the **README.md** and **AGENTS.md** files whenever significant structural or technical shifts (e.g., new firmware nodes, asset reorganization) occur to prevent "dossier rot" and maintain technical parity.
+
 ---
 
 ## 📜 Historical Record

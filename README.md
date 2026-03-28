@@ -49,13 +49,12 @@ graph TD
 │   ├── architecture/   # System-wide logic (Wiring, Power, UDNS)
 │   ├── hardware/       # Component Manuals (Manuals & PDFs)
 │   ├── maintenance/    # Operational & Safety standards
+│   ├── archive/        # Legacy test and research assets
 │   └── bill-of-materials.md # Unified Component Ledger
 ├── firmware/           # Microcontroller Code
-│   ├── node1-body-brain/  # ESPHome: Audio & Signal Dispatch
-│   ├── node2-dome-lights/ # WLED: 2D Matrix & Effects
-│   └── node3-dome-motion/ # ESPHome: Dome Rotation Control
-├── archive/            # Legacy test code
-├── index.html          # Imperial Databank Engine (SPA)
+├── system/             # Databank Engine (SPA Logic & Styles)
+├── assets/             # Normalized Hardware Assets
+├── index.html          # Databank HUD (Entry Point)
 └── README.md           # This file
 ```
 
