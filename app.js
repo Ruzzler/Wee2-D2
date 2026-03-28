@@ -159,8 +159,19 @@ document.addEventListener('DOMContentLoaded', () => {
             
             const path = link.getAttribute('data-path');
             loadContent(path);
+
+            // Close mobile menu after click
+            document.body.classList.remove('sidebar-open');
         });
     });
+
+    // Mobile Menu Toggle Logic
+    const menuToggle = document.getElementById('mobile-menu-toggle');
+    if (menuToggle) {
+        menuToggle.addEventListener('click', () => {
+            document.body.classList.toggle('sidebar-open');
+        });
+    }
 
     // Initial Load
     const defaultPath = document.querySelector('nav a.active').getAttribute('data-path');

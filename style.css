@@ -315,3 +315,107 @@ main {
 .mermaid .marker {
     fill: rgba(0, 242, 255, 0.4) !important;
 }
+/* --- MOBILE MENU TOGGLE --- */
+#mobile-menu-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30px;
+    height: 20px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 1002;
+}
+
+#mobile-menu-toggle span {
+    width: 100%;
+    height: 2px;
+    background-color: var(--accent-cyan);
+    transition: all 0.3s ease;
+    box-shadow: 0 0 5px var(--accent-cyan);
+}
+
+/* --- RESPONSIVE ADJUSTMENTS --- */
+@media (max-width: 900px) {
+    body {
+        grid-template-columns: 1fr;
+        grid-template-rows: 60px 1fr;
+        height: auto;
+        min-height: 100vh;
+        overflow-x: hidden;
+    }
+
+    header {
+        padding: 0 20px;
+    }
+
+    .logo-text {
+        font-size: 1.2rem;
+        letter-spacing: 2px;
+    }
+
+    .header-info {
+        display: none;
+    }
+
+    #mobile-menu-toggle {
+        display: flex;
+    }
+
+    /* Sidebar as mobile overlay */
+    aside {
+        position: fixed;
+        top: 60px;
+        left: 0;
+        width: 100%;
+        height: calc(100vh - 60px);
+        transform: translateX(-100%);
+        transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        z-index: 99;
+        background: rgba(5, 5, 5, 0.98);
+        padding-top: 10px;
+        border-right: none;
+        border-bottom: 2px solid var(--accent-cyan);
+    }
+
+    body.sidebar-open aside {
+        transform: translateX(0);
+    }
+
+    /* Hamburger Animation to 'X' */
+    body.sidebar-open #mobile-menu-toggle span:nth-child(1) { transform: translateY(9px) rotate(45deg); }
+    body.sidebar-open #mobile-menu-toggle span:nth-child(2) { opacity: 0; }
+    body.sidebar-open #mobile-menu-toggle span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
+
+    main {
+        padding: 20px;
+        overflow: visible;
+    }
+
+    .content-panel {
+        padding: 25px;
+        margin-top: 20px;
+    }
+
+    #content h1 {
+        font-size: 1.5rem;
+    }
+
+    .droid-render {
+        max-width: 80%;
+    }
+
+    /* Table Responsiveness */
+    #content table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+    /* Mermaid Responsiveness Fix */
+    .mermaid svg {
+        width: 100% !important;
+        height: auto !important;
+    }
+}
