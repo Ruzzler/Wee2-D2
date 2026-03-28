@@ -62,19 +62,19 @@ graph TD
     end
 
     %% Direct Markdown-Relative Links for Interactivity
-    click BAT "docs/hardware/mgcstem-lvp-r15-manual.md" "Power Core Manual"
-    click LVC "docs/hardware/mgcstem-lvp-r15-manual.md" "LVC Manual"
-    click ESC1 "docs/hardware/flipsky-fsesc-67-pro-manual.md" "Left Drive ESC Manual"
-    click ESC2 "docs/hardware/flipsky-fsesc-67-pro-manual.md" "Right Drive ESC Manual"
-    click SLIP "docs/hardware/cnbtr-slip-ring-manual.md" "Slip Ring Manual"
-    click AUDIO "docs/hardware/pemenol-60w-voice-manual.md" "Soundboard Specs"
-    click PSIS "docs/hardware/grnwave-psi-manual.md" "PSI Logic Manual"
-    click ESP1 "firmware/node1-body-brain/body-brain.yaml" "Node 1 Configuration"
-    click ESP3 "firmware/node3-dome-motion/dome-motion.yaml" "Node 3 Configuration"
-    click WLED "firmware/node2-dome-lights/README.md" "Node 2 Configuration"
-    click ESC3 "docs/bill-of-materials.md" "Dome ESC Specs"
-    click TX1 "docs/hardware/hotrc-ds600-manual.md" "Body Transmitter Manual"
-    click TX2 "docs/hardware/hotrc-ds600-manual.md" "Dome Transmitter Manual"
+    click BAT href "docs/hardware/mgcstem-lvp-r15-manual.md" "Power Core Manual"
+    click LVC href "docs/hardware/mgcstem-lvp-r15-manual.md" "LVC Manual"
+    click ESC1 href "docs/hardware/flipsky-fsesc-67-pro-manual.md" "Left Drive ESC Manual"
+    click ESC2 href "docs/hardware/flipsky-fsesc-67-pro-manual.md" "Right Drive ESC Manual"
+    click SLIP href "docs/hardware/cnbtr-slip-ring-manual.md" "Slip Ring Manual"
+    click AUDIO href "docs/hardware/pemenol-60w-voice-manual.md" "Soundboard Specs"
+    click PSIS href "docs/hardware/grnwave-psi-manual.md" "PSI Logic Manual"
+    click ESP1 href "firmware/node1-body-brain/body-brain.yaml" "Node 1 Configuration"
+    click ESP3 href "firmware/node3-dome-motion/dome-motion.yaml" "Node 3 Configuration"
+    click WLED href "firmware/node2-dome-lights/README.md" "Node 2 Configuration"
+    click ESC3 href "docs/bill-of-materials.md" "Dome ESC Specs"
+    click TX1 href "docs/hardware/hotrc-ds600-manual.md" "Body Transmitter Manual"
+    click TX2 href "docs/hardware/hotrc-ds600-manual.md" "Dome Transmitter Manual"
 
     classDef power fill:#ff9900,stroke:#333,stroke-width:2px,color:#000
     classDef drive fill:#cc3300,stroke:#fff,color:#fff
