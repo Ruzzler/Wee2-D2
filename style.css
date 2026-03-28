@@ -253,7 +253,7 @@ main {
 .droid-render {
   max-width: 400px;
   filter: drop-shadow(0 0 20px rgba(0, 242, 255, 0.3));
-  image-rendering: pixelated; /* Retro feel */
+  image-rendering: auto; /* High-res for actual photos */
 }
 
 /* Scrollbar */

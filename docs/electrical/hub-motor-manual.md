@@ -1,6 +1,8 @@
 # 🏛️ IMPERIAL DATABANK: L-FASTER HUB MOTOR (FLD-5)
 > **DECRYPTED DATA REPOSITORY** | **SERIAL: LF-FLD5-200W**
 
+![L-faster Hub Motor](../../assets/l-faster-hub-motor.jpg)
+
 This entry covers the dual high-torque brushless drive motors that power the Wee2-D2. The **FLD-5** is a gearless, brushless hub motor designed for electric scooters, repurposed here for precision droid locomotion.
 
 ## ⚙️ Core Specifications (FLD-5)

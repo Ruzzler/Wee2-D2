@@ -1,5 +1,7 @@
-# 🏛️ IMPERIAL DATABANK: GRNWAVE PSI (76-LED)
-> **DECRYPTED DATA REPOSITORY** | **SERIAL: GW-76-MICRO**
+# 🏛️ IMPERIAL DATABANK: GRNWAVE CIRCULAR PSI
+> **DECRYPTED DATA REPOSITORY** | **SERIAL: GRN-PSI-WS2812B**
+
+![GrnWave PSI](../../assets/grnwave-psi-logic.jpg)
 
 The **GrnWave Circular PSI** is a high-density addressable LED display used for the Processor Status Indicators in the dome.
 
