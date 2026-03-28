@@ -22,9 +22,9 @@ A comprehensive list of hardware used in the Wee2-D2 droid project.
 ## 🔊 Audio & Lights
 | **MICROCONTROLLERS** | | | | |
 | :--- | :--- | :--- | :--- | :--- |
-| **Node 1: Body Brain** | ESP32-WROOM-32D | Primary logic, sound triggers | [Amazon](https://www.amazon.ca/dp/B0718T2ZK6) | Body Chassis |
-| **Node 2: Dome Lights** | ESP32-S3 Super Mini | WLED Controller (HW-747) | [Aliexpress](https://www.aliexpress.com/item/1005005967641933.html) | Internal Dome |
-| **Node 3: Dome Motion** | ESP32-S3 Super Mini | PWM Motor controller | [Aliexpress](https://www.aliexpress.com/item/1005005967641933.html) | Internal Dome |
+| **Node 1: Body Brain** | 1 | ESP32-WROOM-32D | Primary logic, sound triggers | [Amazon](https://www.amazon.ca/dp/B0718T2ZK6) |
+| **Node 2: Dome Lights** | 1 | ESP32-S3 Super Mini | **WLED** Controller (Form-Factor: 22x18mm) | [Aliexpress](https://www.aliexpress.com/item/1005005967641933.html) |
+| **Node 3: Dome Motion** | 1 | ESP32-S3 Super Mini | Dedicated Dome Rotation controller | [Aliexpress](https://www.aliexpress.com/item/1005005967641933.html) |
 | Component | Qty | Description |
 | :--- | :---: | :--- |
 | [PEMENOL 60W Soundboard](docs/electrical/pemenol-60w-voice-manual.md) | 1 | Soundboard w/ 60W Amp ([Amazon](https://www.amazon.ca/dp/B0CGRN3JKF)) |

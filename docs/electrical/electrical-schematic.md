@@ -95,21 +95,24 @@ Used for RC input interpretation and soundboard triggering.
 | **Angry Link** | GPIO13 | Output | To Node 2 Button Input |
 
 ### **Node 3: Dome Motion (ESP32-S3 Super Mini)**
-Controls the 360° dome rotation motor.
+Dedicated controller for 360° dome rotation.
 
 | Component | Pin (GPIO) | Mode | Notes |
 | :--- | :---: | :---: | :--- |
-| **RC Steering** | GPIO1 | Input | From Receiver #2 (Steer) |
-| **Dome ESC** | GPIO2 | Output | PWM Signal (50Hz) |
+| **Status LED** | GPIO48 | Output | Onboard RGB LED (Diagnostic) |
+| **RC CH1 Input** | GPIO1 | Input | From Receiver #2 (Dome Rotation) |
+| **Dome ESC** | GPIO2 | Output | PWM Signal (50Hz) to goBILDA ESC |
 
 ### **Node 2: Dome Lights (ESP32-S3 Super Mini - WLED)**
-Addressable LEDs for logics and PSIs.
+Runs **WLED Firmware** for high-fidelity light control.
 
 | Component | Pin (GPIO) | Mode | Notes |
 | :--- | :---: | :---: | :--- |
-| **Front Logic** | GPIO3 | Output | Data Pin A |
-| **Rear Logic** | GPIO4 | Output | Data Pin B |
-| **Angry Link** | GPIO5 | Input | From Node 1 Trigger |
+| **Status LED** | GPIO48 | Output | Onboard RGB LED (Diagnostic) |
+| **Front Logic** | GPIO1 | Output | Data Pin - Front Logics |
+| **Rear Logic** | GPIO2 | Output | Data Pin - Rear Logics |
+| **PSI Units** | GPIO3 | Output | Data Pin - PSI Disks |
+| **Angry Link** | GPIO5 | Input | **WLED External Trigger** (From Body) |
 
 ---
 
