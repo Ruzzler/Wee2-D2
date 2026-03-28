@@ -24,7 +24,7 @@ The droid operates on a **Master-Slave Serial Bus** model called the **UDNS**.
 ## 🛠️ Hardware Ecosystem
 *   **Audio**: PEMENOL 60W (DY-HL50T). **Confirmed**: No UART control needed; use 9-wire direct trigger (Active LOW).
 *   **Power**: 20V DeWalt Battery ➔ LVC (MgcSTEM) ➔ Multi-channel Buck Converters (5.1V logic).
-*   **Drive**: 2x Flipsky Mini FSESC 6.7 Pro ➔ Hub Motors.
+*   **Drive**: 2x Flipsky Mini FSESC 6.7 Pro ➔ **L-faster FLD-5 5" Hub Motors**.
 *   **Dome**: goBILDA 5203 Yellow Jacket ➔ 1x15A Motor Controller (PWM).
 *   **Lighting**: GrnWave PSI Logic (Addressable LEDs).
 
@@ -44,6 +44,8 @@ The droid operates on a **Master-Slave Serial Bus** model called the **UDNS**.
 2.  **S3 Mini for Dome**: Chosen for its ultra-compact form factor and native USB-C support.
 3.  **No Standalone WLED**: Integrated lighting into ESPHome to ensure the "Unified Nervous System" commands work holistically.
 4.  **Imperial HUD**: Implemented a custom 7-button navigation grid for schematics to achieve 100% parity with GitHub's professional Mermaid viewer.
+5.  **17.5V Safety Floor**: Established 17.5V (3.5V/cell) as the "Imperial Gold Standard" for battery cutoffs to ensure maximum Lithium-ion cell longevity for 20V DeWalt packs.
+6.  **Conditional Hero**: Confined the large droid hero render to `README.md` only to maintain technical focus on secondary Databank pages.
 
 ---
 
