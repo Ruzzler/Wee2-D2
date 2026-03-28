@@ -13,6 +13,11 @@ This document provides a high-fidelity visual and technical map of the Wee2-D2 e
 
 ```mermaid
 graph TD
+    subgraph TRANSMITTERS [2x HOTRC DS-600]
+        TX1["TX #1: Body Drive"]:::signal
+        TX2["TX #2: Dome Motion"]:::signal
+    end
+
     subgraph POWER_SOURCE [20V DC POWER CORE]
         BAT["DeWalt 20V Battery"]:::power --> LVC["MgcSTEM LVP-R1.5 (40A)"]:::power
         LVC --> FUSE["Main Fuse Bus Bar"]:::power
@@ -30,8 +35,8 @@ graph TD
         BUCK1 --> ESP1["Node 1: Body Brain"]:::brain
         BUCK1 --> ESP3["Node 3: Dome Motion"]:::brain
         BUCK1 --> AUDIO["DY-HL50T Soundboard"]:::audio
-        BUCK1 --> RC1["RC Receiver (Body)"]:::signal
-        BUCK1 --> RC2["RC Receiver (Dome)"]:::signal
+        BUCK1 --> RC1["RC Receiver #1 (Body)"]:::signal
+        BUCK1 --> RC2["RC Receiver #2 (Dome)"]:::signal
     end
 
     subgraph LIGHT_RAIL [5V LIGHTING SYSTEM]
@@ -42,6 +47,8 @@ graph TD
     end
 
     subgraph SIGNAL_INTERCONNECTS [SIGNAL & TRIGGERS]
+        TX1 -. "2.4GHz" .-> RC1
+        TX2 -. "2.4GHz" .-> RC2
         RC1 -- "CH3/4/5 PWM" --> ESP1
         ESP1 -- "9-Wire Trigger" --> AUDIO
         RC2 -- "CH1 PWM" --> ESP3
@@ -61,6 +68,8 @@ graph TD
     click ESP3 call loadMapContent("firmware/node3-dome-motion/dome-motion.yaml")
     click WLED call loadMapContent("firmware/node2-dome-lights/README.md")
     click ESC3 call loadMapContent("docs/components/bill-of-materials.md")
+    click TX1 call loadMapContent("docs/electrical/hotrc-ds600-manual.md")
+    click TX2 call loadMapContent("docs/electrical/hotrc-ds600-manual.md")
 
     classDef power fill:#ff9900,stroke:#333,stroke-width:2px,color:#000
     classDef drive fill:#cc3300,stroke:#fff,color:#fff
@@ -81,8 +90,8 @@ Used for RC input interpretation and soundboard triggering.
 | Component | Pin (GPIO) | Mode | Notes |
 | :--- | :---: | :---: | :--- |
 | **Status LED** | GPIO2 | Output | Heartbeat Blinker |
-| **RC CH3 Input** | GPIO25 | Input | PWM Pulse Width |
-| **RC CH4 Input** | GPIO32 | Input | PWM Pulse Width |
+| **RC CH3 Input** | GPIO25 | Input | From Receiver #1 (Drive) |
+| **RC CH4 Input** | GPIO32 | Input | From Receiver #1 (Turn) |
 | **RC CH5 Input** | GPIO33 | Input | Bank Cycle Switch |
 | **Sound S1-S9** | 4,5,16,17,18,19,21,22,23 | Output | **Active LOW** (Trigger) |
 | **Angry Link** | GPIO13 | Output | To Node 2 Button Input |
@@ -92,7 +101,7 @@ Controls the 360° dome rotation motor.
 
 | Component | Pin (GPIO) | Mode | Notes |
 | :--- | :---: | :---: | :--- |
-| **RC Steering** | GPIO4 | Input | From Receiver #2 |
+| **RC Steering** | GPIO4 | Input | From Receiver #2 (Steer) |
 | **Dome ESC** | GPIO18 | Output | PWM Signal (50Hz) |
 
 ### **Node 2: Dome Lights (WLED)**
@@ -108,4 +117,5 @@ Addressable LEDs for logics and PSIs.
 
 ## 🛡️ Best Practices
 *   **Common Ground**: All ESP32 grounds and Buck Converter grounds **MUST** be tied together at a central star-ground point.
+*   **Dual-TX Binding**: Ensure the Body Transmitter and Dome Transmitter are bound to their respective receivers on separate IDs or distinct channel ranges if using a multi-receiver setup.
 *   **Signal Cleanliness**: Since the dome motor is a large DC motor, ensure logic wires are positioned away from the main motor leads to prevent EMI noise.

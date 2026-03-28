@@ -6,7 +6,7 @@ A comprehensive list of hardware used in the Wee2-D2 droid project.
 | Component | Qty | Description |
 | :--- | :---: | :--- |
 | **ESP32 Dev Board** | 3 | Node 1 (Audio), Node 2 (Lights), Node 3 (Motion) |
-| **HOTRC DS-600** | 1 | 6-CH Transmitter (**Silent Mode Mod / No Beeps**) [Manual](docs/electrical/hotrc-ds600-manual.md) |
+| **HOTRC DS-600** | 2 | 6-CH Transmitters (**1x Body Drive, 1x Dome Motion**) [Manual](docs/electrical/hotrc-ds600-manual.md) |
 | **HOTRC F-06A** | 2 | RC Receivers (One for body, one for dome) |
 
 ## 🔋 Power & Protection

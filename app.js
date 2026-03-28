@@ -3,29 +3,28 @@ document.addEventListener('DOMContentLoaded', () => {
     const navLinks = document.querySelectorAll('#sidebar-nav a');
 
     // Configure marked with custom rendering for Mermaid and GitHub Alerts
-    marked.use({
-        renderer: {
-            code(token) {
-                if (token.lang === 'mermaid') {
-                    return `<div class="mermaid">${token.text}</div>`;
-                }
-                // Default code block rendering
-                return `<pre><code class="language-${token.lang}">${escapeHtml(token.text)}</code></pre>`;
-            },
-            blockquote(token) {
-                // Support [!TIP], [!IMPORTANT], etc.
-                const alertMatch = token.text.match(/^\[!(TIP|IMPORTANT|WARNING|CAUTION|NOTE)\]\n?([\s\S]*)$/i);
-                if (alertMatch) {
-                    const type = alertMatch[1].toUpperCase();
-                    const content = marked.parse(alertMatch[2]);
-                    return `<div class="alert alert-${type.toLowerCase()}"><strong>${type}</strong><br>${content}</div>`;
-                }
-                return `<blockquote>${marked.parse(token.text)}</blockquote>`;
-            }
-        },
-        gfm: true,
-        breaks: true
-    });
+    const renderer = new marked.Renderer();
+    
+    // Custom code block renderer for Mermaid
+    renderer.code = ({ text, lang }) => {
+        if (lang === 'mermaid') {
+            return `<div class="mermaid">${text}</div>`;
+        }
+        return `<pre><code class="language-${lang}">${escapeHtml(text)}</code></pre>`;
+    };
+
+    // Custom blockquote renderer for GitHub Alerts [!TIP], etc.
+    renderer.blockquote = ({ text }) => {
+        const alertMatch = text.match(/^\[!(TIP|IMPORTANT|WARNING|CAUTION|NOTE)\]\s*([\s\S]*)$/i);
+        if (alertMatch) {
+            const type = alertMatch[1].toUpperCase();
+            const content = marked.parse(alertMatch[2]);
+            return `<div class="alert alert-${type.toLowerCase()}"><strong>${type}</strong><br>${content}</div>`;
+        }
+        return `<blockquote>${marked.parse(text)}</blockquote>`;
+    };
+
+    marked.use({ renderer });
 
     // Define a global function that Mermaid can call
     window.loadMapContent = (path) => {
@@ -70,20 +69,25 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Trigger Mermaid rendering for any new diagrams
                 setTimeout(async () => {
                     try {
-                        // Re-initialize for every load to ensure callbacks bind
+                        // Reset mermaid for clean state logic
                         mermaid.initialize({ 
                             startOnLoad: false, 
                             theme: 'dark',
                             securityLevel: 'loose',
                             flowchart: { useMaxWidth: true, htmlLabels: true, curve: 'basis' }
                         });
-                        await mermaid.run({
-                            nodes: contentDiv.querySelectorAll('.mermaid'),
-                        });
+                        
+                        // Force render on all .mermaid divs in the new content
+                        const nodes = contentDiv.querySelectorAll('.mermaid');
+                        if (nodes.length > 0) {
+                            await mermaid.run({
+                                nodes: nodes,
+                            });
+                        }
                     } catch (e) {
                         console.error("Mermaid Decryption Error:", e);
                     }
-                }, 50);
+                }, 100);
             }
 
             // Scroll to top
