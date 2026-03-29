@@ -43,19 +43,19 @@ Unlike Wi-Fi-only communication (which can be unreliable at busy events/conventi
 ---
 
 ## 🛞 Slip Ring Integration (6-Circuit)
-The slip ring is the physical "Spinal Cord" of the droid. Every signal must be shared across this rotating joint perfectly to ensure the UDNS bus does not drop packets.
+The slip ring is the physical "Spinal Cord" of the droid. Every signal must be shared across this rotating joint perfectly to ensure the UDNS bus does not drop packets. Because the dome contains a heavy motor and sensitive 5V logic chips, power is separated into two clean lines.
 
 | Circuit | Function | Color (Typical) | Wire Gauge | Destination |
 | :--- | :--- | :--- | :--- | :--- |
-| **C1** | **VCC (20V DC)** | Red | 16-18 AWG | To Dome Buck Converter |
-| **C2** | **GND (Common)** | Black | 16-18 AWG | To All MCU Grounds (Star Ground) |
-| **C3** | **UDNS TX (Out)** | Yellow/White | 22-24 AWG | Body Master -> Dome Slaves (Command) |
-| **C4** | **UDNS RX (In)** | Green/Blue | 22-24 AWG | Dome Slaves -> Body Master (Telemetry) |
-| **C5** | **Spare/Aux** | Brown | 22-24 AWG | Optional Signal (RC Bypass) |
-| **C6** | **Spare/Aux** | Gray | 22-24 AWG | Optional Signal |
+| **C1** | **VCC (20V DC)** | Red | 16-18 AWG | **Motor Line**: To goBILDA 15A ESC |
+| **C2** | **GND (Common)** | Black | 16-18 AWG | **Motor Line**: To goBILDA 15A ESC |
+| **C3** | **VCC (20V DC)** | Yellow/White | 22-24 AWG | **Logic Line**: To Mini560 Pro Buck |
+| **C4** | **GND (Common)** | Green/Blue | 22-24 AWG | **Logic Line**: To Mini560 Pro Buck |
+| **C5** | **UDNS TX (Out)** | Brown | 22-24 AWG | Body Master -> Dome Slaves (Command) |
+| **C6** | **UDNS RX (In)** | Gray | 22-24 AWG | Dome Slaves -> Body Master (Telemetry) |
 
 > [!WARNING]
-> **COMMON GROUND IS MANDATORY**: You must ensure the Ground (C2) from the battery connects to every single ESP32 on both sides of the slip ring. If the ground is broken or isolated in the dome, your 3.3V serial signals will become "garbage" data floating in reference to nothing, and the droid will wildly glitch. 
+> **COMMON GROUND IS MANDATORY**: You must ensure the Ground from the main Negative Bus Bar travels up the slip ring to provide a flawless reference potential for both the motor and the logic wires. If the ground is broken or noisy, your 3.3V UART serial signals will become "garbage" data floating in reference to nothing, and the droid will wildly glitch. 
 
 ---
 

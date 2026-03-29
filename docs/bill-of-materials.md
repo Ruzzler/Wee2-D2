@@ -17,8 +17,10 @@ A comprehensive list of hardware used in the Wee2-D2 project, organized by syste
 | :--- | :---: | :--- | :---: |
 | **DeWalt 20V Battery** | 1 | 4.0Ah / 80Wh (18.5V - 21.0V) | [Guide](maintenance/battery-runtime-guide.md) |
 | [MgcSTEM LVP-R1.5](hardware/mgcstem-lvp-r15-manual.md) | 1 | 40A LVC; **17.5V** Safety Floor [PDF](hardware/mgcstem-lvp-r15-manual.pdf) | ![LVC](../assets/mgcstem-lvp-r15.jpg) |
-| **Fuse Bus Bar** | 1 | Multi-circuit safety distribution | ![Fuse Box](../assets/fuse-bus-bar.jpg) |
-| **Buck Converters** | 2 | Mini560 (Dome) & Standard (Body) 5V Units | ![Buck Converter](../assets/mini560-buck-converter.jpg) |
+| **Positive Blade Fuse Box** | 1 | 20V Positive distribution to main electronics | ![Fuse Box](../assets/fuse-bus-bar.jpg) |
+| **Negative Bus Bar** | 1 | Central Star Ground connection point | ![Negative Bus](../assets/negative-bus-bar.jpg) |
+| **Mini560 Pro Buck Converter** | 1 | 20V to 5V Step-Down (Dome Logic) | ![Buck Converter](../assets/mini560-buck-converter.jpg) |
+| **5-Port Wago Connectors** | 2 | Splits single 5V line into multiple MCU/LED loads | - |
 | [CNBTR Slip Ring](hardware/cnbtr-slip-ring-manual.md) | 1 | 12.7mm Bore, 6-Circuit @ 10A/ch | ![Slip Ring](../assets/slip-ring-cnbtr.jpg) |
 
 ## 🔊 Audio & Lights

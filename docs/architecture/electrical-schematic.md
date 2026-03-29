@@ -11,71 +11,6 @@ This document provides a high-fidelity visual and technical map of the Wee2-D2 e
 
 ```mermaid
 graph TD
-    subgraph TRANSMITTERS [2x HOTRC DS-600]
-        TX1["TX #1: Body Drive"]:::signal
-        TX2["TX #2: Motion Controller"]:::signal
-    end
-
-    subgraph POWER_SOURCE [20V DC POWER CORE]
-        BAT["DeWalt 20V Battery"]:::power --> LVC["MgcSTEM LVP-R1.5 (40A)"]:::power
-        LVC --> FUSE["Main Fuse Bus Bar"]:::power
-    end
-
-    subgraph HIGH_POWER_RAIL [20V DRIVE SYSTEM]
-        FUSE --> ESC1["Flipsky FSESC 6.7 (Left Drive)"]:::drive
-        FUSE --> ESC2["Flipsky FSESC 6.7 (Right Drive)"]:::drive
-        FUSE --> SLIP["Slip Ring (Through-Hole)"]:::power
-        SLIP --> ESC3["goBILDA 15A ESC (Dome Motor)"]:::drive
-    end
-
-    subgraph LOGIC_RAIL [5V LOGIC & AUDIO]
-        FUSE --> BUCK1["Mini560 Buck #1 (5.1V)"]:::logic
-        BUCK1 --> ESP1["MCU 1: Body (ESP32D)"]:::brain
-        BUCK1 --> ESP3["MCU 3: Dome (ESP32-S3 Mini)"]:::brain
-        BUCK1 --> AUDIO["PEMENOL 60W Soundboard"]:::audio
-        BUCK1 --> RC1["RC Receiver #1 (Body)"]:::signal
-        BUCK1 --> RC2["RC Receiver #2 (Dome)"]:::signal
-    end
-
-    subgraph LIGHT_RAIL [5V LIGHTING SYSTEM]
-        SLIP --> BUCK2["Mini560 Buck #2 (5.0V)"]:::logic
-        BUCK2 --> WLED["MCU 2: Lights (ESP32-S3 Mini)"]:::lights
-        WLED --> LOGICS["Front/Rear Logics"]:::lights
-        WLED --> PSIS["GrnWave PSI Disks"]:::lights
-    end
-
-    subgraph SIGNAL_INTERCONNECTS [UNIFIED DROID NERVOUS SYSTEM]
-        TX1 -.->|2.4GHz WiFi| RC1
-        TX2 -.->|2.4GHz WiFi| RC2
-        RC1 -->|PWM| ESP1
-        ESP1 -->|Trigger| AUDIO
-        RC2 -->|PWM| ESP3
-        ESP3 -->|PWM| ESC3
-        ESP1 ---|UART TX/RX| WLED
-        ESP1 ---|UART TX/RX| ESP3
-    end
-
-    subgraph HUD_INTERFACES [MOBILE COMMAND]
-        PHONE[Mobile/Tablet] -->|Web Dashboard| ESP1
-        PHONE -->|Web Dashboard| WLED
-        PHONE -->|Web Dashboard| ESP3
-    end
-
-    %% Direct Markdown-Relative Links for Interactivity
-    click BAT href "docs/hardware/mgcstem-lvp-r15-manual.md" "Power Core Manual"
-    click LVC href "docs/hardware/mgcstem-lvp-r15-manual.md" "LVC Manual"
-    click ESC1 href "docs/hardware/flipsky-fsesc-67-pro-manual.md" "Left Drive ESC Manual"
-    click ESC2 href "docs/hardware/flipsky-fsesc-67-pro-manual.md" "Right Drive ESC Manual"
-    click SLIP href "docs/hardware/cnbtr-slip-ring-manual.md" "Slip Ring Manual"
-    click AUDIO href "docs/hardware/pemenol-60w-voice-manual.md" "Soundboard Specs"
-    click PSIS href "docs/hardware/grnwave-psi-manual.md" "PSI Logic Manual"
-    click ESP1 href "firmware/mcu1-body-controller/body-brain.yaml" "MCU 1 Configuration"
-    click ESP3 href "firmware/mcu3-motion-controller/dome-motion.yaml" "MCU 3 Configuration"
-    click WLED href "firmware/mcu2-lighting-controller/README.md" "MCU 2 Configuration"
-    click ESC3 href "docs/bill-of-materials.md" "Dome ESC Specs"
-    click TX1 href "docs/hardware/hotrc-ds600-manual.md" "Body Transmitter Manual"
-    click TX2 href "docs/hardware/hotrc-ds600-manual.md" "Dome Transmitter Manual"
-
     classDef power fill:#ff9900,stroke:#333,stroke-width:2px,color:#000
     classDef drive fill:#cc3300,stroke:#fff,color:#fff
     classDef logic fill:#00cccc,stroke:#333,color:#000
@@ -83,6 +18,67 @@ graph TD
     classDef audio fill:#99cc00,stroke:#000,color:#000
     classDef signal fill:#ffcc00,stroke:#333,color:#000
     classDef lights fill:#6600cc,stroke:#fff,color:#fff
+
+    subgraph TRANSMITTERS [HOTRC DS-600]
+        TX1["TX #1: Body Drive"]:::signal
+        TX2["TX #2: Motion Controller"]:::signal
+    end
+
+    subgraph POWER_SOURCE [20V DC POWER CORE]
+        BAT["DeWalt 20V Battery"]:::power --> LVC["MgcSTEM LVP-R1.5 (40A)"]:::power
+        LVC --> POS_FUSE["Positive Blade Fuse Box"]:::power
+        LVC --> NEG_BUS["Negative Bus Bar (Star Ground)"]:::power
+    end
+
+    subgraph HIGH_POWER_RAIL [20V DISTRIBUTION]
+        POS_FUSE & NEG_BUS --> ESC1["Flipsky FSESC (Left)"]:::drive
+        POS_FUSE & NEG_BUS --> ESC2["Flipsky FSESC (Right)"]:::drive
+        POS_FUSE & NEG_BUS --> AUDIO["PEMENOL 60W Soundboard"]:::audio
+        POS_FUSE & NEG_BUS --> SLIP1["Slip Ring C1/C2: Motor Line"]:::power
+        POS_FUSE & NEG_BUS --> SLIP2["Slip Ring C3/C4: Logic Line"]:::power
+    end
+
+    subgraph DOME_POWER [DOME POWER (Via Slip Ring)]
+        SLIP1 --> DOME_ESC["goBILDA 15A ESC"]:::drive
+        SLIP2 --> DOME_BUCK["Mini560 Pro Buck (5V)"]:::logic
+        DOME_BUCK --> DOME_WAGOS["2x 5-Port Wagos"]:::power
+    end
+
+    subgraph RECEIVER_MCU_RAIL [5V BEC LOGIC & SIGNAL]
+        ESC1 -->|5V BEC| RC1["Body Receiver (F-06A)"]:::signal
+        RC1 -->|5V OUT| ESP1["MCU 1: Body Brain"]:::brain
+        
+        DOME_ESC -->|5V BEC| RC2["Dome Receiver (F-06A)"]:::signal
+
+        DOME_WAGOS --> ESP3["MCU 3: Dome Motion"]:::brain
+        DOME_WAGOS --> WLED["MCU 2: Dome Lights"]:::lights
+        DOME_WAGOS --> LOGICS["Logic Matrices & PSIs"]:::lights
+    end
+
+    subgraph SIGNAL_INTERCONNECTS [UART & PWM CONTROL]
+        TX1 -.->|2.4GHz WiFi| RC1
+        TX2 -.->|2.4GHz WiFi| RC2
+        RC1 -->|PWM| ESC1 & ESC2
+        RC1 -->|PWM| ESP1
+        ESP1 -->|S1-S9 Triggers| AUDIO
+        RC2 -->|PWM| ESP3
+        ESP3 -->|PWM| DOME_ESC
+        ESP1 ---|UDNS UART| WLED
+        ESP1 ---|UDNS UART| ESP3
+    end
+
+    %% Direct Markdown-Relative Links for Interactivity
+    click BAT href "docs/maintenance/battery-runtime-guide.md" "Battery Guide"
+    click LVC href "docs/hardware/mgcstem-lvp-r15-manual.md" "LVC Manual"
+    click ESC1 href "docs/hardware/flipsky-fsesc-67-pro-manual.md" "Flipsky Manual"
+    click AUDIO href "docs/capabilities/lights-and-sounds/audio-system.md" "Audio System"
+    click SLIP1 href "docs/architecture/unified-nervous-system.md" "Slip Ring Setup"
+    click DOME_BUCK href "docs/bill-of-materials.md" "Buck Converter"
+    click RC1 href "docs/hardware/hotrc-f06a-manual.md" "Receiver Manual"
+    click ESP1 href "firmware/mcu1-body-controller/body-brain.yaml" "MCU 1 Code"
+    click ESP3 href "firmware/mcu3-motion-controller/dome-motion.yaml" "MCU 3 Code"
+    click WLED href "docs/capabilities/lights-and-sounds/led-system.md" "LED System"
+    click DOME_ESC href "docs/capabilities/movement/dome-rotation.md" "Dome Rotation"
 ```
 
 ---
