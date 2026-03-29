@@ -37,6 +37,27 @@ Unlike Wi-Fi-only communication (which can be unreliable at busy events/conventi
 ---
 
 ## 🛠️ Components of the System
-*   **Body Controller**: ESP32D Dev Board (High pin-count for sound triggers).
+*   **Body Controller**: ESP32-WROOM-32D (High pin-count for sound triggers).
 *   **Dome Controllers**: 2x ESP32-S3 Super Mini (Ultra-compact for internal dome mounting).
-*   **Interconnect**: 6-Circuit High-Current Slip Ring (The "Spinal Cord").
+
+---
+
+## 🛞 Slip Ring Integration (6-Circuit)
+The slip ring is the physical "Spinal Cord" of the droid. Every signal must be shared across this rotating joint perfectly to ensure the UDNS bus does not drop packets.
+
+| Circuit | Function | Color (Typical) | Wire Gauge | Destination |
+| :--- | :--- | :--- | :--- | :--- |
+| **C1** | **VCC (20V DC)** | Red | 16-18 AWG | To Dome Buck Converter |
+| **C2** | **GND (Common)** | Black | 16-18 AWG | To All MCU Grounds (Star Ground) |
+| **C3** | **UDNS TX (Out)** | Yellow/White | 22-24 AWG | Body Master -> Dome Slaves (Command) |
+| **C4** | **UDNS RX (In)** | Green/Blue | 22-24 AWG | Dome Slaves -> Body Master (Telemetry) |
+| **C5** | **Spare/Aux** | Brown | 22-24 AWG | Optional Signal (RC Bypass) |
+| **C6** | **Spare/Aux** | Gray | 22-24 AWG | Optional Signal |
+
+> [!WARNING]
+> **COMMON GROUND IS MANDATORY**: You must ensure the Ground (C2) from the battery connects to every single ESP32 on both sides of the slip ring. If the ground is broken or isolated in the dome, your 3.3V serial signals will become "garbage" data floating in reference to nothing, and the droid will wildly glitch. 
+
+---
+
+## 📊 GPIO Interconnects
+If you need the specific GPIO pins used by the UDNS serial bus to wire the controllers into the slip ring, refer to the **Pinout Lookup Tables** at the bottom of the [Interactive Electrical Schematic](electrical-schematic.md).
