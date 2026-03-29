@@ -27,6 +27,14 @@ The dome is separated from the main drive logic.
 1.  **HOTRC #2**: The builder carries a second, miniaturized HOTRC DS-600 transmitter used exclusively by MCU 3.
 2.  **CH1 Input**: This steering channel dictates the left/right rotation of the dome head. MCU 3 reads this PWM signal and filters out minor "stick drift" by employing a wide deadband around the 1500μs center point to ensure the dome rests perfectly still when the stick is released.
 
+### 🕹️ Transmitter Mode: Standard (Unmixed)
+Unlike the body, the dome uses a single-axis rotation. To prevent "signal bleed" from other joystick movements:
+*   **Correct Mode**: **[No Icon]** on the transmitter screen.
+*   **To Cycle Modes**: Turn the remote **OFF**. Hold **Button 3** and turn the remote **ON**. Repeat until the circle on the screen is **Empty**.
+
+> [!TIP]
+> Using **Standard Mode** ensures that accidental Up/Down movement of the thumb joystick does not trigger the dome's rotation ESC.
+
 ---
 **Relevant Hardware & Code:**
 *   [MCU 3: Motion Controller](../../../firmware/mcu3-motion-controller/README.md)
