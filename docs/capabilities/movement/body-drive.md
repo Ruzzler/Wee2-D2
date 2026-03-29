@@ -18,8 +18,8 @@ The Flipsky controllers pump power down to two **L-faster FLD-5 5" Hub Motors**.
 
 ## 🎮 RC Mixing & Interaction
 Unlike the Audio and Dome systems, the Body Drive system operates **without** relying on an ESP32 MCU to translate signals. The Flipsky VESCs are incredibly intelligent.
-1.  **Transmitter**: Powered by **HOTRC DS-600 #1** (The main handset).
-2.  **In-Radio V-Tail Mixing**: The HOTRC radio must be put into "Mix Mode". When you push forward on the joystick, it cleanly signals *both* motors to move forward. When you push left, it signals the left motor to spin backward and the right motor forward, letting Wee2-D2 spin seamlessly like a tank on its center axis!
+1.  **Transmitter**: Powered by **HOTRC DS-600 #1** (The one-handed thumb joystick variant).
+2.  **In-Radio V-Tail Mixing**: The HOTRC radio must be put into **Mixing Mode (1)**. When you push the joystick **UP**, it cleanly signals *both* motor controllers to move forward. When you push **LEFT/RIGHT**, it signals the motors to counter-rotate, letting Wee2-D2 spin seamlessly like a tank on its center axis!
 3.  **Physical Link**: The PWM wires from CH1 and CH2 on the receiver run *straight* into the PWM input pins of the left and right Flipsky ESCS. 
 4.  **Mixing Matrix Calibration**: The transmitter must be manually set to **Mode (1)** to enable the mechanical "Tank Mix."
 
