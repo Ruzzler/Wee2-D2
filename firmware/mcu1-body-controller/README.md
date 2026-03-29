@@ -7,6 +7,7 @@ The **Body Controller** acts as the central nervous system for Wee2-D2. It decod
 | :--- | :--- |
 | **Logic Framework** | ESPHome |
 | **Primary Function** | Audio & Dispatch |
+| **Source Code** | [🗄️ `body-brain.yaml`](body-brain.yaml) |
 | **Visual ID** | ![ESP32D](../../assets/esp32d-dev-board.png) |
 
 ## 🚀 Core Features

@@ -7,6 +7,7 @@ The **Motion Controller** node provides high-torque, non-blocking control of the
 | :--- | :--- |
 | **Logic Framework** | ESPHome |
 | **Primary Function** | High-Torque Motor Drive |
+| **Source Code** | [🗄️ `dome-motion.yaml`](dome-motion.yaml) |
 | **Visual ID** | ![S3 Mini](../../assets/esp32-s3-super-mini.jpg) |
 
 ## 🚀 Core Features

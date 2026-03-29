@@ -7,6 +7,7 @@ This MCU is dedicated to controlling the WS2812 addressable LED system in the do
 | :--- | :--- |
 | **Logic Framework** | WLED |
 | **Primary Function** | Addressable LEDs |
+| **Source Code** | [🌐 WLED Pre-compiled Binaries (Web Installer)](https://kno.wled.ge/) |
 | **Visual ID** | ![S3 Mini](../../assets/esp32-s3-super-mini.jpg) |
 ## 🔋 Power Management & Safety
 > [!IMPORTANT]
