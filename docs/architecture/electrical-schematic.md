@@ -10,18 +10,10 @@ This document provides a high-fidelity visual and technical map of the Wee2-D2 e
 > **INTERACTIVE INTERFACE**: Click on any component node to instantly decrypt its technical manual in the databank.
 
 ```mermaid
-graph TD
-    classDef power fill:#ff9900,stroke:#333,stroke-width:2px,color:#000
-    classDef drive fill:#cc3300,stroke:#fff,color:#fff
-    classDef logic fill:#00cccc,stroke:#333,color:#000
-    classDef brain fill:#0066cc,stroke:#fff,color:#fff
-    classDef audio fill:#99cc00,stroke:#000,color:#000
-    classDef signal fill:#ffcc00,stroke:#333,color:#000
-    classDef lights fill:#6600cc,stroke:#fff,color:#fff
-
+flowchart TD
     subgraph TRANSMITTERS [HOTRC DS-600]
-        TX1["TX #1: Body Drive"]:::signal
-        TX2["TX #2: Motion Controller"]:::signal
+        TX1["TX 1: Body Drive"]:::signal
+        TX2["TX 2: Motion Controller"]:::signal
     end
 
     subgraph POWER_SOURCE [20V DC POWER CORE]
@@ -44,13 +36,13 @@ graph TD
         NEG_BUS --> SLIP2
     end
 
-    subgraph DOME_POWER [DOME POWER (Via Slip Ring)]
+    subgraph DOME_POWER [DOME POWER Via Slip Ring]
         SLIP1 --> DOME_ESC["goBILDA 15A ESC"]:::drive
         SLIP2 --> DOME_BUCK["Mini560 Pro Buck (5V)"]:::logic
         DOME_BUCK --> DOME_WAGOS["2x 5-Port Wagos"]:::power
     end
 
-    subgraph RECEIVER_MCU_RAIL [5V BEC LOGIC & SIGNAL]
+    subgraph RECEIVER_MCU_RAIL [5V BEC LOGIC AND SIGNAL]
         ESC1 -->|5V BEC| RC1["Body Receiver (F-06A)"]:::signal
         RC1 -->|5V OUT| ESP1["MCU 1: Body Brain"]:::brain
         
@@ -58,10 +50,10 @@ graph TD
 
         DOME_WAGOS --> ESP3["MCU 3: Dome Motion"]:::brain
         DOME_WAGOS --> WLED["MCU 2: Dome Lights"]:::lights
-        DOME_WAGOS --> LOGICS["Logic Matrices & PSIs"]:::lights
+        DOME_WAGOS --> LOGICS["Logic Matrices and PSIs"]:::lights
     end
 
-    subgraph SIGNAL_INTERCONNECTS [UART & PWM CONTROL]
+    subgraph SIGNAL_INTERCONNECTS [UART AND PWM CONTROL]
         TX1 -.->|2.4GHz WiFi| RC1
         TX2 -.->|2.4GHz WiFi| RC2
         RC1 -->|PWM| ESC1
@@ -86,6 +78,14 @@ graph TD
     click ESP3 href "firmware/mcu3-motion-controller/dome-motion.yaml" "MCU 3 Code"
     click WLED href "docs/capabilities/lights-and-sounds/led-system.md" "LED System"
     click DOME_ESC href "docs/capabilities/movement/dome-rotation.md" "Dome Rotation"
+
+    classDef power fill:#ff9900,stroke:#333,stroke-width:2px,color:#000
+    classDef drive fill:#cc3300,stroke:#fff,color:#fff
+    classDef logic fill:#00cccc,stroke:#333,color:#000
+    classDef brain fill:#0066cc,stroke:#fff,color:#fff
+    classDef audio fill:#99cc00,stroke:#000,color:#000
+    classDef signal fill:#ffcc00,stroke:#333,color:#000
+    classDef lights fill:#6600cc,stroke:#fff,color:#fff
 ```
 
 ---
