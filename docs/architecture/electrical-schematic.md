@@ -31,11 +31,17 @@ graph TD
     end
 
     subgraph HIGH_POWER_RAIL [20V DISTRIBUTION]
-        POS_FUSE & NEG_BUS --> ESC1["Flipsky FSESC (Left)"]:::drive
-        POS_FUSE & NEG_BUS --> ESC2["Flipsky FSESC (Right)"]:::drive
-        POS_FUSE & NEG_BUS --> AUDIO["PEMENOL 60W Soundboard"]:::audio
-        POS_FUSE & NEG_BUS --> SLIP1["Slip Ring C1/C2: Motor Line"]:::power
-        POS_FUSE & NEG_BUS --> SLIP2["Slip Ring C3/C4: Logic Line"]:::power
+        POS_FUSE --> ESC1["Flipsky FSESC (Left)"]:::drive
+        POS_FUSE --> ESC2["Flipsky FSESC (Right)"]:::drive
+        POS_FUSE --> AUDIO["PEMENOL 60W Soundboard"]:::audio
+        POS_FUSE --> SLIP1["Slip Ring C1/C2: Motor Line"]:::power
+        POS_FUSE --> SLIP2["Slip Ring C3/C4: Logic Line"]:::power
+
+        NEG_BUS --> ESC1
+        NEG_BUS --> ESC2
+        NEG_BUS --> AUDIO
+        NEG_BUS --> SLIP1
+        NEG_BUS --> SLIP2
     end
 
     subgraph DOME_POWER [DOME POWER (Via Slip Ring)]
@@ -58,7 +64,8 @@ graph TD
     subgraph SIGNAL_INTERCONNECTS [UART & PWM CONTROL]
         TX1 -.->|2.4GHz WiFi| RC1
         TX2 -.->|2.4GHz WiFi| RC2
-        RC1 -->|PWM| ESC1 & ESC2
+        RC1 -->|PWM| ESC1
+        RC1 -->|PWM| ESC2
         RC1 -->|PWM| ESP1
         ESP1 -->|S1-S9 Triggers| AUDIO
         RC2 -->|PWM| ESP3
