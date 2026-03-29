@@ -47,6 +47,9 @@ The droid operates on a **Master-Slave Serial Bus** model called the **UDNS**.
 5.  **17.5V Safety Floor**: Established 17.5V (3.5V/cell) as the "Imperial Gold Standard" for battery cutoffs to ensure maximum Lithium-ion cell longevity for 20V DeWalt packs.
 6.  **Conditional Hero**: Confined the large droid hero render to `README.md` only to maintain technical focus on secondary Databank pages.
 7.  **Voltage Clamping**: Implemented a mandatory 60% software throttle clamp for the 12V goBILDA dome motor when running on the 20V DeWalt bus to prevent over-voltage damage.
+8.  **Functional Hierarchy**: Documentation is organized by "Capabilities" (e.g., Movement, Lights & Sounds) rather than raw hardware components, allowing builders to digest the architecture functionally.
+9.  **Star Ground Topology**: The droid strictly employs a "Star Ground" referencing the central Negative Bus Bar. Step-down logic grounds and motor grounds must pass uninterrupted to the bus bar to ensure the 3.3V UDNS UART serial connection remains perfectly stable.
+10. **Dual-Line Slip Ring**: The 6-circuit slip ring carries *two separate* 20V lines (Motor Power and Logic Power) upward to mechanically isolate heavy inductive motor noise from the sensitive 5V ESP32 Micro-LED data grids.
 
 ---
 
@@ -54,6 +57,7 @@ The droid operates on a **Master-Slave Serial Bus** model called the **UDNS**.
 *   **Don't** use placeholders for images; use the real hardware photos in the `assets/` or `Photos to import/` directories.
 *   **Don't** use generic CSS colors; stick to the Imperial HSL palette.
 *   **Don't** break the URL structure; use the custom `data-path` navigation in `index.html`.
+*   **Don't** use standard `graph TD` or unescaped special characters (e.g., `&`, `#`, `()`) in Mermaid diagrams. The project strictly uses `flowchart TD` with `classDef` styling declared at the absolute bottom of the document to prevent markdown rendering crashes on strict/offline viewers.
 
 ---
 
