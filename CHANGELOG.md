@@ -4,6 +4,19 @@ All notable changes to the Wee2-D2 project will be documented in this file. This
 
 ---
 
+## [1.4.0] - 2026-03-28 (Power Topology & AI Dossier Overhaul)
+### Added
+- **Star Ground Architecture**: Redesigned power distribution topology featuring a 40A LVC, Positive Blade Fuse Box, and central Negative Bus Bar for flawless 3.3V UART transmission.
+- **Dual-Line Slip Ring Protocol**: Documented the mechanical isolation of Dome Motor Power (C1/C2) from Dome Logic Power (C3/C4) carrying identical 18 AWG wiring through the 6-circuit hub.
+- **BEC Logic Tapping**: Diagramed the explicit routing of 5V power from the Flipsky and goBILDA ESC internal BECs directly to the HOTRC Receivers and MCUs.
+
+### Changed
+- **Architectural Hierarchy**: Shifted documentation structure from component-focus to capability-focus (Lights & Sounds vs Movement).
+- **Mermaid Standardization**: Hardened the unified electrical schematic by migrating from `graph TD` to modern `flowchart TD`, moving all `classDef` styling parameters to EOF, and scrubbing symbols to ensure zero parser crashes on strict offline viewers.
+- **Personal Linguistics**: Rewrote the entire project repository (from collective pronouns to 'I') to accurately attribute the custom engineering to a single builder.
+- **AI Directives**: Expanded `AGENTS.md` with explicit hardware mandates (Star Ground rules, capability structural logic, and Mermaid formatting bans).
+- **Hero Image Integration**: Replaced the native Markdown README entrance block with an HTML-scaled `droid-actual.jpg` and scrubbed duplicate fixed-layout instances from the `index.html` Databank HUD wrapper.
+
 ## [1.3.0] - 2026-03-28 (Diatáxis UX Overhaul)
 ### Changed
 - **Navigation Flow**: Reorganized the Databank sidebar to follow the Builder's Journey (Overview > Architecture > Wiring > Firmware > Maintenance).
