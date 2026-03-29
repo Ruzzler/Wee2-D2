@@ -83,6 +83,7 @@ The droid operates on a **Master-Slave Serial Bus** model called the **UDNS**.
 *   **Naming**: Use lowercase, hyphenated names (e.g., `esp32d-wiring-v1.webp`).
 
 ### 4. Verification & Deployment
+*   **Local Server**: To test the Databank UI locally, AI assistants should spawn a background terminal running `python -m http.server 8001 --bind 127.0.0.1` in the project root and navigate to `http://127.0.0.1:8001`.
 *   **Cache-Busting**: When verifying changes on the live GitHub Pages site, assistants **MUST** use a unique version query string (e.g., `index.html?v=v20_refresh`) to bypass the CDN cache.
 *   **Interactive Audit**: Use the browser subagent to hover over Mermaid diagrams to ensure the pan-zoom HUD controls are functional after any CSS/JS change.
 *   **Lightbox Verification**: Ensure hardware photos in tables (BoM) are clickable to trigger the Imperial Lightbox modal for high-fidelity technical view.

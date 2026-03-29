@@ -1,59 +1,57 @@
+![Wee2-D2 Hero](assets/droid-hero.png)
+
 # Wee2-D2: Mr. Baddeley Big Baby Astromech
 
-Welcome to the official repository for **Wee2-D2**. Built in 2025 as part of the **Badlands Droid Builders** and the **501st Legion's Badlands Garrison**, this active-duty astromech is frequently deployed to community events for both organizations. The physical chassis was meticulously 3D printed utilizing the acclaimed Mr. Baddeley engineering files.
+Welcome to the official repository for **Wee2-D2**. I built this droid in 2025 as an active-duty astromech for the **Badlands Droid Builders** and the **501st Legion's Badlands Garrison**, frequently deploying it to community events. The physical chassis was meticulously 3D printed utilizing the acclaimed engineering files created by Mr. Baddeley.
 
-This specific repository tracks the subsequent high-current electrical architecture, firmware configurations, and hardware documentation required to bring the droid's decentralized control system to life.
+This repository tracks the subsequent high-current electrical architecture, firmware configurations, and custom hardware documentation I engineered to bring the droid's decentralized control system to life.
+
 ## 🛰️ Technical Wiki: Imperial Databank
-To view the documented system with a premium, interactive "Mission Control" interface, visit the official Technical Wiki:
+To view my documented system with a premium, interactive "Mission Control" interface, visit the official Technical Wiki:
 👉 **[Wee2-D2 Databank (Wiki)](https://ruzzler.github.io/Wee2-D2/)**
 
 ---
 
 ## 🚀 Project Overview
-Wee2-D2 uses a decentralized architecture across three ESP32 microcontrollers to ensure non-blocking operation of audio, lighting, and mechanical systems. The droid is controlled via **Dual HOTRC DS-600 transmitters** (one for drive, one for dome) for maximum reliability during events.
+I designed Wee2-D2 utilizing a decentralized architecture split across three ESP32 microcontrollers. This ensures non-blocking operation between the heavy audio processing, intricate LED lighting, and mechanical drive systems. The droid is piloted via **Dual HOTRC DS-600 transmitters** (one for drive logic, one for dome motion) for absolute reliability during crowded events.
 
-### 🧠 System MCUs
-- **MCU 1: Body Controller (Audio & Dispatch)**: ESPHome-based controller for RC signal processing, bank-switching, and audio triggering.
-- **MCU 2: Lighting Controller (WLED)**: Dedicated WLED instance for WS2812 addressable LED light shows with safety current limiting.
-- **MCU 3: Motion Controller (ESPHome)**: Precise motor control for dome rotation with safety voltage clamping (20V battery to 12V motor).
+### 🧠 Unified Droid Nervous System (UDNS)
+- **MCU 1: Body Controller (Audio & Dispatch)**: Main ESP32 Dev Board capturing RC signals, managing the S1-S9 sound triggers, and broadcasting UART commands up the slip ring.
+- **MCU 2: Lighting Controller (ESPHome)**: Dedicated ESP32-S3 Mini running purely on native ESPHome (bypassing WLED) for total system-sync of the WS2812 addressable LED light matrices.
+- **MCU 3: Motion Controller (ESPHome)**: Implements precise motor control for dome rotation with vital safety voltage clamping (software throttling a 20V battery down to an effective 12V for the motor hub).
 
 > [!WARNING]
-> **PROJECT SCOPE**: This repository exclusively documents the custom **Electrical Architecture** and **Firmware** ecosystem. It does **not** contain the 3D-printable STL files or mechanical assembly instructions for the droid chassis itself. Please refer to the official Mr. Baddeley Patreon or Group for structural files.
+> **PROJECT SCOPE**: This repository exclusively documents my custom **Electrical Architecture** and **Firmware** ecosystem. It does **not** contain the 3D-printable STL files or mechanical assembly instructions for the droid chassis itself. Please refer to the official Mr. Baddeley Patreon or group hubs for structural files.
 
-## 🔋 Master Power Architecture
+## 🔋 Star-Ground Power Architecture
+My electrical design deviates from standard 12V ecosystems by natively powering Wee2-D2 via **DeWalt 20V Batteries** funneled through an MgcSTEM Low-Voltage Cutoff. 
 
-The Wee2-D2 is natively powered by **DeWalt 20V Batteries** running through an LVP-R1.5 low-voltage cutoff to a primary distribution bus.
+To eliminate data corruption and inductive motor noise across the 3.3V UART lines:
+1. I implemented an explicit **Star Ground** topology centered around a heavy-duty **Negative Bus Bar**. 
+2. The 6-circuit CNBTR slip ring carries a **Dual-Line 20V Payload** (isolating the heavy ESC motor branch from the sensitive Dome Logic branch).
 
-👉 **[View the Interactive Electrical Schematic](#docs/architecture/electrical-schematic.md)**
-👉 **[View the Power Architecture Deep-Dive](#docs/architecture/power-architecture.md)**
+👉 **[View the Interactive Electrical Schematic](docs/architecture/electrical-schematic.md)**
+👉 **[View the Power Architecture Deep-Dive](docs/architecture/power-architecture.md)**
 
 ## 📁 Repository Structure
 ```text
 ├── docs/               # Technical Documentation
-│   ├── architecture/   # System-wide logic (Wiring, Power, UDNS)
-│   ├── hardware/       # Component Manuals (Manuals & PDFs)
+│   ├── capabilities/   # Functional guides (Lights, Sounds, Movement)
+│   ├── architecture/   # System-wide logic (Wiring, UDNS Bus)
+│   ├── hardware/       # Component Manuals (Raw PDFs)
 │   ├── maintenance/    # Operational & Safety standards
-│   ├── archive/        # Legacy test and research assets
 │   └── bill-of-materials.md # Unified Component Ledger
-├── firmware/           # Microcontroller Code
+├── firmware/           # Microcontroller Code (ESPHome)
 ├── system/             # Databank Engine (SPA Logic & Styles)
-├── assets/             # Normalized Hardware Assets
+├── assets/             # Normalized Hardware Visuals
 ├── index.html          # Databank HUD (Entry Point)
 └── README.md           # This file
 ```
 
 ## 🦿 Hardware Ecosystem
-*   **Control**: 2x [HOTRC DS-600](./docs/hardware/hotrc-ds600-manual.md) (Silent Mode mod).
-*   **Drive System**: 2x [Flipsky Mini FSESC 6.7 Pro](./docs/hardware/flipsky-fsesc-67-pro-manual.md) ➔ L-faster Hub Motors.
-*   **Motion Controller**: [goBILDA 5203 Yellow Jacket](./docs/hardware/gobilda-motor-manual.md) ➔ [1x15A Motor Controller](./docs/hardware/gobilda-motor-manual.md).
-*   **Audio**: [PEMENOL 60W (DY-HL50T)](./docs/hardware/pemenol-60w-voice-manual.md) (60W Mono).
-*   **Power Protection**: [MgcSTEM LVP-R1.5](./docs/hardware/mgcstem-lvp-r15-manual.md) (40A Cutoff).
-*   **Lighting**: [GrnWave Circular PSI](./docs/hardware/grnwave-psi-manual.md) (76-LED Inward Spiral).
-
----
-
-## 🏛️ Local Deployment
-To run the Databank engine locally via Python:
-1.  Open a terminal in the project root.
-2.  Run the local server: `python -m http.server 8001 --bind 127.0.0.1`
-3.  Navigate to [http://127.0.0.1:8001](http://127.0.0.1:8001).
+*   **Piloting**: 2x [HOTRC DS-600](docs/hardware/hotrc-ds600-manual.md) (Silent Mode mod).
+*   **Drive System**: 2x [Flipsky Mini FSESC 6.7 Pro](docs/hardware/flipsky-fsesc-67-pro-manual.md) feeding L-faster Hub Motors.
+*   **Dome Motion**: [goBILDA 5203 Yellow Jacket](docs/hardware/gobilda-motor-manual.md) driven by a [1x15A Motor Controller](docs/hardware/gobilda-motor-manual.md).
+*   **Audio**: [PEMENOL 60W (DY-HL50T)](docs/hardware/pemenol-60w-voice-manual.md) running to a Pyle 60W Dual Cone driver.
+*   **Power Hub**: [MgcSTEM LVP-R1.5](docs/hardware/mgcstem-lvp-r15-manual.md) mapping to a Positive Blade Fuse Box and central Negative Bus Bar.
+*   **Lighting**: [GrnWave Circular PSIs](docs/hardware/grnwave-psi-manual.md) and custom logic arrays.
