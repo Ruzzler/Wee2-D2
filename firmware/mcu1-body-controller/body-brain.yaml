@@ -22,7 +22,7 @@ uart:
   id: udns_bus
   tx_pin: GPIO17
   rx_pin: GPIO16
-  baud_rate: 9600
+  baud_rate: 115200
 
 # Enable Home Assistant API
 api:
