@@ -14,7 +14,7 @@ The single most important firmware logic for Dome Rotation handles the power mis
 > [!WARNING]
 > The droid's main bus is **20V** (DeWalt Battery). However, the goBILDA motor is only rated for **12V**. Do not plug it directly into the battery!
 
-Instead of buying a massive, expensive 12V Buck Converter just for the motor, we handle this in the **MCU 3** software. MCU 3 listens to your joystick, calculates how fast you *want* to spin, and scales the signal down by exactly 60%. Thus, applying "100% Throttle" on the joystick only commands the ESC to output an effective 12V. 
+Instead of buying a massive, expensive 12V Buck Converter just for the motor, I handle this in the **MCU 3** software. MCU 3 listens to your joystick, calculates how fast you *want* to spin, and scales the signal down by exactly 60%. Thus, applying "100% Throttle" on the joystick only commands the ESC to output an effective 12V. 
 
 ```cpp
 // ESPHome Dome Clamp Logic Example

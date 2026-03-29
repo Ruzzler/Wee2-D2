@@ -21,7 +21,7 @@ The Big Baby chassis is designed to house specialized hub motors directly in the
 *   **Dome Rotation**: The internal dome gear meshes with the [goBILDA 5203 Yellow Jacket Motor](../hardware/gobilda-motor-manual.md).
 
 ## 👥 Community Resources
-Building a 3D-printed astromech is a massive undertaking. The Wee2-D2 Databank covers the unique *electrical* architecture of this specific droid, but we highly recommend consulting the following community knowledge bases for mechanical slicing profiles, structural engineering, and assembly support:
+Building a 3D-printed astromech is a massive undertaking. The Wee2-D2 Databank covers the unique *electrical* architecture of this specific droid, but I highly recommend consulting the following community knowledge bases for mechanical slicing profiles, structural engineering, and assembly support:
 1.  **[Mr. Baddeley Patreon](https://www.patreon.com/mrbaddeley)**: The official source for the files and community access.
 2.  **[Printed-Droid.com](https://www.printed-droid.com/)**: A fantastic, highly-organized secondary resource for Baddeley part documentation and build diaries.
 3.  **[Astromech.net Forums](https://astromech.net/)**: The premier builder's repository and engineering forum for astromechs worldwide.

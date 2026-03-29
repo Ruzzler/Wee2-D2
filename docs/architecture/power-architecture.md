@@ -18,7 +18,7 @@ From the Fuse Box and Bus Bar, **five** distinct 20V (+/-) power lines are sent 
 - **Sound System**: 20V ➔ [DY-HL50T Sound Module](../hardware/pemenol-60w-voice-manual.md) (60W Mono).
 
 ### **Dome Electronics (Upper)**
-Because the CNBTR Slip Ring has exactly 6 wires (10A per circuit), we send **TWO separate 20V lines** (consuming 4 wires total) up into the dome to completely isolate the sensitive microchips from the noisy dome motor:
+Because the CNBTR Slip Ring has exactly 6 wires (10A per circuit), I send **TWO separate 20V lines** (consuming 4 wires total) up into the dome to completely isolate the sensitive microchips from the noisy dome motor:
 1.  **Slip Ring Line 1 (Motor Power)**: 20V ➔ goBILDA 15A Motor Controller.
 2.  **Slip Ring Line 2 (Logic Power)**: 20V ➔ **Mini560 Pro Buck Converter** ➔ steps down to 5V ➔ 2x 5-Port Wago Connectors ➔ Powers MCU 2, MCU 3, and all Dome LEDs. 
 
@@ -28,7 +28,7 @@ Because the CNBTR Slip Ring has exactly 6 wires (10A per circuit), we send **TWO
 > **5V REGULATION**: All dome lighting components (Logic, PSIs, Strips) share a common 5V rail fed by the Wagos. **Never** connect the 5V BEC from the motor controller to the 5V lighting rail as it will immediately destroy the micro-LEDs.
 
 ## 🧠 5V BEC Logic Routing
-Instead of packing the body with extra buck converters, we intelligently steal 5V from the massive motor controllers (which have built-in "BEC" step-down regulators):
+Instead of packing the body with extra buck converters, I intelligently steal 5V from the massive motor controllers (which have built-in "BEC" step-down regulators):
 *   **Body Logic**: The Flipsky ESCs output 5V to power the **Body HOTRC F-06A Receiver**. The receiver *then* outputs that 5V straight into **MCU 1 (Body Brain)**.
 *   **Dome Motion Logic**: The goBILDA 15A ESC outputs 5V to power the **Dome HOTRC F-06A Receiver**.
 
