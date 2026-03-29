@@ -20,6 +20,15 @@ document.addEventListener('DOMContentLoaded', () => {
         return `<img src="${resolvedHref}" alt="${text}" title="${title || ''}" class="content-image">`;
     };
 
+    // Custom link renderer to resolve relative paths for PDFs and external resources
+    renderer.link = ({ href, title, text }) => {
+        let resolvedHref = href;
+        if (href && !href.startsWith('http') && !href.startsWith('#') && !href.startsWith('mailto:')) {
+            resolvedHref = resolvePath(currentPath, href);
+        }
+        return `<a href="${resolvedHref}" title="${title || ''}">${text}</a>`;
+    };
+
     // Custom blockquote renderer for GitHub Alerts [!TIP], etc.
     renderer.blockquote = ({ text }) => {
         // Multi-line match for alerts
