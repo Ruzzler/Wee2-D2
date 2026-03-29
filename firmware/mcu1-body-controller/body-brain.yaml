@@ -141,8 +141,8 @@ button:
     on_press:
       then:
         # Standard WLED JSON API command over serial to turn everything RED
-        # Note: WLED requires the \n at the end to process the command
-        - uart.write: '{"seg":{"col":[[255,0,0]]}}\n'
+        # Corrected: WLED requires 'seg' to be an array [{ ... }]
+        - uart.write: '{"seg":[{"col":[[255,0,0]]}]}\n'
 
 sensor:
   # CH5 (Bank Cycle Switch)
