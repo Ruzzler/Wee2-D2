@@ -22,7 +22,7 @@ If your droid begins exhibiting non-compliant behavior, use this matrix to diagn
 The most powerful tool at your disposal is the **ESPHome Logger**.
 1.  Connect the ESP32 to your PC via USB.
 2.  Open the ESPHome Dashboard.
-3.  Click **Logs** on the problematic node.
+3.  Click **Logs** on the problematic MCU.
 4.  **Watch for Errors**: UART timeouts, Wi-Fi disconnects, or I2C bus failures will appear in RED text.
 
 ### **2. Unified Droid Nervous System (UDNS) Serial Bus Test**
@@ -30,7 +30,7 @@ To verify communication across the slip ring:
 1.  Open the **Body Controller (MCU 1)** Logs.
 2.  Trigger a sound.
 3.  Look for a log entry like `[D][uart_debug:158]: >>> "CMD:PLAY_01\n"`.
-4.  Open the **Dome Node** Logs and confirm it receives the same string.
+4.  Open the **Dome Controller (MCU 2/3)** Logs and confirm it receives the same string.
 
 ### **3. Multimeter Probe Points**
 *   **VCC Rail**: Should be **18V - 21V** (Main Battery).
