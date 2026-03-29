@@ -44,21 +44,21 @@ graph TD
         WLED --> PSIS["GrnWave PSI Disks"]:::lights
     end
 
-    subgraph SIGNAL_INTERCONNECTS [UNIFIED DROID NERVOUS SYSTEM (UDNS)]
-        TX1 -. "2.4GHz" .-> RC1
-        TX2 -. "2.4GHz" .-> RC2
-        RC1 -- "CH3/4/5 PWM" --> ESP1
-        ESP1 -- "9-Wire Trigger" --> AUDIO
-        RC2 -- "CH1 PWM" --> ESP3
-        ESP3 -- "PWM" --> ESC3
-        ESP1 -- "Nervous System UART" --- WLED
-        ESP1 -- "Nervous System UART" --- ESP3
+    subgraph SIGNAL_INTERCONNECTS [UNIFIED DROID NERVOUS SYSTEM]
+        TX1 -.->|2.4GHz WiFi| RC1
+        TX2 -.->|2.4GHz WiFi| RC2
+        RC1 -->|PWM| ESP1
+        ESP1 -->|Trigger| AUDIO
+        RC2 -->|PWM| ESP3
+        ESP3 -->|PWM| ESC3
+        ESP1 ---|UART TX/RX| WLED
+        ESP1 ---|UART TX/RX| ESP3
     end
 
     subgraph HUD_INTERFACES [MOBILE COMMAND]
-        PHONE["Mobile/Tablet"] -- "Web Server / HA" --> ESP1
-        PHONE -- "Web Server / HA" --> WLED
-        PHONE -- "Web Server / HA" --> ESP3
+        PHONE[Mobile/Tablet] -->|Web Dashboard| ESP1
+        PHONE -->|Web Dashboard| WLED
+        PHONE -->|Web Dashboard| ESP3
     end
 
     %% Direct Markdown-Relative Links for Interactivity
