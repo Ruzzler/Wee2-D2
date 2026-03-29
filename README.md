@@ -1,7 +1,8 @@
 # Wee2-D2: Mr. Baddeley Big Baby Astromech
 
-Welcome to the official repository for **Wee2-D2**, a custom-built astromech droid designed for 501st Legion events. This repository tracks the electrical architecture, firmware configurations, and hardware documentation for the droid's decentralized control system.
+Welcome to the official repository for **Wee2-D2**. Built in 2025 as part of the **Badlands Droid Builders** and the **501st Legion's Badlands Garrison**, this active-duty astromech is frequently deployed to community events for both organizations. The physical chassis was meticulously 3D printed utilizing the acclaimed Mr. Baddeley engineering files.
 
+This specific repository tracks the subsequent high-current electrical architecture, firmware configurations, and hardware documentation required to bring the droid's decentralized control system to life.
 ## 🛰️ Technical Wiki: Imperial Databank
 To view the documented system with a premium, interactive "Mission Control" interface, visit the official Technical Wiki:
 👉 **[Wee2-D2 Databank (Wiki)](https://ruzzler.github.io/Wee2-D2/)**
