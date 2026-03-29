@@ -1,4 +1,4 @@
-![Wee2-D2 Hero](assets/droid-hero.png)
+![Wee2-D2 Hero](assets/droid-actual.jpg)
 
 # Wee2-D2: Mr. Baddeley Big Baby Astromech
 
