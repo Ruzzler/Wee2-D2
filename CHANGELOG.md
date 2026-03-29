@@ -11,7 +11,7 @@ All notable changes to the Wee2-D2 project will be documented in this file. This
 
 ### Changed
 - **Pin Remediation (MCU 1)**: Migrated Sound Triggers S3 and S4 from GPIO 16/17 to **GPIO 26/27** to resolve Hardware UART2 conflicts.
-- **RC Channel Realignment**: Updated the Body Controller to utilize **CH6 (GPIO 32)** for bank switching to match the builder's physical receiver data pin mapping.
+- **RC Channel Realignment**: Updated the Body Controller to utilize **CH5 (GPIO 32)** for bank switching to match the builder's physical receiver data pin mapping.
 - **Physical Build Synchronization**: Updated all technical manuals (Schematic, Audio Guide, Firmware READMEs) to reflect the builder's specific wire colors and pin selections.
 
 ---
