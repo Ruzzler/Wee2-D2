@@ -14,8 +14,8 @@ This document provides critical context for AI coding assistants working on the 
 ## 🧠 Core Architecture: Unified Droid Nervous System (UDNS)
 The droid operates on a **Master-Slave Serial Bus** model called the **UDNS**.
 
-*   **Node 1 (Body Master)**: **ESP32D Dev Board**. Interprets RC signals (PWM) and manages the hardware soundboard triggers.
-*   **Nodes 2 & 3 (Dome Slaves)**: **ESP32-S3 Super Mini**. Handle lighting (WLED-style effects within ESPHome) and precision dome rotation.
+*   **MCU 1 (Body Master)**: **ESP32D Dev Board**. Interprets RC signals (PWM) and manages the hardware soundboard triggers.
+*   **MCUs 2 & 3 (Dome Slaves)**: **ESP32-S3 Super Mini**. Handle lighting (WLED-style effects within ESPHome) and precision dome rotation.
 *   **Communication**: Bidirectional UART (Serial) @ 9600 baud through a 6-circuit slip ring.
 *   **Firmware**: 100% **ESPHome**. Integrated with **Home Assistant** and support for **OTA (Over-The-Air)** updates.
 
@@ -40,7 +40,7 @@ The droid operates on a **Master-Slave Serial Bus** model called the **UDNS**.
 ---
 
 ## 📜 Key Technical Decisions
-1.  **3-Node Split**: Moved from single large ESP to 3 distributed nodes to minimize wiring through the slip ring and isolate motor noise from lighting logic.
+1.  **3-MCU Split**: Moved from single large ESP to 3 distributed nodes to minimize wiring through the slip ring and isolate motor noise from lighting logic.
 2.  **S3 Mini for Dome**: Chosen for its ultra-compact form factor and native USB-C support.
 3.  **No Standalone WLED**: Integrated lighting into ESPHome to ensure the "Unified Nervous System" commands work holistically.
 4.  **Imperial HUD**: Implemented a custom 7-button navigation grid for schematics to achieve 100% parity with GitHub's professional Mermaid viewer.

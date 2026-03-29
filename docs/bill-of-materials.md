@@ -6,9 +6,9 @@ A comprehensive list of hardware used in the Wee2-D2 project, organized by syste
 ## 🧠 Brains & Control
 | Component | Qty | Specifications | Visual ID |
 | :--- | :---: | :--- | :---: |
-| **Node 1: Body Brain** | 1 | ESP32-Dev Board; primary signal dispatch | ![ESP32D](../assets/esp32d-dev-board.png) |
-| **Node 2: Dome Lights** | 1 | ESP32-S3 Super Mini; **WLED** Matrix Controller | ![S3 Mini](../assets/esp32-s3-super-mini.jpg) |
-| **Node 3: Dome Motion** | 1 | ESP32-S3 Super Mini; Precision Dome Rotation | ![S3 Mini](../assets/esp32-s3-super-mini.jpg) |
+| **MCU 1: Body Controller** | 1 | ESP32-Dev Board; primary signal dispatch | ![ESP32D](../assets/esp32d-dev-board.png) |
+| **MCU 2: Lighting Controller** | 1 | ESP32-S3 Super Mini; **WLED** Matrix Controller | ![S3 Mini](../assets/esp32-s3-super-mini.jpg) |
+| **MCU 3: Motion Controller** | 1 | ESP32-S3 Super Mini; Precision Dome Rotation | ![S3 Mini](../assets/esp32-s3-super-mini.jpg) |
 | [HOTRC DS-600](hardware/hotrc-ds600-manual.md) | 2 | 6-CH Transmitter (Silent Mod) | [PDF](hardware/hotrc-ds600-manual.pdf) |
 | [HOTRC F-06A Receivers](hardware/hotrc-f06a-manual.md) | 2 | 6-CH PWM Output @ 9600 Baud | [PDF](hardware/hotrc-f06a-manual.pdf) |
 

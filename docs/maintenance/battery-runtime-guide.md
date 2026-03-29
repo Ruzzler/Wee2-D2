@@ -27,7 +27,7 @@ The 20V DeWalt battery operates at **18.5V Nominal**. A 4Ah pack contains **74 W
 - **Duty Cycle**: 40% (Moving 24 minutes per hour).
 - **Estimated Load**: **16.0 Watts (Avg)**
 
-### **4. Dome Motion (goBILDA 5203)**
+### **4. Motion Controller (goBILDA 5203)**
 - **Condition**: Continuous random dome rotation.
 - **Duty Cycle**: 15%.
 - **Estimated Load**: **1.5 Watts (Avg)**

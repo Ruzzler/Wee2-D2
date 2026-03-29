@@ -55,7 +55,7 @@ All notable changes to the Wee2-D2 project will be documented in this file. This
 - **Imperial Databank UI**: Launched the custom SPA (Single Page Application) for technical documentation.
 
 ### Changed
-- **Node Configuration**: Refactored the droid from a "simple trigger" model to a "Nexus Bus" Serial model.
+- **MCU Configuration**: Refactored the droid from a "simple trigger" model to a "Nexus Bus" Serial model.
 - **Mobile Responsiveness**: Optimized the entire Databank UI for desktop and high-density mobile displays.
 - **Path Resolution**: Improved the SPA routing to handle GitHub Pages subdirectories (`/Wee2-D2/`) automatically.
 
@@ -69,5 +69,5 @@ All notable changes to the Wee2-D2 project will be documented in this file. This
 ### Added
 - Initial project structure including Markdown documentation and Mermaid diagrams.
 - Basic Bill of Materials (BOM) following the Star Wars Imperial aesthetic.
-- ESPHome firmware templates for Node 1 (Body Brain).
+- ESPHome firmware templates for MCU 1 (Body Controller).
 - Core electrical schematic draft representing the initial 20V power system.

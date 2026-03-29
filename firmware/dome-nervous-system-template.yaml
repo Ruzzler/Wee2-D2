@@ -23,7 +23,7 @@ logger:
   level: DEBUG
   baud_rate: 0 # Disable serial logging to free up UART0 if needed
 
-# Inter-Node Communication (The UDNS Bus)
+# Inter-MCU Communication (The UDNS Bus)
 uart:
   id: udns_bus
   tx_pin: GPIO44

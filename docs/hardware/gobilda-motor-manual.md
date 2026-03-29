@@ -26,7 +26,7 @@ The **goBILDA 1x15A** is a compact, high-reliability brushed DC motor controller
 *   **Motor**: Connects via 3.5mm bullet connectors. Brushed DC motors are reversible; if spinning in the wrong direction, swap the red and black wires.
 *   **RC/Data Input**: 
     *   **Receiver**: Plugs into white/red/black 3-wire connector.
-    *   **Node 3 Wiring**: Connected to the **Node 3: Dome ESP32** data pin.
+    *   **MCU 3 Wiring**: Connected to the **MCU 3: Dome ESP32** data pin.
     *   **Logic**: Responds proportionally to signals between 1050-1950μs.
 
 > [!IMPORTANT]

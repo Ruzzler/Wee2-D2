@@ -13,7 +13,7 @@ This document provides a high-fidelity visual and technical map of the Wee2-D2 e
 graph TD
     subgraph TRANSMITTERS [2x HOTRC DS-600]
         TX1["TX #1: Body Drive"]:::signal
-        TX2["TX #2: Dome Motion"]:::signal
+        TX2["TX #2: Motion Controller"]:::signal
     end
 
     subgraph POWER_SOURCE [20V DC POWER CORE]
@@ -30,8 +30,8 @@ graph TD
 
     subgraph LOGIC_RAIL [5V LOGIC & AUDIO]
         FUSE --> BUCK1["Mini560 Buck #1 (5.1V)"]:::logic
-        BUCK1 --> ESP1["Node 1: Body (ESP32D)"]:::brain
-        BUCK1 --> ESP3["Node 3: Dome (ESP32-S3 Mini)"]:::brain
+        BUCK1 --> ESP1["MCU 1: Body (ESP32D)"]:::brain
+        BUCK1 --> ESP3["MCU 3: Dome (ESP32-S3 Mini)"]:::brain
         BUCK1 --> AUDIO["PEMENOL 60W Soundboard"]:::audio
         BUCK1 --> RC1["RC Receiver #1 (Body)"]:::signal
         BUCK1 --> RC2["RC Receiver #2 (Dome)"]:::signal
@@ -39,7 +39,7 @@ graph TD
 
     subgraph LIGHT_RAIL [5V LIGHTING SYSTEM]
         SLIP --> BUCK2["Mini560 Buck #2 (5.0V)"]:::logic
-        BUCK2 --> WLED["Node 2: Lights (ESP32-S3 Mini)"]:::lights
+        BUCK2 --> WLED["MCU 2: Lights (ESP32-S3 Mini)"]:::lights
         WLED --> LOGICS["Front/Rear Logics"]:::lights
         WLED --> PSIS["GrnWave PSI Disks"]:::lights
     end
@@ -69,9 +69,9 @@ graph TD
     click SLIP href "docs/hardware/cnbtr-slip-ring-manual.md" "Slip Ring Manual"
     click AUDIO href "docs/hardware/pemenol-60w-voice-manual.md" "Soundboard Specs"
     click PSIS href "docs/hardware/grnwave-psi-manual.md" "PSI Logic Manual"
-    click ESP1 href "firmware/node1-body-brain/body-brain.yaml" "Node 1 Configuration"
-    click ESP3 href "firmware/node3-dome-motion/dome-motion.yaml" "Node 3 Configuration"
-    click WLED href "firmware/node2-dome-lights/README.md" "Node 2 Configuration"
+    click ESP1 href "firmware/mcu1-body-controller/body-brain.yaml" "MCU 1 Configuration"
+    click ESP3 href "firmware/mcu3-motion-controller/dome-motion.yaml" "MCU 3 Configuration"
+    click WLED href "firmware/mcu2-lighting-controller/README.md" "MCU 2 Configuration"
     click ESC3 href "docs/bill-of-materials.md" "Dome ESC Specs"
     click TX1 href "docs/hardware/hotrc-ds600-manual.md" "Body Transmitter Manual"
     click TX2 href "docs/hardware/hotrc-ds600-manual.md" "Dome Transmitter Manual"
@@ -89,7 +89,7 @@ graph TD
 
 ## 📌 Pinout Lookup Tables
 
-### **Node 1: Body Brain (ESP32D Dev Board)**
+### **MCU 1: Body Controller (ESP32D Dev Board)**
 Master controller for sounds and UDNS coordination.
 
 | Component | Pin (GPIO) | Mode | Notes |
@@ -101,7 +101,7 @@ Master controller for sounds and UDNS coordination.
 | **UDNS RX** | GPIO16 | Input | Serial from Dome (Slip Ring Point 4) |
 | **Web UI** | N/A | WiFi | Port 80 (ESPHome Dashboard) |
 
-### **Node 3: Dome Motion (ESP32-S3 Super Mini)**
+### **MCU 3: Motion Controller (ESP32-S3 Super Mini)**
 Dedicated controller for 360° dome rotation.
 
 | Component | Pin (GPIO) | Mode | Notes |
@@ -111,7 +111,7 @@ Dedicated controller for 360° dome rotation.
 | **UDNS TX** | GPIO44 | Output | Serial to Body (via Slip Ring) |
 | **UDNS RX** | GPIO43 | Input | Serial from Body (via Slip Ring) |
 
-### **Node 2: Dome Lights (ESP32-S3 Super Mini - ESPHome)**
+### **MCU 2: Lighting Controller (ESP32-S3 Super Mini - ESPHome)**
 Addressable LEDs using the **UDNS Light Interface**.
 
 | Component | Pin (GPIO) | Mode | Notes |

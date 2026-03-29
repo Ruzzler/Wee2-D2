@@ -1,7 +1,7 @@
-# 🦾 Node 3: Dome Motion (ESPHome)
+# 🦾 MCU 3: Motion Controller (ESPHome)
 > **ESPHome Firmware** | **ESP32-S3 Super Mini**
 
-The **Dome Motion** node provides high-torque, non-blocking control of the 5203 Yellow Jacket motor via a goBILDA 15A ESC. It translates RC receiver signals into brushed motor throttle commands with integrated safety clamping.
+The **Motion Controller** node provides high-torque, non-blocking control of the 5203 Yellow Jacket motor via a goBILDA 15A ESC. It translates RC receiver signals into brushed motor throttle commands with integrated safety clamping.
 
 ![ESP32-S3 Super Mini](../../assets/esp32-s3-super-mini.jpg)
 

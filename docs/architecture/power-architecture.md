@@ -12,22 +12,22 @@ The droid is powered by **DeWalt 20V Batteries**.
 ## 🗺️ Power Routing
 Raw 20V is sent up through a **CNBTR 12.7mm Through-Hole Slip Ring** (6 Circuits, 10A/Circuit) to the rotating dome.
 
-### **Node 1 & Body (Lower)**
+### **MCU 1 & Body (Lower)**
 - **Drive**: 20V ➔ 2x [Flipsky Mini FSESC 6.7 Pro](../hardware/flipsky-fsesc-67-pro-manual.md) ➔ Hub Motors.
 - **Audio**: 20V ➔ [DY-HL50T Sound Module](../hardware/pemenol-60w-voice-manual.md) (60W Mono).
-- **Body Logic**: 20V ➔ 5V Buck Converter ➔ Node 1 (ESP32).
+- **Body Logic**: 20V ➔ 5V Buck Converter ➔ MCU 1 (ESP32).
 
 ### **Dome Systems (Upper)**
-- **Dome Motion**:
+- **Motion Controller**:
   - 20V ➔ goBILDA 1x15A Motor Controller ➔ goBILDA 5203 Yellow Jacket Motor.
-  - **BEC Output (6V)**: Powers Receiver #2 and Node 3 (ESP32).
-- **Dome Lights**:
-  - 20V ➔ **Mini560 5V Buck Regulator** ➔ Node 2 (ESP32) and all LED Logic.
+  - **BEC Output (6V)**: Powers Receiver #2 and MCU 3 (ESP32).
+- **Lighting Controller**:
+  - 20V ➔ **Mini560 5V Buck Regulator** ➔ MCU 2 (ESP32) and all LED Logic.
   - **5V Logic**: Front Logic (12x2), Rear Logic (10x2), and [GrnWave PSIs](../hardware/grnwave-psi-manual.md).
 
 > [!CAUTION]
 > **5V REGULATION**: All dome lighting components (Logic, PSIs, Strips) share a common 5V rail. **Never** connect the 6V BEC from the motor controller to the 5V lighting rail as it will immediately destroy the micro-LEDs.
 
 ## ⚠️ Safety Logic & Clamping
-- **Dome Motion**: Software clamp in Node 3 restricts the 20V source to 60% power to simulate a safe **12V** output for the motor.
-- **Dome Lights**: Brightness limiter enabled at **3500mA** to protect the Mini560 buck converter.
+- **Motion Controller**: Software clamp in MCU 3 restricts the 20V source to 60% power to simulate a safe **12V** output for the motor.
+- **Lighting Controller**: Brightness limiter enabled at **3500mA** to protect the Mini560 buck converter.

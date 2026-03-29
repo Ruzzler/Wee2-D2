@@ -1,7 +1,7 @@
-# 💡 Node 2: Dome Lights (WLED)
+# 💡 MCU 2: Lighting Controller (WLED)
 > **WLED Firmware** | **ESP32-S3 Super Mini**
 
-This node is dedicated to controlling the WS2812 addressable LED system in the dome using **WLED**.
+This MCU is dedicated to controlling the WS2812 addressable LED system in the dome using **WLED**.
 
 ## 🔋 Power Management & Safety
 > [!IMPORTANT]
@@ -30,10 +30,10 @@ To achieve authentic "Logic" scrolling:
 - **Support Strips**: 1x 12-pixel strip, 2x 5-pixel strips.
 
 ## 🔴 "Angry/Red" Trigger Logic
-WLED is configured to listen for a hardwired HIGH/LOW signal from the **Body Brain**.
+WLED is configured to listen for a hardwired HIGH/LOW signal from the **Body Controller**.
 
 ### Physical Button Configuration
-1. Connect a spare GPIO on the Dome Lights ESP32 to a signal wire coming from the Body Brain.
+1. Connect a spare GPIO on the Lighting Controller ESP32 to a signal wire coming from the Body Controller.
 2. In WLED **Config > Time & Macros**:
    - Define a Macro (e.g., Macro 1) that activates a Red/Angry preset.
 3. In WLED **Config > LED Preferences**:

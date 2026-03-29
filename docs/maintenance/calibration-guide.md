@@ -31,7 +31,7 @@ To sync your "Angry Mode" trigger:
 2.  Go to **Presets** and create a "Red Strobe" effect. Save as **Preset 5**.
 3.  Go to **Settings > Macro / Button Actions**.
 4.  Under "Button 0" (GPIO5 on S3 Mini), set the action to `P1=5&P2=1` (Pushes preset 5).
-5.  Test by triggering an "Angry" sound on Node 1; the dome should instantly turn red via the **Unified Droid Nervous System (UDNS)**.
+5.  Test by triggering an "Angry" sound on MCU 1; the dome should instantly turn red via the **Unified Droid Nervous System (UDNS)**.
 
 ### **3. Dome Center Alignment**
 The dome motor (goBILDA 15A ESC) operates on standard PWM (Servo) signals.

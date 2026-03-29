@@ -1,6 +1,6 @@
 substitutions:
   name: "wee2d2-dome-motion"
-  friendly_name: "Wee2-D2 Dome Motion"
+  friendly_name: "Wee2-D2 Motion Controller"
 
 esphome:
   name: ${name}

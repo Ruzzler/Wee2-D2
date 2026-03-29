@@ -31,7 +31,7 @@ The DS-600 can internally "mix" CH1 and CH2 for dual-motor control.
     2. Press and hold the **[CH3]** button.
     3. Turn the remote **ON**.
     4. **Status**: Green light = Mixing ON. No light = Mixing OFF.
-*   **Recommendation for Wee2-D2**: Keep Mixing **OFF**. The ESP32 (Node 1) performs more precise software-based mixing and safety clamping.
+*   **Recommendation for Wee2-D2**: Keep Mixing **OFF**. The ESP32 (MCU 1) performs more precise software-based mixing and safety clamping.
 
 ### 2. Channel Reversal
 If your droid drives backward when you pull the trigger:
@@ -40,10 +40,10 @@ If your droid drives backward when you pull the trigger:
 3. Turn the remote **ON** (you will hear a beep).
 4. Move the trigger (CH2) or joystick (CH1) to its limit. A long beep confirms the reversal.
 
-## 📡 Wiring to ESP32 (Node 1)
-The **F-06A Receiver** should be connected to the Node 1 ESP32 using standard 3-pin servo cables.
+## 📡 Wiring to ESP32 (MCU 1)
+The **F-06A Receiver** should be connected to the MCU 1 ESP32 using standard 3-pin servo cables.
 
-| Receiver Port | Node 1 Pin | Function |
+| Receiver Port | MCU 1 Pin | Function |
 | :--- | :--- | :--- |
 | **CH1** (Steer) | **GPIO 32** | Steering Signal (PWM) |
 | **CH2** (Drive) | **GPIO 33** | Throttle Signal (PWM) |

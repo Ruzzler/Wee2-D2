@@ -1,7 +1,7 @@
-# 🧠 Node 1: Body Brain (Audio & Dispatch)
+# 🧠 MCU 1: Body Controller (Audio & Dispatch)
 > **ESPHome Firmware** | **ESP32-WROOM-32D**
 
-The **Body Brain** acts as the central nervous system for Wee2-D2. It decodes PWM signals from the primary RC receiver and translates them into digital triggers for the PEMENOL/DY-HL50T soundboard.
+The **Body Controller** acts as the central nervous system for Wee2-D2. It decodes PWM signals from the primary RC receiver and translates them into digital triggers for the PEMENOL/DY-HL50T soundboard.
 
 ![ESP32D Dev Board](../../assets/esp32d-dev-board.png)
 

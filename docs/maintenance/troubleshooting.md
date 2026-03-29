@@ -27,7 +27,7 @@ The most powerful tool at your disposal is the **ESPHome Logger**.
 
 ### **2. Unified Droid Nervous System (UDNS) Serial Bus Test**
 To verify communication across the slip ring:
-1.  Open the **Body Brain (Node 1)** Logs.
+1.  Open the **Body Controller (MCU 1)** Logs.
 2.  Trigger a sound.
 3.  Look for a log entry like `[D][uart_debug:158]: >>> "CMD:PLAY_01\n"`.
 4.  Open the **Dome Node** Logs and confirm it receives the same string.

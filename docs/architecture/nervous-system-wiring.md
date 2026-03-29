@@ -10,7 +10,7 @@ The slip ring is the "Spinal Cord" of the droid. Every signal must be shared acr
 | Circuit | Function | Color (Typical) | Wire Gauge | Destination |
 | :--- | :--- | :--- | :--- | :--- |
 | **C1** | **VCC (20V DC)** | Red | 16-18 AWG | To Dome Buck Converter |
-| **C2** | **GND (Common)** | Black | 16-18 AWG | To All Node Grounds (Star Ground) |
+| **C2** | **GND (Common)** | Black | 16-18 AWG | To All MCU Grounds (Star Ground) |
 | **C3** | **UDNS TX (Out)** | Yellow/White | 22-24 AWG | Body Master -> Dome Slaves (Command) |
 | **C4** | **UDNS RX (In)** | Green/Blue | 22-24 AWG | Dome Slaves -> Body Master (Telemetry) |
 | **C5** | **Spare/Aux** | Brown | 22-24 AWG | Optional Signal (RC Bypass) |
@@ -21,7 +21,7 @@ The slip ring is the "Spinal Cord" of the droid. Every signal must be shared acr
 ## 🧠 Controller Interconnects
 
 ### **1. Body Master (ESP32D Dev Board)**
-The "Body Brain" sends commands up the spine to the dome controllers.
+The "Body Controller" sends commands up the spine to the dome controllers.
 *   **UDNS TX (GPIO17)**: Connect to Slip Ring **Circuit 3**.
 *   **UDNS RX (GPIO16)**: Connect to Slip Ring **Circuit 4**.
 *   **Power**: 5V from Body Buck Converter.
@@ -39,7 +39,7 @@ The S3 Super Minis are wired in "Parallel" (Multidrop) on the command bus.
 ```mermaid
 graph LR
     subgraph BODY [BODY CHASSIS]
-        B_ESP["Node 1 (Body Brain)"]
+        B_ESP["MCU 1 (Body Controller)"]
     end
 
     subgraph RING [6-CIRCUIT SLIP RING]
@@ -51,8 +51,8 @@ graph LR
 
     subgraph DOME [DOME INTERIOR]
         D_BUCK["Dome Buck (5V)"]
-        D_S3["Node 2 (Lights)"]
-        D_S3_M["Node 3 (Motion)"]
+        D_S3["MCU 2 (Lights)"]
+        D_S3_M["MCU 3 (Motion)"]
     end
 
     %% Power Path

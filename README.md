@@ -12,10 +12,10 @@ To view the documented system with a premium, interactive "Mission Control" inte
 ## 🚀 Project Overview
 Wee2-D2 uses a decentralized architecture across three ESP32 microcontrollers to ensure non-blocking operation of audio, lighting, and mechanical systems. The droid is controlled via **Dual HOTRC DS-600 transmitters** (one for drive, one for dome) for maximum reliability during events.
 
-### 🧠 System Nodes
-- **Node 1: Body Brain (Audio & Dispatch)**: ESPHome-based controller for RC signal processing, bank-switching, and audio triggering.
-- **Node 2: Dome Lights (WLED)**: Dedicated WLED instance for WS2812 addressable LED light shows with safety current limiting.
-- **Node 3: Dome Motion (ESPHome)**: Precise motor control for dome rotation with safety voltage clamping (20V battery to 12V motor).
+### 🧠 System MCUs
+- **MCU 1: Body Controller (Audio & Dispatch)**: ESPHome-based controller for RC signal processing, bank-switching, and audio triggering.
+- **MCU 2: Lighting Controller (WLED)**: Dedicated WLED instance for WS2812 addressable LED light shows with safety current limiting.
+- **MCU 3: Motion Controller (ESPHome)**: Precise motor control for dome rotation with safety voltage clamping (20V battery to 12V motor).
 
 > [!WARNING]
 > **PROJECT SCOPE**: This repository exclusively documents the custom **Electrical Architecture** and **Firmware** ecosystem. It does **not** contain the 3D-printable STL files or mechanical assembly instructions for the droid chassis itself. Please refer to the official Mr. Baddeley Patreon or Group for structural files.
@@ -45,7 +45,7 @@ The Wee2-D2 is natively powered by **DeWalt 20V Batteries** running through an L
 ## 🦿 Hardware Ecosystem
 *   **Control**: 2x [HOTRC DS-600](./docs/hardware/hotrc-ds600-manual.md) (Silent Mode mod).
 *   **Drive System**: 2x [Flipsky Mini FSESC 6.7 Pro](./docs/hardware/flipsky-fsesc-67-pro-manual.md) ➔ L-faster Hub Motors.
-*   **Dome Motion**: [goBILDA 5203 Yellow Jacket](./docs/hardware/gobilda-motor-manual.md) ➔ [1x15A Motor Controller](./docs/hardware/gobilda-motor-manual.md).
+*   **Motion Controller**: [goBILDA 5203 Yellow Jacket](./docs/hardware/gobilda-motor-manual.md) ➔ [1x15A Motor Controller](./docs/hardware/gobilda-motor-manual.md).
 *   **Audio**: [PEMENOL 60W (DY-HL50T)](./docs/hardware/pemenol-60w-voice-manual.md) (60W Mono).
 *   **Power Protection**: [MgcSTEM LVP-R1.5](./docs/hardware/mgcstem-lvp-r15-manual.md) (40A Cutoff).
 *   **Lighting**: [GrnWave Circular PSI](./docs/hardware/grnwave-psi-manual.md) (76-LED Inward Spiral).
