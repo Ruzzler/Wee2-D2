@@ -20,11 +20,13 @@ The **Body Controller** acts as the central nervous system for Wee2-D2. It decod
 ## 🔌 Pinout Configuration
 | Connection | ESP32 Pin | Logic |
 | :--- | :---: | :--- |
-| **RC CH3 (Trigger A)** | GPIO25 | Input |
-| **RC CH4 (Trigger B)** | GPIO33 | Input |
-| **RC CH6 (Bank Switch)** | GPIO32 | Input |
-| **Sound Trigger S1 - S9** | 4, 5, 26, 27, 18, 19, 21, 22, 23 | Output (Active Low) |
-| **Status LED** | GPIO2 | Heartbeat |
+| **RC CH3 (Trigger A)** | GPIO 25 | Grey/Black (Input) |
+| **RC CH4 (Trigger B)** | GPIO 33 | Blue/Black (Input) |
+| **RC CH6 (Bank Switch)** | GPIO 32 | Purple/Black (Input) |
+| **Sound Trigger S1 - S9** | 4, 5, 26, 27, 18, 19, 21, 22, 23 | Master Trigger Hub (Active Low) |
+| **UDNS TX (Slip Ring)** | GPIO 17 | Yellow/Black (Serial Output) |
+| **UDNS RX (Slip Ring)** | GPIO 16 | Green/Black (Serial Input) |
+| **Status LED** | GPIO 2 | Heartbeat (Onboard) |
 
 ## 🛠️ Configuration
 The configuration is defined in [`body-brain.yaml`](./body-brain.yaml). 

@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         try {
             // Adjust path to root since app.js is now in root
-            const fullPath = './' + path;
+            const fullPath = './' + path + '?v=' + Date.now();
             const response = await fetch(fullPath);
             
             if (!response.ok) {
