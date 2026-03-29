@@ -17,7 +17,7 @@ Welcome to the centralized Technical Manuals Registry. This page contains all th
 
 ## 📡 Signal & Audio
 *   [HOTRC DS-600 Transmitter](../hardware/hotrc-ds600-manual.md) — [[Source PDF](../hardware/hotrc-ds600-manual.pdf)]
-*   [HOTRC F-06A PWM Receiver (PDF Only)](../hardware/hotrc-f06a-manual.pdf)
+*   [HOTRC F-06A PWM Receiver](../hardware/hotrc-f06a-manual.md) — [[Source PDF](../hardware/hotrc-f06a-manual.pdf)]
 *   [PEMENOL 60W Soundboard (DY-HL50T)](../hardware/pemenol-60w-voice-manual.md)
 *   [GrnWave Circular PSI Logic](../hardware/grnwave-psi-manual.md)
 
