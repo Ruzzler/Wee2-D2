@@ -139,13 +139,43 @@ switch:
 
 button:
   - platform: template
-    name: "Test Dome: Red Alert"
-    icon: "mdi:lightbulb-alert"
+    name: "TEST: Angry Mode"
+    icon: "mdi:emoticon-angry"
     on_press:
       then:
-        # Standard WLED JSON API command over serial to turn everything RED
-        # The simplest possible test: Toggle the Power (ON/OFF)
-        - uart.write: '{"on":"t"}\n'
+        - switch.turn_on: s5_trigger
+        - uart.write: '{"on":true,"seg":[{"fx":0,"col":[[255,0,0]]}]}\n'
+
+  - platform: template
+    name: "TEST: Happy Mode"
+    icon: "mdi:emoticon-happy"
+    on_press:
+      then:
+        - switch.turn_on: s1_trigger
+        - uart.write: '{"on":true,"seg":[{"fx":2,"sx":100,"col":[[0,255,0]]}]}\n'
+
+  - platform: template
+    name: "TEST: Processing"
+    icon: "mdi:chip"
+    on_press:
+      then:
+        - switch.turn_on: s3_trigger
+        - uart.write: '{"on":true,"seg":[{"fx":84,"sx":150,"col":[[0,0,255]]}]}\n'
+
+  - platform: template
+    name: "TEST: Alert Level"
+    icon: "mdi:alarm-light"
+    on_press:
+      then:
+        - switch.turn_on: s7_trigger
+        - uart.write: '{"on":true,"seg":[{"fx":45,"sx":200,"col":[[255,0,0],[0,0,255]]}]}\n'
+
+  - platform: template
+    name: "TEST: Restoration"
+    icon: "mdi:shield-check"
+    on_press:
+      then:
+        - uart.write: '{"on":true,"seg":[{"fx":0,"col":[[0,0,255]]}]}\n'
 
 sensor:
   # CH5 (Bank Cycle Switch)
