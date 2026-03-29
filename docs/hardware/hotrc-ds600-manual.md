@@ -47,9 +47,9 @@ The **F-06A Receiver** should be connected to the MCU 1 ESP32 using standard 3-p
 | :--- | :--- | :--- | :--- |
 | **CH3** (Data Pin 3) | **GPIO 25** | Grey/Black | Audio Bank/Trigger A |
 | **CH4** (Data Pin 4) | **GPIO 33** | Blue/Black | Audio Bank/Trigger B |
-| **CH6** (Data Pin 6) | **GPIO 32** | Purple/Black | Audio Bank Cycle Switch |
-| **Slot 6 (+)** | **5V / VIN** | Red | Power Bridge (5V Rail) |
-| **Slot 6 (-)** | **GND** | Black | Common Ground |
+| **CH5** (Data Pin 5) | **GPIO 32** | Purple/Black | Audio Bank Cycle Switch |
+| **Slot 5 (+)** | **5V / VIN** | Red | Power Bridge (5V Rail) |
+| **Slot 5 (-)** | **GND** | Black | Common Ground |
 
 > [!IMPORTANT]
 > **Failsafe Setup**: 

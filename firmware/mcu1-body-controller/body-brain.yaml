@@ -37,7 +37,7 @@ globals:
   - id: prev_ch4_state
     type: int
     initial_value: '-1'
-  - id: prev_ch6_state
+  - id: prev_ch5_state
     type: int
     initial_value: '-1'
   - id: current_bank
@@ -128,10 +128,10 @@ switch:
       - switch.turn_off: s9_trigger
 
 sensor:
-  # CH6 (Bank Cycle Switch)
+  # CH5 (Bank Cycle Switch)
   - platform: pulse_width
     pin: GPIO32
-    name: "RC CH6 Pulse Width"
+    name: "RC CH5 Pulse Width"
     unit_of_measurement: 'µs'
     update_interval: 50ms
     filters:
@@ -141,14 +141,14 @@ sensor:
         - lambda: |-
             if (x > 0) {
               int current_state = (x > 1500) ? 1 : 0;
-              if (current_state != id(prev_ch6_state)) {
+              if (current_state != id(prev_ch5_state)) {
                 id(current_bank) = (id(current_bank) + 1) % 4; // Now cycles through 4 banks
                 if (id(current_bank) == 3) {
                   id(bank_status).publish_state("Bank 4 (Auto)");
                 } else {
                   id(bank_status).publish_state("Bank " + to_string(id(current_bank) + 1));
                 }
-                id(prev_ch6_state) = current_state;
+                id(prev_ch5_state) = current_state;
                 id(auto_sound_timer) = 0;  // Reset auto timer on any bank switch
               }
             }

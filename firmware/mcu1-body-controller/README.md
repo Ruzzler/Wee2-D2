@@ -11,8 +11,8 @@ The **Body Controller** acts as the central nervous system for Wee2-D2. It decod
 | **Visual ID** | ![ESP32D](../../assets/esp32d-dev-board.png) |
 
 ## 🚀 Core Features
-*   **RC Signal Decoding**: Monitored on CH3, CH4, and CH6.
-*   **Bank Switching**: Uses CH6 (3-position or toggle switch) to cycle through 4 distinct sound banks.
+*   **RC Signal Decoding**: Monitored on CH3, CH4, and **CH5**.
+*   **Bank Switching**: Uses **CH5** (3-position or toggle switch) to cycle through 4 distinct sound banks.
 *   **Sound Matrix**: Triggers S1-S9 on the soundboard based on current bank and stick position.
 *   **Auto-Mode (Bank 4)**: Automatically plays a random sound every 5–15 seconds for "ambient" droid behavior during events.
 *   **OTA Updates**: Fully support Over-The-Air updates via the [Imperial Databank Dashboard](docs/maintenance/network-ota-guide.md).
@@ -22,7 +22,7 @@ The **Body Controller** acts as the central nervous system for Wee2-D2. It decod
 | :--- | :---: | :--- |
 | **RC CH3 (Trigger A)** | GPIO 25 | Grey/Black (Input) |
 | **RC CH4 (Trigger B)** | GPIO 33 | Blue/Black (Input) |
-| **RC CH6 (Bank Switch)** | GPIO 32 | Purple/Black (Input) |
+| **RC CH5 (Bank Switch)** | GPIO 32 | Purple/Black (Input) |
 | **Sound Trigger S1 - S9** | 4, 5, 26, 27, 18, 19, 21, 22, 23 | Master Trigger Hub (Active Low) |
 | **UDNS TX (Slip Ring)** | GPIO 17 | Yellow/Black (Serial Output) |
 | **UDNS RX (Slip Ring)** | GPIO 16 | Green/Black (Serial Input) |

@@ -99,7 +99,7 @@ Master controller for sounds and UDNS coordination.
 | Component | Pin (GPIO) | Mode | Notes |
 | :--- | :---: | :---: | :--- |
 | **Status LED** | GPIO2 | Output | Heartbeat Blinker |
-| **RC Inputs (Body F-06A)** | 25, 33, 32 | Input | CH3 (Grey/Blk), CH4 (Blue/Blk), CH6 (Purple/Blk) |
+| **RC Inputs (Body F-06A)** | 25, 33, 32 | Input | CH3 (Grey/Blk), CH4 (Blue/Blk), CH5 (Purple/Blk) |
 | **Sound S1-S9** | 4,5,26,27,18,19,21,22,23 | Output | **Active LOW** (Trigger) |
 | **UDNS TX** | GPIO17 | Output | Serial to Dome (Yellow/Black) |
 | **UDNS RX** | GPIO16 | Input | Serial from Dome (Green/Black) |

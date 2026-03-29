@@ -33,7 +33,7 @@ SD_ROOT/
 *Note: If a trigger is hit twice, the PEMENOL board automatically shuffles to the next MP3 in that folder.*
 
 ## 🔄 The ESPHome Bank Logic
-By flicking **CH6** on your transmitter, MCU 1 cycles through 4 internal "Banks." This routes your standard CH3 and CH4 joystick movements to completely different audio folders on the SD card:
+By flicking **CH5** on your transmitter, MCU 1 cycles through 4 internal "Banks." This routes your standard CH3 and CH4 joystick movements to completely different audio folders on the SD card:
 
 | ESPHome Bank | Trigger Mode | Mapped Audio Folder |
 | :--- | :--- | :--- |
