@@ -1,4 +1,4 @@
-![Wee2-D2 Hero](assets/droid-actual.jpg)
+<img src="assets/droid-actual.jpg" alt="Wee2-D2 Hero" width="400">
 
 # Wee2-D2: Mr. Baddeley Big Baby Astromech
 
@@ -22,16 +22,6 @@ I designed Wee2-D2 utilizing a decentralized architecture split across three ESP
 
 > [!WARNING]
 > **PROJECT SCOPE**: This repository exclusively documents my custom **Electrical Architecture** and **Firmware** ecosystem. It does **not** contain the 3D-printable STL files or mechanical assembly instructions for the droid chassis itself. Please refer to the official Mr. Baddeley Patreon or group hubs for structural files.
-
-## 🔋 Star-Ground Power Architecture
-My electrical design deviates from standard 12V ecosystems by natively powering Wee2-D2 via **DeWalt 20V Batteries** funneled through an MgcSTEM Low-Voltage Cutoff. 
-
-To eliminate data corruption and inductive motor noise across the 3.3V UART lines:
-1. I implemented an explicit **Star Ground** topology centered around a heavy-duty **Negative Bus Bar**. 
-2. The 6-circuit CNBTR slip ring carries a **Dual-Line 20V Payload** (isolating the heavy ESC motor branch from the sensitive Dome Logic branch).
-
-👉 **[View the Interactive Electrical Schematic](docs/architecture/electrical-schematic.md)**
-👉 **[View the Power Architecture Deep-Dive](docs/architecture/power-architecture.md)**
 
 ## 📁 Repository Structure
 ```text
