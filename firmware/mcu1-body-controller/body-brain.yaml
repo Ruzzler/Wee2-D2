@@ -41,6 +41,9 @@ status_led:
 
 globals:
   # Using -1 as the initial state forces the first reading to be registered as a change
+  - id: prev_ch3_state
+    type: int
+    initial_value: '-1'
   - id: prev_ch4_state
     type: int
     initial_value: '-1'
