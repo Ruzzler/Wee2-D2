@@ -17,6 +17,13 @@ esp32:
 logger:
   level: WARN
 
+# UDNS Serial Bus (To Dome)
+uart:
+  id: udns_bus
+  tx_pin: GPIO17
+  rx_pin: GPIO16
+  baud_rate: 9600
+
 # Enable Home Assistant API
 api:
 
@@ -126,6 +133,15 @@ switch:
     on_turn_on:
       - delay: 100ms
       - switch.turn_off: s9_trigger
+
+button:
+  - platform: template
+    name: "Test Dome: Red Alert"
+    icon: "mdi:lightbulb-alert"
+    on_press:
+      then:
+        # Standard WLED JSON API command over serial to turn everything RED
+        - uart.write: '{"seg":{"col":[[255,0,0]]}}'
 
 sensor:
   # CH5 (Bank Cycle Switch)
