@@ -11,8 +11,8 @@ The **Body Controller** acts as the central nervous system for Wee2-D2. It decod
 | **Visual ID** | ![ESP32D](../../assets/esp32d-dev-board.png) |
 
 ## 🚀 Core Features
-*   **RC Signal Decoding**: Monitored on CH3, CH4, and CH5.
-*   **Bank Switching**: Uses CH5 (3-position or toggle switch) to cycle through 4 distinct sound banks.
+*   **RC Signal Decoding**: Monitored on CH3, CH4, and CH6.
+*   **Bank Switching**: Uses CH6 (3-position or toggle switch) to cycle through 4 distinct sound banks.
 *   **Sound Matrix**: Triggers S1-S9 on the soundboard based on current bank and stick position.
 *   **Auto-Mode (Bank 4)**: Automatically plays a random sound every 5–15 seconds for "ambient" droid behavior during events.
 *   **OTA Updates**: Fully support Over-The-Air updates via the [Imperial Databank Dashboard](docs/maintenance/network-ota-guide.md).
@@ -20,10 +20,10 @@ The **Body Controller** acts as the central nervous system for Wee2-D2. It decod
 ## 🔌 Pinout Configuration
 | Connection | ESP32 Pin | Logic |
 | :--- | :---: | :--- |
-| **RC CH3 (Audio 1)** | GPIO25 | Input |
-| **RC CH4 (Audio 2)** | GPIO32 | Input |
-| **RC CH5 (Bank Switch)** | GPIO33 | Input |
-| **Sound Trigger S1 - S9** | GPIO4, 5, 16-19, 21-23 | Output (Active Low) |
+| **RC CH3 (Trigger A)** | GPIO25 | Input |
+| **RC CH4 (Trigger B)** | GPIO33 | Input |
+| **RC CH6 (Bank Switch)** | GPIO32 | Input |
+| **Sound Trigger S1 - S9** | 4, 5, 26, 27, 18, 19, 21, 22, 23 | Output (Active Low) |
 | **Status LED** | GPIO2 | Heartbeat |
 
 ## 🛠️ Configuration

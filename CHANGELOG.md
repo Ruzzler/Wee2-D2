@@ -4,6 +4,18 @@ All notable changes to the Wee2-D2 project will be documented in this file. This
 
 ---
 
+## [1.5.0] - 2026-03-29 (Physical Architecture & Pin Remediation)
+### Added
+- **Finalized Body Wiring Guide**: Created a master reference artifact integrating all user-provided wire colors and logic mappings for MCU 1.
+- **UDNS Color Standard**: Established **Yellow/Black (TX)** and **Green/Black (RX)** as the official wiring standard for the 6-circuit slip ring serial bridge.
+
+### Changed
+- **Pin Remediation (MCU 1)**: Migrated Sound Triggers S3 and S4 from GPIO 16/17 to **GPIO 26/27** to resolve Hardware UART2 conflicts.
+- **RC Channel Realignment**: Updated the Body Controller to utilize **CH6 (GPIO 32)** for bank switching to match the builder's physical receiver data pin mapping.
+- **Physical Build Synchronization**: Updated all technical manuals (Schematic, Audio Guide, Firmware READMEs) to reflect the builder's specific wire colors and pin selections.
+
+---
+
 ## [1.4.0] - 2026-03-28 (Power Topology & AI Dossier Overhaul)
 ### Added
 - **Star Ground Architecture**: Redesigned power distribution topology featuring a 40A LVC, Positive Blade Fuse Box, and central Negative Bus Bar for flawless 3.3V UART transmission.

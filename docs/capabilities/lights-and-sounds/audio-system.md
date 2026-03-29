@@ -33,7 +33,7 @@ SD_ROOT/
 *Note: If a trigger is hit twice, the PEMENOL board automatically shuffles to the next MP3 in that folder.*
 
 ## 🔄 The ESPHome Bank Logic
-By flicking **CH5** on your transmitter, MCU 1 cycles through 4 internal "Banks." This routes your standard CH3 and CH4 joystick movements to completely different audio folders on the SD card:
+By flicking **CH6** on your transmitter, MCU 1 cycles through 4 internal "Banks." This routes your standard CH3 and CH4 joystick movements to completely different audio folders on the SD card:
 
 | ESPHome Bank | Trigger Mode | Mapped Audio Folder |
 | :--- | :--- | :--- |
@@ -45,6 +45,22 @@ By flicking **CH5** on your transmitter, MCU 1 cycles through 4 internal "Banks.
 
 ## 🤖 Bank 4 (Auto-Mode)
 When you cycle into **Bank 4**, the ESP32 enters "Ambient Mode." Every 5 to 15 seconds, MCU 1 will automatically fire a random trigger from S1 to S9. Ensure every folder (`01`-`09`) has at least one MP3, otherwise Auto-Mode may randomly trigger a silent folder during an event!
+
+## 🧰 Physical Wiring Guide (S1-S9)
+When physically wiring the ESP32 (MCU 1) to the PEMENOL soundboard, ensure the following wire colors map exactly to the S1-S9 triggers:
+
+| Trigger | ESP32 GPIO | Wire Color |
+| :--- | :---: | :--- |
+| **S1** | GPIO4 | 🟨 Yellow |
+| **S2** | GPIO5 | 🟥 Red |
+| **S3** | **GPIO26** | ⬛ Black |
+| **S4** | **GPIO27** | ⬜ White |
+| **S5** | GPIO18 | 🟫 Brown |
+| **S6** | GPIO19 | 🟪 Purple |
+| **S7** | GPIO21 | 🟦 Blue |
+| **S8** | GPIO22 | ⬜ Grey |
+| **S9** | GPIO23 | 🟧 Orange |
+| **GND Line**| GND (near 3V3) | 🟩 Green |
 
 ---
 **Relevant Hardware & Code:**

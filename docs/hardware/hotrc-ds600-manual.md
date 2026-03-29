@@ -43,11 +43,13 @@ If your droid drives backward when you pull the trigger:
 ## 📡 Wiring to ESP32 (MCU 1)
 The **F-06A Receiver** should be connected to the MCU 1 ESP32 using standard 3-pin servo cables.
 
-| Receiver Port | MCU 1 Pin | Function |
-| :--- | :--- | :--- |
-| **CH1** (Steer) | **GPIO 32** | Steering Signal (PWM) |
-| **CH2** (Drive) | **GPIO 33** | Throttle Signal (PWM) |
-| **CH3** | **GPIO 34** | Mode / Audio Select |
+| Receiver Port | MCU 1 Pin | Wire Color | Function |
+| :--- | :--- | :--- | :--- |
+| **CH3** (Data Pin 3) | **GPIO 25** | Grey/Black | Audio Bank/Trigger A |
+| **CH4** (Data Pin 4) | **GPIO 33** | Blue/Black | Audio Bank/Trigger B |
+| **CH6** (Data Pin 6) | **GPIO 32** | Purple/Black | Audio Bank Cycle Switch |
+| **Slot 6 (+)** | **5V / VIN** | Red | Power Bridge (5V Rail) |
+| **Slot 6 (-)** | **GND** | Black | Common Ground |
 
 > [!IMPORTANT]
 > **Failsafe Setup**: 

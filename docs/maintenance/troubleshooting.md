@@ -12,7 +12,7 @@ If your droid begins exhibiting non-compliant behavior, use this matrix to diagn
 | **Sound is Distorted** | Poor Grounding | Ensure common ground is tied to the soundboard amp GND. |
 | **LEDs Flickering** | Data Noise | Increase wire thickness; add 470-ohm resistor to data line. |
 | **Cannot Connect to IP** | DHCP Lease Expired | Check router; use static IP in `secrets.yaml`. |
-| **"Angry Mode" Fails** | UDNS Link Fault | Check GPIO 13-to-5 serial connection (UDNS). |
+| **"Angry Mode" Fails** | UDNS Link Fault | Check GPIO 17-to-43 serial connection (UDNS). |
 
 ---
 
@@ -29,7 +29,7 @@ The most powerful tool at your disposal is the **ESPHome Logger**.
 To verify communication across the slip ring:
 1.  Open the **Body Controller (MCU 1)** Logs.
 2.  Trigger a sound.
-3.  Look for a log entry like `[D][uart_debug:158]: >>> "CMD:PLAY_01\n"`.
+3.  Look for a log entry indicating that a serial command was broadcasted (e.g., `[D][uart_debug:158]: >>> "BANK:1\n"`).
 4.  Open the **Dome Controller (MCU 2/3)** Logs and confirm it receives the same string.
 
 ### **3. Multimeter Probe Points**

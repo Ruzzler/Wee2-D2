@@ -49,8 +49,8 @@ The slip ring is the physical "Spinal Cord" of the droid. Every signal must be s
 | **C2** | **GND (Common)** | Black | 18 AWG | **Motor Line**: To goBILDA 15A ESC |
 | **C3** | **VCC (20V DC)** | Yellow/White | 18 AWG | **Logic Line**: To Mini560 Pro Buck |
 | **C4** | **GND (Common)** | Green/Blue | 18 AWG | **Logic Line**: To Mini560 Pro Buck |
-| **C5** | **UDNS TX (Out)** | Brown | 18 AWG | Body Master -> Dome Slaves (Command) |
-| **C6** | **UDNS RX (In)** | Gray | 18 AWG | Dome Slaves -> Body Master (Telemetry) |
+| **C5** | **UDNS TX (Out)** | Yellow/Black | 18 AWG | Body Master -> Dome Slaves (Command) |
+| **C6** | **UDNS RX (In)** | Green/Black | 18 AWG | Dome Slaves -> Body Master (Telemetry) |
 
 > [!WARNING]
 > **COMMON GROUND IS MANDATORY**: You must ensure the Ground from the main Negative Bus Bar travels up the slip ring to provide a flawless reference potential for both the motor and the logic wires. If the ground is broken or noisy, your 3.3V UART serial signals will become "garbage" data floating in reference to nothing, and the droid will wildly glitch. 

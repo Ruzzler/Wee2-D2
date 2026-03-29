@@ -49,8 +49,8 @@ flowchart TD
         
         DOME_ESC -->|5V BEC| RC2["Dome Receiver (F-06A)"]:::signal
 
-        DOME_WAGOS --> ESP3["MCU 3: Dome Motion"]:::brain
         DOME_WAGOS --> WLED["MCU 2: Dome Lights"]:::lights
+        DOME_WAGOS --> ESP3["MCU 3: Dome Motion"]:::brain
         DOME_WAGOS --> LOGICS["Logic Matrices and PSIs"]:::lights
     end
 
@@ -76,8 +76,8 @@ flowchart TD
     click DOME_BUCK href "docs/bill-of-materials.md" "Buck Converter"
     click RC1 href "docs/hardware/hotrc-f06a-manual.md" "Receiver Manual"
     click ESP1 href "firmware/mcu1-body-controller/body-brain.yaml" "MCU 1 Code"
-    click ESP3 href "firmware/mcu3-motion-controller/dome-motion.yaml" "MCU 3 Code"
     click WLED href "docs/capabilities/lights-and-sounds/led-system.md" "LED System"
+    click ESP3 href "firmware/mcu3-motion-controller/dome-motion.yaml" "MCU 3 Code"
     click DOME_ESC href "docs/capabilities/movement/dome-rotation.md" "Dome Rotation"
 
     classDef power fill:#ff9900,stroke:#333,stroke-width:2px,color:#000
@@ -99,21 +99,11 @@ Master controller for sounds and UDNS coordination.
 | Component | Pin (GPIO) | Mode | Notes |
 | :--- | :---: | :---: | :--- |
 | **Status LED** | GPIO2 | Output | Heartbeat Blinker |
-| **RC Inputs** | 25, 32, 33 | Input | CH3, CH4, CH5 (PWM) |
-| **Sound S1-S9** | 4,5,16,17,18,19,21,22,23 | Output | **Active LOW** (Trigger) |
-| **UDNS TX** | GPIO17 | Output | Serial to Dome (Slip Ring Point 3) |
-| **UDNS RX** | GPIO16 | Input | Serial from Dome (Slip Ring Point 4) |
+| **RC Inputs (Body F-06A)** | 25, 33, 32 | Input | CH3 (Grey/Blk), CH4 (Blue/Blk), CH6 (Purple/Blk) |
+| **Sound S1-S9** | 4,5,26,27,18,19,21,22,23 | Output | **Active LOW** (Trigger) |
+| **UDNS TX** | GPIO17 | Output | Serial to Dome (Yellow/Black) |
+| **UDNS RX** | GPIO16 | Input | Serial from Dome (Green/Black) |
 | **Web UI** | N/A | WiFi | Port 80 (ESPHome Dashboard) |
-
-### **MCU 3: Motion Controller (ESP32-S3 Super Mini)**
-Dedicated controller for 360° dome rotation.
-
-| Component | Pin (GPIO) | Mode | Notes |
-| :--- | :---: | :---: | :--- |
-| **RC CH1 Input** | GPIO1 | Input | From Receiver #2 (Dome Rotation) |
-| **Dome ESC** | GPIO2 | Output | PWM Signal (50Hz) to goBILDA ESC |
-| **UDNS TX** | GPIO44 | Output | Serial to Body (via Slip Ring) |
-| **UDNS RX** | GPIO43 | Input | Serial from Body (via Slip Ring) |
 
 ### **MCU 2: Lighting Controller (ESP32-S3 Super Mini - ESPHome)**
 Addressable LEDs using the **UDNS Light Interface**.
@@ -124,6 +114,16 @@ Addressable LEDs using the **UDNS Light Interface**.
 | **UDNS TX** | GPIO44 | Output | Shared Serial Bus |
 | **UDNS RX** | GPIO43 | Input | Shared Serial Bus |
 | **Web UI** | N/A | WiFi | Port 80 (Pattern selection) |
+
+### **MCU 3: Motion Controller (ESP32-S3 Super Mini)**
+Dedicated controller for 360° dome rotation.
+
+| Component | Pin (GPIO) | Mode | Notes |
+| :--- | :---: | :---: | :--- |
+| **RC CH1 Input** | GPIO1 | Input | From Receiver #2 (Dome Rotation) |
+| **Dome ESC** | GPIO2 | Output | PWM Signal (50Hz) to goBILDA ESC |
+| **UDNS TX** | GPIO44 | Output | Serial to Body (via Slip Ring) |
+| **UDNS RX** | GPIO43 | Input | Serial from Body (via Slip Ring) |
 
 ---
 

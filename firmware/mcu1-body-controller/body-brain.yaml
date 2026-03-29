@@ -34,13 +34,10 @@ status_led:
 
 globals:
   # Using -1 as the initial state forces the first reading to be registered as a change
-  - id: prev_ch3_state
-    type: int
-    initial_value: '-1'
   - id: prev_ch4_state
     type: int
     initial_value: '-1'
-  - id: prev_ch5_state
+  - id: prev_ch6_state
     type: int
     initial_value: '-1'
   - id: current_bank
@@ -74,7 +71,7 @@ switch:
       - delay: 100ms
       - switch.turn_off: s2_trigger
   - platform: gpio
-    pin: GPIO16
+    pin: GPIO26
     id: s3_trigger
     name: "Sound S3"
     inverted: true
@@ -82,7 +79,7 @@ switch:
       - delay: 100ms
       - switch.turn_off: s3_trigger
   - platform: gpio
-    pin: GPIO17
+    pin: GPIO27
     id: s4_trigger
     name: "Sound S4"
     inverted: true
@@ -131,10 +128,10 @@ switch:
       - switch.turn_off: s9_trigger
 
 sensor:
-  # CH5 (Bank Cycle Switch)
+  # CH6 (Bank Cycle Switch)
   - platform: pulse_width
-    pin: GPIO33
-    name: "RC CH5 Pulse Width"
+    pin: GPIO32
+    name: "RC CH6 Pulse Width"
     unit_of_measurement: 'µs'
     update_interval: 50ms
     filters:
@@ -144,14 +141,14 @@ sensor:
         - lambda: |-
             if (x > 0) {
               int current_state = (x > 1500) ? 1 : 0;
-              if (current_state != id(prev_ch5_state)) {
+              if (current_state != id(prev_ch6_state)) {
                 id(current_bank) = (id(current_bank) + 1) % 4; // Now cycles through 4 banks
                 if (id(current_bank) == 3) {
                   id(bank_status).publish_state("Bank 4 (Auto)");
                 } else {
                   id(bank_status).publish_state("Bank " + to_string(id(current_bank) + 1));
                 }
-                id(prev_ch5_state) = current_state;
+                id(prev_ch6_state) = current_state;
                 id(auto_sound_timer) = 0;  // Reset auto timer on any bank switch
               }
             }
@@ -183,7 +180,7 @@ sensor:
 
   # CH4 (Sound Trigger)
   - platform: pulse_width
-    pin: GPIO32
+    pin: GPIO33
     name: "RC CH4 Pulse Width"
     unit_of_measurement: 'µs'
     update_interval: 50ms
