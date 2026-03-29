@@ -3,7 +3,11 @@
 
 The **Motion Controller** node provides high-torque, non-blocking control of the 5203 Yellow Jacket motor via a goBILDA 15A ESC. It translates RC receiver signals into brushed motor throttle commands with integrated safety clamping.
 
-![ESP32-S3 Super Mini](../../assets/esp32-s3-super-mini.jpg)
+| **Hardware Node** | ESP32-S3 Super Mini |
+| :--- | :--- |
+| **Logic Framework** | ESPHome |
+| **Primary Function** | High-Torque Motor Drive |
+| **Visual ID** | ![S3 Mini](../../assets/esp32-s3-super-mini.jpg) |
 
 ## 🚀 Core Features
 *   **RC Steering Input**: Decodes CH1 from the dome's secondary HOTRC receiver.

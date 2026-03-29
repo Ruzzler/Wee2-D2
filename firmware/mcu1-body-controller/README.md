@@ -3,7 +3,11 @@
 
 The **Body Controller** acts as the central nervous system for Wee2-D2. It decodes PWM signals from the primary RC receiver and translates them into digital triggers for the PEMENOL/DY-HL50T soundboard.
 
-![ESP32D Dev Board](../../assets/esp32d-dev-board.png)
+| **Hardware Node** | ESP32-WROOM-32D |
+| :--- | :--- |
+| **Logic Framework** | ESPHome |
+| **Primary Function** | Audio & Dispatch |
+| **Visual ID** | ![ESP32D](../../assets/esp32d-dev-board.png) |
 
 ## 🚀 Core Features
 *   **RC Signal Decoding**: Monitored on CH3, CH4, and CH5.

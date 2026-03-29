@@ -3,6 +3,11 @@
 
 This MCU is dedicated to controlling the WS2812 addressable LED system in the dome using **WLED**.
 
+| **Hardware Node** | ESP32-S3 Super Mini |
+| :--- | :--- |
+| **Logic Framework** | WLED |
+| **Primary Function** | Addressable LEDs |
+| **Visual ID** | ![S3 Mini](../../assets/esp32-s3-super-mini.jpg) |
 ## 🔋 Power Management & Safety
 > [!IMPORTANT]
 > To protect the Mini560 5V buck converter from overheating or melting during high-intensity light shows (e.g., full-white flashes), the WLED brightness limiter **MUST** be enabled.
