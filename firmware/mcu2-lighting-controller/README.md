@@ -9,6 +9,8 @@ This MCU is dedicated to controlling the WS2812 addressable LED system in the do
 | **Primary Function** | Addressable LEDs |
 | **Source Code** | [🌐 WLED Pre-compiled Binaries (Web Installer)](https://kno.wled.ge/) |
 | **Visual ID** | ![S3 Mini](../../assets/esp32-s3-super-mini.jpg) |
+| **UDNS RX** | **GPIO 43** (Yellow/Black) |
+| **UDNS TX** | **GPIO 44** (Green/Black) |
 ## 🔋 Power Management & Safety
 > [!IMPORTANT]
 > To protect the Mini560 5V buck converter from overheating or melting during high-intensity light shows (e.g., full-white flashes), the WLED brightness limiter **MUST** be enabled.
@@ -34,6 +36,12 @@ To achieve authentic "Logic" scrolling:
 - **Total Pixels**: ~200 LEDs.
 - **PSI Boards**: 2x Grnwave PSI boards.
 - **Support Strips**: 1x 12-pixel strip, 2x 5-pixel strips.
+
+## 🛰️ UDNS Serial Integration
+This MCU receives high-level commands from the Body Controller via the slip ring.
+*   **Data Signal**: Connect the Yellow/Black wire (Body TX) to **GPIO 43**.
+*   **Response Signal**: Connect the Green/Black wire (Body RX) to **GPIO 44**.
+*   **Protocol**: 9600 Baud, 8N1. WLED can be configured to react to serial JSON payloads for synchronized animations.
 
 ## 🔴 "Angry/Red" Trigger Logic
 WLED is configured to listen for a hardwired HIGH/LOW signal from the **Body Controller**.

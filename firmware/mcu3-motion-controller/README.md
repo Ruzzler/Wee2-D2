@@ -9,6 +9,8 @@ The **Motion Controller** node provides high-torque, non-blocking control of the
 | **Primary Function** | High-Torque Motor Drive |
 | **Source Code** | [🗄️ `dome-motion.yaml`](dome-motion.yaml) |
 | **Visual ID** | ![S3 Mini](../../assets/esp32-s3-super-mini.jpg) |
+| **UDNS RX** | **GPIO 43** (Yellow/Black) |
+| **UDNS TX** | **GPIO 44** (Green/Black) |
 
 ## 🚀 Core Features
 *   **RC Steering Input**: Decodes CH1 from the dome's secondary HOTRC receiver.
