@@ -177,6 +177,69 @@ button:
       then:
         - uart.write: '{"on":true,"seg":[{"fx":0,"col":[[0,0,255]]}]}\n'
 
+  - platform: template
+    name: "SOLID: Red"
+    icon: "mdi:palette"
+    on_press:
+      then:
+        - uart.write: '{"on":true,"seg":[{"id":0,"fx":0,"col":[[255,0,0]]}]}\n'
+
+  - platform: template
+    name: "SOLID: Green"
+    icon: "mdi:palette"
+    on_press:
+      then:
+        - uart.write: '{"on":true,"seg":[{"id":0,"fx":0,"col":[[0,255,0]]}]}\n'
+
+  - platform: template
+    name: "SOLID: Blue"
+    icon: "mdi:palette"
+    on_press:
+      then:
+        - uart.write: '{"on":true,"seg":[{"id":0,"fx":0,"col":[[0,0,255]]}]}\n'
+
+  - platform: template
+    name: "SOLID: Gold"
+    icon: "mdi:palette"
+    on_press:
+      then:
+        - uart.write: '{"on":true,"seg":[{"id":0,"fx":0,"col":[[255,180,0]]}]}\n'
+
+  - platform: template
+    name: "SOLID: White"
+    icon: "mdi:palette"
+    on_press:
+      then:
+        - uart.write: '{"on":true,"seg":[{"id":0,"fx":0,"col":[[255,255,255]]}]}\n'
+
+  - platform: template
+    name: "ANIM: Rainbow"
+    icon: "mdi:shimmer"
+    on_press:
+      then:
+        - uart.write: '{"on":true,"seg":[{"id":0,"fx":9,"sx":128,"ix":128}]}\n'
+
+  - platform: template
+    name: "ANIM: Sweep"
+    icon: "mdi:rotate-right"
+    on_press:
+      then:
+        - uart.write: '{"on":true,"seg":[{"id":0,"fx":3,"sx":100,"col":[[0,255,255]]}]}\n'
+
+  - platform: template
+    name: "ANIM: Scanner"
+    icon: "mdi:ray-end-arrow"
+    on_press:
+      then:
+        - uart.write: '{"on":true,"seg":[{"id":0,"fx":10,"sx":150,"ix":200,"col":[[255,0,0]]}]}\n'
+
+  - platform: template
+    name: "ANIM: Fire"
+    icon: "mdi:fire"
+    on_press:
+      then:
+        - uart.write: '{"on":true,"seg":[{"id":0,"fx":66,"sx":150,"ix":100}]}\n'
+
 sensor:
   # CH5 (Bank Cycle Switch)
   - platform: pulse_width
