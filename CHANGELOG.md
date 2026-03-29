@@ -4,6 +4,19 @@ All notable changes to the Wee2-D2 project will be documented in this file. This
 
 ---
 
+## [1.6.0] - 2026-03-29 (UDNS Verification & Behavioral Integration)
+### Added
+- **Serial Integration Suite**: Implemented 14 diagnostic buttons on the Body Dashboard for "One-Touch" droid emotion testing (Red Alert, Happy, Processing, etc.).
+- **Body Wiring Guide**: Created a permanent "Imperial Standard" wiring ledger for MCU 1 in `docs/architecture/`.
+
+### Changed
+- **UDNS Baud Standard**: Synchronized the imperial serial bridge to **115200 Baud** to match WLED and S3 Mini high-speed logic.
+- **Serial JSON Protocol**: Hardened the command strings to utilize WLED's mandatory `\n` delimiter and Segment Array `[]` syntax for 100% reliability.
+- **Temporary Node Calibration**: Documented the **GPIO 3 (RX0)** requirement for standard ESP32-D temporary dome test nodes.
+- **Mixing Matrix Calibration**: Documented the DS-600 "Mixing Matrix" (Mode 1 for Body, Standard for Dome) to ensure correct Joystick interpretation.
+
+---
+
 ## [1.5.0] - 2026-03-29 (Physical Architecture & Pin Remediation)
 ### Added
 - **Finalized Body Wiring Guide**: Created a master reference artifact integrating all user-provided wire colors and logic mappings for MCU 1.
