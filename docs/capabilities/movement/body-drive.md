@@ -21,6 +21,17 @@ Unlike the Audio and Dome systems, the Body Drive system operates **without** re
 1.  **Transmitter**: Powered by **HOTRC DS-600 #1** (The main handset).
 2.  **In-Radio V-Tail Mixing**: The HOTRC radio must be put into "Mix Mode". When you push forward on the joystick, it cleanly signals *both* motors to move forward. When you push left, it signals the left motor to spin backward and the right motor forward, letting Wee2-D2 spin seamlessly like a tank on its center axis!
 3.  **Physical Link**: The PWM wires from CH1 and CH2 on the receiver run *straight* into the PWM input pins of the left and right Flipsky ESCS. 
+4.  **Mixing Matrix Calibration**: The transmitter must be manually set to **Mode (1)** to enable the mechanical "Tank Mix."
+
+### 🕹️ The DS-600 Mixing Matrix
+If your droid is "one-legging" or steering incorrectly, check the icon in the circle on your remote screen:
+*   **Mode (1)**: **REQUIRED FOR BODY**. Mixes CH1/CH2 for tank steering. 
+*   **Mode (1)(2)**: **AVOID**. Mixes all 4 channels; will interfere with sound triggers.
+*   **Mode (2)**: **INCORRECT**. Mixes CH3/CH4 only; droid will not steer.
+*   **No Icon**: **INCORRECT**. Standard logic; droid will not steer.
+
+> [!TIP]
+> **To Cycle Modes**: Turn the remote **OFF**. Hold **Button 3** and turn the remote **ON**. Repeat until you see only the **(1)** icon.
 
 ---
 **Relevant Hardware:**
