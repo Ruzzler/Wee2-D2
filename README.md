@@ -16,7 +16,7 @@ To view my documented system with a premium, interactive "Mission Control" inter
 I designed Wee2-D2 utilizing a decentralized architecture split across three ESP32 microcontrollers. This ensures non-blocking operation between the heavy audio processing, intricate LED lighting, and mechanical drive systems. The droid is piloted via **Dual HOTRC DS-600 transmitters** (one for drive logic, one for dome motion) for absolute reliability during crowded events.
 
 ### 🧠 Unified Droid Nervous System (UDNS)
-- **MCU 1: Body Controller (Audio & Dispatch)**: Main ESP32 Dev Board capturing RC signals, managing the S1-S9 sound triggers, and broadcasting UART commands up the slip ring.
+- **MCU 1: Body Controller (Audio & Dispatch)**: **38-pin** ESP32 Dev Board capturing RC signals, managing the S1-S9 sound triggers, and broadcasting UART commands up the slip ring.
 - **MCU 2: Lighting Controller (ESPHome)**: Dedicated ESP32-S3 Mini running purely on native ESPHome (bypassing WLED) for total system-sync of the WS2812 addressable LED light matrices.
 - **MCU 3: Motion Controller (ESPHome)**: Implements precise motor control for dome rotation with vital safety voltage clamping (software throttling a 20V battery down to an effective 12V for the motor hub).
 

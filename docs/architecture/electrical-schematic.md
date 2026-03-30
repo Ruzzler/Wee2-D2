@@ -47,7 +47,7 @@ flowchart TD
         ESC1 -->|5V BEC| RC1["Body Receiver (F-06A)"]:::signal
         RC1 -->|5V OUT| ESP1["MCU 1: Body Brain"]:::brain
         
-        DOME_ESC -->|5V BEC| RC2["Dome Receiver (F-06A)"]:::signal
+        DOME_ESC -.->|6V BEC ISOLATED| RC2["Dome Receiver (F-06A)"]:::signal
 
         DOME_WAGOS --> WLED["MCU 2: Dome Lights"]:::lights
         DOME_WAGOS --> ESP3["MCU 3: Dome Motion"]:::brain
@@ -93,17 +93,18 @@ flowchart TD
 
 ## 📌 Pinout Lookup Tables
 
-### **MCU 1: Body Controller (ESP32D Dev Board)**
+### **MCU 1: Body Controller (ESP32D 38-pin Board)**
 Master controller for sounds and UDNS coordination.
 
-| Component | Pin (GPIO) | Mode | Notes |
+| Component | Physical Label | Pin (GPIO) | Notes |
 | :--- | :---: | :---: | :--- |
-| **Status LED** | GPIO2 | Output | Heartbeat Blinker |
-| **RC Inputs (Body F-06A)** | 25, 33, 32 | Input | CH3 (Grey/Blk), CH4 (Blue/Blk), CH5 (Purple/Blk) |
-| **Sound S1-S9** | 4,5,26,27,18,19,21,22,23 | Output | **Active LOW** (Trigger) |
-| **UDNS TX** | GPIO17 | Output | Serial to Dome (Yellow/Black) |
-| **UDNS RX** | GPIO16 | Input | Serial from Dome (Green/Black) |
-| **Web UI** | N/A | WiFi | Port 80 (ESPHome Dashboard) |
+| **Status LED** | D2 | GPIO2 | Heartbeat Blinker |
+| **RC CH3 Input** | D25 | GPIO25 | Trigger A (Grey/Blk) |
+| **RC CH4 Input** | D33 | GPIO33 | Trigger B (Blue/Blk) |
+| **RC CH5 Input** | D32 | GPIO32 | Bank Switch (Purple/Blk) |
+| **Sound S1-S9** | D4, D5... | 4,5,26,27,18,19,21,22,23 | **Active LOW** Trigger Pins |
+| **UDNS TX** | TX2 | GPIO17 | To Dome (Yellow/Black) |
+| **UDNS RX** | RX2 | GPIO16 | From Dome (Green/Black) |
 
 ### **MCU 2: Lighting Controller (ESP32-S3 Super Mini - ESPHome)**
 Addressable LEDs using the **UDNS Light Interface**.
@@ -128,6 +129,7 @@ Dedicated controller for 360° dome rotation.
 ---
 
 ## 🛡️ Best Practices
-*   **Common Ground**: All ESP32 grounds and Buck Converter grounds **MUST** be tied together at a central star-ground point.
-*   **Dual-TX Binding**: Ensure the Body Transmitter and Dome Transmitter (HOTRC DS-600 #1 and #2) are bound to their respective receivers on separate IDs.
+*   **Common Ground**: All ESP32 grounds, Receiver grounds, and ESC signal grounds **MUST** be tied together at a central star-ground point.
+*   **Dual Drive: Parallel Signal Isolation**: The drive system uses two Flipsky Mini 6.7 Pro ESCs. Because the remote is in **Mode 1 (Mixed)**, each ESC receives its own PWM/PPM signal independently. To prevent ground loops, **only ESC 1** provides power and a ground reference to the receiver; **ESC 2** is connected via the **Signal Pin only**.
 *   **Signal Cleanliness**: Since the dome motor is a large DC motor, ensure logic wires are positioned away from the main motor leads to prevent EMI noise.
+*   **BEC Isolation**: When using the goBILDA 15A ESC, isolate the Red (6V) wire if the logic bus is already powered by a 5V source. The Black (GND) must remain connected for signal reference.

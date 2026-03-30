@@ -15,7 +15,7 @@ esp32:
 
 # Enable logging
 logger:
-  level: WARN
+  level: DEBUG
 
 # UDNS Serial Bus (To Dome)
 uart:
@@ -278,14 +278,20 @@ sensor:
       then:
         - lambda: |-
             if (x > 0) {
-              int current_state = (x > 1500) ? 1 : 0;
+              // 3-Zone Logic: 1 = UP (>1700), 0 = NEUTRAL (1300-1700), 2 = DOWN (<1300)
+              int current_state = 0;
+              if (x > 1700) current_state = 1; else if (x < 1300) current_state = 2;
+
               if (current_state != id(prev_ch3_state)) {
-                if (id(current_bank) == 0) {
-                  if (current_state == 1) id(s1_trigger).turn_on(); else id(s2_trigger).turn_on();
-                } else if (id(current_bank) == 1) {
-                  if (current_state == 1) id(s5_trigger).turn_on(); else id(s6_trigger).turn_on();
-                } else if (id(current_bank) == 2) {
-                  if (current_state == 1) id(s9_trigger).turn_on();
+                if (current_state != 0) { // Only trigger on enter UP or DOWN
+                  ESP_LOGD("custom", "CH3 Sound Trigger - State: %d (Bank: %d)", current_state, id(current_bank) + 1);
+                  if (id(current_bank) == 0) {
+                    if (current_state == 1) id(s1_trigger).turn_on(); else id(s2_trigger).turn_on();
+                  } else if (id(current_bank) == 1) {
+                    if (current_state == 1) id(s5_trigger).turn_on(); else id(s6_trigger).turn_on();
+                  } else if (id(current_bank) == 2) {
+                    if (current_state == 1) id(s9_trigger).turn_on();
+                  }
                 }
                 id(prev_ch3_state) = current_state;
               }
@@ -303,12 +309,18 @@ sensor:
       then:
         - lambda: |-
             if (x > 0) {
-              int current_state = (x > 1500) ? 1 : 0;
+              // 3-Zone Logic: 1 = UP/RIGHT (>1700), 0 = NEUTRAL (1300-1700), 2 = DOWN/LEFT (<1300)
+              int current_state = 0;
+              if (x > 1700) current_state = 1; else if (x < 1300) current_state = 2;
+
               if (current_state != id(prev_ch4_state)) {
-                if (id(current_bank) == 0) {
-                  if (current_state == 1) id(s3_trigger).turn_on(); else id(s4_trigger).turn_on();
-                } else if (id(current_bank) == 1) {
-                  if (current_state == 1) id(s7_trigger).turn_on(); else id(s8_trigger).turn_on();
+                if (current_state != 0) { // Only trigger on enter UP or DOWN
+                  ESP_LOGD("custom", "CH4 Sound Trigger - State: %d (Bank: %d)", current_state, id(current_bank) + 1);
+                  if (id(current_bank) == 0) {
+                    if (current_state == 1) id(s3_trigger).turn_on(); else id(s4_trigger).turn_on();
+                  } else if (id(current_bank) == 1) {
+                    if (current_state == 1) id(s7_trigger).turn_on(); else id(s8_trigger).turn_on();
+                  }
                 }
                 id(prev_ch4_state) = current_state;
               }

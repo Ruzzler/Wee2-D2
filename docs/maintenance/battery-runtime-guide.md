@@ -25,6 +25,7 @@ The 20V DeWalt battery operates at **18.5V Nominal**. A 4Ah pack contains **74 W
 ### **3. Drive Motion (2x 200W Hub Motors)**
 - **Conditions**: Level convention floor, slow walking pace.
 - **Duty Cycle**: 40% (Moving 24 minutes per hour).
+- **Throttling**: **15A Software Clamp** applied for endurance.
 - **Estimated Load**: **16.0 Watts (Avg)**
 
 ### **4. Motion Controller (goBILDA 5203)**

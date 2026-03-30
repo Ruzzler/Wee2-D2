@@ -1,12 +1,12 @@
 # 💡 LED Arrays & Displays
 > **FUNCTIONAL CAPABILITY** | **SERIAL: CAP-LIGHT-v1.0**
 
-The visual personality of Wee2-D2 is driven by high-density **WS2812B addressable LED** matrices, entirely controlled by **MCU 2 (Lighting Controller)** running the powerful **WLED** framework.
+The visual personality of Wee2-D2 is driven by high-density **WS2812B addressable LED** matrices, controlled by **MCU 2 (Lighting Controller)** running the **ESPHome** framework for total system synchronization.
 
 ## 🔋 Power Constraints
-Because there are hundreds of LEDs in the dome, they have their own dedicated **Mini560 5V Buck Converter** tied to the 20V slip ring. 
+Because there are hundreds of LEDs in the dome, they have their own dedicated **Mini560 5V Buck Converter (Buck 1)** tied to the 20V Ganged Wago Hub. 
 > [!CAUTION]
-> The LED matrices (especially the GrnWave PSIs) will instantly blow if exposed to more than 5.2V. You must also enforce a **3500mA** software current limit in WLED to prevent the 3D printed dome mounts from melting.
+> The LED matrices (especially the GrnWave PSIs) will instantly blow if exposed to more than 5.2V. By using the **Dual-Buck Strategy**, we isolate these high-current light sweeps from the sensitive logic pins of the ESP32.
 
 ## 🗺️ Physical LED Mapping
 The LEDs are split across two primary data lines emitting from MCU 2:

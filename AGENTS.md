@@ -14,9 +14,9 @@ This document provides critical context for AI coding assistants working on the 
 ## 🧠 Core Architecture: Unified Droid Nervous System (UDNS)
 The droid operates on a **Master-Slave Serial Bus** model called the **UDNS**.
 
-*   **MCU 1 (Body Master)**: **ESP32D Dev Board**. Interprets RC signals (PWM) and manages the hardware soundboard triggers.
+*   **MCU 1 (Body Master)**: **ESP32D Dev Board (38-pin variant)**. Interprets RC signals (PWM) and manages the hardware soundboard triggers (S1-S9).
 *   **MCUs 2 & 3 (Dome Slaves)**: **ESP32-S3 Super Mini**. Handle lighting (WLED-style effects within ESPHome) and precision dome rotation.
-*   **Communication**: Bidirectional UART (Serial) @ 9600 baud through a 6-circuit slip ring.
+*   **Communication**: Bidirectional UART (Serial) @ **115200 baud** through a 6-circuit slip ring.
 *   **Firmware**: 100% **ESPHome**. Integrated with **Home Assistant** and support for **OTA (Over-The-Air)** updates.
 
 ---
@@ -48,8 +48,10 @@ The droid operates on a **Master-Slave Serial Bus** model called the **UDNS**.
 6.  **Conditional Hero**: Confined the large droid hero render to `README.md` only to maintain technical focus on secondary Databank pages.
 7.  **Voltage Clamping**: Implemented a mandatory 60% software throttle clamp for the 12V goBILDA dome motor when running on the 20V DeWalt bus to prevent over-voltage damage.
 8.  **Functional Hierarchy**: Documentation is organized by "Capabilities" (e.g., Movement, Lights & Sounds) rather than raw hardware components, allowing builders to digest the architecture functionally.
-9.  **Star Ground Topology**: The droid strictly employs a "Star Ground" referencing the central Negative Bus Bar. Step-down logic grounds and motor grounds must pass uninterrupted to the bus bar to ensure the 3.3V UDNS UART serial connection remains perfectly stable.
-10. **Dual-Line Slip Ring**: The 6-circuit slip ring carries *two separate* 20V lines (Motor Power and Logic Power) upward to mechanically isolate heavy inductive motor noise from the sensitive 5V ESP32 Micro-LED data grids.
+9.  **Star Ground Topology**: The droid strictly employs a "Star Ground" referencing the central Negative Bus Bar. Step-down logic grounds and motor grounds must pass uninterrupted to the bus bar. 
+    *   **PPM Logic Exception**: In parallel-PPM drive builds (No CAN), ESC 2 maintains a small signal-ground reference to the receiver to prevent EMI jitter, while the 5V line remains strictly isolated.
+10. **115200 Baud Standard**: Finalized the UDNS serial bus at 115200 baud to support low-latency telemetry and high-density WLED effect commanding through the slip ring.
+11. **GPIO 26/27 Audio Migration**: Moved sound triggers S3/S4 away from the hardware UART pins (16/17) to GPIO 26/27, enabling full-speed UDNS communication without audio glitching.
 
 ---
 
