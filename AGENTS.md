@@ -8,10 +8,35 @@ This document provides critical context for AI coding assistants working on the 
 *   **Role**: You are an Imperial Astromech Engineering Assistant.
 *   **Aesthetic**: All user interfaces and documentation must reflect a high-fidelity **Star Wars Imperial Databank** theme (Dark mode, glassmorphism, scanlines, modern typography).
 *   **Visual Excellence**: Modern web design best practices (curated HSL palettes, smooth transitions, micro-animations) are mandatory. **Avoid Tailwind CSS**; use Vanilla CSS for maximum control.
-*   **Tone**: Maintain a professional, informative, and engineering-focused tone. Avoid non-functional or "cheesy" descriptors (e.g., "Final Boss," "Elite," "Authentic," "Mission-Ready").
+*   **Tone**: Maintain a professional, informative, and engineering-focused tone.
 *   **Terminology**: 
     *   Use **"High Alert"** instead of "Angry Mode."
     *   Use **"Cinematic Logic Display"** for LED matrix scrolling animations.
+
+---
+
+## 📊 Databank Dependency Map (v1.8.2)
+To ensure project-wide synchronization, use this map as a lookup table during research phases. When modifying a component, audit **ALL** primary and firmware files listed.
+
+| Dependency Cluster | Core Components | Primary Documentation & Firmware Links |
+| :--- | :--- | :--- |
+| **🧠 Control Hub** | MCU 1, 2, 3 | `AGENTS.md`, `electrical-schematic.md`, `firmware/**/README.md` |
+| **📡 Comm Bridge** | ESP-NOW, RC | `unified-nervous-system.md`, `hotrc-ds600-manual.md`, `hotrc-f06a-manual.md` |
+| **⚡ Power Grid** | Battery, LVP, Buck | `power-architecture.md`, `battery-runtime-guide.md`, `mgcstem-lvp-r15-manual.md` |
+| **🛞 Drive System** | Motors, ESCs | `body-drive.md`, `hub-motor-manual.md`, `flipsky-fsesc-67-pro-manual.md`, `ESC-XML-Settings` |
+| **🔊 Audio/Visual** | DFPlayer, LEDs | `audio-system.md`, `led-system.md`, `dfplayer-mini-manual.md`, `grnwave-psi-manual.md` |
+| **🔧 Maintenance** | OTA, Calibration | `troubleshooting.md`, `calibration-guide.md`, `network-ota-guide.md`, `manuals-and-files.md` |
+| **🏗️ Physical** | Chassis, Slip Ring | `3d-print-assembly.md`, `cnbtr-slip-ring-manual.md`, `body-wiring-guide.md` |
+
+### 🛰️ Refined File Dependency Matrix
+
+| Hardware Component | Primary Documentation | Firmware / Config Files |
+| :--- | :--- | :--- |
+| **MCU 1 (Body)** | `body-wiring-guide.md`, `electrical-schematic.md` | `body-brain.yaml`, `mcu1-body/README.md` |
+| **MCU 3 (Dome)** | `dome-rotation.md`, `electrical-schematic.md` | `dome-motion.yaml`, `mcu3-motion/README.md` |
+| **Drive ESCs** | `body-drive.md`, `flipsky-fsesc-67-pro-manual.md` | `Left/Right_Motor_Settings.xml` |
+| **Audio (DFPlayer)**| `audio-system.md`, `dfplayer-mini-manual.md` | `body-brain.yaml` (UART triggers) |
+| **WLED Display** | `led-system.md`, `grnwave-psi-manual.md` | `dome-motion.yaml` (RMT Timing) |
 
 ---
 
@@ -71,6 +96,7 @@ The droid operates on a **Distributed Wireless Trigger** model called the **Wire
 ## 🛠️ Operational Procedures (SOPs)
 
 ### 1. Development & Documentation
+*   **MANDATORY FIRST STEP: Check the Databank Dependency Map**. Before performing ANY research, analysis, or modification, the agent **MUST** audit the relevant files listed in the `Databank Dependency Map`.
 *   **Documenting New Components**: Markdown first, add to `index.html` sidebar, use industrial formatting.
 *   **Energy Sync**: Major hardware changes MUST trigger a review of the battery runtime guide.
 *   **Optimization**: Prefer WebP/Lossy JPEG. Strip EXIF metadata from all user photos.
