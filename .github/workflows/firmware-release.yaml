@@ -30,16 +30,16 @@ jobs:
         id: esphome-build
         with:
           version: latest
-          yaml_file: firmware/production/node-1-body-hub.yaml
+          yaml_file: firmware/production/node-1-sound-hub.yaml
 
-      - name: 🏗️ Compile Node 1 (Body Hub)
-        run: esphome compile firmware/production/node-1-body-hub.yaml
+      - name: 🏗️ Compile Node 1 (Sound Hub)
+        run: esphome compile firmware/production/node-1-sound-hub.yaml
 
-      - name: 🏗️ Compile Node 3 (Dome Master)
-        run: esphome compile firmware/production/node-3-motion-master.yaml
+      - name: 🏗️ Compile Node 3 (Dome Motion)
+        run: esphome compile firmware/production/node-3-dome-motion.yaml
 
-      - name: 🏗️ Compile Node 2 (Lighting)
-        run: esphome compile firmware/production/node-2-lighting-bridge.yaml
+      - name: 🏗️ Compile Node 2 (LED Distribution)
+        run: esphome compile firmware/production/node-2-led-distribution.yaml
 
       - name: 📂 Organize Artifacts
         run: |

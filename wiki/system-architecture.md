@@ -6,17 +6,17 @@ The Wee2-D2 project utilizes a distributed MCU architecture to handle high-amper
 ## 🧠 Distributed Control Hub
 The system is divided into three primary nodes, communicating via low-latency **ESP-NOW** wireless bridging.
 
-### Node 1: Body Hub (ESP32-S3)
+### Node 1: Sound Hub (ESP32-S3)
 - **Role**: Behavioral execution and audio management.
 - **Hardware**: DFPlayer Mini, TPA3118 Amplifier, Drive ESC integration.
-- **Primary Logic**: Listens for ESP-NOW triggers from the Dome Master to initiate synchronized audio/visual events.
+- **Primary Logic**: Listens for ESP-NOW triggers from the Dome Motion master to initiate synchronized audio/visual events.
 
-### Node 2: Lighting Bridge (ESP32)
+### Node 2: LED Distribution (ESP32)
 - **Role**: Visual output management.
 - **Hardware**: Addressable LED arrays (WS2812B/PSI Logic).
 - **Primary Logic**: Operates as a WLED-enabled node, translating motion-state triggers into specific lighting patterns.
 
-### Node 3: Motion Master (ESP32-S3)
+### Node 3: Dome Motion (ESP32-S3)
 - **Role**: Droid sensory input and movement control.
 - **Hardware**: goBILDA 5203 Dome Motor, PWM Motor Controller.
 - **Primary Logic**: Processes RC/Manual inputs and broadcasts state triggers (e.g., "Droid Thinking", "High Alert") to Nodes 1 and 2.

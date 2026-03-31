@@ -3,8 +3,8 @@
 
 The Wee2-D2 droid uses a modular behavior system based on **ESPHome States** and **Wireless Triggers**. This architecture allows for cinematic, synchronized audio and lighting changes across all MCU nodes without direct physical connections.
 
-## 🧠 The State Machine
-Behavioral states are primarily managed by **Node 3 (Motion Master)** and broadcasted to other hubs via the **ESP-NOW** bridge.
+### Behavioral Logic (Node 3)
+Behavioral states are primarily managed by **Node 3 (Dome Motion)** and broadcasted to other hubs via the **ESP-NOW** bridge.
 
 ### Primary Operational States
 1.  **Rest/Standard**: Default animation loop and movement response.

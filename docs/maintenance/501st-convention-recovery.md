@@ -20,10 +20,10 @@ Use this method if the droid is powered on but cannot find its known network.
 Use this method for standard production updates without needing any build servers or local infrastructure.
 
 1.  **Download**: Obtain the latest `.bin` firmware files from the **GitHub Releases** page of your repository.
-2.  **Navigate**: On your laptop or phone, go to the droid's local IP address or hostname (e.g., `http://wee2d2-body.local/`).
+2.  **Navigate**: On your laptop or phone, go to the droid's local IP address or hostname (e.g., `http://wee2d2-sound.local/`).
 3.  **Update**:
     - Scroll to the bottom of the Imperial Dashboard to the **OTA Update** section.
-    - Select the appropriate `.bin` file (e.g., `body-hub.bin`) and click **Update**.
+    - Select the appropriate `.bin` file (e.g., `node-1-sound-hub.bin`) and click **Update**.
 4.  **Confirm**: The droid will reboot and apply the new firmware in seconds.
 
 ---

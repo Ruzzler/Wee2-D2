@@ -114,7 +114,7 @@ To ensure droid stability and zero-infrastructure deployment:
     *   `s3-defaults.yaml`: S3-specific framework/RMT protections.
 *   **Direct-to-Droid OTA**:
     - **GitHub Cloud**: Compiles code and attaches `.bin` files to a **GitHub Release**.
-    - **Web Dashboard**: Use the droid's local IP (e.g., `http://wee2d2-body.local/`) to drag-and-drop its latest firmware binary.
+    - **Web Dashboard**: Use the droid's local IP (e.g., `http://wee2d2-sound.local/`) to drag-and-drop its latest firmware binary.
 *   **The Workflow**:
     1.  **Develop** in `development/`.
     2.  **Verify** via bench test on a spare ESP32.

@@ -29,9 +29,9 @@ Internal documentation optimized for the Wee2-D2 architecture.
 Direct links to the latest production-verified code and settings.
 
 ### **🧠 ESPHome Firmware (YAML)**
-- [Body Hub (Node 1)](../../firmware/production/node-1-body-hub.yaml)
-- [Lighting Bridge (Node 2)](../../firmware/production/node-2-lighting-bridge.yaml)
-- [Motion Master (Node 3)](../../firmware/production/node-3-motion-master.yaml)
+- [Sound Hub (Node 1)](../../firmware/production/node-1-sound-hub.yaml)
+- [LED Distribution (Node 2)](../../firmware/production/node-2-led-distribution.yaml)
+- [Dome Motion (Node 3)](../../firmware/production/node-3-dome-motion.yaml)
 
 ### **🛞 VESC Motor Settings (XML)**
 - [Left Drive Motor](../../firmware/esc-configs/left-motor-settings.xml)
