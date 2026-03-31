@@ -68,7 +68,15 @@ The droid operates on a **Master-Slave Serial Bus** model called the **UDNS**.
 ---
 
 ## 🛠️ Operational Procedures (SOPs)
-1.  **Documenting New Components**: Markdown first, add to `index.html` sidebar, use industrial formatting.
-2.  **Energy Sync**: Major hardware changes MUST trigger a review of the battery runtime guide.
-3.  **Optimization**: Prefer WebP/Lossy JPEG. Strip EXIF metadata from all user photos.
-4.  **Deployment**: Use port `8001` for local testing. Use version query strings (e.g., `?v=v20`) for cache-busting on GitHub.
+
+### 1. Development & Documentation
+*   **Documenting New Components**: Markdown first, add to `index.html` sidebar, use industrial formatting.
+*   **Energy Sync**: Major hardware changes MUST trigger a review of the battery runtime guide.
+*   **Optimization**: Prefer WebP/Lossy JPEG. Strip EXIF metadata from all user photos.
+*   **Deployment**: Use port `8001` for local testing. Use version query strings (e.g., `?v=v20`) for cache-busting on GitHub.
+
+### 2. Release & Versioning Strategy
+*   **Pre-Harmonization Snapshot**: A `vX.X.X-Legacy` tag **MUST** be created and pushed to GitHub before any major structural refactor, tone-scrub, or decommissioning of established features.
+*   **Verified Releases**: Create a primary version tag (e.g., `v1.7.0`) ONLY after the associated firmware has been successfully bench-tested on physical hardware.
+*   **Commit Batching**: Accumulate changes locally. Push to `main` as a cohesive version update that matches a new entry in `CHANGELOG.md`.
+*   **Rollback Baseline**: If multiple agents or complex changes are active, create a temporary baseline tag on `origin/main` as a safety-catch before pushing a major batch.

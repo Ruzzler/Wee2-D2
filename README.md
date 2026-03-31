@@ -45,3 +45,6 @@ I designed Wee2-D2 utilizing a decentralized architecture split across three ESP
 *   **Audio**: [PEMENOL 60W (DY-HL50T)](docs/hardware/pemenol-60w-voice-manual.md) running to a Pyle 60W Dual Cone driver.
 *   **Power Hub**: [MgcSTEM LVP-R1.5](docs/hardware/mgcstem-lvp-r15-manual.md) mapping to a Positive Blade Fuse Box and central Negative Bus Bar.
 *   **Lighting**: [GrnWave Circular PSIs](docs/hardware/grnwave-psi-manual.md) and custom logic arrays.
+
+---
+📅 **[View Project Changelog](CHANGELOG.md)**
