@@ -29,15 +29,15 @@ Internal documentation optimized for the Wee2-D2 architecture.
 Direct links to the latest production-verified code and settings.
 
 ### **🧠 ESPHome Firmware (YAML)**
-- [Body Audio Hub (Node 1)](../../firmware/mcu1-body-controller/body-brain.yaml)
-- [Dome Master (Node 3)](../../firmware/mcu3-motion-controller/dome-motion.yaml)
+- [Body Audio Hub (Node 1)](../../firmware/production/mcu1-body-controller/body-brain.yaml)
+- [Dome Master (Node 3)](../../firmware/production/mcu3-motion-controller/dome-motion.yaml)
 - [Dome Nervous System Template](../../firmware/dome-nervous-system-template.yaml)
 
 ### **🛞 VESC Motor Settings (XML)**
-- [Left Drive Motor](../../firmware/mcu1-body-controller/esc-settings/Left_Motor_Settings.xml)
-- [Right Drive Motor](../../firmware/mcu1-body-controller/esc-settings/Right_Motor_Settings.xml)
-- [Left App Settings](../../firmware/mcu1-body-controller/esc-settings/Left_App_Settings.xml)
-- [Right App Settings](../../firmware/mcu1-body-controller/esc-settings/Right_App_Settings.xml)
+- [Left Drive Motor](../../firmware/production/mcu1-body-controller/esc-settings/Left_Motor_Settings.xml)
+- [Right Drive Motor](../../firmware/production/mcu1-body-controller/esc-settings/Right_Motor_Settings.xml)
+- [Left App Settings](../../firmware/production/mcu1-body-controller/esc-settings/Left_App_Settings.xml)
+- [Right App Settings](../../firmware/production/mcu1-body-controller/esc-settings/Right_App_Settings.xml)
 
 ---
 

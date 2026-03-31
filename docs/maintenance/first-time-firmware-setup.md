@@ -33,7 +33,7 @@ Once the blank firmware is running on the device, it will connect to your Wi-Fi 
 
 1.  Click **"Edit"** on your new node in the Dashboard.
 2.  Erase the default code that ESPHome generated.
-3.  Copy and paste the entire YAML configuration from the repository (e.g., `firmware/mcu1-body-controller/body-brain.yaml`).
+3.  Copy and paste the entire YAML configuration from the repository (e.g., `firmware/production/mcu1-body-controller/body-brain.yaml`).
 4.  Hit **"Install"** in the top right corner. Because the device is now online, it will install wirelessly!
 
 > [!TIP]
