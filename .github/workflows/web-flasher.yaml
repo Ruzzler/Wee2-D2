@@ -57,4 +57,5 @@ jobs:
           EOF
 
       - name: 🚀 Deploy to GitHub Pages
-        uses: Actions-tools/deploy-pages@v4 # Note: Use standard action in real repo
+        id: deployment
+        uses: actions/deploy-pages@v4
