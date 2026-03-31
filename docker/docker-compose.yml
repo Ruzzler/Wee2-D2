@@ -15,7 +15,6 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./runner-data:/data
-      - ../firmware/production/secrets.yaml:/actions-runner/_work/Wee2-D2/Wee2-D2/firmware/production/secrets.yaml:ro
     labels:
       - "net.unraid.docker.icon=https://raw.githubusercontent.com/esphome/esphome/dev/resources/esphome.png"
       - "net.unraid.docker.shell=bash"
