@@ -1,5 +1,5 @@
 # 📡 IMPERIAL DATABANK: HOTRC F-06A RECEIVER
-> **DECRYPTED DATA REPOSITORY** | **SERIAL: F06A-PWM-RX**
+> **DECRYPTED DATA REPOSITORY**
 
 The **HOTRC F-06A** is the native 6-channel 2.4GHz receiver paired with the DS-600 transmitter. In the Wee2-D2 project, these receivers capture wireless PWM signals and pass them to the ESP32 microcontrollers for drive and sound processing.
 

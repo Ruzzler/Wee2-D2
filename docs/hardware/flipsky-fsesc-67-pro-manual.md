@@ -1,5 +1,5 @@
 # 🏛️ IMPERIAL DATABANK: FLIPSKY FSESC 6.7
-> **DECRYPTED DATA REPOSITORY** | **SERIAL: MINI-FSESC-6.7-PRO**
+> **DECRYPTED DATA REPOSITORY**
 
 The **Flipsky Mini FSESC 6.7 Pro** is a high-performance electronic speed controller based on the VESC 6.6 architecture. It is used in the Wee2-D2 to drive the high-torque hub motors.
 

@@ -1,5 +1,5 @@
 # 🏛️ IMPERIAL DATABANK: goBILDA DRIVE & MOTION
-> **DECRYPTED DATA REPOSITORY** | **SERIAL: GB-5203-15A**
+> **DECRYPTED DATA REPOSITORY**
 
 This entry covers the high-torque dome rotation motor and its dedicated speed controller.
 

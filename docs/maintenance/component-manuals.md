@@ -1,5 +1,5 @@
 # 📚 IMPERIAL DATABANK: MANUAL REGISTRY
-> **TECHNICAL REPOSITORY** | **SERIAL: MNL-DRCTRY-v1.0**
+> **TECHNICAL REPOSITORY**
 
 Welcome to the centralized Technical Manuals Registry. This page contains all the deep-level datasheets and specifications for the hardware systems powering Wee2-D2.
 

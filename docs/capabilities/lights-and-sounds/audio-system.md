@@ -1,5 +1,5 @@
 # 🔊 Audio & Behavioral Triggers
-> **FUNCTIONAL CAPABILITY** | **SERIAL: CAP-AUDIO-v1.8**
+> **FUNCTIONAL CAPABILITY**
 
 Wee2-D2's voice and sound system is a distributed modular stack built around the **DFPlayer Mini** (MP3 Hub) and a **TPA3118 60W Amplifier**. Triggers are managed wirelessly via the **ESP-NOW** bridge.
 

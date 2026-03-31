@@ -1,5 +1,5 @@
 # 🏛️ IMPERIAL DATABANK: L-FASTER HUB MOTOR (FLD-5)
-> **DECRYPTED DATA REPOSITORY** | **SERIAL: LF-FLD5-200W**
+> **DECRYPTED DATA REPOSITORY**
 
 ![L-faster Hub Motor](../../assets/l-faster-hub-motor.jpg)
 

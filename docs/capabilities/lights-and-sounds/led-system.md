@@ -1,5 +1,5 @@
 # 💡 LED Arrays & Displays
-> **FUNCTIONAL CAPABILITY** | **SERIAL: CAP-LIGHT-v1.0**
+> **FUNCTIONAL CAPABILITY**
 
 The visual personality of Wee2-D2 is driven by high-density **WS2812B addressable LED** matrices, controlled by **MCU 2 (Lighting Controller)** running the **WLED** framework with **ESP-NOW** wireless synchronization.
 

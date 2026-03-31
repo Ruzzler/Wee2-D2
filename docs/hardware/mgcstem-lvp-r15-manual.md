@@ -1,5 +1,5 @@
 # 🏛️ IMPERIAL DATABANK: MGCSTEM LVP-R1.5
-> **DECRYPTED DATA REPOSITORY** | **SERIAL: LVP-R1.5-40A**
+> **DECRYPTED DATA REPOSITORY**
 
 The **MgcSTEM LVP-R1.5** (Purple PCB) is a high-current 40A relay controller. It features a large T90-series relay and a 3-button interface (**SET**, **UP**, **DOWN**).
 

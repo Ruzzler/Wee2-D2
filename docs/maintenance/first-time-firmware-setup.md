@@ -1,5 +1,5 @@
 # 💻 First-Time Firmware Setup (Initial USB Flash)
-> **OPERATION & MAINTENANCE** | **SERIAL: FW-FLASH-v1.0**
+> **OPERATION & MAINTENANCE**
 
 Before your ESP32 microcontrollers can be updated wirelessly over your local network, they must be "injected" with their initial code and Wi-Fi credentials via a physical USB connection.
 

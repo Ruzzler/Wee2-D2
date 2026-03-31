@@ -1,5 +1,5 @@
 # 🔄 Dome Rotation System
-> **FUNCTIONAL CAPABILITY** | **SERIAL: CAP-DOME-v1.0**
+> **FUNCTIONAL CAPABILITY**
 
 Wee2-D2's 360° dome rotation is driven by a precision heavy-duty motor, interpreted exclusively by **MCU 3 (Motion Controller)** running ESPHome.
 
