@@ -15,19 +15,20 @@ This document provides critical context for AI coding assistants working on the 
 
 ---
 
-## 🧠 Core Architecture: Unified Droid Nervous System (UDNS)
-The droid operates on a **Master-Slave Serial Bus** model called the **UDNS**.
+## 🧠 Core Architecture: Wireless Bridge (ESP-NOW)
+The droid operates on a **Distributed Wireless Trigger** model called the **Wireless Bridge**.
 
-*   **MCU 1 (Body Master)**: **ESP32D Dev Board (38-pin variant)**. Interprets RC signals (PWM) and manages the hardware soundboard triggers (S1-S9).
-*   **MCUs 2 & 3 (Dome Slaves)**: **ESP32D / ESP32-S3 Dev Boards**. Handle lighting (WLED) and precision dome rotation (ESPHome).
-*   **Communication**: Bidirectional UART (Serial) @ **115200 baud** through a 6-circuit slip ring. UART2 (GPIO 16/17) is the production standard for all three nodes.
-*   **Firmware**: 100% **ESPHome**. Integrated with **Home Assistant** and support for **OTA (Over-The-Air)** updates. 
-    *   *Note*: MCU 3 (ESP32-S3) **MUST** use the `esp-idf` framework to ensure RMT peripheral stability for high-density LED arrays.
+*   **MCU 1 (Body Hub)**: **ESP32-S3 Super Mini**. Manages the **DFPlayer Mini** and drive system monitoring. Listens for ESP-NOW triggers.
+*   **MCU 2 (Dome Lights)**: **ESP32D Dev Board**. Handles lighting (WLED). Listens for sync triggers.
+*   **MCU 3 (Dome Master)**: **ESP32-S3 Super Mini**. Manages precision dome rotation (ESPHome) and acts as the **Behavioral Master**, broadcasting ESP-NOW triggers.
+*   **Communication**: Extremely low-latency **ESP-NOW** (@ 2.4GHz). This eliminates the need for data wires through the slip ring.
+*   **Firmware**: 100% **ESPHome** (MCUs 1 & 3) and **WLED** (MCU 2).
+    *   *Note*: Both S3 nodes **MUST** use the `esp-idf` framework to ensure RMT and ESP-NOW stability.
 
 ---
 
 ## 🛠️ Hardware Ecosystem
-*   **Audio**: PEMENOL 60W (DY-HL50T). **Confirmed**: No UART control needed; use 9-wire direct trigger (Active LOW).
+*   **Audio**: **DFPlayer Mini** (MP3-TF-16P). Managed via UART from MCU 1 (Body). Feeds a **TPA3118 60W Amplifier**.
 *   **Power**: 20V DeWalt Battery ➔ LVC (MgcSTEM) ➔ Multi-channel Buck Converters (5.1V logic).
 *   **Drive**: 2x Flipsky Mini FSESC 6.7 Pro ➔ **L-faster FLD-5 5" Hub Motors**.
 *   **Dome**: goBILDA 5203 Yellow Jacket ➔ 1x15A Motor Controller (PWM). **Standard Pinout: GPIO 7**.
@@ -54,7 +55,7 @@ The droid operates on a **Master-Slave Serial Bus** model called the **UDNS**.
 2.  **S3 Pivot**: Standardized on the ESP32-S3 for the dome to utilize natively supported RMT peripherals for LED driving.
 3.  **17.5V Safety Floor**: Established 17.5V (3.5V/cell) as the standard for battery cutoffs to ensure cell longevity.
 4.  **Voltage Clamping**: Mandatory 60% software throttle clamp for the 12V dome motor when running on 20V (Currently disabled for testing).
-5.  **Angry Mode Decoupling**: "Angry Mode" has been decommissioned as a featured term and architectural relay; standard behavioral triggers via UDNS are preferred.
+5.  **Wireless Bridge Shift**: Decommissioned the physical serial bus (UDNS) in favor of the **ESP-NOW** wireless bridge to isolate analog audio noise from motor EMI.
 
 ---
 

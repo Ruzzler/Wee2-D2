@@ -4,6 +4,14 @@ All notable changes to the Wee2-D2 project will be documented in this file. This
 
 ---
 
+## [1.8.0] - 2026-03-31
+### 🛰️ Wireless Bridge Pivot (ESP-NOW)
+- **Architectural Shift**: Decommissioned the physical UDNS UART bus (GPIO 16/17) through the slip ring in favor of a distributed **ESP-NOW** wireless bridge.
+- **Node Consolidation**: Standardized **MCU 1 (Body)** and **MCU 3 (Dome)** as **ESP32-S3 Super Mini** nodes, utilizing the `esp-idf` framework for stabilized wireless and RMT performance.
+- **Audio Overhaul**: Replaced the PEMENOL 60W soundboard with a modular **DFPlayer Mini** (MP3 serial hub) and **TPA3118 60W Amplifier**.
+- **EMI Isolation**: Repurposed slip ring circuits **C5 and C6** to "RESERVED" status, effectively isolating all high-speed signal logic from motor-induced EMI by moving to the 2.4GHz spectrum.
+- **Passive Body Drive**: Simplified the body electronics by directing RC1 signals straight to the Flipsky ESCs, with the Body S3 now focusing on audio triggering and system telemetry.
+
 ## [1.7.5] - 2026-03-31 (Final Harmonization & Tone Scrub)
 ### Added
 - **Imperial Engineering Standard (v1.7.5)**: Established a project-wide professional tone, scrubbed all "cheesy" or non-functional descriptors (Authentic, Elite, Mission-Ready, Final Boss).

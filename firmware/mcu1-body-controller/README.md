@@ -1,32 +1,30 @@
-# 🧠 MCU 1: Body Controller (Audio & Dispatch)
-> **ESPHome Firmware** | **ESP32-WROOM-32D**
+# 🧠 MCU 1: Body Audio Hub
+> **ESPHome Firmware** | **ESP32-S3 Super Mini**
 
-The **Body Controller** acts as the central nervous system for Wee2-D2. It decodes PWM signals from the primary RC receiver and translates them into digital triggers for the PEMENOL/DY-HL50T soundboard.
+The **Body Audio Hub** acts as the localized sound and drive monitoring system for Wee2-D2. It listens for **ESP-NOW** behavioral triggers from the Dome Master and translates them into serial commands for the **DFPlayer Mini**.
 
-| **Hardware Node** | ESP32-WROOM-32D |
+| **Hardware Node** | ESP32-S3 Super Mini |
 | :--- | :--- |
-| **Logic Framework** | ESPHome |
-| **Primary Function** | Audio & Dispatch |
+| **Logic Framework** | ESPHome (esp-idf) |
+| **Primary Function** | Audio Hub (ESP-NOW Slave) |
 | **Source Code** | [🗄️ `body-brain.yaml`](body-brain.yaml) |
-| **Visual ID** | ![ESP32D](../../assets/esp32d-dev-board.png) |
+| **Visual ID** | ![S3 Mini](../../assets/esp32-s3-super-mini.jpg) |
 
 ## 🚀 Core Features
-*   **RC Signal Decoding**: Monitored on CH3, CH4, and **CH5**.
-*   **Bank Switching**: Uses **CH5** (3-position or toggle switch) to cycle through 4 distinct sound banks.
-*   **Sound Matrix**: Triggers S1-S9 on the soundboard based on current bank and stick position.
-*   **Auto-Mode (Bank 4)**: Automatically plays a random sound every 5–15 seconds for "ambient" droid behavior during events.
+*   **ESP-NOW Wireless Link**: Low-latency behavioral synchronization with the Dome Master.
+*   **DFPlayer UART Control**: High-fidelity track triggering and volume management via serial.
+*   **RC Signal Monitoring**: Decodes PWM from RC1 for localized drive fail-safes.
+*   **Telemetry Projection**: Reports audio status and battery health back to Home Assistant.
 *   **OTA Updates**: Fully support Over-The-Air updates via the [Imperial Databank Dashboard](docs/maintenance/network-ota-guide.md).
 
 ## 🔌 Pinout Configuration
 | Connection | ESP32 Pin | Logic |
 | :--- | :---: | :--- |
-| **RC CH3 (Trigger A)** | GPIO 25 | Grey/Black (Input) |
-| **RC CH4 (Trigger B)** | GPIO 33 | Blue/Black (Input) |
-| **RC CH5 (Bank Switch)** | GPIO 32 | Purple/Black (Input) |
-| **Sound Trigger S1 - S9** | 4, 5, 26, 27, 18, 19, 21, 22, 23 | Master Trigger Hub (Active Low) |
-| **UDNS TX (Slip Ring)** | GPIO 17 | Yellow/Black (Serial Output) |
-| **UDNS RX (Slip Ring)** | GPIO 16 | Green/Black (Serial Input) |
-| **Status LED** | GPIO 2 | Heartbeat (Onboard) |
+| **RC CH3-5 (In)** | 4, 5, 6 | Trigger Pulse Data (Input) |
+| **DFPlayer TX** | GPIO 17 | Serial Command Out |
+| **DFPlayer RX** | GPIO 16 | Serial Status In (Optional) |
+| **Wireless Link** | N/A | ESP-NOW Behavioral Sync |
+| **Status LED** | GPIO 47 | Internal Neopixel (Logic) |
 
 ## 🛠️ Configuration
 The configuration is defined in [`body-brain.yaml`](./body-brain.yaml). 

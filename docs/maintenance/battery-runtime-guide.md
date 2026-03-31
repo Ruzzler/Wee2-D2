@@ -18,7 +18,7 @@ The 20V DeWalt battery operates at **18.5V Nominal**. A 4Ah pack contains **74 W
 - **Estimated Load**: **11.0 Watts**
 
 ### **2. Audio (Intermittent Chatter)**
-- **System**: PEMENOL 60W Soundboard.
+- **System**: DFPlayer Mini + TPA3118 Amp.
 - **Duty Cycle**: 20% (Droid chirps every 30 seconds).
 - **Estimated Load**: **2.0 Watts (Avg)**
 

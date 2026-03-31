@@ -7,37 +7,37 @@ The **Unified Droid Nervous System (UDNS)** is the high-bandwidth industrial bac
 ## 🏛️ Architecture Overview
 In a standard hobbyist build, parts often work in isolation. In the **UDNS** model, every action is synchronized across the droid's entire frame:
 
-*   **The Master (Body Controller)**: Interprets RC signals and manages the soundboard. It acts as the "Central Cortex."
-*   **The Slaves (Dome MCUs)**: High-performance **ESP32-D nodes** that listen on a shared **Command Bus**. They react instantly to instructions sent from the body (e.g., "Rotate dome 90°," "Switch lights to High Alert").
+*   **The Master (Dome Motion)**: Handles all behavioral triggers and dome rotation. It acts as the "Behavioral Master."
+*   **The Slaves (Body Logic & Dome Lights)**: High-performance **ESP32-S3 and ESP32-D nodes** that listen for broadcast packets. They react instantly to wireless instructions (e.g., "Play Sound: Happy," "Switch lights to High Alert").
 
 ---
 
-## 🛰️ How it Works: The Serial Bus
-The UDNS uses **Asynchronous Serial (UART)** communication @ **115200 Baud** to bridge the gap between the body and the dome. 
+## 🛰️ How it Works: The Wireless Bridge (ESP-NOW)
+The UDNS uses **ESP-NOW**, a low-power, high-speed 2.4GHz wireless protocol, to bridge the gap between the body and the dome without physical data wires.
 
-1.  **Command Flow**: When the Body Master detects an event (like a specific button push on your remote), it broadcasts a simplified command string across the **Slip Ring**.
-2.  **Multidrop Listening**: Multiple dome MCUs can listen to the same command line simultaneously. This ensures that dome LEDs and dome motors move in perfect unison without latency.
-3.  **Bidirectional Telemetry**: The dome can report its status (battery health, current position) back to the body, which then relays that data to your **Home Assistant** dashboard.
+1.  **Direct P2P Link**: Unlike standard Wi-Fi, ESP-NOW does not require a router. MCUs communicate directly with one another, ensuring sub-10ms latency for triggers.
+2.  **Broadcast Behavior**: When the Dome Master (MCU 3) detects an event (like a specific rotation threshold or RC command), it broadcasts a behavioral packet to the Body Hub (MCU 1) and Lighting Hub (MCU 2) simultaneously.
+3.  **Radio Isolation**: By moving data to the 2.4GHz spectrum, we eliminate analog ground loops and EMI interference that typically plague UART signals running through a rotating slip ring.
 
 ---
 
-## 🚀 Why UDNS? (Future-Proofing)
+## 🚀 Why Wireless? (Architectural Evolution)
 
-### **1. Home Assistant Integration**
-By running **ESPHome** as the native firmware for UDNS, your droid isn't just a toy—it's a smart device. You can track battery levels, trigger automated "Guard Mode" routines, and control every LED segment from your phone or tablet.
+### **1. Audio Signal Integrity**
+By communicating wirelessly, we can keep the **DFPlayer Mini** and its analog audio paths entirely within the body. This prevents analog audio from ever crossing the noisy slip ring environment, ensuring a hiss-free sound floor.
 
-### **2. Over-The-Air (OTA) Updates**
-Wireless maintenance is a core pillar of UDNS. You will never need to open the droid's chassis to update the code. Simply push the update from your PC via Wi-Fi, and the MCUs will reboot with their new "logic" instantly.
+### **2. Reduced Slip Ring Friction**
+By removing the two serial data lines (TX/RX) from the slip ring, we reduce the complexity of the rotating joint and free up two high-current circuits for future logic sensors or backup power.
 
-### **3. Zero-Latency Triggers**
-Unlike Wi-Fi-only communication (which can be unreliable at busy events/conventions), the UDNS uses a **physical wire** through the slip ring. This ensures your behavioral triggers work 100% of the time, even in areas with heavy radio interference.
+### **3. Zero-Latency Reactivity**
+ESP-NOW provides the same "physical wire" feel as UART but handles packet collisions and retries at the hardware layer, making behavioral triggers more robust in high-interference environments.
 
 ---
 
 ## 🛠️ Components of the System
-*   **Body Controller**: ESP32-WROOM-32D (Master).
-*   **Dome Controller (Motion)**: ESP32-Dev Board (Slave/Relay).
-*   **Dome Controller (Lights)**: ESP32-Dev Board (Standalone WLED).
+*   **Body Controller (Audio)**: ESP32-S3 Super Mini (Behavioral Slave).
+*   **Dome Controller (Motion)**: ESP32-S3 Super Mini (Behavioral Master).
+*   **Dome Controller (Lights)**: ESP32-Dev Board (Slave WLED).
 
 ---
 
@@ -50,8 +50,8 @@ The slip ring is the physical "Spinal Cord" of the droid. Every signal must be s
 | **C2** | **GND (Common)** | Black | 18 AWG | **Motor Line**: To goBILDA 15A ESC |
 | **C3** | **VCC (20V DC)** | Yellow/White | 18 AWG | **Logic Line**: To Mini560 Pro Buck |
 | **C4** | **GND (Common)** | Green/Blue | 18 AWG | **Logic Line**: To Mini560 Pro Buck |
-| **C5** | **UDNS TX (Out)** | Yellow/Black | 18 AWG | Body Master -> Dome Slaves (Command) |
-| **C6** | **UDNS RX (In)** | Green/Black | 18 AWG | Dome Slaves -> Body Master (Telemetry) |
+| **C5** | **RESERVED** | Yellow/Black | 18 AWG | Future High-Speed Logic / Sensor Bus |
+| **C6** | **RESERVED** | Green/Black | 18 AWG | Future High-Speed Logic / Sensor Bus |
 
 ---
 
@@ -64,16 +64,15 @@ To ensure the UDNS remains stable across multiple nodes and through the slip rin
 
 ---
 
-## 💾 Serial JSON Protocol
-For reliability, the UDNS utilizes the industry-standard JSON format with the following requirements:
+## 💾 ESP-NOW Behavioral Events
+For reliability, the Wireless Bridge utilizes the broadcast protocol with the following logic:
 
-1.  **Delimiter**: Every command string must end with the `\n` newline character.
-2.  **Segment Arrays**: All effects must be wrapped in the `[]` segment array for multi-node compatibility.
+1.  **Channel Locking**: All nodes MUST remain on the same Wi-Fi channel (typically Channel 1) to ensure packet delivery.
+2.  **Encryption**: Communication can be hardened using the `api: encryption` key if deployed in public environments.
 
-**Example Command (High Alert Mode)**:
-```json
-{"on":true,"seg":[{"fx":0,"col":[[255,0,0]]}]}\n
-```
+**Example Behavior (Play Sound)**:
+- **Dome Master** broadcasts: `SOUND_ID_01`
+- **Body Hub** receives: `PLAY TRACK 01` on DFPlayer Mini.
 
 ## 📊 GPIO Interconnects
-If you need the specific GPIO pins used by the UDNS serial bus, refer to the **Pinout Lookup Tables** in the [Interactive Electrical Schematic](electrical-schematic.md).
+If you need the specific GPIO pins used by the DFPlayer or ESCs, refer to the **Pinout Lookup Tables** in the [Interactive Electrical Schematic](electrical-schematic.md).

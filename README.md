@@ -15,10 +15,10 @@ To view my documented system with a premium, interactive "Mission Control" inter
 ## 🚀 Project Overview
 I designed Wee2-D2 utilizing a decentralized architecture split across three ESP32 microcontrollers. This ensures non-blocking operation between the heavy audio processing, intricate LED lighting, and mechanical drive systems. The droid is piloted via **Dual HOTRC DS-600 transmitters** (one for drive logic, one for dome motion) for absolute reliability during crowded events.
 
-### 🧠 Unified Droid Nervous System (UDNS)
-- **MCU 1: Body Controller (Audio & Dispatch)**: **38-pin** ESP32 Dev Board capturing RC signals, managing the S1-S9 sound triggers, and broadcasting UDNS commands @ **115200 Baud**.
+### 🧠 Wireless Bridge (ESP-NOW)
+- **MCU 1: Body Audio Hub**: **ESP32-S3 Super Mini** managing the **DFPlayer Mini** and drive system telemetry.
 - **MCU 2: Lighting Controller (WLED)**: Standard **ESP32 Dev Board** running WLED for high-density addressable light matrices.
-- **MCU 3: Motion Controller (ESPHome)**: Standard **ESP32 Dev Board** managing dome rotation with 60% voltage clamping and local relay triggers.
+- **MCU 3: Motion Controller (ESPHome)**: **ESP32-S3 Super Mini** acting as the "Behavioral Master," broadcasting wireless triggers to the body and lights.
 
 > [!WARNING]
 > **PROJECT SCOPE**: This repository exclusively documents my custom **Electrical Architecture** and **Firmware** ecosystem. It does **not** contain the 3D-printable STL files or mechanical assembly instructions for the droid chassis itself. Please refer to the official Mr. Baddeley Patreon or group hubs for structural files.
@@ -42,7 +42,7 @@ I designed Wee2-D2 utilizing a decentralized architecture split across three ESP
 *   **Piloting**: 2x [HOTRC DS-600](docs/hardware/hotrc-ds600-manual.md) (Silent Mode mod).
 *   **Drive System**: 2x [Flipsky Mini FSESC 6.7 Pro](docs/hardware/flipsky-fsesc-67-pro-manual.md) feeding L-faster Hub Motors.
 *   **Dome Motion**: [goBILDA 5203 Yellow Jacket](docs/hardware/gobilda-motor-manual.md) driven by a [1x15A Motor Controller](docs/hardware/gobilda-motor-manual.md).
-*   **Audio**: [PEMENOL 60W (DY-HL50T)](docs/hardware/pemenol-60w-voice-manual.md) running to a Pyle 60W Dual Cone driver.
+*   **Audio**: [DFPlayer Mini](docs/bill-of-materials.md) triggered via ESP-NOW, feeding a [TPA3118 60W Amp](docs/bill-of-materials.md) and Pyle 3.5" driver.
 *   **Power Hub**: [MgcSTEM LVP-R1.5](docs/hardware/mgcstem-lvp-r15-manual.md) mapping to a Positive Blade Fuse Box and central Negative Bus Bar.
 *   **Lighting**: [GrnWave Circular PSIs](docs/hardware/grnwave-psi-manual.md) and custom logic arrays.
 

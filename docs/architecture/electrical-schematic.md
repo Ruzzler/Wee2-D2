@@ -26,13 +26,13 @@ flowchart TD
     subgraph HIGH_POWER_RAIL [20V DISTRIBUTION]
         POS_FUSE --> ESC1["Flipsky FSESC (Left)"]:::drive
         POS_FUSE --> ESC2["Flipsky FSESC (Right)"]:::drive
-        POS_FUSE --> AUDIO["PEMENOL 60W Soundboard"]:::audio
+        POS_FUSE --> AMP["TPA3118 Amplifier"]:::audio
         POS_FUSE --> SLIP1["Slip Ring C1/C2: Motor Line"]:::power
         POS_FUSE --> SLIP2["Slip Ring C3/C4: Logic Line"]:::power
 
         NEG_BUS --> ESC1
         NEG_BUS --> ESC2
-        NEG_BUS --> AUDIO
+        NEG_BUS --> AMP
         NEG_BUS --> SLIP1
         NEG_BUS --> SLIP2
     end
@@ -45,39 +45,40 @@ flowchart TD
 
     subgraph RECEIVER_MCU_RAIL [5V BEC LOGIC AND SIGNAL]
         ESC1 -->|5V BEC| RC1["Body Receiver (F-06A)"]:::signal
-        RC1 -->|5V OUT| ESP1["MCU 1: Body Brain"]:::brain
+        RC1 -->|5V OUT| ESP1["MCU 1: Body Audio (S3)"]:::brain
+        ESP1 -->|UART| AUDIO["DFPlayer Mini"]:::audio
         
         DOME_ESC -.->|6V BEC ISOLATED| RC2["Dome Receiver (F-06A)"]:::signal
 
         DOME_WAGOS --> WLED["MCU 2: Dome Lights"]:::lights
-        DOME_WAGOS --> ESP3["MCU 3: Dome Motion"]:::brain
+        DOME_WAGOS --> ESP3["MCU 3: Dome Motion (S3)"]:::brain
         DOME_WAGOS --> LOGICS["Logic Matrices and PSIs"]:::lights
     end
 
-    subgraph SIGNAL_INTERCONNECTS [UART AND PWM CONTROL]
+    subgraph SIGNAL_INTERCONNECTS [WIRELESS AND PWM]
         TX1 -.->|2.4GHz WiFi| RC1
         TX2 -.->|2.4GHz WiFi| RC2
         RC1 -->|PWM| ESC1
         RC1 -->|PWM| ESC2
         RC1 -->|PWM| ESP1
-        ESP1 -->|S1-S9 Triggers| AUDIO
         RC2 -->|PWM| ESP3
         ESP3 -->|PWM| DOME_ESC
-        ESP1 ---|UDNS UART Bus| ESP3
-        ESP1 ---|UDNS UART Bus| WLED
+        AUDIO -->|Analog| AMP
+        ESP3 -.->|ESP-NOW Wireless| ESP1
+        ESP3 -.->|ESP-NOW Wireless| WLED
     end
 
     %% Direct Markdown-Relative Links for Interactivity
     click BAT href "docs/maintenance/battery-runtime-guide.md" "Battery Guide"
     click LVC href "docs/hardware/mgcstem-lvp-r15-manual.md" "LVC Manual"
     click ESC1 href "docs/hardware/flipsky-fsesc-67-pro-manual.md" "Flipsky Manual"
-    click AUDIO href "docs/capabilities/lights-and-sounds/audio-system.md" "Audio System"
+    click AUDIO href "docs/bill-of-materials.md" "DFPlayer Manual"
     click SLIP1 href "docs/architecture/unified-nervous-system.md" "Slip Ring Setup"
     click DOME_BUCK href "docs/bill-of-materials.md" "Buck Converter"
     click RC1 href "docs/hardware/hotrc-f06a-manual.md" "Receiver Manual"
-    click ESP1 href "firmware/mcu1-body-controller/body-brain.yaml" "MCU 1 Code"
+    click ESP1 href "firmware/mcu1-body-controller/README.md" "MCU 1 Code"
     click WLED href "docs/capabilities/lights-and-sounds/led-system.md" "LED System"
-    click ESP3 href "firmware/mcu3-motion-controller/dome-motion.yaml" "MCU 3 Code"
+    click ESP3 href "firmware/mcu3-motion-controller/README.md" "MCU 3 Code"
     click DOME_ESC href "docs/capabilities/movement/dome-rotation.md" "Dome Rotation"
 
     classDef power fill:#ff9900,stroke:#333,stroke-width:2px,color:#000
@@ -87,24 +88,23 @@ flowchart TD
     classDef audio fill:#99cc00,stroke:#000,color:#000
     classDef signal fill:#ffcc00,stroke:#333,color:#000
     classDef lights fill:#6600cc,stroke:#fff,color:#fff
+    classDef reserved fill:#444,stroke:#333,color:#fff
 ```
 
 ---
 
 ## 📌 Pinout Lookup Tables
 
-### **MCU 1: Body Controller (ESP32D 38-pin Board)**
-Master controller for sounds and UDNS coordination.
+### **MCU 1: Body Audio (ESP32-S3 Super Mini)**
+Primary controller for sounds and drive system monitoring.
 
-| Component | Physical Label | Pin (GPIO) | Notes |
+| Component | Pin (GPIO) | Mode | Notes |
 | :--- | :---: | :---: | :--- |
-| **Status LED** | D2 | GPIO2 | Heartbeat Blinker |
-| **RC CH3 Input** | D25 | GPIO25 | Trigger A (Grey/Blk) |
-| **RC CH4 Input** | D33 | GPIO33 | Trigger B (Blue/Blk) |
-| **RC CH5 Input** | D32 | GPIO32 | Bank Switch (Purple/Blk) |
-| **Sound S1-S9** | D4, D5... | 4,5,26,27,18,19,21,22,23 | **Active LOW** Trigger Pins |
-| **UDNS TX** | TX2 | GPIO17 | To Dome (Yellow/Black) |
-| **UDNS RX** | RX2 | GPIO16 | From Dome (Green/Black) |
+| **Status LED** | GPIO 47 | Output | S3 Internal Neopixel (Logic) |
+| **RC CH3-5** | 4, 5, 6 | Input | Behavioral Triggers from RC1 |
+| **DFPlayer TX** | GPIO 17 | Output | To DFPlayer RX |
+| **DFPlayer RX** | GPIO 16 | Input | From DFPlayer TX (Optional) |
+| **Wireless RX** | N/A | ESP-NOW | Listening for Dome triggers |
 
 ### **MCU 2: Lighting Controller (ESP32-Dev Board - WLED)**
 Dedicated high-density addressable LED matrix controller.
@@ -118,15 +118,16 @@ Dedicated high-density addressable LED matrix controller.
 | **UDNS RX (Bus)** | 16 | Input | Serial Command In |
 | **Web UI** | N/A | WiFi | Port 80 (Pattern selection) |
 
-### **MCU 3: Motion Controller (ESP32-Dev Board)**
-Dedicated controller for 360° dome rotation and UDNS dispatch.
+### **MCU 3: Motion Controller (ESP32-S3 Super Mini)**
+Dedicated controller for 360° dome rotation and behavior broadcasting.
 
 | Component | Pin (GPIO) | Mode | Notes |
 | :--- | :---: | :---: | :--- |
 | **RC CH1 Input** | GPIO 4 | Input | From Receiver #2 (Steering) |
 | **Dome ESC** | GPIO 7 | Output | PWM Signal to goBILDA ESC |
-| **UDNS TX** | GPIO 17 | Output | Serial to Body (Yellow/Black) |
-| **UDNS RX** | GPIO 16 | Input | Serial from Body (Green/Black) |
+| **Wireless TX** | N/A | ESP-NOW | Broadcasting to Body/WLED |
+| **Slip Ring C5** | N/A | Reserved | UNUSED / FUTURE EXPANSION |
+| **Slip Ring C6** | N/A | Reserved | UNUSED / FUTURE EXPANSION |
 
 ---
 
