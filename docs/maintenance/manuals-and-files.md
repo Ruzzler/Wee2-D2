@@ -1,7 +1,7 @@
 # 📚 Manuals and Files
 > **TECHNICAL REPOSITORY** | **CORE DATA HUB**
 
-Welcome to the centralized Manuals and Files Hub. This page provides rapid access to all documentation, firmware, and configuration assets for the Wee2-D2.
+Welcome to the centralized Manuals and Files Hub. This page provides rapid access to all documentation, firmware, and configuration assets for the Wee2-D2 project.
 
 ---
 
@@ -15,7 +15,7 @@ These are the original manufacturer specifications for the core hardware.
 - [Flipsky Mini FSESC 6.7 Pro](../hardware/flipsky-fsesc-67-pro-manual.pdf)
 - [MgcSTEM LVP-R1.5 Logic](../hardware/mgcstem-lvp-r15-manual.pdf)
 
-### **📖 Imperial Guides (Markdown)**
+### **📖 Project Documentation (Markdown)**
 Internal documentation optimized for the Wee2-D2 architecture.
 - [DFPlayer Mini (Audio Hub)](../hardware/dfplayer-mini-manual.md)
 - [GrnWave PSI Logic (LEDs)](../hardware/grnwave-psi-manual.md)
@@ -25,7 +25,7 @@ Internal documentation optimized for the Wee2-D2 architecture.
 
 ---
 
-## 💾 2. Droid Files (Firmware & Config)
+## 💾 2. System Configuration Files (Firmware & Config)
 Direct links to the latest production-verified code and settings.
 
 ### **🧠 ESPHome Firmware (YAML)**
@@ -41,10 +41,10 @@ Direct links to the latest production-verified code and settings.
 
 ---
 
-## 🛰️ 3. Imperial Cloud Uplinks
+## 🛰️ 3. External Tooling & Cloud Links
 Direct links to external tools and cloud-based management systems.
 
-| Resource | Logic Path | Description |
+| Resource | URL / Source | Description |
 | :--- | :--- | :--- |
 | **VESC Tool** | [Download Hub](https://vesc-project.com/vesc_tool) | Desktop interface for motor tuning. |
 | **ESPHome Web** | [Flasher Tool](https://web.esphome.io/) | Browser-based firmware injection. |

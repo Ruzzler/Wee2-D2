@@ -6,9 +6,9 @@ Welcome to the official repository for **Wee2-D2**. I built this droid in 2025 a
 
 This repository tracks the subsequent high-current electrical architecture, firmware configurations, and custom hardware documentation I engineered to bring the droid's decentralized control system to life.
 
-## 🛰️ Technical Wiki: Imperial Databank
-To view my documented system with a premium, interactive "Mission Control" interface, visit the official Technical Wiki:
-👉 **[Wee2-D2 Databank (Wiki)](https://ruzzler.github.io/Wee2-D2/)**
+## 🛰️ Technical Documentation: Mr. Baddeley Big Baby
+To view the documented system with a premium, interactive technical interface, visit the official Project Wiki:
+👉 **[Wee2-D2 Project Wiki](https://ruzzler.github.io/Wee2-D2/)**
 
 ---
 

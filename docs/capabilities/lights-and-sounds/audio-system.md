@@ -17,16 +17,16 @@ The folders must be named `01` through `99`, and files must start with a 3-digit
 
 ```text
 SD_ROOT/
-├── 01/                     # Folder 1: Happy Sounds
+├── 01/                     # Folder 1: Standard Communication
 │   ├── 001_beep_boop.mp3
 │   └── 002_whistle.mp3
-├── 02/                     # Folder 2: Alert Sounds
+├── 02/                     # Folder 2: System Alerts
 │   ├── 001_scream.mp3
 │   └── 002_alarm.mp3
-├── 03/                     # Folder 3: Ambient
+├── 03/                     # Folder 3: Ambient / Background
 │   ├── 001_low_hum.mp3
 │   └── 002_processing.mp3
-└── 04/                     # Folder 4: High Alert (Red)
+└── 04/                     # Folder 4: High Alert (System Red)
 ```
 *Note: The DFPlayer supports up to 255 tracks per folder, allowing for massive behavioral variety.*
 
@@ -41,7 +41,7 @@ By flicking **CH5** on your transmitter, the droid cycles through functional "Mo
 | **Bank 4 (Silent)** | Dim Blue | Stealth / Event Safe |
 
 ## 🤖 Ambient Mode
-When set to **Ambient Mode (Bank 1)**, the Body Hub will automatically fire random tracks from Folder `03` every 15-45 seconds to simulate droid "thinking" during idle periods.
+When set to **Ambient Mode (Bank 1)**, the Body Hub will automatically fire random tracks from Folder `03` every 15-45 seconds to simulate autonomous processing during idle periods.
 
 ## 🧰 Audio Stack Interconnect (UART)
 Unlike the legacy 9-wire trigger system, the v1.8 stack uses a 4-wire serial bus for absolute control:
