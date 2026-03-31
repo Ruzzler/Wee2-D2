@@ -1,0 +1,21 @@
+name: 🚀 Production OTA (Local Update)
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'firmware/production/**'
+      - 'firmware/common/**'
+
+jobs:
+  local-ota-deploy:
+    runs-on: self-hosted # Targets your Unraid Build Server
+    steps:
+      - name: 📥 Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: 🛠️ Compile & Push OTA: Body Hub
+        run: esphome run --no-logs firmware/production/mcu1-body-controller/body-brain.yaml
+
+      - name: 🛠️ Compile & Push OTA: Dome Master
+        run: esphome run --no-logs firmware/production/mcu3-motion-controller/dome-motion.yaml

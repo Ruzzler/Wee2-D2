@@ -102,18 +102,19 @@ The droid operates on a **Distributed Wireless Trigger** model called the **Wire
 *   **Optimization**: Prefer WebP/Lossy JPEG. Strip EXIF metadata from all user photos.
 *   **Deployment**: Use port `8001` for local testing. Use version query strings (e.g., `?v=v20`) for cache-busting on GitHub.
 
-### 3. Firmware Versioning & Backup (v1.8.5)
-To ensure droid stability and rapid recovery from breaking changes:
-*   **Tiered Structure**: All firmware resides in `firmware/`.
-    *   `production/`: Verified, bench-tested YAMLs currently running on the droid.
-    *   `development/`: Experimental or testing YAMLs.
-    *   `archive/`: Historical snapshots with version suffixes (e.g., `v1.8.4-body.yaml`).
+### 3. Firmware Versioning & Backup (v2.0.0-Hybrid)
+To ensure droid stability and secure deployment:
+*   **Modular Architecture**: All firmware inherits from `firmware/common/`.
+    *   `base-config.yaml`: Unified connectivity/security (Captive Portal, Improv, API).
+    *   `s3-defaults.yaml`: S3-specific framework/RMT protections.
+*   **Dual-Track CI/CD**:
+    *   **Local OTA**: Self-hosted Unraid runner uses real `secrets.yaml` for home deployment.
+    *   **Web-Flasher**: Cloud runner uses `dummy-secrets.yaml` for public recovery.
 *   **The Workflow**:
     1.  **Develop** in `development/`.
     2.  **Verify** via bench test on a spare ESP32.
     3.  **Graduate** to `production/` for active deployment.
-    4.  **Archive** the previous production YAML with a version suffix.
-*   **The Ledger**: Update `firmware/VERSION_HISTORY.md` on every production graduation to track stabilization milestones.
+    4.  **Tag Commit**: SemVer (e.g., `v2.0.1`) triggers the automated pipeline.
 
 ### 4. Release & Versioning Strategy (Global)
 *   **Pre-Harmonization Snapshot**: A `vX.X.X-Legacy` tag **MUST** be created and pushed to GitHub before any major structural refactor, tone-scrub, or decommissioning of established features.

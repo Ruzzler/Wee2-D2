@@ -1,0 +1,11 @@
+{
+    "name": "Wee2-D2 Droid Firmware (v2.0)",
+    "builds": [
+      {
+        "chipFamily": "ESP32-S3",
+        "parts": [
+          { "path": "firmware/body-hub.bin", "offset": 0 }
+        ]
+      }
+    ]
+  }

@@ -12,9 +12,9 @@ This document tracks all production-verified firmware releases for the Wee2-D2. 
 - **Sync Protocol**: Switched to **ESP-NOW** for all inter-node communication, decommissioning the physical UDNS bus.
 - **Status**: **VERIFIED**
 
-## [v1.8.0] - 2026-03-31
-### 🧠 S3 Architecture Shift
-- **Hardware Upgrade**: Transitioned from standard ESP32 Dev Boards to ESP32-S3 across the motion and audio tiers.
+## v2.0.0-Hybrid | 2026-03-31 | **The Automated Pipeline** | Stable | [Node 1, 3] | [v1.8.4-Legacy] |
+| v1.8.5 | 2026-03-31 | **Factual Language Audit** | Stable-Legacy | [All] | [v1.7.0] |
+Upgrade**: Transitioned from standard ESP32 Dev Boards to ESP32-S3 across the motion and audio tiers.
 - **LED Interface**: Implemented RMT memory splits (`rmt_symbols: 96`) for dual-strip driving on S3 pins.
 - **Status**: **ARCHIVED**
 
