@@ -1,0 +1,115 @@
+name: 🛸 Wee2-D2 Zero-Infra Release (v2.1)
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'firmware/production/**'
+      - 'firmware/common/**'
+
+permissions:
+  contents: write    # Required for creating releases
+  pages: write       # Required for GitHub Pages
+  id-token: write
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Required for tagging/versioning
+
+      - name: 🔐 Prepare Dummy Secrets
+        run: |
+          cp firmware/common/dummy-secrets.yaml firmware/production/secrets.yaml
+
+      - name: 🛠️ Setup ESPHome
+        uses: esphome/build-action@v2
+        id: esphome-build
+        with:
+          version: latest
+          yaml_file: firmware/production/mcu1-body-controller/body-brain.yaml
+
+      - name: 🏗️ Compile Node 1 (Body Hub)
+        run: esphome compile firmware/production/mcu1-body-controller/body-brain.yaml
+
+      - name: 🏗️ Compile Node 3 (Dome Master)
+        run: esphome compile firmware/production/mcu3-motion-controller/dome-motion.yaml
+
+      - name: 🏗️ Compile Node 2 (Lighting)
+        run: esphome compile firmware/production/mcu2-lighting-controller/wled-bridge.yaml
+
+      - name: 📂 Organize Artifacts
+        run: |
+          mkdir -p public/firmware
+          cp .esphome/build/wee2d2-body-hub/.pioenvs/wee2d2-body-hub/firmware.bin public/firmware/body-hub.bin
+          cp .esphome/build/wee2d2-dome-master/.pioenvs/wee2d2-dome-master/firmware.bin public/firmware/dome-master.bin
+          cp .esphome/build/wee2d2-lighting-ctrl/.pioenvs/wee2d2-lighting-ctrl/firmware.bin public/firmware/lighting-ctrl.bin
+
+      - name: 📜 Generate Manifest
+        run: |
+          cat <<EOF > public/manifest.json
+          {
+            "name": "Wee2-D2 Droid Firmware (v2.1)",
+            "builds": [
+              { "chipFamily": "ESP32-S3", "parts": [{ "path": "firmware/body-hub.bin", "offset": 0 }] },
+              { "chipFamily": "ESP32-S3", "parts": [{ "path": "firmware/dome-master.bin", "offset": 0 }] },
+              { "chipFamily": "ESP32", "parts": [{ "path": "firmware/lighting-ctrl.bin", "offset": 0 }] }
+            ]
+          }
+          EOF
+
+      - name: 🏷️ Determine Version
+        id: versioning
+        run: |
+          # Simple versioning: based on date/time for unique release tags
+          TAG_NAME="v2.1.$(date +'%Y%m%d%H%M')"
+          echo "TAG_NAME=$TAG_NAME" >> $GITHUB_ENV
+          echo "tag=$TAG_NAME" >> $GITHUB_OUTPUT
+
+      - name: 🚀 Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ env.TAG_NAME }}
+          name: Wee2-D2 Zero-Infra Release ${{ env.TAG_NAME }}
+          body: |
+            ## 🛸 Wee2-D2 Firmware v2.1 (Zero-Infrastructure Pivot)
+            
+            This release contains the latest production-ready firmware binaries for the Wee2-D2 project.
+            
+            ### 🛠️ Installation Instructions:
+            1. Download the `.bin` file for the node you wish to update.
+            2. Connect to your droid via its local IP address (e.g., `http://wee2d2-body.local/`).
+            3. Scroll to the **OTA Update** section and upload the `.bin` file.
+            
+            ### 🛰️ Included Assets:
+            - **body-hub.bin**: Main Body Hub (MCU 1)
+            - **dome-master.bin**: Dome Motion Master (MCU 3)
+            - **lighting-ctrl.bin**: Lighting/WLED Controller (MCU 2)
+          files: |
+            public/firmware/body-hub.bin
+            public/firmware/dome-master.bin
+            public/firmware/lighting-ctrl.bin
+          draft: false
+          prerelease: false
+
+      - name: 🌐 Deploy Web-Flasher to GitHub Pages
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: 'public'
+
+  deploy-pages:
+    needs: build-and-release
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: 🚀 Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

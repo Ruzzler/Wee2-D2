@@ -26,13 +26,19 @@ captive_portal:
 # Improv Serial allows configuring Wi-Fi via USB (Web-Flasher Compatibility)
 improv_serial:
 
-# API and OTA logic
+# API and Web Server OTA
 api:
   password: !secret api_password
+
+# Native web dashboard for direct-to-droid updates
+web_server:
+  port: 80
+  version: 3 # Modern v3 dashboard with OTA upload
 
 ota:
   - platform: esphome
     password: !secret ota_password
+  - platform: web_server # Enables the "OTA Update" form in the browser
 
 # Standard Logger levels
 logger:

@@ -15,8 +15,13 @@ This document provides critical context for AI coding assistants working on the 
 
 ---
 
-## 📊 Databank Dependency Map (v1.8.2)
+## 📊 Databank Dependency Map (v2.1.0-Zero-Infra)
 To ensure project-wide synchronization, use this map as a lookup table during research phases. When modifying a component, audit **ALL** primary and firmware files listed.
+
+| Version | Date | Milestone | Status | Nodes | Base |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| v2.1.0-Zero-Infra | 2026-03-31 | **The Zero-Infra Pivot** | Stable | [Node 1, 2, 3] | [v2.0.0-Hybrid] |
+| v2.0.0-Hybrid | 2026-03-31 | **The Automated Pipeline** | Stable-Legacy | [Node 1, 3] | [v1.8.4-Legacy] |
 
 | Dependency Cluster | Core Components | Primary Documentation & Firmware Links |
 | :--- | :--- | :--- |
@@ -102,19 +107,19 @@ The droid operates on a **Distributed Wireless Trigger** model called the **Wire
 *   **Optimization**: Prefer WebP/Lossy JPEG. Strip EXIF metadata from all user photos.
 *   **Deployment**: Use port `8001` for local testing. Use version query strings (e.g., `?v=v20`) for cache-busting on GitHub.
 
-### 3. Firmware Versioning & Backup (v2.0.0-Hybrid)
-To ensure droid stability and secure deployment:
+### 3. Firmware Versioning & Backup (v2.1.0-Zero-Infra)
+To ensure droid stability and zero-infrastructure deployment:
 *   **Modular Architecture**: All firmware inherits from `firmware/common/`.
-    *   `base-config.yaml`: Unified connectivity/security (Captive Portal, Improv, API).
+    *   `base-config.yaml`: Unified Web Server (v3), Captive Portal, and API.
     *   `s3-defaults.yaml`: S3-specific framework/RMT protections.
-*   **Dual-Track CI/CD**:
-    *   **Local OTA**: Self-hosted Unraid runner uses real `secrets.yaml` for home deployment.
-    *   **Web-Flasher**: Cloud runner uses `dummy-secrets.yaml` for public recovery.
+*   **Direct-to-Droid OTA**:
+    - **GitHub Cloud**: Compiles code and attaches `.bin` files to a **GitHub Release**.
+    - **Web Dashboard**: Use the droid's local IP (e.g., `http://wee2d2-body.local/`) to drag-and-drop its latest firmware binary.
 *   **The Workflow**:
     1.  **Develop** in `development/`.
     2.  **Verify** via bench test on a spare ESP32.
     3.  **Graduate** to `production/` for active deployment.
-    4.  **Tag Commit**: SemVer (e.g., `v2.0.1`) triggers the automated pipeline.
+    4.  **Tag Push**: Pushing to `production/` triggers a GitHub Release with `.bin` artifacts.
 
 ### 4. Release & Versioning Strategy (Global)
 *   **Pre-Harmonization Snapshot**: A `vX.X.X-Legacy` tag **MUST** be created and pushed to GitHub before any major structural refactor, tone-scrub, or decommissioning of established features.
