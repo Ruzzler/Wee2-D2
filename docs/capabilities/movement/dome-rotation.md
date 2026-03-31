@@ -8,6 +8,7 @@ The physical rotation relies on a **goBILDA 5203 Yellow Jacket Motor** (117 RPM 
 
 To drive this motor, the droid uses a **goBILDA 15A Cont PWM ESC** securely mounted inside the **dome hub**.
 *   **Power Source**: Powered by 20V directly from the **Ganged Wago Hub** (See [Body Wiring Guide](../../architecture/body-wiring-guide.md)).
+*   **Signal (White)**: Connected to **MCU 3 (GPIO 18)**.
 *   **Safety Interlock**: The ESC boots up fully disengaged. It requires a neutral 1500μs PWM signal to arm, preventing the dome from wildly spinning when you turn on the main power.
 
 ## ⚡ 60% Software Throttling (Crucial)
@@ -35,6 +36,11 @@ Unlike the body, the dome uses a single-axis rotation. To prevent "signal bleed"
 
 > [!TIP]
 > Using **Standard Mode** ensures that accidental Up/Down movement of the thumb joystick does not trigger the dome's rotation ESC.
+
+## 📡 Master Relay Role
+In the **v1.6.2 Architecture**, MCU 3 acts as the primary "Command Dispatcher" for the dome.
+- **Listens** for serial commands from the body (GPIO 16).
+- **Triggers** the WLED board locally (GPIO 27) for synchronized effects.
 
 ---
 **Relevant Hardware & Code:**

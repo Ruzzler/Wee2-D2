@@ -12,7 +12,7 @@ If your droid begins exhibiting non-compliant behavior, use this matrix to diagn
 | **Sound is Distorted** | Poor Grounding | Ensure common ground is tied to the soundboard amp GND. |
 | **LEDs Flickering** | Data Noise | Increase wire thickness; add 470-ohm resistor to data line. |
 | **Cannot Connect to IP** | DHCP Lease Expired | Check router; use static IP in `secrets.yaml`. |
-| **"Angry Mode" Fails** | UDNS Link Fault | Check GPIO 17-to-43 serial connection (UDNS). |
+| **Sync Failure** | UDNS Link Fault | Check GPIO 17-to-43 serial connection (UDNS). |
 
 ---
 

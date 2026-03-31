@@ -8,7 +8,10 @@ The droid is powered by **DeWalt 20V Batteries**.
 ## 🛡️ Protection Layer & Main Distribution
 1.  **MgcSTEM LVP-R1.5 (40A Cutoff)**: Protects DeWalt batteries from over-discharge (17.5V recommended cutoff).
 2.  **Positive Blade Fuse Box**: Receives the raw 20V Positive line from the MgcSTEM.
-3.  **Negative Bus Bar (Star Ground)**: Receives the raw 20V Negative line. *Every single ground wire in the entire droid traces back to this massive metal bus bar to create a perfect "Star Ground" topology, ensuring crystal clear UART data transmission.*
+3.  **Negative Bus Bar (Star Ground)**: Receives the raw 20V Negative line. 
+
+> [!IMPORTANT]
+> **THE GOLDEN RULE OF GROUNDS**: Every component in the droid (MCUs, ESCs, Receivers, and LED Strips) MUST share a common ground reference. Every ground wire traces back to this central Negative Bus Bar to create a "Star Ground" topology. This is critical for signal integrity; without a shared reference, UART and PWM data signals will become unreadable static.
 
 From the Fuse Box and Bus Bar, **five** distinct 20V (+/-) power lines are sent outward:
 

@@ -8,12 +8,12 @@ The **Unified Droid Nervous System (UDNS)** is the high-bandwidth industrial bac
 In a standard hobbyist build, parts often work in isolation. In the **UDNS** model, every action is synchronized across the droid's entire frame:
 
 *   **The Master (Body Controller)**: Interprets RC signals and manages the soundboard. It acts as the "Central Cortex."
-*   **The Slaves (Dome MCUs)**: High-performance S3 Mini nodes that listen on a shared **Command Bus**. They react instantly to instructions sent from the body (e.g., "Rotate dome 90°," "Switch lights to Angry Mode").
+*   **The Slaves (Dome MCUs)**: High-performance **ESP32-D nodes** that listen on a shared **Command Bus**. They react instantly to instructions sent from the body (e.g., "Rotate dome 90°," "Switch lights to High Alert").
 
 ---
 
 ## 🛰️ How it Works: The Serial Bus
-The UDNS uses **Asynchronous Serial (UART)** communication to bridge the gap between the body and the dome. 
+The UDNS uses **Asynchronous Serial (UART)** communication @ **115200 Baud** to bridge the gap between the body and the dome. 
 
 1.  **Command Flow**: When the Body Master detects an event (like a specific button push on your remote), it broadcasts a simplified command string across the **Slip Ring**.
 2.  **Multidrop Listening**: Multiple dome MCUs can listen to the same command line simultaneously. This ensures that dome LEDs and dome motors move in perfect unison without latency.
@@ -30,13 +30,14 @@ By running **ESPHome** as the native firmware for UDNS, your droid isn't just a 
 Wireless maintenance is a core pillar of UDNS. You will never need to open the droid's chassis to update the code. Simply push the update from your PC via Wi-Fi, and the MCUs will reboot with their new "logic" instantly.
 
 ### **3. Zero-Latency Triggers**
-Unlike Wi-Fi-only communication (which can be unreliable at busy events/conventions), the UDNS uses a **physical wire** through the slip ring. This ensures your "Angry Mode" trigger works 100% of the time, even in areas with heavy radio interference.
+Unlike Wi-Fi-only communication (which can be unreliable at busy events/conventions), the UDNS uses a **physical wire** through the slip ring. This ensures your behavioral triggers work 100% of the time, even in areas with heavy radio interference.
 
 ---
 
 ## 🛠️ Components of the System
-*   **Body Controller**: ESP32-WROOM-32D (High pin-count for sound triggers).
-*   **Dome Controllers**: 2x ESP32-S3 Super Mini (Ultra-compact for internal dome mounting).
+*   **Body Controller**: ESP32-WROOM-32D (Master).
+*   **Dome Controller (Motion)**: ESP32-Dev Board (Slave/Relay).
+*   **Dome Controller (Lights)**: ESP32-Dev Board (Standalone WLED).
 
 ---
 
@@ -52,10 +53,27 @@ The slip ring is the physical "Spinal Cord" of the droid. Every signal must be s
 | **C5** | **UDNS TX (Out)** | Yellow/Black | 18 AWG | Body Master -> Dome Slaves (Command) |
 | **C6** | **UDNS RX (In)** | Green/Black | 18 AWG | Dome Slaves -> Body Master (Telemetry) |
 
-> [!WARNING]
-> **COMMON GROUND IS MANDATORY**: You must ensure the Ground from the main Negative Bus Bar travels up the slip ring to provide a flawless reference potential for both the motor and the logic wires. If the ground is broken or noisy, your 3.3V UART serial signals will become "garbage" data floating in reference to nothing, and the droid will wildly glitch. 
+---
+
+## 🛠️ Signal Integrity Standards
+To ensure the UDNS remains stable across multiple nodes and through the slip ring, the following engineering standards are applied to all firmware configurations:
+
+1.  **Sensor Update Intervals**: General ESPHome sensors default to 60-second intervals. For real-time RC control, an `update_interval: 50ms` is used on the `pulse_width` component to ensure reactive motion.
+2.  **Input Pull-Downs**: High-speed digital signals (like RC PWM) require `mode: INPUT_PULLDOWN` on the GPIO pin to prevent floating signals and electrical jitter when the source is disconnected or idle.
+3.  **Log Noise Suppression**: Analog signals often have micro-fluctuations. A `delta: 20.0` filter is applied to sensors to ignore these fluctuations, and the `logger` level is set to `INFO` to suppress unnecessary background telemetry.
 
 ---
 
+## 💾 Serial JSON Protocol
+For reliability, the UDNS utilizes the industry-standard JSON format with the following requirements:
+
+1.  **Delimiter**: Every command string must end with the `\n` newline character.
+2.  **Segment Arrays**: All effects must be wrapped in the `[]` segment array for multi-node compatibility.
+
+**Example Command (High Alert Mode)**:
+```json
+{"on":true,"seg":[{"fx":0,"col":[[255,0,0]]}]}\n
+```
+
 ## 📊 GPIO Interconnects
-If you need the specific GPIO pins used by the UDNS serial bus to wire the controllers into the slip ring, refer to the **Pinout Lookup Tables** at the bottom of the [Interactive Electrical Schematic](electrical-schematic.md).
+If you need the specific GPIO pins used by the UDNS serial bus, refer to the **Pinout Lookup Tables** in the [Interactive Electrical Schematic](electrical-schematic.md).

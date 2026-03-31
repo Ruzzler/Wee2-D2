@@ -22,9 +22,9 @@ The **GrnWave Circular PSI** is a high-density addressable LED display used for 
     3.  **Inner Ring 2**: LEDs **D45 - D60**.
     4.  **Core / Matrix**: LEDs **D61 - D76** (Central logic cluster).
 
-## 🛠️ WLED Configuration Guide
+## 🛠️ Configuration Guide (WLED)
 
-To get the most authentic "Astromech PSI" look in **WLED**, use the following settings for **MCU 2: Lighting Controller**:
+To achieve the cinematic scanning look in **WLED**, use the following settings for **MCU 2: Lighting Controller**:
 
 ### 1️⃣ LED Settings
 *   **LED Type**: WS2812B
@@ -40,10 +40,10 @@ Define these segments in the WLED UI to allow for layered animations:
 | **Full PSI** | 0 | 76 | The entire board. |
 | **Outer Ring** | 0 | 24 | The boundary ring (Use 'Sweep' or 'Spin'). |
 | **Mid & Inner** | 24 | 60 | The intermediate flickering logic rings. |
-| **Core** | 60 | 76 | The 4-12 central logic LEDs. |
+| **Core** | 60 | 76 | The central logic cluster. |
 
 ### 3️⃣ Recommended Effects
-*   **PSI Classic**: Set Segment 0 (Outer) to a slow **Breathing** effect in Blue/Green. Set Segment 2 (Core) to a rapid **Flicker** or **Strobe** in Red/Amber.
+*   **Classic Idle**: Set Segment 0 (Outer) to a slow **Breathing** effect in Blue/Green. Set Segment 2 (Core) to a rapid **Flicker** or **Strobe** in White/Amber.
 *   **Spinning Disc**: Apply the **Wiper** or **Scan** effect to the **Outer Ring** segment only. 
 *   **2D Matrix**: In WLED's 2D settings, you can define this as a "Ring" layout with a diameter of 10 to create even more complex geometric patterns.
 

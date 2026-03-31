@@ -39,7 +39,7 @@ Triggers are **Active LOW**. Connecting a pin to Ground (GND) fires the sound.
 | **S2** | `GPIO 5` | Green | Whistle |
 | **S3** | `GPIO 26` | Black | Alert (Moved from 16) |
 | **S4** | `GPIO 27` | White | Scream (Moved from 17) |
-| **S5** | `GPIO 18` | Red | Angry Mode |
+| **S5** | `GPIO 18` | Red | High Alert Mode |
 | **S6** | `GPIO 19` | Blue | Processing |
 | **S7** | `GPIO 21` | Brown | Police Siren |
 | **S8** | `GPIO 22` | Orange | Laugh |
@@ -94,18 +94,18 @@ To handle the 15A+ peak loads of the dome motor and LED matrices, the slip ring 
 
 ---
 
-## 🛠️ 6. Temporary Dome Node (ESP32-D WROOM)
-*Note: Use these pins only during the testing phase with the full-sized Dev Board. For S3 Mini, refer to the [Lighting Manual](../hardware/led-system.md).*
+## 🛠️ 6. Universal Dome Interconnect (ESP32-D)
+*Note: These pins represent the final production wiring for the 115200 Baud UDNS bus in the dome.*
 
-| Component | ESP32-D Pin | Wire Color |
-| :--- | :---: | :--- |
-| **UDNS RX** | `GPIO 3` | 🟨/⬛ Yellow/Blk |
-| **UDNS TX** | `GPIO 1` | 🟩/⬛ Green/Blk |
+| Component | ESP32-D Pin | Wire Color | Role |
+| :--- | :---: | :--- | :--- |
+| **UDNS RX (Bus)** | `GPIO 16` | 🟨/⬛ Yellow/Blk | Parallel Command Bus |
+| **UDNS TX (Bus)** | `GPIO 17` | 🟩/⬛ Green/Blk | Parallel Telemetry Bus |
 
 ---
 
 ## ⚡ 7. Dome ESC Pulse Calibration (goBILDA 15A)
-*   **Signal (White)**: Connect to **MCU 3 (GPIO 2)**.
+*   **Signal (White)**: Connect to **MCU 3 (GPIO 18)**.
 *   **Ground (Black)**: **MUST** be connected to the Dome Logic GND rail (Reference).
 *   **Voltage (Red)**: **ISOLATE** (Do not connect) if using the Slip Ring 5V Logic Bus.
 

@@ -27,7 +27,7 @@ ESPHome is natively designed for Home Assistant (HA).
 1.  Open Home Assistant > **Settings > Devices & Services**.
 2.  Your 3 droid MCUs should appear automatically under "Discovered."
 3.  Click **Configure** and enter the API password (if you set one).
-4.  **Control**: You can now add "Angry Mode" switches, Battery sensors, and Volume sliders to your HA dashboard.
+4.  **Control**: You can now add behavioral switches, battery sensors, and volume sliders to your HA dashboard.
 
 ---
 

@@ -1,3 +1,6 @@
+# Wee2-D2 Body Controller (MCU 1)
+# Firmware: ESPHome | v1.6.2 "Imperial Gold Standard"
+# Hardware: ESP32D Dev Board (38-pin variant)
 esphome:
   name: rc-sound-controller
   friendly_name: RC Sound Controller
@@ -32,8 +35,8 @@ ota:
   platform: esphome
 
 wifi:
-  ssid: "PLACEHOLDER_SSID"
-  password: "PLACEHOLDER_PASSWORD"
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
 
 # Status LED for Heartbeat
 status_led:
@@ -139,7 +142,7 @@ switch:
 
 button:
   - platform: template
-    name: "TEST: Angry Mode"
+    name: "TEST: High Alert"
     icon: "mdi:emoticon-angry"
     on_press:
       then:

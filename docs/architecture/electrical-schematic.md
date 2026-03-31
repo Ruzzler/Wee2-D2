@@ -63,8 +63,8 @@ flowchart TD
         ESP1 -->|S1-S9 Triggers| AUDIO
         RC2 -->|PWM| ESP3
         ESP3 -->|PWM| DOME_ESC
-        ESP1 ---|UDNS UART| WLED
-        ESP1 ---|UDNS UART| ESP3
+        ESP1 ---|UDNS UART Bus| ESP3
+        ESP1 ---|UDNS UART Bus| WLED
     end
 
     %% Direct Markdown-Relative Links for Interactivity
@@ -106,25 +106,27 @@ Master controller for sounds and UDNS coordination.
 | **UDNS TX** | TX2 | GPIO17 | To Dome (Yellow/Black) |
 | **UDNS RX** | RX2 | GPIO16 | From Dome (Green/Black) |
 
-### **MCU 2: Lighting Controller (ESP32-S3 Super Mini - ESPHome)**
-Addressable LEDs using the **UDNS Light Interface**.
+### **MCU 2: Lighting Controller (ESP32-Dev Board - WLED)**
+Dedicated high-density addressable LED matrix controller.
 
 | Component | Pin (GPIO) | Mode | Notes |
 | :--- | :---: | :---: | :--- |
-| **Logics / PSI** | 1, 2, 3 | Output | Neopixel Data Lines |
-| **UDNS TX** | GPIO44 | Output | Shared Serial Bus |
-| **UDNS RX** | GPIO43 | Input | Shared Serial Bus |
+| **Front Logic (10x2)** | 18 | Output | Yellow Wire |
+| **Rear Logic (12x2)** | 19 | Output | Yellow/Black Striped |
+| **Front PSI** | 21 | Output | Green Wire |
+| **Back PSI** | 22 | Output | White Wire |
+| **UDNS RX (Bus)** | 16 | Input | Serial Command In |
 | **Web UI** | N/A | WiFi | Port 80 (Pattern selection) |
 
-### **MCU 3: Motion Controller (ESP32-S3 Super Mini)**
-Dedicated controller for 360° dome rotation.
+### **MCU 3: Motion Controller (ESP32-Dev Board)**
+Dedicated controller for 360° dome rotation and UDNS dispatch.
 
 | Component | Pin (GPIO) | Mode | Notes |
 | :--- | :---: | :---: | :--- |
-| **RC CH1 Input** | GPIO1 | Input | From Receiver #2 (Dome Rotation) |
-| **Dome ESC** | GPIO2 | Output | PWM Signal (50Hz) to goBILDA ESC |
-| **UDNS TX** | GPIO44 | Output | Serial to Body (via Slip Ring) |
-| **UDNS RX** | GPIO43 | Input | Serial from Body (via Slip Ring) |
+| **RC CH1 Input** | GPIO 4 | Input | From Receiver #2 (Steering) |
+| **Dome ESC** | GPIO 7 | Output | PWM Signal to goBILDA ESC |
+| **UDNS TX** | GPIO 17 | Output | Serial to Body (Yellow/Black) |
+| **UDNS RX** | GPIO 16 | Input | Serial from Body (Green/Black) |
 
 ---
 

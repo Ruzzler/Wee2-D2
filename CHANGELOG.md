@@ -4,6 +4,62 @@ All notable changes to the Wee2-D2 project will be documented in this file. This
 
 ---
 
+## [1.7.5] - 2026-03-31 (Final Harmonization & Tone Scrub)
+### Added
+- **Imperial Engineering Standard (v1.7.5)**: Established a project-wide professional tone, scrubbed all "cheesy" or non-functional descriptors (Authentic, Elite, Mission-Ready, Final Boss).
+- **Cinematic Logic Standard**: Rebranded LED scrolling as "Cinematic Logic Display".
+
+### Changed
+- **Feature Decommissioning**: Fully removed "Angry Mode" from all Databank documentation, tutorials, and schematics. Reclassified as "High Alert" in internal logic only.
+- **Pinout Parity**: Synchronized all READMEs and schematics to the production-verified **GPIO 7** (Dome ESC) and **115200 Baud** (UDNS) standards.
+- **Nervous System Template**: Updated the core inter-MCU template to reflect the 115200 baud standard and removed legacy test-bench scripts.
+
+### Fixed
+- **Documentation Corruption**: Resolved multiple alignment and injection errors in the `architecture/` and `maintenance/` guides caused by legacy multi-file edit attempts.
+- **Firmware Pathing**: Corrected broken link references in the Databank SPA to point to the new hierarchical firmware READMEs.
+
+---
+
+## [1.7.2] - 2026-03-31 (Dome Control Refinement & Bench Testing)
+### Changed
+- **UDNS Removal**: Eliminated the UART serial bus and local relay triggers from MCU 3 to simplify the standalone S3 Mini behavioral test suite.
+- **Experimental Safety**: Commented out the mandatory 60% voltage clamp across all motor logic (RC and Scripts) to allow for baseline bench testing. **Warning**: Motor is now exposed to full battery bus voltage.
+
+---
+
+## [1.7.0] - 2026-03-31 (S3 Behavioral Update)
+### Added
+- **ESP32-S3 Performance Pivot**: Upgraded MCU 3 to the S3 Super Mini platform, utilizing the `esp-idf` framework and RMT (Remote Control) peripheral for glitch-free LED driving.
+- **Behavioral script Integration**: Integrated advanced autonomous scripts: "Scan Patrol," "Party Dance," and "Mood Logic" (Mechanical Jam simulator).
+- **RC High-performance Passthrough**: Implemented instantaneous manual override on GPIO 4 with logic-level stick detection.
+
+### Changed
+- **Voltage Safety Enforcement**: Injected a mandatory **0.6 scale factor (60% clamp)** across all motor throttle logic (RC and Scripts) to protect the 12V goBILDA motor from the 20V battery bus.
+- **UDNS Restoration**: Re-integrated the 115200 Baud UDNS serial bus (GPIO 16/17) and local relay synchronization.
+- **Credential Stripping**: Migrated local Wi-Fi and API credentials to the project's `!secret` logic to prevent accidental public disclosure.
+
+### Fixed
+- **PSI Logic Mapping**: Resolved a physical label swap; confirmed GPIO 5 as **Rear PSI** and GPIO 6 as **Front PSI**.
+
+---
+
+## [1.6.2] - 2026-03-31 (Imperial Engineering Standard & Dome Pivot)
+### Added
+- **Local Relay Trigger**: Implemented the physical GPIO 27 `switch` in `dome-motion.yaml` to provide a zero-latency sync trigger to the lighting controller.
+- **UDNS UART (MCU 3)**: Added the UDNS serial bus component to the Motion Controller for future telemetry and synchronized movement.
+
+### Changed
+- **Dome Hardware Pivot**: Standardized all documentation and firmware READMEs to reflect the **ESP32 Dev Board (Standard)** as the official node for the entire droid, replacing the S3 Super Mini.
+- **UDNS Baud Parity**: Synchronized all READMEs and architectural docs to the **115200 Baud** imperial standard (fixing 9600 baud discrepancies).
+- **Communication Hardware**: Updated MCU 2 (WLED) documentation to use standard ESP32-D pins (GPIO 16/17) for the UDNS bus instead of S3-specific pins.
+- **WLED Framework Sync**: Corrected the Lighting Controller's functional capability documentation to reflect the **WLED** framework instead of ESPHome.
+
+### Fixed
+- **Logic Matrix Dimensions**: Corrected swapped Front (10x2) and Rear (12x2) matrix dimensions in the WLED configuration guide.
+- **Firmware Redundancy**: Cleaned up and consolidated duplicate `esphome:` blocks in the MCU 3 YAML configuration.
+
+---
+
 ## [1.6.0] - 2026-03-29 (UDNS Verification & Behavioral Integration)
 ### Added
 - **Serial Integration Suite**: Implemented 14 diagnostic buttons on the Body Dashboard for "One-Touch" droid emotion testing (Red Alert, Happy, Processing, etc.).
@@ -25,13 +81,14 @@ All notable changes to the Wee2-D2 project will be documented in this file. This
 ### Changed
 - **Pin Remediation (MCU 1)**: Migrated Sound Triggers S3 and S4 from GPIO 16/17 to **GPIO 26/27** to resolve Hardware UART2 conflicts.
 - **RC Channel Realignment**: Updated the Body Controller to utilize **CH5 (GPIO 32)** for bank switching to match the builder's physical receiver data pin mapping.
-- **Physical Build Synchronization**: Updated all technical manuals (Schematic, Audio Guide, Firmware READMEs) to reflect the builder's specific wire colors and pin selections.
+- **Physical Build Synchronization**: Updated all technical manuals (Schematic, Audio Guide, Firmware READMEs) to reflect the specific wire colors and pin selections.
 
 ---
 
 ## [1.4.0] - 2026-03-28 (Power Topology & AI Dossier Overhaul)
 ### Added
-- **Star Ground Architecture**: Redesigned power distribution topology featuring a 40A LVC, Positive Blade Fuse Box, and central Negative Bus Bar for flawless 3.3V UART transmission.
+> [!IMPORTANT]
+> **MANDATORY STAR GROUND RULE**: Every component in the droid (MCUs, ESCs, Receivers, and LED Strips) MUST share a common ground reference. Every ground wire traces back to this central Negative Bus Bar to create a "Star Ground" topology. This is critical for signal integrity; without a shared reference, UART and PWM data signals will become unreadable static.
 - **Dual-Line Slip Ring Protocol**: Documented the mechanical isolation of Dome Motor Power (C1/C2) from Dome Logic Power (C3/C4) carrying identical 18 AWG wiring through the 6-circuit hub.
 - **BEC Logic Tapping**: Diagramed the explicit routing of 5V power from the Flipsky and goBILDA ESC internal BECs directly to the HOTRC Receivers and MCUs.
 
@@ -69,6 +126,8 @@ All notable changes to the Wee2-D2 project will be documented in this file. This
 ## [1.1.0] - 2026-03-28 (WikiSync & PDFAssist)
 ### Added
 - **Battery Endurance Estimation**: Created **`docs/maintenance/battery-runtime-guide.md`** with duty cycle calculations.
+- **Firmware**: 100% **ESPHome**. Integrated with **Home Assistant** and support for **OTA (Over-The-Air)** updates. 
+    *   *Note*: MCU 3 (ESP32-S3) **MUST** use the `esp-idf` framework to ensure RMT peripheral stability for high-density LED arrays.
 - **Hardware Photo Integration**: Migrated and optimized raw assets to permanent project directory.
 - **Enhanced Documentation**: Integrated technical photos into manuals and the BoM.
 

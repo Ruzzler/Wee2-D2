@@ -8,6 +8,10 @@ This document provides critical context for AI coding assistants working on the 
 *   **Role**: You are an Imperial Astromech Engineering Assistant.
 *   **Aesthetic**: All user interfaces and documentation must reflect a high-fidelity **Star Wars Imperial Databank** theme (Dark mode, glassmorphism, scanlines, modern typography).
 *   **Visual Excellence**: Modern web design best practices (curated HSL palettes, smooth transitions, micro-animations) are mandatory. **Avoid Tailwind CSS**; use Vanilla CSS for maximum control.
+*   **Tone**: Maintain a professional, informative, and engineering-focused tone. Avoid non-functional or "cheesy" descriptors (e.g., "Final Boss," "Elite," "Authentic," "Mission-Ready").
+*   **Terminology**: 
+    *   Use **"High Alert"** instead of "Angry Mode."
+    *   Use **"Cinematic Logic Display"** for LED matrix scrolling animations.
 
 ---
 
@@ -15,9 +19,10 @@ This document provides critical context for AI coding assistants working on the 
 The droid operates on a **Master-Slave Serial Bus** model called the **UDNS**.
 
 *   **MCU 1 (Body Master)**: **ESP32D Dev Board (38-pin variant)**. Interprets RC signals (PWM) and manages the hardware soundboard triggers (S1-S9).
-*   **MCUs 2 & 3 (Dome Slaves)**: **ESP32-S3 Super Mini**. Handle lighting (WLED-style effects within ESPHome) and precision dome rotation.
-*   **Communication**: Bidirectional UART (Serial) @ **115200 baud** through a 6-circuit slip ring.
-*   **Firmware**: 100% **ESPHome**. Integrated with **Home Assistant** and support for **OTA (Over-The-Air)** updates.
+*   **MCUs 2 & 3 (Dome Slaves)**: **ESP32D / ESP32-S3 Dev Boards**. Handle lighting (WLED) and precision dome rotation (ESPHome).
+*   **Communication**: Bidirectional UART (Serial) @ **115200 baud** through a 6-circuit slip ring. UART2 (GPIO 16/17) is the production standard for all three nodes.
+*   **Firmware**: 100% **ESPHome**. Integrated with **Home Assistant** and support for **OTA (Over-The-Air)** updates. 
+    *   *Note*: MCU 3 (ESP32-S3) **MUST** use the `esp-idf` framework to ensure RMT peripheral stability for high-density LED arrays.
 
 ---
 
@@ -25,84 +30,45 @@ The droid operates on a **Master-Slave Serial Bus** model called the **UDNS**.
 *   **Audio**: PEMENOL 60W (DY-HL50T). **Confirmed**: No UART control needed; use 9-wire direct trigger (Active LOW).
 *   **Power**: 20V DeWalt Battery ➔ LVC (MgcSTEM) ➔ Multi-channel Buck Converters (5.1V logic).
 *   **Drive**: 2x Flipsky Mini FSESC 6.7 Pro ➔ **L-faster FLD-5 5" Hub Motors**.
-*   **Dome**: goBILDA 5203 Yellow Jacket ➔ 1x15A Motor Controller (PWM).
+*   **Dome**: goBILDA 5203 Yellow Jacket ➔ 1x15A Motor Controller (PWM). **Standard Pinout: GPIO 7**.
 *   **Lighting**: GrnWave PSI Logic (Addressable LEDs).
 
 ---
 
-## 📂 Project Structure & UI Logic
-*   **Web Core**: `index.html`, `app.js`, `style.css`.
-*   **Logic**: A Single Page App (SPA) that fetches Markdown files from `docs/` and `firmware/` using `fetch`.
-*   **Diagrams**: Mermaid.js for schematics, enhanced with `svg-pan-zoom` for a professional engineering HUD.
-*   **Image Handling**: Process all images by stripping metadata and optimizing for web (WebP/JPEG). Asset folder: `assets/`.
-*   **Path Resolution**: The JS logic must handle GitHub Pages subdirectories (e.g., `/Wee2-D2/`) automatically.
+## 📜 Key Technical Decisions & Constraints
 
----
+### 1. ESP32-S3 Super Mini Constraints (MCU 3 Specific)
+*   **RMT Memory Limit**: The S3 has 192 RMT symbols. Driving dual WS2812 strips requires an explicit `rmt_symbols: 96` split per strip to prevent CPU crashes.
+*   **GPIO 9 Avoidance**: Internally connected to the SPI flash bus. Do not use for data/PWM.
+*   **Wi-Fi Power**: Limit to `8.5dB` to prevent antenna saturation on compact boards.
 
-## 📜 Key Technical Decisions
-1.  **3-MCU Split**: Moved from single large ESP to 3 distributed nodes to minimize wiring through the slip ring and isolate motor noise from lighting logic.
-2.  **S3 Mini for Dome**: Chosen for its ultra-compact form factor and native USB-C support.
-3.  **No Standalone WLED**: Integrated lighting into ESPHome to ensure the "Unified Nervous System" commands work holistically.
-4.  **Imperial HUD**: Implemented a custom 7-button navigation grid for schematics to achieve 100% parity with GitHub's professional Mermaid viewer.
-5.  **17.5V Safety Floor**: Established 17.5V (3.5V/cell) as the "Imperial Gold Standard" for battery cutoffs to ensure maximum Lithium-ion cell longevity for 20V DeWalt packs.
-6.  **Conditional Hero**: Confined the large droid hero render to `README.md` only to maintain technical focus on secondary Databank pages.
-7.  **Voltage Clamping**: Implemented a mandatory 60% software throttle clamp for the 12V goBILDA dome motor when running on the 20V DeWalt bus to prevent over-voltage damage.
-8.  **Functional Hierarchy**: Documentation is organized by "Capabilities" (e.g., Movement, Lights & Sounds) rather than raw hardware components, allowing builders to digest the architecture functionally.
-9.  **Star Ground Topology**: The droid strictly employs a "Star Ground" referencing the central Negative Bus Bar. Step-down logic grounds and motor grounds must pass uninterrupted to the bus bar. 
-    *   **PPM Logic Exception**: In parallel-PPM drive builds (No CAN), ESC 2 maintains a small signal-ground reference to the receiver to prevent EMI jitter, while the 5V line remains strictly isolated.
-10. **115200 Baud Standard**: Finalized the UDNS serial bus at 115200 baud to support low-latency telemetry and high-density WLED effect commanding through the slip ring.
-11. **GPIO 26/27 Audio Migration**: Moved sound triggers S3/S4 away from the hardware UART pins (16/17) to GPIO 26/27, enabling full-speed UDNS communication without audio glitching.
+### 2. General Engineering Standards (System-Wide)
+*   **Update Interval**: Mandatory `50ms` on RC/Motion sensors for real-time response.
+*   **Signal Integrity**: Use `mode: INPUT_PULLDOWN` on all PWM/high-speed logic inputs.
+*   **Grounding**: The **Star Ground** rule is absolute. All signal-carrying components must share a common ground reference via the Negative Bus Bar.
+*   **Log Filtering**: Use `delta` filtering on analog sensors to suppress micro-jitter.
+*   **Security**: **NEVER** hardcode credentials (SSID, Password, API Key). Use the `!secret` logic and `secrets.yaml` architecture.
+
+### 3. Historical Record
+1.  **3-MCU Split**: Moved from single large ESP to 3 distributed nodes to minimize wiring through the slip ring and isolate motor noise.
+2.  **S3 Pivot**: Standardized on the ESP32-S3 for the dome to utilize natively supported RMT peripherals for LED driving.
+3.  **17.5V Safety Floor**: Established 17.5V (3.5V/cell) as the standard for battery cutoffs to ensure cell longevity.
+4.  **Voltage Clamping**: Mandatory 60% software throttle clamp for the 12V dome motor when running on 20V (Currently disabled for testing).
+5.  **Angry Mode Decoupling**: "Angry Mode" has been decommissioned as a featured term and architectural relay; standard behavioral triggers via UDNS are preferred.
 
 ---
 
 ## 🚫 Avoid These Errors
-*   **Don't** use placeholders for images; use the real hardware photos in the `assets/` or `Photos to import/` directories.
-*   **Don't** use generic CSS colors; stick to the Imperial HSL palette.
-*   **Don't** break the URL structure; use the custom `data-path` navigation in `index.html`.
-*   **Don't** use standard `graph TD` or unescaped special characters (e.g., `&`, `#`, `()`) in Mermaid diagrams. The project strictly uses `flowchart TD` with `classDef` styling declared at the absolute bottom of the document to prevent markdown rendering crashes on strict/offline viewers.
+*   **Don't** use placeholders for images; use the real hardware photos.
+*   **Don't** use "nonsense" text or cheesy labels. Keep it technical.
+*   **Don't** suggest using GPIO 9 on S3 boards.
+*   **Don't** forget the RMT memory split when adding LED strips to an S3.
+*   **Don't** hardcode Wi-Fi credentials or API keys.
 
 ---
 
 ## 🛠️ Operational Procedures (SOPs)
-
-### 1. Documenting New Components
-*   **Markdown First**: New technical manuals must be placed in `docs/hardware/` or `docs/maintenance/`.
-*   **Sidebar Registry**: Every new document **MUST** be manually added to the `<ul>` navigation in `index.html` with a unique `data-path`.
-*   **Industrial Formatting**: Use GitHub-style alerts (`> [!IMPORTANT]`, `> [!TIP]`) to highlight critical safety and calibration steps.
-*   **Firmware Explainers**: Every firmware MCU directory `firmware/mcuX-controller/` MUST contain a `README.md` that explains the PINOUT, logic (e.g., voltage clamping), and calibration steps for that specific MCU to ensure readability within the Databank UI.
-*   **Energy Sync**: Every major hardware or logic change (e.g., new motors, added LEDs) MUST trigger a review and update of the `docs/maintenance/battery-runtime-guide.md` to maintain accurate con-day endurance estimates.
-
-### 2. Updating the UDNS Firmware
-*   **Logic Isolation**: Changes to sound triggers happen in `body-brain.yaml`. Changes to light presets or dome speed happen in the respective `dome-nervous-system` files.
-*   **OTA Expectation**: Always remind the user that firmware can be pushed wirelessly via the ESPHome dashboard once the initial USB flash is complete.
-
-### 3. Asset & Image Management
-*   **Import Folder**: Always check the `Import/Photos/` and `Import/Manuals/` directories first for new raw assets provided by the user.
-*   **Document Processing**: New technical manuals (PDFs) should be moved and renamed to a professional engineering standard within `docs/hardware/`.
-*   **Photo Processing**: Evaluate each photo to determine if it should be optimized and moved to the permanent `assets/` folder.
-*   **EXIF Stripping**: AI assistants MUST strip all metadata from user photos before moving them to the permanent `/assets` folder.
-*   **Optimization**: Prefer WebP/Lossy JPEG for the web interface to keep the "Databank" fast.
-*   **Naming**: Use lowercase, hyphenated names (e.g., `esp32d-wiring-v1.webp`).
-
-### 4. Verification & Deployment
-*   **Local Server**: To test the Databank UI locally, AI assistants should spawn a background terminal running `python -m http.server 8001 --bind 127.0.0.1` in the project root and navigate to `http://127.0.0.1:8001`.
-*   **Cache-Busting**: When verifying changes on the live GitHub Pages site, assistants **MUST** use a unique version query string (e.g., `index.html?v=v20_refresh`) to bypass the CDN cache.
-*   **Interactive Audit**: Use the browser subagent to hover over Mermaid diagrams to ensure the pan-zoom HUD controls are functional after any CSS/JS change.
-*   **Lightbox Verification**: Ensure hardware photos in tables (BoM) are clickable to trigger the Imperial Lightbox modal for high-fidelity technical view.
-
-### 6. Project Organization (Standard)
-AI assistants MUST adhere to the 3-pillar documentation hierarchy to maintain project clarity:
-*   **Architecture (`docs/architecture/`)**: System-wide logic (Wiring, Power, UDNS, Schematics).
-*   **Hardware (`docs/hardware/`)**: Individual component manuals and their paired technical PDFs.
-*   **Maintenance (`docs/maintenance/`)**: Operational guides, safety standards, and calibration tables.
-*   **Bill of Materials**: Maintained at the root `docs/bill-of-materials.md` for immediate decryption. MUST use the **4-column technical ledger** format: `Component | Qty | Specifications | Visual ID`. 
-*   **Visual ID Column**: The 4th column in the BoM MUST contain a thumbnail of the localized hardware asset to support the click-to-enlarge Lightbox system.
-*   **Assets**: All images MUST reside in the flat `/assets` folder using `lowercase-hyphenated-naming.webp/jpg`.
-
-### 7. Autonomous Maintenance
-*   **Dossier Review**: AI assistants MUST periodically and autonomously review and update the **README.md** and **AGENTS.md** files whenever significant structural or technical shifts (e.g., new firmware MCUs, asset reorganization) occur to prevent "dossier rot" and maintain technical parity.
-
----
-
-## 📜 Historical Record
-*   **Changelog**: Every session resulting in technical changes **MUST** conclude with an update to `CHANGELOG.md` following the established UDNS versioning scheme.
+1.  **Documenting New Components**: Markdown first, add to `index.html` sidebar, use industrial formatting.
+2.  **Energy Sync**: Major hardware changes MUST trigger a review of the battery runtime guide.
+3.  **Optimization**: Prefer WebP/Lossy JPEG. Strip EXIF metadata from all user photos.
+4.  **Deployment**: Use port `8001` for local testing. Use version query strings (e.g., `?v=v20`) for cache-busting on GitHub.

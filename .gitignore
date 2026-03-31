@@ -1,7 +1,8 @@
 # Local Development Exclusions
-local_server_guide.md
-firmware/secrets.yaml
+**/secrets.yaml
 .vs/
 .vscode/
 *.log
+*.bin
+*.ota
 Import/

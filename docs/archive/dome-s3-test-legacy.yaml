@@ -30,12 +30,12 @@ logger:
 
 api:
   encryption:
-    key: "pbEp0iW4DNQS/i0DtL8mG5XJV1apbLQmcDTG8kGUqGE="
+    key: "PLACEHOLDER_KEY"
   reboot_timeout: 0s 
 
 ota:
   - platform: esphome
-    password: "PLACEHOLDER_API_KEY"
+    password: "PLACEHOLDER_PASSWORD"
 
 wifi:
   ssid: "PLACEHOLDER_SSID"
@@ -84,11 +84,11 @@ light:
 
     effects:
       - addressable_scan:
-          name: "Authentic: Cinematic Wipe"
+          name: "Cinematic Wipe"
           move_interval: 75ms
           scan_width: 38
       - addressable_flicker:
-          name: "S1: Random Mode"
+          name: "TEST: High Alert"
           intensity: 3%
       - addressable_twinkle:
           name: "T6: Leia/Hologram"
@@ -123,7 +123,7 @@ number:
         - servo.write: {id: dome_motor, level: !lambda 'return x;'}
 
 # ============================================
-# AUTHENTIC DROID SCRIPTS
+# BEHAVIORAL SCRIPTS
 # ============================================
 
 script:
@@ -135,7 +135,7 @@ script:
           condition:
             lambda: 'return true;'
           then:
-            - light.turn_on: {id: front_psi, brightness: 30%, effect: "Authentic: Cinematic Wipe"}
+            - light.turn_on: {id: front_psi, brightness: 30%, effect: "Cinematic Wipe"}
             - delay: !lambda 'return 5000 + (rand() % 10000);'
             - if:
                 condition:
@@ -145,10 +145,10 @@ script:
                   - light.turn_on: {id: front_psi, effect: "none", red: 100%, blue: 0%}
                   - delay: 7s
 
-  - id: r2_angry
+  - id: high_alert_test
     mode: restart
     then:
-      - light.turn_on: {id: front_psi, brightness: 30%, red: 100%, effect: "S1: Random Mode"}
+      - light.turn_on: {id: front_psi, brightness: 30%, red: 100%, effect: "TEST: High Alert"}
       - repeat:
           count: 8
           then:
@@ -169,14 +169,14 @@ button:
     on_press: {script.execute: mood_standard_stuck}
   
   - platform: template
-    name: "▶ Run: Angry Reaction"
-    on_press: {script.execute: r2_angry}
+    name: "▶ Run: High Alert Test"
+    on_press: {script.execute: high_alert_test}
 
   - platform: template
     name: "⛔ EMERGENCY STOP"
     on_press:
       - script.stop: mood_standard_stuck
-      - script.stop: r2_angry
+      - script.stop: high_alert_test
       - servo.write: {id: dome_motor, level: 0.0}
       - light.turn_off: front_psi
 

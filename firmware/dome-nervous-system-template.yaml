@@ -3,7 +3,7 @@ esphome:
   friendly_name: Dome Nervous System Controller
 
 esp32:
-  board: esp32-s3-devkitc-1 # Standard S3-Sdev target
+  board: esp32-s3-devkitc-1
   framework:
     type: arduino
 
@@ -20,15 +20,15 @@ ota:
 
 # Logging
 logger:
-  level: DEBUG
-  baud_rate: 0 # Disable serial logging to free up UART0 if needed
+  level: INFO
+  baud_rate: 115200
 
 # Inter-MCU Communication (The UDNS Bus)
 uart:
   id: udns_bus
-  tx_pin: GPIO44
-  rx_pin: GPIO43
-  baud_rate: 9600
+  tx_pin: GPIO17
+  rx_pin: GPIO16
+  baud_rate: 115200
   debug:
     direction: BOTH
     dummy_receiver: true
@@ -60,11 +60,11 @@ light:
 
 # SCRIPTS FOR SERIAL COMMANDS
 script:
-  - id: angry_mode_preset
+  - id: high_alert_preset
     then:
       - light.turn_on:
           id: front_logics
-          effect: "Angry Strobe"
+          effect: "Strobe"
           brightness: 100%
           red: 100%
           green: 0%
