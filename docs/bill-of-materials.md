@@ -42,5 +42,5 @@ A comprehensive list of hardware used in the Wee2-D2 project, organized by syste
 
 ---
 
-> [!TIP]
-> **INTEGRITY CHECK**: If visual IDs are missing, please reference the [Unified Droid Nervous System](architecture/unified-nervous-system.md) overview for interior body layout photos.
+> [!NOTE]
+> **TECHNICAL REPOSITORY**: For detailed wiring and signal paths, please refer to the [Interactive Electrical Schematic](architecture/electrical-schematic.md).
