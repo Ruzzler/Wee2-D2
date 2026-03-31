@@ -1,0 +1,13 @@
+# 🧠 ESP32-S3 Hardware Defaults
+# v2.0-Hybrid | NODES 1 & 3
+
+esp32:
+  board: esp32-s3-devkitc-1
+  framework:
+    type: esp-idf # Required for RMT stability on S3
+    version: recommended
+
+# RMT Memory Splits for S3
+# Prevents CPU crashed when driving multiple WS2812 strips
+# The S3 has 192 RMT symbols total.
+# split: 96 per strip (dual) or 192 (single)
