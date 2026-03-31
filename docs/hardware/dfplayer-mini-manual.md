@@ -1,5 +1,5 @@
-# 🏛️ IMPERIAL DATABANK: DFPLAYER MINI (MP3-TF-16P)
-> **DECRYPTED DATA REPOSITORY**
+# 🏛️ DFPlayer Mini (MP3-TF-16P)
+> **TECHNICAL SPECIFICATIONS**
 
 ![DFPlayer Mini](../../assets/soundboard-top.jpg)
 

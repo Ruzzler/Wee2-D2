@@ -1,5 +1,5 @@
-# 🏛️ IMPERIAL DATABANK: goBILDA DRIVE & MOTION
-> **DECRYPTED DATA REPOSITORY**
+# 🏛️ goBILDA Drive & Motion
+> **TECHNICAL SPECIFICATIONS**
 
 This entry covers the high-torque dome rotation motor and its dedicated speed controller.
 

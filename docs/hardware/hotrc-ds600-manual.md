@@ -1,5 +1,5 @@
-# 🏛️ IMPERIAL DATABANK: HOTRC DS-600
-> **DECRYPTED DATA REPOSITORY**
+# 🏛️ HOTRC DS-600
+> **TECHNICAL SPECIFICATIONS**
 
 The **HOTRC DS-600** is a 6-channel, one-handed "trigger style" 2.4GHz transmitter. In the Wee2-D2 project, it provides the primary interface for drive and dome movement.
 

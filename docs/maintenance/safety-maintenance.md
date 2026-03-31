@@ -1,6 +1,6 @@
 # 🛡️ Maintenance & Safety Manual: Wee2-D2
 
-Safety and preventative maintenance are the foundations of a reliable Imperial droid. These protocols protect your hardware and anyone in the droid's immediate vicinity.
+Safety and preventative maintenance are the foundations of a reliable droid system. These protocols protect your hardware and anyone in the droid's immediate vicinity.
 
 ---
 

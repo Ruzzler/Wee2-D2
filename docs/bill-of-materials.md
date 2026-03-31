@@ -1,4 +1,4 @@
-# 🏛️ IMPERIAL DATABANK: BILL OF MATERIALS (BOM)
+# 📋 Bill of Materials (BOM)
 > **TECHNICAL REPOSITORY** | **SERIAL: B0M-WEE2D2-v1.2**
 
 A comprehensive list of hardware used in the Wee2-D2 project, organized by system tier. Click on any thumbnail in the **Visual ID** column to enlarge it.

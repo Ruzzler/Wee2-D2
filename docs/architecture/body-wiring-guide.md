@@ -1,6 +1,6 @@
 # 🧵 Master Wiring Guide: Body Controller (MCU 1)
 
-This document serves as the "Imperial Standard" for the Wee2-D2 Body Controller (ESP32D). It integrates all verified wire colors, pin assignments, and physical orientation for the **38-pin variant**.
+This document serves as the master wiring reference for the Wee2-D2 Body Controller (ESP32-S3). It integrates all verified wire colors, pin assignments, and physical orientation for the S3 Super Mini platform.
 
 ---
 

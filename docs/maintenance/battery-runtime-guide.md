@@ -1,5 +1,5 @@
-# 🏛️ IMPERIAL DATABANK: ENERGY & ENDURANCE
-> **DECRYPTED DATA REPOSITORY** | **SYSTEM: DEWALT 20V (4Ah)**
+# 🔋 Battery Runtime & Power Estimates
+> **POWER MANAGEMENT** | **SYSTEM: DEWALT 20V (4Ah)**
 
 This guide provides predicted operational durations for the Wee2-D2 based on the 4Ah 20V DeWalt battery system.
 

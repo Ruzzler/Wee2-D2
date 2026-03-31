@@ -1,6 +1,6 @@
 # 🧩 Troubleshooting Matrix: Wee2-D2
 
-If your droid begins exhibiting non-compliant behavior, use this matrix to diagnose the specific point of failure in the Imperial architecture.
+If your droid begins exhibiting unexpected behavior, use this matrix to diagnose the specific point of failure in the system architecture.
 
 | Symptom | Probable Cause | Corrective Action |
 | :--- | :--- | :--- |

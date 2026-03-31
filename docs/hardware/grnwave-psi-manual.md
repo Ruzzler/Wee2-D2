@@ -1,5 +1,5 @@
-# 🏛️ IMPERIAL DATABANK: GRNWAVE CIRCULAR PSI
-> **DECRYPTED DATA REPOSITORY**
+# 🏛️ GrnWave Circular PSI
+> **TECHNICAL SPECIFICATIONS**
 
 ![GrnWave PSI](../../assets/grnwave-psi-logic.jpg)
 

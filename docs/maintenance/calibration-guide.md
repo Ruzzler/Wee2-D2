@@ -45,5 +45,5 @@ The dome motor (goBILDA 15A ESC) operates on standard PWM (Servo) signals.
 Follow this exact order to prevent "ghosting" signals:
 1.  **Power ON Transmitters** (Body first, then Dome).
 2.  **Slide DeWalt 20V Battery** into the LVC core.
-3.  **Wait 10 Seconds** for the **Unified Droid Nervous System (UDNS)** to initialize and the "Imperial Databank Heartbeat" (GPIO 2 LED) to start blinking.
+3.  **Wait 10 Seconds** for the **Unified Droid Nervous System (UDNS)** to initialize and the **System Status LED** (GPIO 2) to start blinking.
 4.  **Confirm Sound Output**: Hit a small sound trigger to verify the 60W Amp is alive.
