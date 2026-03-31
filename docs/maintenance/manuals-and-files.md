@@ -10,10 +10,10 @@ Comprehensive guides for hardware integration and system capabilities.
 
 ### **📦 Hardware Data Sheets (PDF)**
 These are the original manufacturer specifications for the core hardware.
-- [HOTRC DS-600 Transmitter](../hardware/hotrc-ds600-manual.pdf)
-- [HOTRC F-06A PWM Receiver](../hardware/hotrc-f06a-manual.pdf)
-- [Flipsky Mini FSESC 6.7 Pro](../hardware/flipsky-fsesc-67-pro-manual.pdf)
-- [MgcSTEM LVP-R1.5 Logic](../hardware/mgcstem-lvp-r15-manual.pdf)
+- [HOTRC DS-600 Transmitter](../manuals/hotrc-ds600-manual.pdf)
+- [HOTRC F-06A PWM Receiver](../manuals/hotrc-f06a-manual.pdf)
+- [Flipsky Mini FSESC 6.7 Pro](../manuals/vesc-esc-manual.pdf)
+- [MgcSTEM LVP-R1.5 Logic](../manuals/low-voltage-protector-manual.pdf)
 
 ### **📖 Project Documentation (Markdown)**
 Internal documentation optimized for the Wee2-D2 architecture.
@@ -29,15 +29,15 @@ Internal documentation optimized for the Wee2-D2 architecture.
 Direct links to the latest production-verified code and settings.
 
 ### **🧠 ESPHome Firmware (YAML)**
-- [Body Audio Hub (Node 1)](../../firmware/production/mcu1-body-controller/body-brain.yaml)
-- [Dome Master (Node 3)](../../firmware/production/mcu3-motion-controller/dome-motion.yaml)
-- [Dome Nervous System Template](../../firmware/dome-nervous-system-template.yaml)
+- [Body Hub (Node 1)](../../firmware/production/node-1-body-hub.yaml)
+- [Lighting Bridge (Node 2)](../../firmware/production/node-2-lighting-bridge.yaml)
+- [Motion Master (Node 3)](../../firmware/production/node-3-motion-master.yaml)
 
 ### **🛞 VESC Motor Settings (XML)**
-- [Left Drive Motor](../../firmware/production/mcu1-body-controller/esc-settings/Left_Motor_Settings.xml)
-- [Right Drive Motor](../../firmware/production/mcu1-body-controller/esc-settings/Right_Motor_Settings.xml)
-- [Left App Settings](../../firmware/production/mcu1-body-controller/esc-settings/Left_App_Settings.xml)
-- [Right App Settings](../../firmware/production/mcu1-body-controller/esc-settings/Right_App_Settings.xml)
+- [Left Drive Motor](../../firmware/esc-configs/left-motor-settings.xml)
+- [Right Drive Motor](../../firmware/esc-configs/right-motor-settings.xml)
+- [Left App Settings](../../firmware/esc-configs/left-app-settings.xml)
+- [Right App Settings](../../firmware/esc-configs/right-app-settings.xml)
 
 ---
 

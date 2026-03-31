@@ -30,16 +30,16 @@ jobs:
         id: esphome-build
         with:
           version: latest
-          yaml_file: firmware/production/mcu1-body-controller/body-brain.yaml
+          yaml_file: firmware/production/node-1-body-hub.yaml
 
       - name: 🏗️ Compile Node 1 (Body Hub)
-        run: esphome compile firmware/production/mcu1-body-controller/body-brain.yaml
+        run: esphome compile firmware/production/node-1-body-hub.yaml
 
       - name: 🏗️ Compile Node 3 (Dome Master)
-        run: esphome compile firmware/production/mcu3-motion-controller/dome-motion.yaml
+        run: esphome compile firmware/production/node-3-motion-master.yaml
 
       - name: 🏗️ Compile Node 2 (Lighting)
-        run: esphome compile firmware/production/mcu2-lighting-controller/wled-bridge.yaml
+        run: esphome compile firmware/production/node-2-lighting-bridge.yaml
 
       - name: 📂 Organize Artifacts
         run: |
