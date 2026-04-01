@@ -66,18 +66,16 @@ The droid operates on a **Distributed Node Mesh** model architecture.
 - **Audio**: **DFPlayer Mini** (MP3-TF-16P). Managed via UART from Node 1. Feeds a **TPA3118 60W Amplifier**.
 - **Power**: 20V DeWalt Battery LVC (MgcSTEM) Multi-channel Buck Converters (5.1V logic).
 - **Drive**: 2x Flipsky Mini FSESC 6.7 Pro **L-faster FLD-5 5" Hub Motors**.
-- **Dome**: goBILDA 5203 Yellow Jacket 1x15A Motor Controller (PWM). **Standard Pinout: GPIO 7**.
+- **Dome**: goBILDA 5203 Yellow Jacket & 1x15A Motor Controller. The ESC handles over-current/voltage protection (up to 30V), allowing firmware speed caps to be treated as **Preference/Realism Tuning** rather than electrical safety. **Standard Pinout: GPIO 7**.
 - **Lighting**: GrnWave PSI Logic (Addressable LEDs).
 
 ---
 
 ## Key Technical Decisions & Constraints
 
-1. **Safety Heartbeat**: Receiving nodes entering "Hold/Rest" after **100ms** of signal loss.
-1. **RMT Memory Limit**: S3 nodes driving LEDs MUST use `rmt_symbols: 96` per strip (Dual strip limit).
-1. **GPIO 9 Avoidance**: Never use for PWM or data on S3 nodes.
-1. **Signal Integrity**: Use `mode: INPUT_PULLDOWN` on all PWM/High-speed inputs.
-1. **Grounding**: The **Star Ground** rule is absolute. All signals must share the Negative Bus Bar ground.
+6. **Relative Path Standard**: All firmware configurations MUST use `../common/` for shared package includes.
+7. **ESPHome Syntax Standard**: Use mandatory **2-space indentation** for all YAML configurations to ensure schema validation stability and cross-environment compatibility.
+8. **Secrets Protocol**: Maintain `!secret` calls for security. Note that automated verification requires a local `secrets.yaml` to pass.
 
 ---
 
@@ -100,8 +98,8 @@ The droid operates on a **Distributed Node Mesh** model architecture.
 
 ### 2. Versioning & Deployment
 
-- **Production Lock**: The Agent **MUST NEVER** modify files in `firmware/production/` for testing or experimental features. All active development **MUST** occur in `firmware/development/`.
-- **Graduation Process**: Production files **SHALL ONLY** be updated once features are bench-tested and graduation is explicitly approved by the user.
+- **Production Lock**: The Agent **MUST NEVER** modify files in `firmware/production/` for testing or experimental features. All active development **MUST** occur in your **Local-Firmware-Development** sandbox, isolated from this repository.
+- **Graduation Process**: Production files **SHALL ONLY** be updated once features are bench-tested and graduation is explicitly approved by the user through a dedicated **Implementation Plan**.
 - **Release Tiers**: Use `v2.1.x-Final-Stable` for harmonized, bench-tested releases.
 
 ### 3. SOP Pre-Flight Checklist
@@ -111,6 +109,15 @@ Before proposing or executing any firmware or documentation changes, the Agent *
 1. **Verification Status**: Has this feature been bench-tested and compiled successfully?
 1. **Documentation Alignment**: Does this change adhere to the **Verification-First** rule (Stable only)?
 1. **Aesthetic Audit**: Does the UI/documentation follow the minimalist **Neutral Technical** standard?
+
+### 4. AI Pre-Flight Checklist (Critical)
+
+Before executing any `write_to_file` or `multi_replace_file_content` targeting the `firmware/` directory, the Agent **MUST** explicitly state the following in its internal thought process:
+1. **Target Tier**: Is this change for `production/` or the **Local Sandbox**? (Default ALL iterative work to the Sandbox).
+2. **Approval Context**: Has the user explicitly approved a **Graduation Plan** to move logic into production?
+3. **Lock Verification**: Does the target file start with a `# [!] PRODUCTION LOCK` header?
+
+---
 
 ---
 

@@ -1,18 +1,18 @@
 # [!] PRODUCTION LOCK: STABLE DEPLOYMENT (v2.1.2)
-# This file MUST NOT be modified for testing or feature development.
-# Use firmware/development/ for active experimentation.
+# AUTHORIZED EDITS ONLY: REQUIRES GRADUATION APPROVAL
+# TARGET TIER: PRODUCTION
 
 # Wee2-D2 Dome Master (Node 1)
-# v2.0-Hybrid | SECURE SECURE RECOVERY
+# v2.2.1 | PRODUCTION: TEST CODE GRADUATION
 
 substitutions:
   node_name: "wee2d2-dome-master"
   node_id: "1"
- fw_version: "2.0.0"
+  fw_version: "2.1.2"
 
 packages:
- remote_base: !include ../../common/base-config.yaml
- hw_base: !include ../../common/s3-defaults.yaml
+  remote_base: !include ../../common/base-config.yaml
+  hw_base: !include ../../common/s3-defaults.yaml
 
 esphome:
  on_boot:

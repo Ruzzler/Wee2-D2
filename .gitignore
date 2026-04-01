@@ -6,3 +6,5 @@
 *.bin
 *.ota
 Import/
+mcp_config.json
+.DS_Store

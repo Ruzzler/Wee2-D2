@@ -2,23 +2,23 @@
 # v2.0-Hybrid | SECURE CONVENTION-READY DEPLOYMENT
 
 esphome:
- name: ${node_name}
- comment: "Wee2-D2 Astromech // Node ${node_id}"
- project:
- name: "ruzzler.wee2-d2"
- version: ${fw_version}
+  name: ${node_name}
+  comment: "Wee2-D2 Astromech // Node ${node_id}"
+  project:
+    name: "ruzzler.wee2-d2"
+    version: ${fw_version}
 
 # Core Connectivity
 wifi:
- # Normal network connection (Injected via secrets.yaml)
- ssid: !secret wifi_ssid
- password: !secret wifi_password
+  # Normal network connection (Injected via secrets.yaml)
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
 
- # Fallback Access Point Mode (CONVENTION-READY)
- ap:
- ssid: "WEE2-D2_SETUP"
- password: "wee2d2setup" # Public fallback password
- ap_timeout: 1min
+  # Fallback Access Point Mode (CONVENTION-READY)
+  ap:
+    ssid: "WEE2-D2_SETUP"
+    password: "wee2d2setup" # Public fallback password
+    ap_timeout: 1min
 
 # Captive Portal provides the web UI when connected to the fallback AP
 captive_portal:
@@ -28,29 +28,29 @@ improv_serial:
 
 # API and Web Server OTA
 api:
- password: !secret api_password
+  password: !secret api_password
 
 # Native web dashboard for direct-to-droid updates
 web_server:
- port: 80
- version: 3 # Modern v3 dashboard with OTA upload
+  port: 80
+  version: 3 # Modern v3 dashboard with OTA upload
 
 ota:
- - platform: esphome
- password: !secret ota_password
- - platform: web_server # Enables the "OTA Update" form in the browser
+  - platform: esphome
+    password: !secret ota_password
+  - platform: web_server # Enables the "OTA Update" form in the browser
 
 # Standard Logger levels
 logger:
- level: INFO
- baud_rate: 0 # Disable serial logging to prevent UART interference on S3
+  level: INFO
+  baud_rate: 0 # Disable serial logging to prevent UART interference on S3
 
 # Live Version Reporting to Home Assistant
 text_sensor:
- - platform: template
- name: "${node_name} Firmware Version"
- id: firmware_version
- lambda: return {"${fw_version}"};
- icon: "mdi:alpha-v-circle-outline"
- entity_category: diagnostic
- update_interval: 1h
+  - platform: template
+    name: "${node_name} Firmware Version"
+    id: firmware_version
+    lambda: return {"${fw_version}"};
+    icon: "mdi:alpha-v-circle-outline"
+    entity_category: diagnostic
+    update_interval: 1h

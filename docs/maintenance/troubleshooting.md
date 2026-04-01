@@ -13,6 +13,7 @@ If your droid begins exhibiting unexpected behavior, use this matrix to diagnose
 | **LEDs Flickering** | Node 2 (LEDs) | Power Isolation / RMT Syms | Check Node 2 RMT memory symbols (S3). |
 | **Cannot Connect to IP** | DHCP Lease Expired | Check router; use static IP in `secrets.yaml`. |
 | **Sync Failure** | Wireless Bridge Fault | Check ESP-NOW MAC pairing; ensure all nodes on WiFi Channel 1. |
+| **Validation Failure** | Missing `secrets.yaml` | Automated health-check fails without a secrets file; logic is still valid. |
 
 ---
 

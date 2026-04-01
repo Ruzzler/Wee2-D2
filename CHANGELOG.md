@@ -4,6 +4,12 @@ All notable changes to the Wee2-D2 project will be documented in this file. This
 
 ---
 
+## [2.2.1] - 2026-04-01
+
+### Added
+- **Node 1 Graduation**: Migrated verified RC passthrough and PSI LED logic from test code to production.
+- **Dome Realism Tuning**: Introduced a dynamic speed multiplier (0.1 - 1.0) accessible via the web dashboard for real-time performance adjustment.
+
 ## [2.2.0] - 2026-04-01
 
 ### Node Mesh 2.0: Logical Renumbering & Normalization

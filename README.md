@@ -36,7 +36,6 @@ Wee2-D2 utilizes a decentralized architecture split across three ESP32 microcont
  maintenance/ # Operational & Safety standards
  bill-of-materials.md # Unified Component Ledger
  firmware/ # Microcontroller Code (ESPHome)
- system/ # Engine (SPA Logic & Styles)
  assets/ # Media Assets
  index.html # HUD (Entry Point)
  README.md # This file
