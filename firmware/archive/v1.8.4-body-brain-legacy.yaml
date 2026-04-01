@@ -1,4 +1,4 @@
-# Wee2-D2 Body Controller (MCU 1)
+# Wee2-D2 Body Controller (Node 1)
 # Firmware: ESPHome | v1.6.2 " Gold Standard"
 # Hardware: ESP32D Dev Board (38-pin variant)
 esphome:

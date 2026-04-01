@@ -1,109 +1,89 @@
 # <i data-lucide="cpu"></i> Master Node Pinout & Wiring Guide
-> **TERMINOLOGY SYNC** | **v2.1.0-Zero-Infra Standard**
+> **TECHNICAL REFERENCE** | **v2.1.2-FINAL-STABLE**
 
-This document serves as the master wiring reference for the Wee2-D2 distributed node mesh (ESP32-S3). It integrates all verified wire colors, pin assignments, and physical orientation for the S3 Super Mini platform.
+This document serves as the master wiring reference for the Wee2-D2 distributed node mesh. It integrates all verified pin assignments, wire colors, and hardware interfaces for the ESP32 platforms.
 
 ---
 
-## 1. Core Node 1 Pinout (Sound Hub)
-The Sound Hub (Node 1) manages all high-level Audio triggering and Drive system monitoring. The pins follow the standard S3 Super Mini layout.
+## 1. Node 1: Sound Hub (ESP32-S3 Super Mini)
+The **Sound Hub** manages behavioral audio triggers and drive system monitoring.
 
 | ESP32 Pin | Wire Color | Role | Function |
 | :---: | :--- | :--- | :--- |
-| **5V** | Red | Power In | 5V BEC (from ESC 1) |
-| **GND** | Green | Ground | Common Logic Ground |
-| **GPIO 4** | ⬜ White | RC CH3 | Behavioral Trigger A |
+| **5V** | Red | Power In | 5.1V BEC (Primary Logic) |
+| **GND** | Black | Ground | Common Logic Ground |
+| **GPIO 4** | White | RC CH3 | Behavioral Trigger A |
 | **GPIO 5** | Green | RC CH4 | Behavioral Trigger B |
-| **GPIO 6** | Purple | RC CH5 | Bank Switch |
+| **GPIO 6** | Purple | RC CH5 | Bank Switch / Mode |
 | **GPIO 17** | Yellow | DFPlayer TX | Serial Command Out |
 | **GPIO 16** | Green | DFPlayer RX | Serial Status In (Optional) |
 | **GPIO 47** | N/A | Status LED | Internal Neopixel (Logic) |
 
 ---
 
-## 2. Audio Stack (DFPlayer + TPA3118)
-Audio triggers are processed via Node 1 and sent to the DFPlayer Mini. The analog signal is then amplified via the TPA3118.
+## 2. Node 2: LED Distribution (ESP32 Dev Board)
+The **Lighting Controller** runs the WLED framework to drive high-density addressable matrices.
 
-### **DFPlayer Mini Interface**
-- **VCC/GND**: Connected to 5V Logic Rail.
-- **TX/RX**: Connected to S3 GPIO 16/17 (Crossed: TX -> RX).
-- **SPK_1/SPK_2**: Connected to **TPA3118 Input**.
-
-### **TPA3118 Amplifier**
-- **POWER**: Connected to 20V Positive Fuse Box (+).
-- **GND**: Connected to **Star Ground** (-).
-- **INPUT**: Connected to DFPlayer SPK_1/SPK_2 or DAC pads.
-- **OUTPUT**: Connected to Pyle 3.5" Speaker.
-
----
-
-## 3. Receiver Interface (F-06A)
-The receiver is powered directly via the **Slot 5** bridge.
-
-| Wire Color | Rec Slot | ESP Pin | Role |
-| :--- | :---: | :---: | :--- |
-| **Red (5V)** | Slot 5 (+) | `VIN` | Master Logic Power |
-| **Black (GND)** | Slot 5 (-) | `GND` | Master Logic Ground |
-| **Grey/Black** | Slot 3 (S) | `GPIO 25` | CH3 Pulse Data |
-| **Blue/Black** | Slot 4 (S) | `GPIO 33` | CH4 Pulse Data |
-| **Purple/Black**| Slot 5 (S) | `GPIO 32` | CH5 Pulse Data |
-
----
-
-## 4. Drive System: Parallel ESC Wiring (No CAN)
-Because the remote is in **Mode 1 (Mixed)**, each ESC needs its own logic pulse. We use the "High-Fidelity Signal" method to ensure smooth steering at high currents.
-
-| Source | Connection | ESC 1 (Left) | ESC 2 (Right) |
-| :--- | :--- | :---: | :---: |
-| **Receiver CH1** | Signal (White) | **CONNECT** | — |
-| **Receiver CH2** | Signal (White) | — | **CONNECT** |
-| **BEC Power** | Red (5V) | **CONNECT** | **ISOLATE (Red)** |
-| **Signal Reference**| Black (GND) | **CONNECT** | **CONNECT (Black)** |
-
-> [!IMPORTANT]
-> **Signal Jitter Prevention**: While the main power ground goes to the bus bar, keeping the small Black ground wire on ESC 2 provides a clean reference for the PWM signal, preventing "twitches" caused by motor noise.
-
----
-
-## 5. Dome Distribution: Ganged Wago Hub
-To handle the 15A+ peak loads of the dome motor and LED matrices, the slip ring circuits must be ganged at the entry Wagos.
-
-### **Positive 20V Hub (Wago A - 5 Port)**
-1. **IN**: Slip Ring Circuit 1 (20V)
-2. **IN**: Slip Ring Circuit 2 (20V) - **GANGED**
-3. **OUT**: goBILDA 15A Speed Controller (+)
-4. **OUT**: Mini560 Pro Buck 1 (LED Power)
-5. **OUT**: Mini560 Pro Buck 2 (Logic Power)
-
-### **GND Star Hub (Wago B - 5 Port)**
-1. **IN**: Slip Ring Circuit 3 (GND)
-2. **IN**: Slip Ring Circuit 4 (GND) - **GANGED**
-3. **OUT**: goBILDA 15A Speed Controller (-)
-4. **OUT**: Mini560 Pro Buck 1 (GND)
-5. **OUT**: Mini560 Pro Buck 2 (GND)
-
----
-
-## 5. Wireless Interconnect (ESP-NOW)
-*Note: Node 1 (Body) is a wireless slave. It contains NO physical signal wires through the slip ring.*
-
-| Circuit | Role | Logic | Notes |
+| ESP32 Pin | Wire Color | Role | Function |
 | :---: | :--- | :--- | :--- |
-| **Wireless** | **ESP-NOW** | 2.4GHz | Behavioral sync from Dome Master |
-| **C5/C6** | **RESERVED** | N/A | Available for future logic / telemetry |
+| **5V** | Red | Power In | 5.1V (Dedicated 10A Buck) |
+| **GND** | Black | Ground | Common Logic Ground |
+| **GPIO 18** | Yellow | Data Out | Front Logic (10x2) |
+| **GPIO 19** | Yel/Blk | Data Out | Rear Logic (12x2) |
+| **GPIO 21** | Green | Data Out | Front PSI Logic |
+| **GPIO 22** | White | Data Out | Back PSI Logic |
+| **GPIO 16** | Blue/Blk | UART RX | Serial Command In (Sync) |
 
 ---
 
-## 7. Dome ESC Pulse Calibration (goBILDA 15A)
-* **Signal (White)**: Connect to **MCU 3 (GPIO 18)**.
-* **Ground (Black)**: **MUST** be connected to the Dome Logic GND rail (Reference).
-* **Voltage (Red)**: **ISOLATE** (Do not connect) if using the Slip Ring 5V Logic Bus.
+## 3. Node 3: Dome Motion Master (ESP32-S3 Super Mini)
+The **Motion Master** manages 360° dome rotation and broadcasts behavioral triggers via ESP-NOW.
+
+| ESP32 Pin | Wire Color | Role | Function |
+| :---: | :--- | :--- | :--- |
+| **5V** | Red | Power In | 5.1V BEC (from goBILDA ESC) |
+| **GND** | Black | Ground | Common Logic Ground |
+| **GPIO 4** | White | RC CH1 | Steering Input (PWM) |
+| **GPIO 7** | Yellow | Dome ESC | PWM Command Out |
+| **GPIO 47** | N/A | Status LED | Internal Neopixel (Logic) |
 
 ---
 
-## 6. Summary Check
-- [x] Body MCU upgraded to **ESP32-S3 Super Mini**.
-- [x] **DFPlayer Mini** integrated as the primary audio source.
-- [x] **TPA3118 Amplifier** powered directly from 20V rail.
-- [x] **ESP-NOW** established as the wireless behavioral link.
-- [x] **Slip Ring C5/C6** isolated and reserved for future logic.
+## 4. Hardware Interconnects
+
+### Audio Stack (DFPlayer + TPA3118)
+- **S3 TX (GPIO 17)** **DFPlayer RX**.
+- **DFPlayer SPK_1/2** **TPA3118 Analog Input**.
+- **TPA3118 Power** 20V Positive Fuse Box.
+- **TPA3118 GND** **Star Ground** (-).
+
+### Receiver Interface (HOTRC F-06A)
+| Wire Color | Rec Slot | Node Pin | Role |
+| :--- | :---: | :---: | :--- |
+| **Red (5V)** | Slot 5 (+) | `5V / VIN` | Master Logic Power |
+| **Black (GND)** | Slot 5 (-) | `GND` | Master Logic Ground |
+| **Grey/Black** | Slot 3 (S) | `Node 1: GPIO 4` | CH1 Pulse Data |
+| **Blue/Black** | Slot 4 (S) | `Node 1: GPIO 5` | CH2 Pulse Data |
+| **Purple/Black**| Slot 5 (S) | `Node 1: GPIO 6` | CH3 Pulse Data |
+
+---
+
+## 5. Dome Distribution: Ganged Wagos
+To handle the 15A+ peak loads, the slip ring circuits are ganged at the entry points.
+
+### Positive 20V Wago (5-Port)
+1. **IN**: Slip Ring Circuit 1 (20V)
+2. **IN**: Slip Ring Circuit 2 (20V)
+3. **OUT**: goBILDA 15A Speed Controller (+)
+4. **OUT**: Mini560 Pro Buck (Logic Power)
+
+### Negative GND Wago (5-Port)
+1. **IN**: Slip Ring Circuit 3 (GND)
+2. **IN**: Slip Ring Circuit 4 (GND)
+3. **OUT**: goBILDA 15A Speed Controller (-)
+4. **OUT**: Mini560 Pro Buck (GND)
+
+---
+
+[View Power Architecture](power-architecture.md)
+gic.

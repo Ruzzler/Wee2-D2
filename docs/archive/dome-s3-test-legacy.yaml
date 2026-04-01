@@ -165,11 +165,11 @@ script:
 
 button:
  - platform: template
- name: "▶ Start: Standard Logic"
+ name: " Start: Standard Logic"
  on_press: {script.execute: mood_standard_stuck}
  
  - platform: template
- name: "▶ Run: High Alert Test"
+ name: " Run: High Alert Test"
  on_press: {script.execute: high_alert_test}
 
  - platform: template

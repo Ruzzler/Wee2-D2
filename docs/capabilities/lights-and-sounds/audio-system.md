@@ -19,16 +19,16 @@ The folders must be named `01` through `99`, and files must start with a 3-digit
 
 ```text
 SD_ROOT/
-├── 01/ # Folder 1: Happy Sounds
-│ ├── 001_beep_boop.mp3
-│ └── 002_whistle.mp3
-├── 02/ # Folder 2: Alert Sounds
-│ ├── 001_scream.mp3
-│ └── 002_alarm.mp3
-├── 03/ # Folder 3: Ambient
-│ ├── 001_low_hum.mp3
-│ └── 002_processing.mp3
-└── 04/ # Folder 4: High Alert (Red)
+ 01/ # Folder 1: Happy Sounds
+ 001_beep_boop.mp3
+ 002_whistle.mp3
+ 02/ # Folder 2: Alert Sounds
+ 001_scream.mp3
+ 002_alarm.mp3
+ 03/ # Folder 3: Ambient
+ 001_low_hum.mp3
+ 002_processing.mp3
+ 04/ # Folder 4: High Alert (Red)
 ```
 *Note: The DFPlayer supports up to 255 tracks per folder, allowing for massive behavioral variety.*
 

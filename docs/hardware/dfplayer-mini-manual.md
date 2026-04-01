@@ -3,7 +3,7 @@
 
 ![DFPlayer Mini](../../assets/soundboard-top.jpg)
 
-The **DFPlayer Mini** is the primary audio playback module for Wee2-D2. It is a compact, high-performance MP3 serial hub that interfaces directly with the Body Audio Hub (MCU 1) via UART.
+The **DFPlayer Mini** is the primary audio playback module for Wee2-D2. It is a compact, high-performance MP3 serial hub that interfaces directly with the Body Audio Hub (Node 1) via UART.
 
 ## Technical Specifications
 | Attribute | Specification |

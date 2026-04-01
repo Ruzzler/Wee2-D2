@@ -24,7 +24,7 @@ The **GrnWave Circular PSI** is a high-density addressable LED display used for 
 
 ## Configuration Guide (WLED)
 
-To achieve the cinematic scanning look in **WLED**, use the following settings for **MCU 2: Lighting Controller**:
+To achieve the cinematic scanning look in **WLED**, use the following settings for **Node 2: Lighting Controller**:
 
 ### 1⃣ LED Settings
 * **LED Type**: WS2812B
@@ -54,7 +54,7 @@ The board typically features a 3-pin interface:
 | :--- | :--- | :--- | :--- |
 | **1** | **5V / VCC** | Power Input | Connect to **5V Regulator (+) ** |
 | **2** | **GND** | Ground | Connect to **Common Ground (-)** |
-| **3** | **DIN / DATA** | Data Input | Connect to **MCU 2 (ESP32) GPIO** |
+| **3** | **DIN / DATA** | Data Input | Connect to **Node 2 (ESP32) GPIO** |
 
 ## Firmware Configuration (WLED / ESPHome)
 * **LED Type**: WS2812B / SK6812.

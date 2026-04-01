@@ -25,17 +25,17 @@ Wee2-D2 utilizes a decentralized architecture split across three ESP32 microcont
 
 ## Repository Structure
 ```text
-├── docs/ # Technical Documentation
-│ ├── capabilities/ # Functional guides (Lights, Sounds, Movement)
-│ ├── architecture/ # System-wide logic (Wiring, UDNS Bus)
-│ ├── hardware/ # Component Manuals (Raw PDFs)
-│ ├── maintenance/ # Operational & Safety standards
-│ └── bill-of-materials.md # Unified Component Ledger
-├── firmware/ # Microcontroller Code (ESPHome)
-├── system/             # Engine (SPA Logic & Styles)
-├── assets/             # Media Assets
-├── index.html          # HUD (Entry Point)
-└── README.md # This file
+ docs/ # Technical Documentation
+ capabilities/ # Functional guides (Lights, Sounds, Movement)
+ architecture/ # System-wide logic (Wiring, UDNS Bus)
+ hardware/ # Component Manuals (Raw PDFs)
+ maintenance/ # Operational & Safety standards
+ bill-of-materials.md # Unified Component Ledger
+ firmware/ # Microcontroller Code (ESPHome)
+ system/ # Engine (SPA Logic & Styles)
+ assets/ # Media Assets
+ index.html # HUD (Entry Point)
+ README.md # This file
 ```
 
 ## Hardware Ecosystem

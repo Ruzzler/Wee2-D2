@@ -14,18 +14,18 @@ All notable changes to the Wee2-D2 project will be documented in this file. This
 ## [1.8.0] - 2026-03-31
 ### Wireless Bridge Pivot (ESP-NOW)
 - **Architectural Shift**: Decommissioned the physical UDNS UART bus (GPIO 16/17) through the slip ring in favor of a distributed **ESP-NOW** wireless bridge.
-- **Node Consolidation**: Standardized **MCU 1 (Body)** and **MCU 3 (Dome)** as **ESP32-S3 Super Mini** nodes, utilizing the `esp-idf` framework for stabilized wireless and RMT performance.
+- **Node Consolidation**: Standardized **Node 1 (Body)** and **Node 3 (Dome)** as **ESP32-S3 Super Mini** nodes, utilizing the `esp-idf` framework for stabilized wireless and RMT performance.
 - **Audio Overhaul**: Replaced the PEMENOL 60W soundboard with a modular **DFPlayer Mini** (MP3 serial hub) and **TPA3118 60W Amplifier**.
 - **EMI Isolation**: Repurposed slip ring circuits **C5 and C6** to "RESERVED" status, effectively isolating all high-speed signal logic from motor-induced EMI by moving to the 2.4GHz spectrum.
 - **Passive Body Drive**: Simplified the body electronics by directing RC1 signals straight to the Flipsky ESCs, with the Body S3 now focusing on audio triggering and system telemetry.
 
 ## [1.7.5] - 2026-03-31 (Final Harmonization & Tone Scrub)
 ### Added
-- **Technical Standard (v1.7.5)**: Established a project-wide professional tone, scrubbed all "cheesy" or non-functional descriptors (Authentic, Elite, Mission-Ready, Final Boss).
+- **Technical Standard (v1.7.5)**: Established a project-wide professional tone, scrubbed all "cheesy" or non-functional descriptors (Authentic, Professional, Production-Ready, Final Boss).
 - **Cinematic Logic Standard**: Rebranded LED scrolling as "Cinematic Logic Display".
 
 ### Changed
-- **Feature Decommissioning**: Fully removed "Angry Mode" from all Documentation documentation, tutorials, and schematics. Reclassified as "High Alert" in internal logic only.
+- **Feature Decommissioning**: Fully removed "High Alert" from all Documentation documentation, tutorials, and schematics. Reclassified as "High Alert" in internal logic only.
 - **Pinout Parity**: Synchronized all READMEs and schematics to the production-verified **GPIO 7** (Dome ESC) and **115200 Baud** (UDNS) standards.
 - **Nervous System Template**: Updated the core inter-MCU template to reflect the 115200 baud standard and removed legacy test-bench scripts.
 
@@ -37,14 +37,14 @@ All notable changes to the Wee2-D2 project will be documented in this file. This
 
 ## [1.7.2] - 2026-03-31 (Dome Control Refinement & Bench Testing)
 ### Changed
-- **UDNS Removal**: Eliminated the UART serial bus and local relay triggers from MCU 3 to simplify the standalone S3 Mini behavioral test suite.
+- **UDNS Removal**: Eliminated the UART serial bus and local relay triggers from Node 3 to simplify the standalone S3 Mini behavioral test suite.
 - **Experimental Safety**: Commented out the mandatory 60% voltage clamp across all motor logic (RC and Scripts) to allow for baseline bench testing. **Warning**: Motor is now exposed to full battery bus voltage.
 
 ---
 
 ## [1.7.0] - 2026-03-31 (S3 Behavioral Update)
 ### Added
-- **ESP32-S3 Performance Pivot**: Upgraded MCU 3 to the S3 Super Mini platform, utilizing the `esp-idf` framework and RMT (Remote Control) peripheral for glitch-free LED driving.
+- **ESP32-S3 Performance Pivot**: Upgraded Node 3 to the S3 Super Mini platform, utilizing the `esp-idf` framework and RMT (Remote Control) peripheral for glitch-free LED driving.
 - **Behavioral script Integration**: Integrated advanced autonomous scripts: "Scan Patrol," "Party Dance," and "Mood Logic" (Mechanical Jam simulator).
 - **RC High-performance Passthrough**: Implemented instantaneous manual override on GPIO 4 with logic-level stick detection.
 
@@ -61,24 +61,24 @@ All notable changes to the Wee2-D2 project will be documented in this file. This
 ## [1.6.2] - 2026-03-31 (Technical Standard & Dome Pivot)
 ### Added
 - **Local Relay Trigger**: Implemented the physical GPIO 27 `switch` in `dome-motion.yaml` to provide a zero-latency sync trigger to the lighting controller.
-- **UDNS UART (MCU 3)**: Added the UDNS serial bus component to the Motion Controller for future telemetry and synchronized movement.
+- **UDNS UART (Node 3)**: Added the UDNS serial bus component to the Motion Controller for future telemetry and synchronized movement.
 
 ### Changed
 - **Dome Hardware Pivot**: Standardized all documentation and firmware READMEs to reflect the **ESP32 Dev Board (Standard)** as the official node for the entire droid, replacing the S3 Super Mini.
 - **UDNS Baud Parity**: Synchronized all READMEs and architectural docs to the **115200 Baud** Technical Standard (fixing 9600 baud discrepancies).
-- **Communication Hardware**: Updated MCU 2 (WLED) documentation to use standard ESP32-D pins (GPIO 16/17) for the UDNS bus instead of S3-specific pins.
+- **Communication Hardware**: Updated Node 2 (WLED) documentation to use standard ESP32-D pins (GPIO 16/17) for the UDNS bus instead of S3-specific pins.
 - **WLED Framework Sync**: Corrected the Lighting Controller's functional capability documentation to reflect the **WLED** framework instead of ESPHome.
 
 ### Fixed
 - **Logic Matrix Dimensions**: Corrected swapped Front (10x2) and Rear (12x2) matrix dimensions in the WLED configuration guide.
-- **Firmware Redundancy**: Cleaned up and consolidated duplicate `esphome:` blocks in the MCU 3 YAML configuration.
+- **Firmware Redundancy**: Cleaned up and consolidated duplicate `esphome:` blocks in the Node 3 YAML configuration.
 
 ---
 
 ## [1.6.0] - 2026-03-29 (UDNS Verification & Behavioral Integration)
 ### Added
 - **Serial Integration Suite**: Implemented 14 diagnostic buttons on the Body Dashboard for "One-Touch" droid emotion testing (Red Alert, Happy, Processing, etc.).
-- **Body Wiring Guide**: Created a permanent "Technical Standard" wiring ledger for MCU 1 in `docs/architecture/`.
+- **Body Wiring Guide**: Created a permanent "Technical Standard" wiring ledger for Node 1 in `docs/architecture/`.
 
 ### Changed
 - **UDNS Baud Standard**: Synchronized the serial bridge to **115200 Baud** to match WLED and S3 Mini high-speed logic.
@@ -90,11 +90,11 @@ All notable changes to the Wee2-D2 project will be documented in this file. This
 
 ## [1.5.0] - 2026-03-29 (Physical Architecture & Pin Remediation)
 ### Added
-- **Finalized Body Wiring Guide**: Created a master reference artifact integrating all user-provided wire colors and logic mappings for MCU 1.
+- **Finalized Body Wiring Guide**: Created a master reference artifact integrating all user-provided wire colors and logic mappings for Node 1.
 - **UDNS Color Standard**: Established **Yellow/Black (TX)** and **Green/Black (RX)** as the official wiring standard for the 6-circuit slip ring serial bridge.
 
 ### Changed
-- **Pin Remediation (MCU 1)**: Migrated Sound Triggers S3 and S4 from GPIO 16/17 to **GPIO 26/27** to resolve Hardware UART2 conflicts.
+- **Pin Remediation (Node 1)**: Migrated Sound Triggers S3 and S4 from GPIO 16/17 to **GPIO 26/27** to resolve Hardware UART2 conflicts.
 - **RC Channel Realignment**: Updated the Body Controller to utilize **CH5 (GPIO 32)** for bank switching to match the builder's physical receiver data pin mapping.
 - **Physical Build Synchronization**: Updated all technical manuals (Schematic, Audio Guide, Firmware READMEs) to reflect the specific wire colors and pin selections.
 
@@ -142,7 +142,7 @@ All notable changes to the Wee2-D2 project will be documented in this file. This
 ### Added
 - **Battery Endurance Estimation**: Created **`docs/maintenance/battery-runtime-guide.md`** with duty cycle calculations.
 - **Firmware**: 100% **ESPHome**. Integrated with **Home Assistant** and support for **OTA (Over-The-Air)** updates. 
- * *Note*: MCU 3 (ESP32-S3) **MUST** use the `esp-idf` framework to ensure RMT peripheral stability for high-density LED arrays.
+ * *Note*: Node 3 (ESP32-S3) **MUST** use the `esp-idf` framework to ensure RMT peripheral stability for high-density LED arrays.
 - **Hardware Photo Integration**: Migrated and optimized raw assets to permanent project directory.
 - **Enhanced Documentation**: Integrated technical photos into manuals and the BoM.
 
@@ -157,7 +157,7 @@ All notable changes to the Wee2-D2 project will be documented in this file. This
 
 ## [1.0.0-UDNS] - 2026-03-28
 ### Added
-- **Unified Droid Nervous System (UDNS)**: Implemented a high-bandwidth master-slave serial architecture across all 3 nodes.
+- **System Bus (UDNS)**: Implemented a high-bandwidth master-slave serial architecture across all 3 nodes.
 - **UDNS Technical Documentation**: Created a dedicated explainer and wiring guide for the droid's integrated nervous system.
 - **AI Agent Briefing**: Created `AGENTS.md` to provide comprehensive context, hardware specs, and design guidelines for future AI engineering assistants.
 - **Hardware Profile**: Integrated the **PEMENOL 60W (DY-HL50T)** soundboard and **ESP32D Dev Board** (Body) into the technical manuals.
@@ -181,5 +181,5 @@ All notable changes to the Wee2-D2 project will be documented in this file. This
 ### Added
 - Initial project structure including Markdown documentation and Mermaid diagrams.
 - Basic Bill of Materials (BOM) following the Star Wars aesthetic.
-- ESPHome firmware templates for MCU 1 (Body Controller).
+- ESPHome firmware templates for Node 1 (Body Controller).
 - Core electrical schematic draft representing the initial 20V power system.

@@ -1,44 +1,62 @@
-# Wee2-D2 <i data-lucide="battery-charging"></i> Power Architecture
+# <i data-lucide="battery-charging"></i> Power Architecture
+> **TECHNICAL INFRASTRUCTURE** | **SYSTEM: ELECTRICAL DISTRIBUTION**
 
-This document tracks the electrical routing and protection systems for the Wee2-D2 droid.
+This document tracks the electrical routing, distribution, and protection systems for Wee2-D2. Locomotion and logic systems are isolated into distinct rails to ensure signal integrity and operational stability.
 
-## <i data-lucide="database"></i> Master Source
-The droid is powered by **DeWalt 20V Batteries**.
+---
 
-## Protection Layer & Main Distribution
-1. **MgcSTEM LVP-R1.5 (40A Cutoff)**: Protects DeWalt batteries from over-discharge (17.5V recommended cutoff).
-2. **Positive Blade Fuse Box**: Receives the raw 20V Positive line from the MgcSTEM.
-3. **Negative Bus Bar (Star Ground)**: Receives the raw 20V Negative line. 
+## 1. The Core Source
+The droid operates on a **20V High-Power Standard**, sourcing energy from a ganged **DeWalt 20V Battery** array.
 
-> [!IMPORTANT]
-> **THE GOLDEN RULE OF GROUNDS**: Every component in the droid (MCUs, ESCs, Receivers, and LED Strips) MUST share a common ground reference. Every ground wire traces back to this central Negative Bus Bar to create a "Star Ground" topology. This is critical for signal integrity; without a shared reference, UART and PWM data signals will become unreadable static.
+### Protection Layer
+- **Master LVP (MgcSTEM LVP-R1.5)**: A 40A low-voltage protector monitors the battery source. It is configured with a **17.5V Cutoff** to prevent over-discharge and permanent battery cell damage.
+- **Positive Blade Fuse Box**: Receives the raw 20V Positive line from the LVP. Individual systems are fused for over-current protection.
+- **Negative Bus Bar (Star Ground)**: Receives the raw 20V Negative line. All system grounds trace back to this central anchor for signal integrity.
 
-From the Fuse Box and Bus Bar, **five** distinct 20V (+/-) power lines are sent outward:
+---
 
-### **Body Electronics (Lower)**
-- **Left Drive ESC**: 20V [Flipsky Mini FSESC 6.7 Pro](../hardware/flipsky-fsesc-67-pro-manual.md) (Left). 
-- **Right Drive ESC**: 20V Flipsky ESC (Right).
-- **Sound System**: 20V [DFPlayer Mini / TPA3118 Amp](../hardware/dfplayer-mini-manual.md) (60W Mono).
+## 2. Power Rail Hierarchy
 
-### **Dome Electronics (Upper)**
-Because the CNBTR Slip Ring has exactly 6 wires (10A per circuit), I send **TWO separate 20V lines** (consuming 4 wires total) up into the dome to completely isolate the sensitive microchips from the noisy dome motor:
-1. **Slip| System Tier | Voltage | Current Peak | Source |
-| :--- | :---: | :---: | :--- |
-| **Node 1 (Sound Hub)** | 5.1V | 2.5A | Internal 5V Buck |
-| **Node 2 (LEDs)** | 5.1V | 8.0A | Dedicated 10A Buck |
-| **Node 3 (Dome Motion)** | 5.1V | 1.5A | Internal 5V Buck |
-2x 5-Port Wago Connectors Powers MCU 2, MCU 3, and all Dome LEDs. 
+Wee2-D2 utilizes two primary voltage rails to isolate high-current inductive motor noise from sensitive logic circuits.
 
-*The remaining 2 slip ring wires (C5/C6) are RESERVED for future logic / telemetry expansion.*
+### A. The 20V High-Power Rail
+High-current components pull directly from the DeWalt batteries via the master fuse box:
+- **Drive System**: 2x [Flipsky Mini FSESC 6.7 Pro](../hardware/flipsky-fsesc-67-pro-manual.md) (Left/Right) draw direct 20V.
+- **Dome Motion**: The goBILDA 15A ESC draws 20V via the Slip Ring bridge.
+- **Audio System**: The **TPA3118 60W Amplifier** draws 20V for maximum sonic output.
+
+### B. The 5.1V Logic & Audio Rail
+Sensitive micro-electronics utilize step-down regulators to provide stable 5.1V logic power:
+- **Body Logic**: Steals 5.1V from the Flipsky ESC built-in BEC to power [Node 1 (Sound Hub)](node-1-sound-hub-spec.md) and the body receiver.
+- **Dome Logic**: [Node 2 (LEDs)](node-2-led-distribution-spec.md) uses a dedicated **Mini560 10A Buck Converter** to drive high-density LED arrays.
+- **Dome Motion Logic**: [Node 3 (Motion)](node-3-dome-motion-spec.md) steals 5.1V from the goBILDA BEC to power the motion controller and dome receiver.
+
+---
+
+## 3. The Slip Ring Bridge (Body Dome)
+
+The **CNBTR Slip Ring** (6 wires) acts as the high-current bridge between the chassis and the rotating dome. To ensure stability, we utilize a **Dual-Circuit Isolation Strategy**:
+
+| Circuit | Function | Current (Peak) | Slip Ring Wires |
+| :--- | :--- | :---: | :---: |
+| **Circuit 1** | **Dome Motor (20V)** | 10.0A | C1 (+) / C2 (-) |
+| **Circuit 2** | **Dome Logic & LEDs (20V)** | 10.0A | C3 (+) / C4 (-) |
+| **Expansion** | Reserved for Serial / Telemetry | — | C5 / C6 |
 
 > [!CAUTION]
-> **5V REGULATION**: All dome lighting components (Logic, PSIs, Strips) share a common 5V rail fed by the Wagos. **Never** connect the 5V BEC from the motor controller to the 5V lighting rail as it will immediately destroy the micro-LEDs.
+> **ISOLATION REQUIRED**: Never bridge the 20V (+) lines of Circuit 1 and Circuit 2. The dome motor generates significant inductive spikes that will destabilize the LED logic if the rails are not isolated through the slip ring.
 
-## 5V BEC Logic Routing
-Instead of packing the body with extra buck converters, I intelligently steal 5V from the massive motor controllers (which have built-in "BEC" step-down regulators):
-* **Body Logic**: The Flipsky ESCs output 5V to power the **Body HOTRC F-06A Receiver**. The receiver *then* outputs that 5V straight into **MCU 1 (Body Audio Hub)**.
-* **Dome Motion Logic**: The goBILDA 15A ESC outputs 5V to power the **Dome HOTRC F-06A Receiver**.
+---
 
-## Safety Logic & Clamping
-- **Motion Controller**: Software clamp in MCU 3 restricts the 20V source to 60% power to simulate a safe **12V** output for the motor.
-- **Lighting Controller**: Brightness limiter enabled at **3500mA** to protect the Mini560 buck converter.
+## 4. Engineering Principles
+
+### The "Star Ground" Rule
+Every component in the droid (MCUs, ESCs, Receivers, and LED Strips) **MUST** share a common ground reference. All grounds trace back to the central Negative Bus Bar. Without this shared reference, the UART and PWM data signals will become unreadable atmospheric noise.
+
+### Logic Clamping & Safety
+- **Motion Clamp**: Node 3 restricts the 20V source to 60% software power to simulate 12V for the goBILDA motor.
+- **Current Limiters**: Node 2 maintains an internal brightness limit of **3500mA** to protect the buck converters from thermal runaway.
+
+---
+
+[View Electrical Schematic](electrical-schematic.md)

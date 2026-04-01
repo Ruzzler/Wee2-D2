@@ -27,10 +27,10 @@ The most powerful tool at your disposal is the **ESPHome Logger**.
 
 ### **2. Wireless Bridge (ESP-NOW) Synchronization Test**
 To verify the wireless behavioral triggers:
-1. Open the **Dome Master (MCU 3)** Logs.
+1. Open the **Dome Master (Node 3)** Logs.
 2. Trigger a movement or behavioral script.
 3. Look for a broadcast entry: `[D][esp_now:xxx]: Broadcast behavioral EVENT_ID_XX`.
-4. Open the **Body Audio Hub (MCU 1)** Logs and confirm it receives the event and triggers the DFPlayer: `[D][dfplayer:xxx]: Playing track XX`.
+4. Open the **Body Audio Hub (Node 1)** Logs and confirm it receives the event and triggers the DFPlayer: `[D][dfplayer:xxx]: Playing track XX`.
 
 ### **3. Multimeter Probe Points**
 * **VCC Rail**: Should be **18V - 21V** (Main Battery).

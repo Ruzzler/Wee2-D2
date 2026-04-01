@@ -23,8 +23,8 @@ The **Dome Motion** node serves as the behavioral heart of Wee2-D2. It manages p
 | :--- | :---: | :--- | :--- |
 | **RC CH1 (Steer)** | GPIO 4 | Yellow | PWM Input (Pull-Down) |
 | **Wireless TX** | N/A | ESP-NOW | Broadcast Master Link |
-| **ESC PWM Out** | GPIO 7 | ⬜/ White/Blue | PWM Output to goBILDA |
-| **Rear PSI** | GPIO 5 | ⬜ White | RMT LED Output (WS2182B) |
+| **ESC PWM Out** | GPIO 7 | / White/Blue | PWM Output to goBILDA |
+| **Rear PSI** | GPIO 5 | White | RMT LED Output (WS2182B) |
 | **Front PSI** | GPIO 6 | Green | RMT LED Output (WS2182B) |
 
 ## ESP32-S3 Engineering Implementation

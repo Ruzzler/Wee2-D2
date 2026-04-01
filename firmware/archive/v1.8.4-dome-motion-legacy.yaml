@@ -277,19 +277,19 @@ script:
 # ============================================
 button:
  - platform: template
- name: "▶ Start: Standard Logic"
+ name: " Start: Standard Logic"
  on_press: {script.execute: mood_standard_stuck}
  
  - platform: template
- name: "▶ Run: Angry Reaction"
+ name: " Run: Angry Reaction"
  on_press: {script.execute: r2_angry}
 
  - platform: template
- name: "▶ Test: Scan Patrol"
+ name: " Test: Scan Patrol"
  on_press: {script.execute: test_scan_patrol}
 
  - platform: template
- name: "▶ Test: Party Dance"
+ name: " Test: Party Dance"
  on_press: {script.execute: test_party_dance}
 
  - platform: template

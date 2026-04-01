@@ -14,9 +14,9 @@ This document provides critical context for AI coding assistants working on the 
  - **Sidebar Minimalism**: The navigational sidebar must remain 100% **text-only**. No icons, no emojis.
  - **Markdown Image Syntax**: Always use standard Markdown syntax (`![alt](path)`) for images to ensure the `app.js` path-resolver correctly handles asset rendering.
 * **Visual Excellence**: Modern web design best practices (curated HSL palettes, smooth transitions, micro-animations) are mandatory. **Avoid Tailwind CSS**; use Vanilla CSS for maximum control.
-* **Tone**: Maintain a professional, straightforward, and technical tone. Avoid "cheesy" flavor text (e.g., "Mission-Ready," "Elite") and "self-important" formalisms. Use plain technical language.
+* **Tone**: Maintain a professional, straightforward, and technical tone. Avoid "cheesy" flavor text (e.g., "Production-Ready," "Professional") and "self-important" formalisms. Use plain technical language.
 * **Terminology**: 
- - Use **"High Alert"** instead of "Angry Mode".
+ - Use **"High Alert"** instead of "High Alert".
  - Use **"Cinematic Logic Display"** for LED matrix scrolling animations.
  - **Physical Chassis**: Always refer to Mr. Baddeley's design as **"3D files"** (e.g., "The acclaimed 3D files created by Mr. Baddeley"). Avoid "engineering files" or "technical blueprints."
 
@@ -94,5 +94,5 @@ The droid operates on a **Distributed Node Mesh** model architecture.
 * **Design Standards**: Use **Lucide Icons** (`<i data-lucide="..."></i>`) for primary page headers only. Avoid emojis repo-wide (cheese factor).
 * **Sidebar Minimalism**: The sidebar must remain **text-only**. No icons, no emojis. Minimalist, professional hierarchy.
 * **Don't** refer to Mr. Baddeley's work as "engineering files"; use **"3D files."**
-* **Don't** use legacy "MCU 1/2/3" nomenclature; use **"Node 1/2/3."**
+* **Don't** use legacy "Node 1/2/3" nomenclature; use **"Node 1/2/3."**
 * **Don't** hardcode credentials in documentation or firmware.

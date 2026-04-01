@@ -18,7 +18,7 @@ The **Flipsky Mini FSESC 6.7 Pro** is a high-performance electronic speed contro
 ## Pinout & Communication
 * **USB**: Type-C for configuration via VESC Tool.
 * **CAN**: For syncing dual ESCs (Master/Slave).
-* **UART**: For MCU 1 communication or Bluetooth modules.
+* **UART**: For Node 1 communication or Bluetooth modules.
 * **PPM**: Standard RC PWM input (1000-2000μs).
 * **Hall Sensors**: For sensored motor control (Startup from 0 RPM).
 

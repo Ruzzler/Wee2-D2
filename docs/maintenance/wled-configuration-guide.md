@@ -12,7 +12,7 @@ To synchronize your 4-pin dome layout, follow these precise configuration steps 
 | **Output 1: Front Logic** | WS2812B | **18** | 20 | Yellow |
 | **Output 2: Rear Logic** | WS2812B | **19** | 24 | / Yellow/Blk |
 | **Output 3: Front PSI** | WS2812B | **21** | 76 | Green |
-| **Output 4: Back PSI** | WS2812B | **22** | 76 | ⬜ White |
+| **Output 4: Back PSI** | WS2812B | **22** | 76 | White |
 
 > [!IMPORTANT]
 > **POWER LIMITER**: Ensure the **"Maximum Current"** is set to **3500mA**. This protects your Mini560 Buck Converter from blowing during high-intensity white flash effects.

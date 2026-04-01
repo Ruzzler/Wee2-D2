@@ -31,7 +31,7 @@ To sync your behavioral triggers:
 2. Go to **Presets** and create a "Red Strobe" effect. Save as **Preset 5**.
 3. Go to **Settings > Macro / Button Actions**.
 4. Under "Button 0" (GPIO5 on S3 Mini), set the action to `P1=5&P2=1` (Pushes preset 5).
-5. Test by triggering a sound on MCU 1; the dome should instantly turn red via the **Unified Droid Nervous System (UDNS)**.
+5. Test by triggering a sound on Node 1; the dome should instantly turn red via the **System Bus (UDNS)**.
 
 ### **3. Dome Center Alignment**
 The dome motor (goBILDA 15A ESC) operates on standard PWM (Servo) signals.
@@ -45,5 +45,5 @@ The dome motor (goBILDA 15A ESC) operates on standard PWM (Servo) signals.
 Follow this exact order to prevent "ghosting" signals:
 1. **Power ON Transmitters** (Body first, then Dome).
 2. **Slide DeWalt 20V Battery** into the LVC core.
-3. **Wait 10 Seconds** for the **Unified Droid Nervous System (UDNS)** to initialize and the **System Status LED** (GPIO 2) to start blinking.
+3. **Wait 10 Seconds** for the **System Bus (UDNS)** to initialize and the **System Status LED** (GPIO 2) to start blinking.
 4. **Confirm Sound Output**: Hit a small sound trigger to verify the 60W Amp is alive.

@@ -24,7 +24,7 @@ The **LED Distribution** node is dedicated to orchestrating the WS2812 addressab
 | **Front Logic** | WS2812B | 20 | Yellow | **18** |
 | **Rear Logic** | WS2812B | 24 | / Yellow/Blk | **19** |
 | **Front PSI** | GrnWave | 76 | Green | **21** |
-| **Back PSI** | GrnWave | 76 | ⬜ White | **22** |
+| **Back PSI** | GrnWave | 76 | White | **22** |
 
 > [!CAUTION]
 > **VOLTAGE SENSITIVITY**: The GrnWave PSI boards use micro 2020-size LEDs that are extremely sensitive. **Do not exceed 5.0V**. Powering them from the 6V BEC of the motor controller will cause immediate failure. Use the dedicated **Mini560 5V Regulator**.
