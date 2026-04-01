@@ -76,7 +76,7 @@ The droid operates on a **Distributed Node Mesh** model architecture.
 ### 1. Documentation Standard
 *   **Header Purge**: Avoid "Serial/Model" headers in documentation. Use clean titles and high-density technical tables.
 *   **Direct-to-Droid OTA**: Deployment is handled via the built-in **ESPHome Web Server (v3)**. No separate back-end infrastructure is used.
-*   **Sidebar Refinement**: Mantain the "Project Documentation / System Architecture / Microcontroller Nodes / Hardware / Capabilities & Movement / Operation & Maintenance" hierarchy (e.g., replace 'Behavioral Logic' with '**Automations**').
+*   **Sidebar Refinement**: Mantain the "Project Documentation / System Architecture / Hardware / Capabilities & Movement / Microcontroller Nodes / Operation & Maintenance" hierarchy (e.g., replace 'Behavioral Logic' with '**Automations**').
 *   **Image Rendering**: Always use standard Markdown image syntax (`![alt](path)`) rather than HTML `<img>` tags. This ensures the `app.js` path-resolver correctly handles relative assets across all navigation nodes.
 
 ### 2. Versioning & Deployment
