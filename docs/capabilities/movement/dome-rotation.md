@@ -1,7 +1,5 @@
 # <i data-lucide="refresh-cw"></i> Dome Rotation System
 
-> **FUNCTIONAL CAPABILITY**
-
 Wee2-D2's 360° dome rotation is driven by a precision heavy-duty motor, interpreted exclusively by **Node 3 (Motion Controller)** running ESPHome.
 
 ## The goBILDA Hardware

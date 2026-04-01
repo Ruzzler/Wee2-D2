@@ -1,7 +1,5 @@
 # <i data-lucide="cpu"></i> Master Node Pinout & Wiring Guide
 
-> **TECHNICAL REFERENCE** | **v2.1.2-FINAL-STABLE**
-
 This document serves as the master wiring reference for the Wee2-D2 distributed node mesh. It integrates all verified pin assignments, wire colors, and hardware interfaces for the ESP32 platforms.
 
 ---

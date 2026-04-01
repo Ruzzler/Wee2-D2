@@ -1,7 +1,5 @@
 # Droid Electrical Schematic
 
-> **VISUAL ARCHITECTURE** | **v2.1.2-FINAL-STABLE**
-
 This document provides a high-fidelity visual and technical map of the Wee2-D2 electrical system.
 
 ![Chassis Electronics Layout](../../assets/chassis-electronics-layout.png)

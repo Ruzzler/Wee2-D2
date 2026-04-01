@@ -1,7 +1,5 @@
 # <i data-lucide="network"></i> Node Mesh Architecture
 
-> **TECHNICAL ARCHITECTURE** | **v2.1.2-FINAL-STABLE**
-
 The Wee2-D2 utilizes a distributed MCU architecture called the **Node Mesh**.
 This design handles high-amperage motor control, precision dome rotation, and cinematic AV triggers while minimizing physical wiring through the central slip ring.
 

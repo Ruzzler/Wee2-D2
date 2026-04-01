@@ -1,7 +1,5 @@
 # <i data-lucide="battery-charging"></i> Power Architecture
 
-> **TECHNICAL INFRASTRUCTURE** | **SYSTEM: ELECTRICAL DISTRIBUTION**
-
 This document tracks the electrical routing, distribution, and protection systems for Wee2-D2. Locomotion and logic systems are isolated into distinct rails to ensure signal integrity and operational stability.
 
 ---

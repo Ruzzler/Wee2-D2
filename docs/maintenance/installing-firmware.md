@@ -1,7 +1,5 @@
 # <i data-lucide="download"></i> Installing Firmware & Field Recovery
 
-> **TECHNICAL OPERATIONS** | **v2.1.2-FINAL-STABLE**
-
 The Wee2-D2 project utilizes a **Zero-Infrastructure** deployment standard. Once your microcontrollers are "injected" with their initial code, all future updates and configuration changes are handled directly through the air—even when you are away from your home network (e.g., at a 501st convention, parade, or hospital visit).
 
 ---

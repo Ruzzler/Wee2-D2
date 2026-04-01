@@ -1,7 +1,5 @@
 # <i data-lucide="workflow"></i> Automations
 
-> **SYSTEM CAPABILITIES** | **v2.1.2-FINAL-STABLE**
-
 This section serves as the technical roadmap for **Behavioral Automations**. While the droid currently operates on direct manual triggers (RC), the future architecture will utilize a modular automation layer to execute synchronized movement, lighting, and audio routines autonomously.
 
 ---

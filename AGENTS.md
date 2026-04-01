@@ -1,7 +1,5 @@
 # <i data-lucide="folder-git"></i> Wee2-D2
 
-> **v2.1.2-FINAL-STABLE**
-
 This document provides critical context for AI coding assistants working on the Wee2-D2 project. It summarizes the droid's architecture, hardware stack, and technical standards.
 
 ---
