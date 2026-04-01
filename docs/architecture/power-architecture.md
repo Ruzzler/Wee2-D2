@@ -51,15 +51,12 @@ The **CNBTR Slip Ring** (6 wires) acts as the high-current bridge between the ch
 
 ---
 
-## 4. Engineering Principles
-
-### The "Star Ground" Rule
-
-Every component in the droid (MCUs, ESCs, Receivers, and LED Strips) **MUST** share a common ground reference. All grounds trace back to the central Negative Bus Bar.
+## 4. Grounding & Safety
+### Grounding Rule
+Every component in the droid (Nodes, ESCs, Receivers, and LED Strips) **MUST** share a common ground reference. All grounds trace back to the central Negative Bus Bar.
 Without this shared reference, the UART and PWM data signals will become unreadable atmospheric noise.
 
 ### Logic Clamping & Safety
-
 - **Motion Clamp**: Node 3 restricts the 20V source to 60% software power to simulate 12V for the goBILDA motor.
 - **Current Limiters**: Node 2 maintains an internal brightness limit of **3500mA** to protect the buck converters from thermal runaway.
 
