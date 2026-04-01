@@ -1,9 +1,7 @@
-# Wee2-D2 Behavioral Logic
-> **MAINTENANCE & OPERATIONS** | **v2.1.0-Zero-Infra Technical Overview**
+# Wee2-D2 🤖 Behavioral Logic
 
 The Wee2-D2 droid uses a modular behavior system based on **ESPHome States** and **Wireless Triggers**. This architecture allows for cinematic, synchronized audio and lighting changes across all MCU nodes without direct physical connections.
 
-### Behavioral Logic (Node 3)
 Behavioral states are primarily managed by **Node 3 (Dome Motion)** and broadcasted to other hubs via the **ESP-NOW** bridge.
 
 ### Primary Operational States

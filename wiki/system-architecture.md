@@ -1,5 +1,4 @@
-# Wee2-D2 System Architecture
-> **MAINTENANCE & OPERATIONS** | **v2.1.0-Zero-Infra Technical Overview**
+# Wee2-D2 System# 🏛️ Architecture Overview
 
 The Wee2-D2 project utilizes a distributed MCU architecture to handle high-amperage motor control, precision dome rotation, and cinematic AV triggering while minimizing physical wiring through the central slip ring.
 

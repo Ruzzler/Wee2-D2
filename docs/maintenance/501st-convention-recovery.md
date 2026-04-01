@@ -1,5 +1,4 @@
-# 🛰️ 501st Convention Recovery (On-the-Road Updates)
-> **MAINTENANCE & OPERATIONS** | **v2.1.0-Zero-Infra Procedure**
+# 🚨 501st Garrison Protocol: Recovery & Troubleshooting
 
 This guide outlines how to update or recover your Wee2-D2 droid when you are away from your home network (e.g., at a 501st convention, parade, or hospital visit).
 
