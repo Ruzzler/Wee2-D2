@@ -1,14 +1,15 @@
-# 🧠 MCU 1: Body Audio Hub
+# 🧠 Node 1: Sound Hub
 > **ESPHome Firmware** | **ESP32-S3 Super Mini**
 
-The **Body Audio Hub** acts as the localized sound and drive monitoring system for Wee2-D2. It listens for **ESP-NOW** behavioral triggers from the Dome Master and translates them into serial commands for the **DFPlayer Mini**.
+The **Sound Hub** acts as the localized audio management and drive monitoring system for Wee2-D2. It listens for **ESP-NOW** behavioral triggers from the Dome Motion master and translates them into serial commands for the **DFPlayer Mini**.
 
 | **Hardware Node** | ESP32-S3 Super Mini |
 | :--- | :--- |
 | **Logic Framework** | ESPHome (esp-idf) |
 | **Primary Function** | Audio Hub (ESP-NOW Slave) |
-| **Source Code** | [🗄️ `body-brain.yaml`](body-brain.yaml) |
-| **Visual ID** | ![S3 Mini](../../assets/esp32-s3-super-mini.jpg) |
+| **Source Code** | [🗄️ `node-1-sound-hub.yaml`](../../firmware/production/node-1-sound-hub.yaml) |
+| **Visual ID (Logic)** | ![S3 Mini](../../assets/esp32-s3-super-mini.jpg) |
+| **Visual ID (Audio)** | ![TPA3118](../../assets/tpa3118-amplifier-module.jpg) |
 
 ## 🚀 Core Features
 *   **ESP-NOW Wireless Link**: Low-latency behavioral synchronization with the Dome Master.

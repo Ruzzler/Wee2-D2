@@ -3,11 +3,13 @@
 
 Wee2-D2's voice and sound system is a distributed modular stack built around the **DFPlayer Mini** (MP3 Hub) and a **TPA3118 60W Amplifier**. Triggers are managed wirelessly via the **ESP-NOW** bridge.
 
+![TPA3118 Amplifier Module](../../../assets/tpa3118-amplifier-module.jpg)
+
 ## 🧠 How it Works: The Wireless Trigger
 Instead of physical wires running through the slip ring, the droid uses a **Wireless Behavioral Bridge**.
-1.  **Event Capture**: The **Dome Master (MCU 3)** or **Body Hub (MCU 1)** detects an RC command or autonomous event.
+1.  **Event Capture**: The **Dome Motion (Node 3)** or **Sound Hub (Node 1)** detects an RC command or autonomous event.
 2.  **Broadcast**: Node 3 broadcasts an **ESP-NOW** packet (e.g., `TRIGGER_SOUND_01`) across the 2.4GHz spectrum.
-3.  **Command Translation**: The **Body Audio Hub (MCU 1)** receives the wireless packet and sends a precise **Serial (UART)** command to the **DFPlayer Mini**.
+3.  **Command Translation**: The **Sound Hub (Node 1)** receives the wireless packet and sends a precise **Serial (UART)** command to the **DFPlayer Mini**.
 4.  **Amplification**: The DFPlayer outputs a low-level analog signal to the **TPA3118 Amplifier**, which drives the 60W Pyle speaker at 20V.
 
 ## 💾 SD Card Formatting (DFPlayer Standard)
@@ -55,5 +57,5 @@ Unlike the legacy 9-wire trigger system, the v1.8 stack uses a 4-wire serial bus
 
 ---
 **Relevant Hardware & Code:**
-*   [DFPlayer Mini Data Sheet](../../bill-of-materials.md)
-*   [MCU 1: Body Audio Hub](../../../firmware/mcu1-body-controller/README.md)
+*   [DFPlayer Mini Data Sheet](../../manuals/dfplayer-mini-manual.pdf)
+*   [Node 1: Sound Hub Spec](../../architecture/node-1-sound-hub-spec.md)

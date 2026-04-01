@@ -1,7 +1,7 @@
 # 💡 LED Arrays & Displays
 > **FUNCTIONAL CAPABILITY**
 
-The visual personality of Wee2-D2 is driven by high-density **WS2812B addressable LED** matrices, controlled by **MCU 2 (Lighting Controller)** running the **WLED** framework with **ESP-NOW** wireless synchronization.
+The visual personality of Wee2-D2 is driven by high-density **WS2812B addressable LED** matrices, controlled by **MCU 2 (Lighting Controller)** running the **WLED** framework. Synchronized visual behaviors (e.g., "Angry Mode" red pulsing) are triggered wirelessly from the **Dome Motion (Node 3)** via the **ESP-NOW** bridge.
 
 ## 🔋 Power Constraints
 Because there are hundreds of LEDs in the dome, they have their own dedicated **Mini560 5V Buck Converter (Buck 1)** tied to the 20V Ganged Wago Hub. 
@@ -25,5 +25,5 @@ To achieve cinematic animations, the WLED interface is configured using **2D Mat
 
 ---
 **Relevant Hardware & Code:**
-*   [MCU 2: Lighting Controller](../../../firmware/mcu2-lighting-controller/README.md)
-*   [GrnWave PSI Manual](../../hardware/grnwave-psi-manual.md)
+*   [Node 2: LED Distribution Spec](../../architecture/node-2-led-distribution-spec.md)
+*   [Node Pinout Guide](../../architecture/node-pinout-guide.md)

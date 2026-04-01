@@ -1,16 +1,15 @@
-# 💡 MCU 2: Lighting Controller (WLED)
+# 💡 Node 2: LED Distribution
 > **WLED Firmware** | **ESP32 Dev Board (Standard)**
 
-This MCU is dedicated to controlling the WS2812 addressable LED system in the dome using **WLED**.
+The **LED Distribution** node is dedicated to orchestrating the WS2812 addressable LED system in the dome using **WLED**.
 
 | **Hardware Node** | ESP32-Dev Board (Standard) |
 | :--- | :--- |
 | **Logic Framework** | WLED |
 | **Primary Function** | Addressable LEDs |
-| **Source Code** | [🌐 WLED Web Installer](https://install.wled.me/) |
+| **Source Code** | [🌐 Install WLED](https://install.wled.me/) / [🗄️ `node-2-led-distribution-v2.1.yaml`](../../firmware/production/node-2-led-distribution-v2.1.yaml) |
 | **Visual ID** | ![ESP32D](../../assets/esp32d-dev-board.png) |
-| **UDNS RX (Bus)** | **GPIO 16** (Yellow/Black) |
-| **UDNS TX (Bus)** | **GPIO 17** (Green/Black) |
+| **Wireless Link** | **ESP-NOW** |
 | **Status LED** | **GPIO 2** |
 
 ## 🔋 Power Management & Safety

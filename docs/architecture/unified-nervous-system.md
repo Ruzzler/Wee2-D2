@@ -1,11 +1,12 @@
-# 🧠 The Unified Droid Nervous System (UDNS)
+# 🕸️ Unified Nervous System: distributed Node Mesh
+> **ARCHITECTURE OVERVIEW** | **MODEL: v2.1.0-Zero-Infra**
 
-The **Unified Droid Nervous System (UDNS)** is the high-bandwidth industrial backbone of the Wee2-D2. It transforms three independent ESP32 microcontrollers into a single, cohesive "Droid Brain" through a master-slave serial command architecture.
+The Wee2-D2 project uses a **distributed MCU model** called the **Node Mesh**. This architecture eliminates the need for complex, heavy wiring through the slip ring by distributing intelligence into three specialized hubs.
 
 ---
 
 ## 🏛️ Architecture Overview
-In a standard hobbyist build, parts often work in isolation. In the **UDNS** model, every action is synchronized across the droid's entire frame:
+In a standard hobbyist build, parts often work in isolation. In the **Node Mesh** model, every action is synchronized across the droid's entire frame:
 
 *   **The Master (Dome Motion)**: Handles all behavioral triggers and dome rotation. It acts as the "Behavioral Master."
 *   **The Slaves (Body Logic & Dome Lights)**: High-performance **ESP32-S3 and ESP32-D nodes** that listen for broadcast packets. They react instantly to wireless instructions (e.g., "Play Sound: Happy," "Switch lights to High Alert").
@@ -13,7 +14,7 @@ In a standard hobbyist build, parts often work in isolation. In the **UDNS** mod
 ---
 
 ## 🛰️ How it Works: The Wireless Bridge (ESP-NOW)
-The UDNS uses **ESP-NOW**, a low-power, high-speed 2.4GHz wireless protocol, to bridge the gap between the body and the dome without physical data wires.
+The Node Mesh uses **ESP-NOW**, a low-power, high-speed 2.4GHz wireless protocol, to bridge the gap between the body and the dome without physical data wires.
 
 1.  **Direct P2P Link**: Unlike standard Wi-Fi, ESP-NOW does not require a router. MCUs communicate directly with one another, ensuring sub-10ms latency for triggers.
 2.  **Broadcast Behavior**: When the Dome Master (MCU 3) detects an event (like a specific rotation threshold or RC command), it broadcasts a behavioral packet to the Body Hub (MCU 1) and Lighting Hub (MCU 2) simultaneously.
@@ -42,7 +43,7 @@ ESP-NOW provides the same "physical wire" feel as UART but handles packet collis
 ---
 
 ## 🛞 Slip Ring Integration (6-Circuit)
-The slip ring is the physical "Spinal Cord" of the droid. Every signal must be shared across this rotating joint perfectly to ensure the UDNS bus does not drop packets. Because the dome contains a heavy motor and sensitive 5V logic chips, power is separated into two clean lines.
+The slip ring is the physical "Spinal Cord" of the droid. Every signal must be shared across this rotating joint perfectly to ensure the Node Mesh bus does not drop packets. Because the dome contains a heavy motor and sensitive 5V logic chips, power is separated into two clean lines.
 
 | Circuit | Function | Color (Typical) | Wire Gauge | Destination |
 | :--- | :--- | :--- | :--- | :--- |
@@ -56,7 +57,7 @@ The slip ring is the physical "Spinal Cord" of the droid. Every signal must be s
 ---
 
 ## 🛠️ Signal Integrity Standards
-To ensure the UDNS remains stable across multiple nodes and through the slip ring, the following engineering standards are applied to all firmware configurations:
+To ensure the Node Mesh remains stable across multiple nodes and through the slip ring, the following engineering standards are applied to all firmware configurations:
 
 1.  **Sensor Update Intervals**: General ESPHome sensors default to 60-second intervals. For real-time RC control, an `update_interval: 50ms` is used on the `pulse_width` component to ensure reactive motion.
 2.  **Input Pull-Downs**: High-speed digital signals (like RC PWM) require `mode: INPUT_PULLDOWN` on the GPIO pin to prevent floating signals and electrical jitter when the source is disconnected or idle.
@@ -66,6 +67,9 @@ To ensure the UDNS remains stable across multiple nodes and through the slip rin
 
 ## 💾 ESP-NOW Behavioral Events
 For reliability, the Wireless Bridge utilizes the broadcast protocol with the following logic:
+
+### **2. ESP-NOW Mesh (Wireless)**
+The core behavioral link is the **ESP-NOW Wireless Bridge**. Node 3 broadcasts status packets (e.g., "Droid Happy") which are instantly acted upon by Nodes 1 and 2.
 
 1.  **Channel Locking**: All nodes MUST remain on the same Wi-Fi channel (typically Channel 1) to ensure packet delivery.
 2.  **Encryption**: Communication can be hardened using the `api: encryption` key if deployed in public environments.

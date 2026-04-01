@@ -1,14 +1,14 @@
-# 🦾 MCU 3: Dome Master (ESPHome)
+# 🦾 Node 3: Dome Motion
 > **ESPHome Firmware** | **ESP32-S3 Super Mini**
 
-The **Dome Master** node serves as the behavioral heart of Wee2-D2. It manages precision dome rotation via a goBILDA 15A ESC and orchestrates all droid actions by broadcasting **ESP-NOW** triggers to the Body and Lighting hubs.
+The **Dome Motion** node serves as the behavioral heart of Wee2-D2. It manages precision dome rotation via a goBILDA 15A ESC and orchestrates all droid actions by broadcasting **ESP-NOW** triggers to the Sound and LED hubs.
 
 | **Hardware Node** | ESP32-S3 Super Mini |
 | :--- | :--- |
 | **Logic Framework** | ESPHome (esp-idf) |
 | **Primary Function** | Behavioral Master & Motion |
-| **Source Code** | [🗄️ `dome-motion.yaml`](dome-motion.yaml) |
-| **Visual ID** | ![MCU 3 Master](../../assets/esp32-s3-super-mini.jpg) |
+| **Source Code** | [🗄️ `node-3-dome-motion.yaml`](../../firmware/production/node-3-dome-motion.yaml) |
+| **Visual ID** | ![Node 3 Master](../../assets/esp32-s3-super-mini.jpg) |
 
 ## 🚀 Core Features
 *   **Behavioral Orchestration**: Broadcasts wireless triggers for audio tracks (Body) and light patterns (Dome) using the low-latency **ESP-NOW** protocol.

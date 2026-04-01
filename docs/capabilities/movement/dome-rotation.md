@@ -44,5 +44,5 @@ In the **v1.6.2 Architecture**, MCU 3 acts as the primary "Command Dispatcher" f
 
 ---
 **Relevant Hardware & Code:**
-*   [MCU 3: Motion Controller](../../../firmware/mcu3-motion-controller/README.md)
-*   [goBILDA 5203 Hardware Manual](../../hardware/gobilda-motor-manual.md)
+*   [Node 3: Dome Motion Spec](../../architecture/node-3-dome-motion-spec.md)
+*   [Node Pinout Guide](../../architecture/node-pinout-guide.md)

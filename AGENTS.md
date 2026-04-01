@@ -37,11 +37,11 @@ To ensure project-wide synchronization, use this map as a lookup table during re
 
 | Hardware Component | Primary Documentation | Firmware / Config Files |
 | :--- | :--- | :--- |
-| **MCU 1 (Body)** | `body-wiring-guide.md`, `electrical-schematic.md` | `body-brain.yaml`, `mcu1-body/README.md` |
-| **MCU 3 (Dome)** | `dome-rotation.md`, `electrical-schematic.md` | `dome-motion.yaml`, `mcu3-motion/README.md` |
-| **Drive ESCs** | `body-drive.md`, `flipsky-fsesc-67-pro-manual.md` | `Left/Right_Motor_Settings.xml` |
-| **Audio (DFPlayer)**| `audio-system.md`, `dfplayer-mini-manual.md` | `body-brain.yaml` (UART triggers) |
-| **WLED Display** | `led-system.md`, `grnwave-psi-manual.md` | `dome-motion.yaml` (RMT Timing) |
+| **Node 1 (Sound Hub)** | `node-pinout-guide.md`, `electrical-schematic.md` | `node-1-sound-hub.yaml`, `README.md` |
+| **Node 3 (Dome Motion)** | `dome-rotation.md`, `electrical-schematic.md` | `node-3-dome-motion.yaml`, `README.md` |
+| **Drive ESCs** | `body-drive.md`, `flipsky-fsesc-67-pro-manual.md` | `left-motor-settings.xml` |
+| **Audio (DFPlayer)**| `audio-system.md`, `dfplayer-mini-manual.md` | `node-1-sound-hub.yaml` (UART triggers) |
+| **WLED Display** | `led-system.md`, `grnwave-psi-manual.md` | `node-2-led-distribution.yaml` (RMT Timing) |
 
 ---
 
@@ -107,7 +107,7 @@ The droid operates on a **Distributed Wireless Trigger** model called the **Wire
 *   **Optimization**: Prefer WebP/Lossy JPEG. Strip EXIF metadata from all user photos.
 *   **Deployment**: Use port `8001` for local testing. Use version query strings (e.g., `?v=v20`) for cache-busting on GitHub.
 
-### 3. Firmware Versioning & Backup (v2.1.0-Zero-Infra)
+### 3. Firmware Versioning & Backup (v2.1.2-Final)
 To ensure droid stability and zero-infrastructure deployment:
 *   **Modular Architecture**: All firmware inherits from `firmware/common/`.
     *   `base-config.yaml`: Unified Web Server (v3), Captive Portal, and API.

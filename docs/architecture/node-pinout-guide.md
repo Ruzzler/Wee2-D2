@@ -1,11 +1,12 @@
-# 🧵 Master Wiring Guide: Body Controller (MCU 1)
+# 🧵 Master Node Pinout & Wiring Guide
+> **TERMINOLOGY SYNC** | **v2.1.0-Zero-Infra Standard**
 
-This document serves as the master wiring reference for the Wee2-D2 Body Controller (ESP32-S3). It integrates all verified wire colors, pin assignments, and physical orientation for the S3 Super Mini platform.
+This document serves as the master wiring reference for the Wee2-D2 distributed node mesh (ESP32-S3). It integrates all verified wire colors, pin assignments, and physical orientation for the S3 Super Mini platform.
 
 ---
 
-## 🧠 1. Core MCU Pinout (S3 Super Mini)
-The Body Controller manages all high-level Audio triggering and Drive system monitoring. The pins follow the standard S3 Super Mini layout.
+## 🧠 1. Core Node 1 Pinout (Sound Hub)
+The Sound Hub (Node 1) manages all high-level Audio triggering and Drive system monitoring. The pins follow the standard S3 Super Mini layout.
 
 | ESP32 Pin | Wire Color | Role | Function |
 | :---: | :--- | :--- | :--- |

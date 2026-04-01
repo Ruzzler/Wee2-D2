@@ -22,8 +22,12 @@ From the Fuse Box and Bus Bar, **five** distinct 20V (+/-) power lines are sent 
 
 ### **Dome Electronics (Upper)**
 Because the CNBTR Slip Ring has exactly 6 wires (10A per circuit), I send **TWO separate 20V lines** (consuming 4 wires total) up into the dome to completely isolate the sensitive microchips from the noisy dome motor:
-1.  **Slip Ring Line 1 (Motor Power)**: 20V ➔ goBILDA 15A Motor Controller.
-2.  **Slip Ring Line 2 (Logic Power)**: 20V ➔ **Mini560 Pro Buck Converter** ➔ steps down to 5V ➔ 2x 5-Port Wago Connectors ➔ Powers MCU 2, MCU 3, and all Dome LEDs. 
+1.  **Slip| System Tier | Voltage | Current Peak | Source |
+| :--- | :---: | :---: | :--- |
+| **Node 1 (Sound Hub)** | 5.1V | 2.5A | Internal 5V Buck |
+| **Node 2 (LEDs)** | 5.1V | 8.0A | Dedicated 10A Buck |
+| **Node 3 (Dome Motion)** | 5.1V | 1.5A | Internal 5V Buck |
+2x 5-Port Wago Connectors ➔ Powers MCU 2, MCU 3, and all Dome LEDs. 
 
 *The remaining 2 slip ring wires (C5/C6) are RESERVED for future logic / telemetry expansion.*
 

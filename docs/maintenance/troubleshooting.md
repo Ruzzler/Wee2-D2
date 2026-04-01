@@ -8,9 +8,9 @@ If your droid begins exhibiting unexpected behavior, use this matrix to diagnose
 | **No Power / No Lights** | LVC Active | Battery voltage < 16V. Replace DeWalt battery. |
 | **Dome Won't Rotate** | Motor Signal Fault | Check GPIO 7 PWM connection; ensure goBILDA ESC is armed. |
 | **Dome Won't Rotate** | ESC Calibration | Re-calibrate goBILDA ESC throttle range. |
-| **Sound is Distorted** | Low Logic Power | Check Buck Converter output; ensure 5.1V stable. |
-| **Sound is Distorted** | Poor Grounding | Ensure common ground is tied to the soundboard amp GND. |
-| **LEDs Flickering** | Data Noise | Increase wire thickness; add 470-ohm resistor to data line. |
+| **No Audio output** | Node 1 (Sound Hub) | DFPlayer SD / TPA3118 Power | Check Node 1 UART status logs. |
+| **Dome not rotating** | Node 3 (Dome Motion) | 15A ESC / RC Binding | Verify Node 3 is receiving RC1 pulses. |
+| **LEDs Flickering** | Node 2 (LEDs) | Power Isolation / RMT Syms | Check Node 2 RMT memory symbols (S3). |
 | **Cannot Connect to IP** | DHCP Lease Expired | Check router; use static IP in `secrets.yaml`. |
 | **Sync Failure** | Wireless Bridge Fault | Check ESP-NOW MAC pairing; ensure all nodes on WiFi Channel 1. |
 
