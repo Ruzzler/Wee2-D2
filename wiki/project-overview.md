@@ -8,47 +8,28 @@ This repository tracks the subsequent electrical architecture, firmware configur
 
 ---
 
-## Architecture: The Node Mesh
-The control system is distributed across three independent ESP32 microcontrollers. This design ensures low-latency performance and isolates high-current rotor noise from sensitive audio and logic circuits.
+## <i data-lucide="map"></i> Databank Navigation Guide
 
-```mermaid
-graph LR
-    N1[Node 1: Sound Hub]
-    N2[Node 2: LED Distribution]
-    N3[Node 3: Dome Motion Master]
-    
-    N3 ---|ESP-NOW| N1
-    N3 ---|ESP-NOW| N2
-    
-    style N3 fill:#003344,stroke:#00eeff,stroke-width:2px,color:#fff
-```
+This databank is organized into several key technical sectors, as shown in the sidebar:
 
-| Node Unit | Primary Specialization | Logic Framework |
-| :--- | :--- | :--- |
-| **Node 1** | **Sound Hub (S3 Mini)** | ESPHome (esp-idf) |
-| **Node 2** | **LED Distribution (ESP32-D)** | WLED |
-| **Node 3** | **Dome Motion (S3 Mini)** | ESPHome (esp-idf) |
+### 1. Project Documentation
+These files provide the high-level context for the Wee2-D2 project, including a visual **Bill of Materials (BOM)**, a complete **Version History** for all firmware tiers, and the master **Changelog**.
 
----
+### 2. System Architecture
+This sector details the core engineering logic of the droid. It includes **Interactive Schematics**, **Power Distribution** maps, and the master **Node Mesh** architecture that enables decentralized control.
 
-## Primary Technical Resources
-Quickly access the core engineering specifications for the v2.1.2 architecture:
+### 3. Hardware Tier
+A comprehensive library of technical manuals and data sheets for every individual component in the droid, from **ESC speed controllers** to **brushless hub motors** and **slip rings**.
 
-> [!IMPORTANT]
-> **[Node Pinout Guide](../../docs/architecture/node-pinout-guide.md)**  
-> Master wiring and GPIO reference for all three nodes.
+### 4. Capabilities & Movement
+Detailed functional guides for the droid's primary output systems, including **LED Display Matrices**, **Audio/Voice Triggers**, **Dome Rotation**, and **Body Drive** configurations.
 
-> [!NOTE]
-> **[Electrical Schematic](../../docs/architecture/electrical-schematic.md)**  
-> Details the 20V power rail and logic distribution.
+### 5. Microcontroller Nodes
+Technical deep-dives into the three specific hubs that run the droid (**Node 1, 2, and 3**), including their specific GPIO pinouts and firmware deployment guides.
 
-> [!TIP]
-> **[Bill of Materials](../../docs/bill-of-materials.md)**  
-> Unified ledger and visual ID for all hardware components.
+### 6. Operation & Maintenance
+The critical maintenance sector covering **Calibration**, **OTA Network Updates**, **Safety Protocols**, and a multi-tier **Troubleshooting Matrix** for field-duty repairs.
 
 ---
-
-## Project Context
-The physical chassis of Wee2-D2 utilizing the 1: scale 3D files developed by **Mr. Baddeley**. This documentation focuses exclusively on the custom **ESPHome** and **WLED** firmware implemented to drive the droid's functional systems.
 
 [View Maintenance Log (Changelog)](../../CHANGELOG.md)
