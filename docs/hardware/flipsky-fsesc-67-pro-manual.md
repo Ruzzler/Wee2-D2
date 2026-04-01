@@ -1,8 +1,6 @@
 # <i data-lucide="zap"></i> Flipsky FSESC 6.7 Pro
 
-> **VESC Firmware** | **Flipsky Mini FSESC 6.7 Pro**
-
-## TECHNICAL SPECIFICATIONS
+> **TECHNICAL SPECIFICATIONS** | **VESC Firmware** | **Flipsky Mini FSESC 6.7 Pro**
 
 The **Flipsky Mini FSESC 6.7 Pro** is a high-performance electronic speed controller based on the VESC 6.6 architecture. It is used in the Wee2-D2 to drive the high-torque hub motors.
 

@@ -1,6 +1,6 @@
-# <i data-lucide="zap"></i> L-Faster Hub Motor (FLD-5)
+# <i data-lucide="zap"></i> L-Faster Hub Motor
 
-## TECHNICAL SPECIFICATIONS
+> **TECHNICAL SPECIFICATIONS** | **MODEL: FLD-5** | **GEARLESS / BRUSHLESS DC**
 
 ![L-faster Hub Motor](../../assets/l-faster-hub-motor.jpg)
 

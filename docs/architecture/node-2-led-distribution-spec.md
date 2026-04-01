@@ -1,8 +1,6 @@
 # <i data-lucide="sun"></i> Node 2: LED Distribution
 
-> **WLED Firmware** | **ESP32 Dev Board (Standard)**
-
-## TECHNICAL SPECIFICATIONS
+> **TECHNICAL SPECIFICATIONS** | **WLED Firmware** | **ESP32 Dev Board (Standard)**
 
 The **LED Distribution** node is dedicated to orchestrating the WS2812 addressable LED system in the dome using **WLED**.
 

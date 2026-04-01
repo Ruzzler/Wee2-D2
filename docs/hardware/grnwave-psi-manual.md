@@ -1,6 +1,6 @@
 # <i data-lucide="sun"></i> GrnWave Circular PSI
 
-## TECHNICAL SPECIFICATIONS
+> **TECHNICAL SPECIFICATIONS** | **WS2812B-2020 LEDs** | **VOLTAGE: 5V ONLY**
 
 ![GrnWave PSI](../../assets/grnwave-psi-logic.jpg)
 
