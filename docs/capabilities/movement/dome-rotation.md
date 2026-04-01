@@ -1,9 +1,9 @@
-# 🔄 Dome Rotation System
+# <i data-lucide="refresh-cw"></i> Dome Rotation System
 > **FUNCTIONAL CAPABILITY**
 
 Wee2-D2's 360° dome rotation is driven by a precision heavy-duty motor, interpreted exclusively by **MCU 3 (Motion Controller)** running ESPHome.
 
-## 🛞 The goBILDA Hardware
+## The goBILDA Hardware
 The physical rotation relies on a **goBILDA 5203 Yellow Jacket Motor** (117 RPM / 12V). This motor is incredibly torquey and interfaces perfectly with the 3D-printed dome ring gear.
 
 To drive this motor, the droid uses a **goBILDA 15A Cont PWM ESC** securely mounted inside the **dome hub**.

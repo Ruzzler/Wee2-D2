@@ -190,6 +190,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 }, 300);
             }
+            
+            // Initialize Lucide Icons for rendered content
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
 
             // Scroll to top
             window.scrollTo({ top: 0, behavior: 'smooth' });

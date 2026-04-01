@@ -1,10 +1,10 @@
-# 🛡️ Maintenance & Safety Manual: Wee2-D2
+# <i data-lucide="shield"></i> Maintenance & Safety Manual: Wee2-D2
 
 Safety and preventative maintenance are the foundations of a reliable droid system. These protocols protect your hardware and anyone in the droid's immediate vicinity.
 
 ---
 
-## ⚡ High-Voltage Safety (20V DC)
+## <i data-lucide="zap"></i> High-Voltage Safety (20V DC)
 The DeWalt battery is capable of high-current discharge. **Respect the power.**
 
 ### **1. Lithium Battery Hazards**

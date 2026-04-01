@@ -1,4 +1,4 @@
-# 🧩 Troubleshooting Matrix: Wee2-D2
+# <i data-lucide="alert-circle"></i> Troubleshooting Matrix: Wee2-D2
 
 If your droid begins exhibiting unexpected behavior, use this matrix to diagnose the specific point of failure in the system architecture.
 

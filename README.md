@@ -1,18 +1,18 @@
 <img src="assets/droid-actual.jpg" alt="Wee2-D2 Hero" width="400">
 
-# Wee2-D2: Mr. Baddeley Big Baby Astromech
+# <i data-lucide="container"></i> Wee2-D2: Imperial Databank
 
 Welcome to the official repository for **Wee2-D2**. I built this droid in 2025 as an active-duty astromech for the **Badlands Droid Builders** and the **501st Legion's Badlands Garrison**, frequently deploying it to community events. The physical chassis was 3D printed utilizing the acclaimed 3D files created by Mr. Baddeley.
 
 This repository tracks the subsequent electrical architecture, firmware configurations, and custom hardware documentation I use to bring the droid's decentralized control system to life.
 
-## 🛰️ Technical Documentation
+## <i data-lucide="book-open"></i> Technical Documentation
 To view the documented system with a premium, interactive technical interface, visit the official Project Wiki:
-👉 **[Wee2-D2 Project Wiki](https://ruzzler.github.io/Wee2-D2/)**
+**[Wee2-D2 Project Wiki](https://ruzzler.github.io/Wee2-D2/)**
 
 ---
 
-## 🚀 Project Overview
+## Project Overview
 Wee2-D2 utilizes a decentralized architecture split across three ESP32 microcontrollers. This ensures non-blocking operation between the audio processing, LED lighting, and mechanical drive systems. The droid is piloted via **Dual HOTRC DS-600 transmitters** (one for drive logic, one for dome motion).
 
 ### 🧠 Wireless Bridge (ESP-NOW)

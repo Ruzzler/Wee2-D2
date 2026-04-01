@@ -1,11 +1,11 @@
-# 🤖 Automations
+# <i data-lucide="workflow"></i> Automations
 > **SYSTEM CAPABILITIES** | **v2.1.2-FINAL-STABLE**
 
 This section serves as the technical roadmap for **Behavioral Automations**. While the droid currently operates on direct manual triggers (RC), the future architecture will utilize a modular automation layer to execute synchronized movement, lighting, and audio routines autonomously.
 
 ---
 
-## 🏗️ Automation Roadmap
+## Automation Roadmap
 The following autonomous behaviors are currently in development as high-density technical placeholders:
 
 ### 1. Idle Scanning (Future)
@@ -25,7 +25,7 @@ The following autonomous behaviors are currently in development as high-density 
 
 ---
 
-## 📡 Programming Strategy
+## Programming Strategy
 Automations will be programmed as **ESPHome Scripts** on **Node 3 (Dome Motion Master)** and broadcasted to the mesh via the **ESP-NOW** bridge. This ensures that even complex autonomous routines remain perfectly synchronized across all three microcontroller hubs.
 
 > [!NOTE]

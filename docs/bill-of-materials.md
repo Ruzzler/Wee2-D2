@@ -1,8 +1,8 @@
-# 📋 Bill of Materials (BOM)
+# <i data-lucide="list"></i> Bill of Materials (BOM)
 
 A comprehensive list of hardware used in the Wee2-D2 project, organized by system tier. Click on any thumbnail in the **Visual ID** column to enlarge it.
 
-## 🧠 Brains & Control
+## <i data-lucide="cpu"></i> Brains & Control
 | Component | Qty | Specifications | Visual ID |
 | :--- | :---: | :--- | :---: |
 | [Node 1: Sound Hub](architecture/node-1-sound-hub-spec.md) | 1 | ESP32-S3 Super Mini; Audio & Drive Sync | ![S3 Mini](../assets/esp32-s3-super-mini.jpg) |
@@ -11,7 +11,7 @@ A comprehensive list of hardware used in the Wee2-D2 project, organized by syste
 | [HOTRC DS-600](hardware/hotrc-ds600-manual.md) | 2 | 6-CH Transmitter (Silent Mod) [PDF](hardware/hotrc-ds600-manual.pdf) | ![Transmitter](../assets/hotrc-ds600-transmitter.webp) |
 | [HOTRC F-06A Receivers](hardware/hotrc-f06a-manual.md) | 2 | 6-CH PWM Output @ **115200 Baud (UDNS)** [PDF](hardware/hotrc-f06a-manual.pdf) | ![Receiver](../assets/hotrc-f06a-receiver.png) |
 
-## 🔋 Power & Protection
+## <i data-lucide="battery-charging"></i> Power & Protection
 | Component | Qty | Specifications | Visual ID |
 | :--- | :---: | :--- | :---: |
 | DeWalt 20V Battery | 1 | 4.0Ah / 80Wh (18.5V - 21.0V) | [Guide](maintenance/battery-runtime-guide.md) |
@@ -22,7 +22,7 @@ A comprehensive list of hardware used in the Wee2-D2 project, organized by syste
 | 5-Port Wago Connectors | 4 | 2x Dome (Power Trunk), 2x Body (Signal/GND) | - |
 | [CNBTR Slip Ring](hardware/cnbtr-slip-ring-manual.md) | 1 | 12.7mm Bore, 6-Circuit @ 10A/ch (2x Ganged) | ![Slip Ring](../assets/slip-ring-cnbtr.jpg) |
 
-## 🔊 Audio & Lights
+## <i data-lucide="volume-2"></i> Audio & Lights
 | Component | Qty | Specifications | Visual ID |
 | :--- | :---: | :--- | :---: |
 | [DFPlayer Mini](hardware/dfplayer-mini-spec.md) | 1 | UART-Controlled MP3 Module; Node 3 Broadcast Sink | ![DFPlayer](../assets/dfplayer-mini-module.jpg) |
@@ -31,7 +31,7 @@ A comprehensive list of hardware used in the Wee2-D2 project, organized by syste
 | [WS2812B Logic Arrays](capabilities/lights-and-sounds/led-system.md) | 1 | Addressable LED matrices (Front & Rear) | ![Logic Array](../assets/ws2812b-logic-arrays.webp) |
 | [GrnWave Circular PSI](hardware/grnwave-psi-manual.md) | 2 | 76x WS2812B-2020 LEDs (**5V ONLY**) | ![GrnWave PSI](../assets/grnwave-psi-logic.jpg) |
 
-## ⚙️ Mechanical / Drive
+## <i data-lucide="wrench"></i> 3D Print & Mechanical Assembly
 | Component | Qty | Specifications | Visual ID |
 | :--- | :---: | :--- | :---: |
 | [Flipsky Mini FSESC 6.7 Pro](hardware/flipsky-fsesc-67-pro-manual.md) | 2 | 70A Hardware (Throttled to **15A Software**) | ![Flipsky ESC](../assets/flipsky-fsesc-67-pro.jpg) |

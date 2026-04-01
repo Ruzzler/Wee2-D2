@@ -1,4 +1,4 @@
-# 🧠 Node 1: Sound Hub
+# <i data-lucide="music"></i> Node 1: Sound Hub Spec
 > **ESPHome Firmware** | **ESP32-S3 Super Mini**
 
 The **Sound Hub** acts as the localized audio management and drive monitoring system for Wee2-D2. It listens for **ESP-NOW** behavioral triggers from the Dome Motion master and translates them into serial commands for the **DFPlayer Mini**.
@@ -7,11 +7,11 @@ The **Sound Hub** acts as the localized audio management and drive monitoring sy
 | :--- | :--- |
 | **Logic Framework** | ESPHome (esp-idf) |
 | **Primary Function** | Audio Hub (ESP-NOW Slave) |
-| **Source Code** | [🗄️ `node-1-sound-hub.yaml`](../../firmware/production/node-1-sound-hub.yaml) |
+| **Source Code** | [`node-1-sound-hub.yaml`](../../firmware/production/node-1-sound-hub.yaml) |
 | **Visual ID (Logic)** | ![S3 Mini](../../assets/esp32-s3-super-mini.jpg) |
 | **Visual ID (Audio)** | ![TPA3118](../../assets/tpa3118-amplifier-module.jpg) |
 
-## 🚀 Core Features
+## <i data-lucide="rocket"></i> Core Purpose
 *   **ESP-NOW Wireless Link**: Low-latency behavioral synchronization with the Dome Master.
 *   **DFPlayer UART Control**: High-fidelity track triggering and volume management via serial.
 *   **RC Signal Monitoring**: Decodes PWM from RC1 for localized drive fail-safes.

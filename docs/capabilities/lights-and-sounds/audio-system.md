@@ -1,11 +1,11 @@
-# 🔊 Audio & Behavioral Triggers
+# <i data-lucide="volume-2"></i> Audio & Behavioral Triggers
 > **FUNCTIONAL CAPABILITY**
 
 Wee2-D2's voice and sound system is a distributed modular stack built around the **DFPlayer Mini** (MP3 Hub) and a **TPA3118 60W Amplifier**. Triggers are managed wirelessly via the **ESP-NOW** bridge.
 
 ![TPA3118 Amplifier Module](../../../assets/tpa3118-amplifier-module.jpg)
 
-## 🧠 How it Works: The Wireless Trigger
+## How it Works: The Wireless Trigger
 Instead of physical wires running through the slip ring, the droid uses a **Wireless Behavioral Bridge**.
 1.  **Event Capture**: The **Dome Motion (Node 3)** or **Sound Hub (Node 1)** detects an RC command or autonomous event.
 2.  **Broadcast**: Node 3 broadcasts an **ESP-NOW** packet (e.g., `TRIGGER_SOUND_01`) across the 2.4GHz spectrum.

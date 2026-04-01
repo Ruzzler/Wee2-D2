@@ -1,10 +1,10 @@
-# 📂 Manuals and Files
+# <i data-lucide="folder"></i> Manuals and Files
 
 Welcome to the centralized Manuals and Files Hub. This page provides rapid access to all documentation, firmware, and configuration assets for the Wee2-D2 project.
 
 ---
 
-## 📜 1. Technical Manuals
+## <i data-lucide="book-open"></i> 1. Technical Manuals
 Comprehensive guides for hardware integration and system capabilities.
 
 ### **📦 Hardware Data Sheets (PDF)**

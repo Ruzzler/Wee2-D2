@@ -1,11 +1,11 @@
 # Node Mesh
 > **TECHNICAL ARCHITECTURE** | **v2.1.2-FINAL-STABLE**
 
-The Wee2-D2 project utilizes a distributed MCU architecture called the **Node Mesh**. This design handles high-amperage motor control, precision dome rotation, and cinematic AV triggering while minimizing physical wiring through the central slip ring by distributing intelligence into three specialized hubs.
+The Wee2-D2 project utilizes a distributed MCU architecture called the <i data-lucide="network"></i> **Node Mesh**. This design handles high-amperage motor control, precision dome rotation, and cinematic AV triggering while minimizing physical wiring through the central slip ring by distributing intelligence into three specialized hubs.
 
 ---
 
-## 🏛️ System Overview
+## <i data-lucide="layout-dashboard"></i> System Overview
 In a standard building model, components often work in isolation. In the **Node Mesh**, every action is synchronized across the droid's entire frame using low-latency **ESP-NOW** wireless bridging.
 
 ### Node 1: Sound Hub (ESP32-S3)
@@ -25,7 +25,7 @@ In a standard building model, components often work in isolation. In the **Node 
 
 ---
 
-## 🛰️ How it Works: The Wireless Bridge (ESP-NOW)
+## <i data-lucide="radio"></i> How it Works: The Wireless Bridge (ESP-NOW)
 The Node Mesh uses **ESP-NOW**, a low-power, high-speed 2.4GHz wireless protocol, to bridge the gap between the body and the dome without physical data wires.
 
 1.  **Direct P2P Link**: MCUs communicate directly with one another without a router, ensuring sub-10ms latency.

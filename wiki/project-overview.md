@@ -1,6 +1,6 @@
 <img src="../assets/droid-actual.jpg" alt="Wee2-D2 Hero" width="400">
 
-# Project Overview
+# <i data-lucide="layout"></i> Project Overview
 
 Welcome to the official repository for **Wee2-D2**. I built this droid in 2025 as an active-duty astromech for the **Badlands Droid Builders** and the **501st Legion's Badlands Garrison**, frequently deploying it to community events. The physical chassis was 3D printed utilizing the acclaimed 3D files created by Mr. Baddeley.
 
@@ -51,4 +51,4 @@ Quickly access the core engineering specifications for the v2.1.2 architecture:
 ## Project Context
 The physical chassis of Wee2-D2 utilizing the 1: scale 3D files developed by **Mr. Baddeley**. This documentation focuses exclusively on the custom **ESPHome** and **WLED** firmware implemented to drive the droid's functional systems.
 
-📅 [View Maintenance Log (Changelog)](../../CHANGELOG.md)
+[View Maintenance Log (Changelog)](../../CHANGELOG.md)

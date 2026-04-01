@@ -1,10 +1,10 @@
-# 🏁 Calibration & Startup Guide: Wee2-D2
+# <i data-lucide="settings"></i> Calibration & Startup Guide: Wee2-D2
 
 This guide ensures your droid is safely initialized and that all electronic systems are calibrated for professional operation.
 
 ---
 
-## 🛠️ Pre-Flight Checklist
+## <i data-lucide="check-square"></i> Pre-Flight Checklist
 Before applying the 20V main power, verify:
 *   [ ] **Main Fuse**: Ensure a 30A-40A fuse is seated in the main bus bar.
 *   [ ] **Common Ground**: Check that all ESP32 grounds are tied to the star-ground point.
