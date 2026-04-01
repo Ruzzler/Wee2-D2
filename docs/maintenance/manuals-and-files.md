@@ -1,5 +1,4 @@
-# 📚 Manuals and Files
-> **TECHNICAL REPOSITORY** | **CORE DATA HUB**
+# 📂 Manuals and Files
 
 Welcome to the centralized Manuals and Files Hub. This page provides rapid access to all documentation, firmware, and configuration assets for the Wee2-D2 project.
 

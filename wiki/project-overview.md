@@ -1,7 +1,6 @@
-<img src="../../assets/droid-actual.jpg" alt="Wee2-D2 Hero" width="400">
+<img src="../assets/droid-actual.jpg" alt="Wee2-D2 Hero" width="400">
 
 # Project Overview
-> **TECHNICAL DOCUMENTATION** | **MODEL: v2.1.2-FINAL-STABLE**
 
 Welcome to the official repository for **Wee2-D2**. I built this droid in 2025 as an active-duty astromech for the **Badlands Droid Builders** and the **501st Legion's Badlands Garrison**, frequently deploying it to community events. The physical chassis was 3D printed utilizing the acclaimed 3D files created by Mr. Baddeley.
 

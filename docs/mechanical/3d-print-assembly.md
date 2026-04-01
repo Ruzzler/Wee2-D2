@@ -1,5 +1,4 @@
-# 🛠️ Mechanical & Chassis Design
-> **HARDWARE MANIFEST** | **SERIAL: MECH-BIGBABY-v1.0**
+# 🛠️ 3D Print & Mechanical Assembly
 
 Wee2-D2 is a highly customized iteration of the **"Big Baby" Astromech** design, originally created by the legendary community astromech designer **Mr. Baddeley**. 
 

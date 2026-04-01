@@ -1,5 +1,4 @@
-# 🏛️ MgcSTEM LVP-R1.5
-> **TECHNICAL SPECIFICATIONS**
+# 🔌 MgcSTEM LVP-R1.5
 
 The **MgcSTEM LVP-R1.5** (Purple PCB) is a high-current 40A relay controller. It features a large T90-series relay and a 3-button interface (**SET**, **UP**, **DOWN**).
 
