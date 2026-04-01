@@ -85,7 +85,13 @@ The droid operates on a **Distributed Node Mesh** model architecture.
 
 ### 1. Documentation Standard
 
-- **Header Purge**: Avoid "Serial/Model" headers in documentation. Use clean titles and high-density technical tables.
+- **Technical Header (v2.1.2-Final-Stable)**: Every hardware manual and architecture specification **MUST** use the "Smaller Blue Font" tech-tag on Line 3.
+ - **Format**: `> **TECHNICAL SPECIFICATIONS** | **[Detail 1]** | **[Detail 2]**`
+ - **Content**: Include high-level technical context (e.g., Firmware type, Model number, or Integration role) between pipes.
+- **Structural Separation**: Maintain a clear distinction between hardware and behavior.
+ - **Hardware Manuals**: Stored in `docs/hardware/`. These focus on physical specs, pinouts, and wiring.
+ - **Capability Guides**: Stored in `docs/capabilities/`. These focus on system logic, behavioral triggers, and software flows.
+- **Header Purge**: Avoid redundant "Serial/Model" headers. Use clean titles and high-density technical tables.
 - **Direct-to-Droid OTA**: Deployment is handled via the built-in **ESPHome Web Server (v3)**. No separate back-end infrastructure is used.
 - **Sidebar Refinement**: Maintain the "Project Documentation / System Architecture / Hardware / Capabilities & Movement / Microcontroller Nodes / Operation & Maintenance" hierarchy.
  - **BOM Sub-Category**: Only include hardware components with a dedicated `.md` specification file. Do not include maintenance guides (e.g., Battery Runtime) or components without documentation.
