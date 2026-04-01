@@ -1,4 +1,5 @@
 # <i data-lucide="folder-git"></i> Wee2-D2
+
 > **v2.1.2-FINAL-STABLE**
 
 This document provides critical context for AI coding assistants working on the Wee2-D2 project. It summarizes the droid's architecture, hardware stack, and technical standards.
@@ -6,16 +7,17 @@ This document provides critical context for AI coding assistants working on the 
 ---
 
 ## Persona & Project Intent
-* **Role**: You are a Professional Technical Assistant for the Wee2-D2 project.
-* **Aesthetic**: All user interfaces and documentation must reflect a high-fidelity **Neutral Technical** theme (Dark mode, glassmorphism, scanlines, modern typography).
-* **Aesthetic Graduation (v2.1.2)**: 
+
+- **Role**: You are a Professional Technical Assistant for the Wee2-D2 project.
+- **Aesthetic**: All user interfaces and documentation must reflect a high-fidelity **Neutral Technical** theme (Dark mode, glassmorphism, scanlines, modern typography).
+- **Aesthetic Graduation (v2.1.2)**:
  - **No Emojis**: The use of emojis in technical documentation, headers, and UI is strictly forbidden (cheese factor).
  - **Lucide Icons**: Use **Lucide Icons** (`<i data-lucide="..."></i>`) for **Primary headers (`#`) ONLY**. This provides a professional technical anchor without visual clutter.
  - **Sidebar Minimalism**: The navigational sidebar must remain 100% **text-only**. No icons, no emojis.
  - **Markdown Image Syntax**: Always use standard Markdown syntax (`![alt](path)`) for images to ensure the `app.js` path-resolver correctly handles asset rendering.
-* **Visual Excellence**: Modern web design best practices (curated HSL palettes, smooth transitions, micro-animations) are mandatory. **Avoid Tailwind CSS**; use Vanilla CSS for maximum control.
-* **Tone**: Maintain a professional, straightforward, and technical tone. Avoid "cheesy" flavor text (e.g., "Production-Ready," "Professional") and "self-important" formalisms. Use plain technical language.
-* **Terminology**: 
+- **Visual Excellence**: Modern web design best practices (curated HSL palettes, smooth transitions, micro-animations) are mandatory. **Avoid Tailwind CSS**; use Vanilla CSS for maximum control.
+- **Tone**: Maintain a professional, straightforward, and technical tone. Avoid "cheesy" flavor text (e.g., "Production-Ready," "Professional") and "self-important" formalisms. Use plain technical language.
+- **Terminology**:
  - Use **"High Alert"** instead of "High Alert".
  - Use **"Cinematic Logic Display"** for LED matrix scrolling animations.
  - **Physical Chassis**: Always refer to Mr. Baddeley's design as **"3D files"** (e.g., "The acclaimed 3D files created by Mr. Baddeley"). Avoid "engineering files" or "technical blueprints."
@@ -23,6 +25,7 @@ This document provides critical context for AI coding assistants working on the 
 ---
 
 ## Documentation Dependency Map (v2.1.2-Final-Stable)
+
 To ensure project-wide synchronization, use this map as a lookup table during research phases. When modifying a component, audit ALL primary and firmware files listed.
 
 | Dependency Cluster | Core Components | Primary Documentation & Firmware Links |
@@ -49,50 +52,57 @@ To ensure project-wide synchronization, use this map as a lookup table during re
 ---
 
 ## Core Architecture: The Node Mesh
+
 The droid operates on a **Distributed Node Mesh** model architecture.
 
-* **Node 1 (Sound Hub)**: **ESP32-S3 Super Mini**. Manages the **DFPlayer Mini** and drive system monitoring. Listens for ESP-NOW triggers.
-* **Node 2 (LED Distribution)**: **ESP32D Dev Board**. Handles lighting (WLED). Listens for sync triggers.
-* **Node 3 (Dome Motion Master)**: **ESP32-S3 Super Mini**. Manages precision dome rotation (ESPHome) and acts as the **Behavioral Master**, broadcasting ESP-NOW triggers.
-* **Communication**: Extremely low-latency **ESP-NOW** (@ 2.4GHz). This eliminates the need for data wires through the slip ring.
-* **Firmware**: 100% **ESPHome** (Nodes 1 & 3) and **WLED** (Node 2). Both S3 nodes **MUST** use the `esp-idf` framework.
+- **Node 1 (Sound Hub)**: **ESP32-S3 Super Mini**. Manages the **DFPlayer Mini** and drive system monitoring. Listens for ESP-NOW triggers.
+- **Node 2 (LED Distribution)**: **ESP32D Dev Board**. Handles lighting (WLED). Listens for sync triggers.
+- **Node 3 (Dome Motion Master)**: **ESP32-S3 Super Mini**. Manages precision dome rotation (ESPHome) and acts as the **Behavioral Master**, broadcasting ESP-NOW triggers.
+- **Communication**: Extremely low-latency **ESP-NOW** (@ 2.4GHz). This eliminates the need for data wires through the slip ring.
+- **Firmware**: 100% **ESPHome** (Nodes 1 & 3) and **WLED** (Node 2). Both S3 nodes **MUST** use the `esp-idf` framework.
 
 ---
 
 ## Hardware Ecosystem
-* **Audio**: **DFPlayer Mini** (MP3-TF-16P). Managed via UART from Node 1. Feeds a **TPA3118 60W Amplifier**.
-* **Power**: 20V DeWalt Battery LVC (MgcSTEM) Multi-channel Buck Converters (5.1V logic).
-* **Drive**: 2x Flipsky Mini FSESC 6.7 Pro **L-faster FLD-5 5" Hub Motors**.
-* **Dome**: goBILDA 5203 Yellow Jacket 1x15A Motor Controller (PWM). **Standard Pinout: GPIO 7**.
-* **Lighting**: GrnWave PSI Logic (Addressable LEDs).
+
+- **Audio**: **DFPlayer Mini** (MP3-TF-16P). Managed via UART from Node 1. Feeds a **TPA3118 60W Amplifier**.
+- **Power**: 20V DeWalt Battery LVC (MgcSTEM) Multi-channel Buck Converters (5.1V logic).
+- **Drive**: 2x Flipsky Mini FSESC 6.7 Pro **L-faster FLD-5 5" Hub Motors**.
+- **Dome**: goBILDA 5203 Yellow Jacket 1x15A Motor Controller (PWM). **Standard Pinout: GPIO 7**.
+- **Lighting**: GrnWave PSI Logic (Addressable LEDs).
 
 ---
 
 ## Key Technical Decisions & Constraints
+
 1. **Safety Heartbeat**: Receiving nodes entering "Hold/Rest" after **100ms** of signal loss.
-2. **RMT Memory Limit**: S3 nodes driving LEDs MUST use `rmt_symbols: 96` per strip (Dual strip limit).
-3. **GPIO 9 Avoidance**: Never use for PWM or data on S3 nodes.
-4. **Signal Integrity**: Use `mode: INPUT_PULLDOWN` on all PWM/High-speed inputs.
-5. **Grounding**: The **Star Ground** rule is absolute. All signals must share the Negative Bus Bar ground.
+1. **RMT Memory Limit**: S3 nodes driving LEDs MUST use `rmt_symbols: 96` per strip (Dual strip limit).
+1. **GPIO 9 Avoidance**: Never use for PWM or data on S3 nodes.
+1. **Signal Integrity**: Use `mode: INPUT_PULLDOWN` on all PWM/High-speed inputs.
+1. **Grounding**: The **Star Ground** rule is absolute. All signals must share the Negative Bus Bar ground.
 
 ---
 
 ## Operational Procedures (SOPs)
+
 ### 1. Documentation Standard
-* **Header Purge**: Avoid "Serial/Model" headers in documentation. Use clean titles and high-density technical tables.
-* **Direct-to-Droid OTA**: Deployment is handled via the built-in **ESPHome Web Server (v3)**. No separate back-end infrastructure is used.
-* **Sidebar Refinement**: Mantain the "Project Documentation / System Architecture / Hardware / Capabilities & Movement / Microcontroller Nodes / Operation & Maintenance" hierarchy (e.g., replace 'Behavioral Logic' with '**Automations**').
-* **Image Rendering**: Always use standard Markdown image syntax (`![alt](path)`) rather than HTML `<img>` tags. This ensures the `app.js` path-resolver correctly handles relative assets across all navigation nodes.
+
+- **Header Purge**: Avoid "Serial/Model" headers in documentation. Use clean titles and high-density technical tables.
+- **Direct-to-Droid OTA**: Deployment is handled via the built-in **ESPHome Web Server (v3)**. No separate back-end infrastructure is used.
+- **Sidebar Refinement**: Mantain the "Project Documentation / System Architecture / Hardware / Capabilities & Movement / Microcontroller Nodes / Operation & Maintenance" hierarchy (e.g., replace 'Behavioral Logic' with '**Automations**').
+- **Image Rendering**: Always use standard Markdown image syntax (`![alt](path)`) rather than HTML `<img>` tags. This ensures the `app.js` path-resolver correctly handles relative assets across all navigation nodes.
 
 ### 2. Versioning & Deployment
-* **Production Graduation**: All active code is localized in `firmware/production/`.
-* **Release Tiers**: Use `v2.1.x-Final-Stable` for harmonized, bench-tested releases.
+
+- **Production Graduation**: All active code is localized in `firmware/production/`.
+- **Release Tiers**: Use `v2.1.x-Final-Stable` for harmonized, bench-tested releases.
 
 ---
 
 ## Avoid These Errors
-* **Design Standards**: Use **Lucide Icons** (`<i data-lucide="..."></i>`) for primary page headers only. Avoid emojis repo-wide (cheese factor).
-* **Sidebar Minimalism**: The sidebar must remain **text-only**. No icons, no emojis. Minimalist, professional hierarchy.
-* **Don't** refer to Mr. Baddeley's work as "engineering files"; use **"3D files."**
-* **Don't** use legacy "Node 1/2/3" nomenclature; use **"Node 1/2/3."**
-* **Don't** hardcode credentials in documentation or firmware.
+
+- **Design Standards**: Use **Lucide Icons** (`<i data-lucide="..."></i>`) for primary page headers only. Avoid emojis repo-wide (cheese factor).
+- **Sidebar Minimalism**: The sidebar must remain **text-only**. No icons, no emojis. Minimalist, professional hierarchy.
+- **Don't** refer to Mr. Baddeley's work as "engineering files"; use **"3D files."**
+- **Don't** use legacy "Node 1/2/3" nomenclature; use **"Node 1/2/3."**
+- **Don't** hardcode credentials in documentation or firmware.

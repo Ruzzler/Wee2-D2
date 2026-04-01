@@ -5,6 +5,7 @@ To synchronize your 4-pin dome layout, follow these precise configuration steps 
 ---
 
 ### 1. LED Preferences
+
 **Navigate to: Config LED Preferences**
 
 | Hardware Line | LED Type | GPIO | Length | wire Color |
@@ -20,19 +21,21 @@ To synchronize your 4-pin dome layout, follow these precise configuration steps 
 ---
 
 ### 2. 2D Matrix Calibration
+
 **Navigate to: Config 2D Configuration**
 *This ensures your logic scrolls correctly rather than just blinking in a straight line.*
 
-- **Matrix 1 (Front)**: 
+- **Matrix 1 (Front)**:
  - Width: **10** | Height: **2**
  - Layout: **Serpentine** (If your strip zig-zags)
-- **Matrix 2 (Rear)**: 
+- **Matrix 2 (Rear)**:
  - Width: **12** | Height: **2**
  - Layout: **Serpentine**
 
 ---
 
 ### 3. Segment Mapping (Visual Layout)
+
 **Navigate to: Main Dashboard Segments**
 Divide your pixels into these blocks to allow different effects on different windows:
 

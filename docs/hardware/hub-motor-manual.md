@@ -1,4 +1,5 @@
 # <i data-lucide="zap"></i> L-Faster Hub Motor (FLD-5)
+
 > **TECHNICAL SPECIFICATIONS**
 
 ![L-faster Hub Motor](../../assets/l-faster-hub-motor.jpg)
@@ -6,9 +7,11 @@
 This entry covers the dual high-torque brushless drive motors that power the Wee2-D2. The **FLD-5** is a gearless, brushless hub motor designed for electric scooters, repurposed here for precision droid locomotion.
 
 ## Core Specifications (FLD-5)
+
 The **FLD-5** provides silent, high-efficiency direct-drive power with integrated Hall Sensors for smooth low-end torque.
 
 ### Technical Blueprint
+
 | Specification | Data / Value |
 | :--- | :--- |
 | **Model** | FLD-5 (Gearless / Brushless DC) |
@@ -28,6 +31,7 @@ The **FLD-5** provides silent, high-efficiency direct-drive power with integrate
 ---
 
 ## Wiring & Interface (8-Wire)
+
 Each motor utilizes **8 wires** total (3 Phase + 5 Hall) for high-fidelity commutation control.
 
 | Signal Type | Color Code | Description |
@@ -47,14 +51,17 @@ Each motor utilizes **8 wires** total (3 Phase + 5 Hall) for high-fidelity commu
 ---
 
 ## Recommended VESC Configuration
+
 To ensure the **Unified Nervous System** remains stable and responsive, the following VESC-tool parameters are recommended for the FLD-5 motors:
 
 ### **1. Commutation Profile**
-* **Motor Type**: **FOC (Field Oriented Control)**.
-* **Sensor Mode**: **Hall Sensors**. Use the VESC-tool detection wizard to auto-calibrate.
-* **Pole Pairs**: **15** (Standard for 5-inch Hub Motors).
+
+- **Motor Type**: **FOC (Field Oriented Control)**.
+- **Sensor Mode**: **Hall Sensors**. Use the VESC-tool detection wizard to auto-calibrate.
+- **Pole Pairs**: **15** (Standard for 5-inch Hub Motors).
 
 ### **2. Current & Voltage Safety**
+
 | Parameter | Value | Rationale |
 | :--- | :---: | :--- |
 | **Motor Max** | 25.0 A | Allows for high-torque bursts during starts. |
@@ -65,12 +72,13 @@ To ensure the **Unified Nervous System** remains stable and responsive, the foll
 | **Voltage Cutoff End**| 16.0 V | Hard stop to protect 20V DeWalt (5S @ 3.2V/cell). |
 
 ### **3. Drive Smoothness**
-* **Startup Boost**: 0.01 (Minimum for FOC to avoid jerky starts).
-* **Current Ramping**: Standard (Ensure "Traction Control" is enabled for dual-drive stability).
+
+- **Startup Boost**: 0.01 (Minimum for FOC to avoid jerky starts).
+- **Current Ramping**: Standard (Ensure "Traction Control" is enabled for dual-drive stability).
 
 ---
 
 ## Mechanical Maintenance
-* **Tire Care**: The 5-inch solid rubber tires are maintenance-free, but check for cracks or severe wear after operations in rough terrain.
-* **Mounting**: The hub motor axle usually features a flattened profile (D-shaft style) for anti-rotation in the droid bracket. Ensure high-grade M12/M14 locknuts are used.
 
+- **Tire Care**: The 5-inch solid rubber tires are maintenance-free, but check for cracks or severe wear after operations in rough terrain.
+- **Mounting**: The hub motor axle usually features a flattened profile (D-shaft style) for anti-rotation in the droid bracket. Ensure high-grade M12/M14 locknuts are used.

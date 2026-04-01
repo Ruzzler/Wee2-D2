@@ -1,4 +1,5 @@
 # <i data-lucide="cpu"></i> Master Node Pinout & Wiring Guide
+
 > **TECHNICAL REFERENCE** | **v2.1.2-FINAL-STABLE**
 
 This document serves as the master wiring reference for the Wee2-D2 distributed node mesh. It integrates all verified pin assignments, wire colors, and hardware interfaces for the ESP32 platforms.
@@ -6,6 +7,7 @@ This document serves as the master wiring reference for the Wee2-D2 distributed 
 ---
 
 ## 1. Node 1: Sound Hub (ESP32-S3 Super Mini)
+
 The **Sound Hub** manages behavioral audio triggers and drive system monitoring.
 
 | ESP32 Pin | Wire Color | Role | Function |
@@ -22,6 +24,7 @@ The **Sound Hub** manages behavioral audio triggers and drive system monitoring.
 ---
 
 ## 2. Node 2: LED Distribution (ESP32 Dev Board)
+
 The **Lighting Controller** runs the WLED framework to drive high-density addressable matrices.
 
 | ESP32 Pin | Wire Color | Role | Function |
@@ -37,6 +40,7 @@ The **Lighting Controller** runs the WLED framework to drive high-density addres
 ---
 
 ## 3. Node 3: Dome Motion Master (ESP32-S3 Super Mini)
+
 The **Motion Master** manages 360° dome rotation and broadcasts behavioral triggers via ESP-NOW.
 
 | ESP32 Pin | Wire Color | Role | Function |
@@ -52,12 +56,14 @@ The **Motion Master** manages 360° dome rotation and broadcasts behavioral trig
 ## 4. Hardware Interconnects
 
 ### Audio Stack (DFPlayer + TPA3118)
+
 - **S3 TX (GPIO 17)** **DFPlayer RX**.
 - **DFPlayer SPK_1/2** **TPA3118 Analog Input**.
 - **TPA3118 Power** 20V Positive Fuse Box.
 - **TPA3118 GND** **Star Ground** (-).
 
 ### Receiver Interface (HOTRC F-06A)
+
 | Wire Color | Rec Slot | Node Pin | Role |
 | :--- | :---: | :---: | :--- |
 | **Red (5V)** | Slot 5 (+) | `5V / VIN` | Master Logic Power |
@@ -69,19 +75,22 @@ The **Motion Master** manages 360° dome rotation and broadcasts behavioral trig
 ---
 
 ## 5. Dome Distribution: Ganged Wagos
+
 To handle the 15A+ peak loads, the slip ring circuits are ganged at the entry points.
 
 ### Positive 20V Wago (5-Port)
+
 1. **IN**: Slip Ring Circuit 1 (20V)
-2. **IN**: Slip Ring Circuit 2 (20V)
-3. **OUT**: goBILDA 15A Speed Controller (+)
-4. **OUT**: Mini560 Pro Buck (Logic Power)
+1. **IN**: Slip Ring Circuit 2 (20V)
+1. **OUT**: goBILDA 15A Speed Controller (+)
+1. **OUT**: Mini560 Pro Buck (Logic Power)
 
 ### Negative GND Wago (5-Port)
+
 1. **IN**: Slip Ring Circuit 3 (GND)
-2. **IN**: Slip Ring Circuit 4 (GND)
-3. **OUT**: goBILDA 15A Speed Controller (-)
-4. **OUT**: Mini560 Pro Buck (GND)
+1. **IN**: Slip Ring Circuit 4 (GND)
+1. **OUT**: goBILDA 15A Speed Controller (-)
+1. **OUT**: Mini560 Pro Buck (GND)
 
 ---
 
