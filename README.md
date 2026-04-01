@@ -2,23 +2,23 @@
 
 # Wee2-D2: Mr. Baddeley Big Baby Astromech
 
-Welcome to the official repository for **Wee2-D2**. I built this droid in 2025 as an active-duty astromech for the **Badlands Droid Builders** and the **501st Legion's Badlands Garrison**, frequently deploying it to community events. The physical chassis was meticulously 3D printed utilizing the acclaimed engineering files created by Mr. Baddeley.
+Welcome to the official repository for **Wee2-D2**. I built this droid in 2025 as an active-duty astromech for the **Badlands Droid Builders** and the **501st Legion's Badlands Garrison**, frequently deploying it to community events. The physical chassis was 3D printed utilizing the acclaimed 3D files created by Mr. Baddeley.
 
-This repository tracks the subsequent high-current electrical architecture, firmware configurations, and custom hardware documentation I engineered to bring the droid's decentralized control system to life.
+This repository tracks the subsequent electrical architecture, firmware configurations, and custom hardware documentation I use to bring the droid's decentralized control system to life.
 
-## 🛰️ Technical Documentation: Mr. Baddeley Big Baby
+## 🛰️ Technical Documentation
 To view the documented system with a premium, interactive technical interface, visit the official Project Wiki:
 👉 **[Wee2-D2 Project Wiki](https://ruzzler.github.io/Wee2-D2/)**
 
 ---
 
 ## 🚀 Project Overview
-I designed Wee2-D2 utilizing a decentralized architecture split across three ESP32 microcontrollers. This ensures non-blocking operation between the heavy audio processing, intricate LED lighting, and mechanical drive systems. The droid is piloted via **Dual HOTRC DS-600 transmitters** (one for drive logic, one for dome motion) for absolute reliability during crowded events.
+Wee2-D2 utilizes a decentralized architecture split across three ESP32 microcontrollers. This ensures non-blocking operation between the audio processing, LED lighting, and mechanical drive systems. The droid is piloted via **Dual HOTRC DS-600 transmitters** (one for drive logic, one for dome motion).
 
 ### 🧠 Wireless Bridge (ESP-NOW)
-- **MCU 1: Body Audio Hub**: **ESP32-S3 Super Mini** managing the **DFPlayer Mini** and drive system telemetry.
-- **MCU 2: Lighting Controller (WLED)**: Standard **ESP32 Dev Board** running WLED for high-density addressable light matrices.
-- **MCU 3: Motion Controller (ESPHome)**: **ESP32-S3 Super Mini** acting as the "Behavioral Master," broadcasting wireless triggers to the body and lights.
+- **Node 1: Sound Hub**: **ESP32-S3 Super Mini** managing the **DFPlayer Mini** and drive system telemetry.
+- **Node 2: LED Distribution**: Standard **ESP32 Dev Board** running WLED for high-density addressable light matrices.
+- **Node 3: Dome Motion**: **ESP32-S3 Super Mini** acting as the "Behavioral Master," broadcasting wireless triggers to the body and lights.
 
 > [!WARNING]
 > **PROJECT SCOPE**: This repository exclusively documents my custom **Electrical Architecture** and **Firmware** ecosystem. It does **not** contain the 3D-printable STL files or mechanical assembly instructions for the droid chassis itself. Please refer to the official Mr. Baddeley Patreon or group hubs for structural files.

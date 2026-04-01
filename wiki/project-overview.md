@@ -1,12 +1,16 @@
+<img src="../../assets/droid-actual.jpg" alt="Wee2-D2 Hero" width="400">
+
 # Project Overview
 > **TECHNICAL DOCUMENTATION** | **MODEL: v2.1.2-FINAL-STABLE**
 
-This wiki serves as the central repository for the Wee2-D2 control system. It details the custom electrical architecture, distributed node-mesh firmware, and maintenance procedures used to orchestrate the droid's functional systems.
+Welcome to the official repository for **Wee2-D2**. I built this droid in 2025 as an active-duty astromech for the **Badlands Droid Builders** and the **501st Legion's Badlands Garrison**, frequently deploying it to community events. The physical chassis was 3D printed utilizing the acclaimed 3D files created by Mr. Baddeley.
+
+This repository tracks the subsequent electrical architecture, firmware configurations, and custom hardware documentation I use to bring the droid's decentralized control system to life.
 
 ---
 
 ## Architecture: The Node Mesh
-The control system is distributed across three independent ESP32 microcontrollers. This design ensures low-latency performance and isolates high-current motor noise from sensitive audio and logic circuits.
+The control system is distributed across three independent ESP32 microcontrollers. This design ensures low-latency performance and isolates high-current rotor noise from sensitive audio and logic circuits.
 
 ```mermaid
 graph LR
@@ -46,6 +50,6 @@ Quickly access the core engineering specifications for the v2.1.2 architecture:
 ---
 
 ## Project Context
-The physical chassis of Wee2-D2 utilizing the 1:1 scale engineering files developed by **Mr. Baddeley**. This documentation focuses exclusively on the custom **ESPHome** and **WLED** firmware implemented to drive the droid's functional systems.
+The physical chassis of Wee2-D2 utilizing the 1: scale 3D files developed by **Mr. Baddeley**. This documentation focuses exclusively on the custom **ESPHome** and **WLED** firmware implemented to drive the droid's functional systems.
 
 📅 [View Maintenance Log (Changelog)](../../CHANGELOG.md)
