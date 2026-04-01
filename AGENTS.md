@@ -25,7 +25,7 @@ To ensure project-wide synchronization, use this map as a lookup table during re
 
 | Dependency Cluster | Core Components | Primary Documentation & Firmware Links |
 | :--- | :--- | :--- |
-| **🧠 Control Hub** | MCU 1, 2, 3 | `AGENTS.md`, `electrical-schematic.md`, `firmware/**/README.md` |
+| **🧠 Control Hub** | Node 1, 2, 3 | `AGENTS.md`, `electrical-schematic.md`, `firmware/**/README.md` |
 | **📡 Comm Bridge** | ESP-NOW, RC | `unified-nervous-system.md`, `hotrc-ds600-manual.md`, `hotrc-f06a-manual.md` |
 | **⚡ Power Grid** | Battery, LVP, Buck | `power-architecture.md`, `battery-runtime-guide.md`, `mgcstem-lvp-r15-manual.md` |
 | **🛞 Drive System** | Motors, ESCs | `body-drive.md`, `hub-motor-manual.md`, `flipsky-fsesc-67-pro-manual.md`, `ESC-XML-Settings` |
@@ -48,17 +48,17 @@ To ensure project-wide synchronization, use this map as a lookup table during re
 ## 🧠 Core Architecture: Wireless Bridge (ESP-NOW)
 The droid operates on a **Distributed Wireless Trigger** model called the **Wireless Bridge**.
 
-*   **MCU 1 (Body Hub)**: **ESP32-S3 Super Mini**. Manages the **DFPlayer Mini** and drive system monitoring. Listens for ESP-NOW triggers.
-*   **MCU 2 (Dome Lights)**: **ESP32D Dev Board**. Handles lighting (WLED). Listens for sync triggers.
-*   **MCU 3 (Dome Master)**: **ESP32-S3 Super Mini**. Manages precision dome rotation (ESPHome) and acts as the **Behavioral Master**, broadcasting ESP-NOW triggers.
+*   **Node 1 (Sound Hub)**: **ESP32-S3 Super Mini**. Manages the **DFPlayer Mini** and drive system monitoring. Listens for ESP-NOW triggers.
+*   **Node 2 (LED Distribution)**: **ESP32D Dev Board**. Handles lighting (WLED). Listens for sync triggers.
+*   **Node 3 (Dome Motion Master)**: **ESP32-S3 Super Mini**. Manages precision dome rotation (ESPHome) and acts as the **Behavioral Master**, broadcasting ESP-NOW triggers.
 *   **Communication**: Extremely low-latency **ESP-NOW** (@ 2.4GHz). This eliminates the need for data wires through the slip ring.
-*   **Firmware**: 100% **ESPHome** (MCUs 1 & 3) and **WLED** (MCU 2).
+*   **Firmware**: 100% **ESPHome** (Nodes 1 & 3) and **WLED** (Node 2).
     *   *Note*: Both S3 nodes **MUST** use the `esp-idf` framework to ensure RMT and ESP-NOW stability.
 
 ---
 
 ## 🛠️ Hardware Ecosystem
-*   **Audio**: **DFPlayer Mini** (MP3-TF-16P). Managed via UART from MCU 1 (Body). Feeds a **TPA3118 60W Amplifier**.
+*   **Audio**: **DFPlayer Mini** (MP3-TF-16P). Managed via UART from Node 1 (Sound Hub). Feeds a **TPA3118 60W Amplifier**.
 *   **Power**: 20V DeWalt Battery ➔ LVC (MgcSTEM) ➔ Multi-channel Buck Converters (5.1V logic).
 *   **Drive**: 2x Flipsky Mini FSESC 6.7 Pro ➔ **L-faster FLD-5 5" Hub Motors**.
 *   **Dome**: goBILDA 5203 Yellow Jacket ➔ 1x15A Motor Controller (PWM). **Standard Pinout: GPIO 7**.
@@ -68,7 +68,7 @@ The droid operates on a **Distributed Wireless Trigger** model called the **Wire
 
 ## 📜 Key Technical Decisions & Constraints
 
-### 1. ESP32-S3 Super Mini Constraints (MCU 3 Specific)
+### 1. ESP32-S3 Super Mini Constraints (Node 3 Specific)
 *   **RMT Memory Limit**: The S3 has 192 RMT symbols. Driving dual WS2812 strips requires an explicit `rmt_symbols: 96` split per strip to prevent CPU crashes.
 *   **GPIO 9 Avoidance**: Internally connected to the SPI flash bus. Do not use for data/PWM.
 *   **Wi-Fi Power**: Limit to `8.5dB` to prevent antenna saturation on compact boards.
@@ -81,7 +81,7 @@ The droid operates on a **Distributed Wireless Trigger** model called the **Wire
 *   **Security**: **NEVER** hardcode credentials (SSID, Password, API Key). Use the `!secret` logic and `secrets.yaml` architecture.
 
 ### 3. Historical Record
-1.  **3-MCU Split**: Moved from single large ESP to 3 distributed nodes to minimize wiring through the slip ring and isolate motor noise.
+1.  **3-Node Split**: Moved from single large ESP to 3 distributed nodes to minimize wiring through the slip ring and isolate motor noise.
 2.  **S3 Pivot**: Standardized on the ESP32-S3 for the dome to utilize natively supported RMT peripherals for LED driving.
 3.  **17.5V Safety Floor**: Established 17.5V (3.5V/cell) as the standard for battery cutoffs to ensure cell longevity.
 4.  **Voltage Clamping**: Mandatory 60% software throttle clamp for the 12V dome motor when running on 20V (Currently disabled for testing).

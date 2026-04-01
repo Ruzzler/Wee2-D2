@@ -8,8 +8,8 @@ The Wee2-D2 project uses a **distributed MCU model** called the **Node Mesh**. T
 ## 🏛️ Architecture Overview
 In a standard hobbyist build, parts often work in isolation. In the **Node Mesh** model, every action is synchronized across the droid's entire frame:
 
-*   **The Master (Dome Motion)**: Handles all behavioral triggers and dome rotation. It acts as the "Behavioral Master."
-*   **The Slaves (Body Logic & Dome Lights)**: High-performance **ESP32-S3 and ESP32-D nodes** that listen for broadcast packets. They react instantly to wireless instructions (e.g., "Play Sound: Happy," "Switch lights to High Alert").
+*   **The Master (Node 3: Dome Motion)**: Handles all behavioral triggers and dome rotation. It acts as the "Behavioral Master."
+*   **The Slaves (Node 1: Sound Hub & Node 2: LED Distribution)**: High-performance **ESP32-S3 and ESP32-D nodes** that listen for broadcast packets. They react instantly to wireless instructions (e.g., "Play Sound: Happy," "Switch lights to High Alert").
 
 ---
 
@@ -17,8 +17,14 @@ In a standard hobbyist build, parts often work in isolation. In the **Node Mesh*
 The Node Mesh uses **ESP-NOW**, a low-power, high-speed 2.4GHz wireless protocol, to bridge the gap between the body and the dome without physical data wires.
 
 1.  **Direct P2P Link**: Unlike standard Wi-Fi, ESP-NOW does not require a router. MCUs communicate directly with one another, ensuring sub-10ms latency for triggers.
-2.  **Broadcast Behavior**: When the Dome Master (MCU 3) detects an event (like a specific rotation threshold or RC command), it broadcasts a behavioral packet to the Body Hub (MCU 1) and Lighting Hub (MCU 2) simultaneously.
+2.  **Broadcast Behavior**: When the Dome Motion master (Node 3) detects an event (like a specific rotation threshold or RC command), it broadcasts a behavioral packet to the Sound Hub (Node 1) and LED Distribution hub (Node 2) simultaneously.
 3.  **Radio Isolation**: By moving data to the 2.4GHz spectrum, we eliminate analog ground loops and EMI interference that typically plague UART signals running through a rotating slip ring.
+
+### **Protocol Specifications**
+- **Type**: Connectionless (Unicast/Broadcast)
+- **Range**: ~50m (Internal Chassis Range optimized for stability)
+- **Latency**: <10ms (Real-time motor/audio sync)
+- **Framework**: `esp-idf` (Required on ESP32-S3 for stable RMT/Wireless threading)
 
 ---
 
@@ -36,9 +42,9 @@ ESP-NOW provides the same "physical wire" feel as UART but handles packet collis
 ---
 
 ## 🛠️ Components of the System
-*   **Body Controller (Audio)**: ESP32-S3 Super Mini (Behavioral Slave).
-*   **Dome Controller (Motion)**: ESP32-S3 Super Mini (Behavioral Master).
-*   **Dome Controller (Lights)**: ESP32-Dev Board (Slave WLED).
+*   **Node 1: Sound Hub (Audio)**: ESP32-S3 Super Mini (Behavioral Slave).
+*   **Node 3: Dome Motion (Motion)**: ESP32-S3 Super Mini (Behavioral Master).
+*   **Node 2: LED Distribution (Lights)**: ESP32-Dev Board (Slave WLED).
 
 ---
 
@@ -73,10 +79,11 @@ The core behavioral link is the **ESP-NOW Wireless Bridge**. Node 3 broadcasts s
 
 1.  **Channel Locking**: All nodes MUST remain on the same Wi-Fi channel (typically Channel 1) to ensure packet delivery.
 2.  **Encryption**: Communication can be hardened using the `api: encryption` key if deployed in public environments.
+3.  **Safety Heartbeat**: If the bridge signal is lost for >100ms, the receiving nodes (Sound Hub and LED Distribution) automatically enter a "Hold" or "Rest" state to prevent runaway motors or stuck light patterns.
 
 **Example Behavior (Play Sound)**:
-- **Dome Master** broadcasts: `SOUND_ID_01`
-- **Body Hub** receives: `PLAY TRACK 01` on DFPlayer Mini.
+- **Node 3 (Dome Motion)** broadcasts: `SOUND_ID_01`
+- **Node 1 (Sound Hub)** receives: `PLAY TRACK 01` on DFPlayer Mini.
 
 ## 📊 GPIO Interconnects
 If you need the specific GPIO pins used by the DFPlayer or ESCs, refer to the **Pinout Lookup Tables** in the [Interactive Electrical Schematic](electrical-schematic.md).
