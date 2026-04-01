@@ -1,11 +1,7 @@
 name:  Wee2-D2 Zero-Infra Release (v2.1)
 
 on:
-  push:
-    branches: [ main ]
-    paths:
-      - 'firmware/production/**'
-      - 'firmware/common/**'
+  workflow_dispatch: # Manual trigger only (to avoid failing on every push)
 
 permissions:
   contents: write    # Required for creating releases

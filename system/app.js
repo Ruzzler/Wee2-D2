@@ -252,11 +252,49 @@ document.addEventListener('DOMContentLoaded', () => {
 
  // Helper for updating active state and navigating
  function navigateToPath(path, pushHistory = true) {
- navLinks.forEach(l => {
- l.classList.toggle('active', l.getAttribute('data-path') === path);
+ const allLinks = document.querySelectorAll('#sidebar-nav a');
+ allLinks.forEach(l => {
+ const isActive = l.getAttribute('data-path') === path;
+ l.classList.toggle('active', isActive);
+ 
+ // If it's a sub-link and active, ensure the parent is open
+ if (isActive) {
+ const parentSubmenu = l.closest('.has-submenu');
+ if (parentSubmenu) {
+ parentSubmenu.classList.add('open');
+ }
+ }
  });
  loadContent(path, pushHistory);
  }
+
+ // Submenu Toggle Logic
+ const submenuToggles = document.querySelectorAll('.submenu-toggle');
+ submenuToggles.forEach(toggle => {
+ toggle.addEventListener('click', (e) => {
+ e.preventDefault();
+ e.stopPropagation();
+ const parent = toggle.closest('.has-submenu');
+ if (parent) {
+ parent.classList.toggle('open');
+ }
+ });
+ });
+
+ // Support clicking the parent header too (if it doesn't have its own navigation or we want both)
+ const submenuHeaders = document.querySelectorAll('.submenu-header');
+ submenuHeaders.forEach(header => {
+ header.addEventListener('click', (e) => {
+ // If we clicked the actual link, let the link handler deal with it
+ // But if we clicked the div background, toggle the menu
+ if (e.target.tagName !== 'A' && e.target.tagName !== 'BUTTON') {
+ const parent = header.closest('.has-submenu');
+ if (parent) {
+ parent.classList.toggle('open');
+ }
+ }
+ });
+ });
 
  // Intercept clicks in the content area for relative links (Standard and SVG)
  contentDiv.addEventListener('click', (e) => {
@@ -286,16 +324,17 @@ document.addEventListener('DOMContentLoaded', () => {
  .replace(/'/g, "&#039;");
  }
 
- // Nav Click Handling
- navLinks.forEach(link => {
- link.addEventListener('click', (e) => {
+ // Nav Click Handling (Delegated to handle dynamically added links or sub-links)
+ document.getElementById('sidebar-nav').addEventListener('click', (e) => {
+ const link = e.target.closest('a');
+ if (!link || !link.getAttribute('data-path')) return;
+ 
  e.preventDefault();
  const path = link.getAttribute('data-path');
  navigateToPath(path);
 
  // Close mobile menu after click
  document.body.classList.remove('sidebar-open');
- });
  });
 
  // Mobile Menu Toggle Logic

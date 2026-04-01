@@ -148,6 +148,73 @@ nav a:hover, nav a.active {
   padding-left: 20px;
 }
 
+/* --- SUBMENU SYSTEM --- */
+.submenu-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.submenu-header a {
+  flex-grow: 1;
+  border-left: none; /* Handled by submenu-header padding */
+}
+
+.submenu-header:hover, .submenu-header.active {
+  background: rgba(0, 242, 255, 0.1);
+}
+
+.submenu-toggle {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  padding: 0 15px;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.submenu-toggle::before {
+  content: "[+]";
+}
+
+.has-submenu.open .submenu-toggle::before {
+  content: "[-]";
+  color: var(--accent-cyan);
+}
+
+.submenu {
+  list-style: none;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s cubic-bezier(0, 1, 0, 1);
+  padding-left: 15px;
+  margin-top: 5px;
+  border-left: 1px solid rgba(0, 242, 255, 0.1);
+}
+
+.has-submenu.open .submenu {
+  max-height: 1000px;
+  transition: max-height 0.5s ease-in-out;
+}
+
+.submenu li a {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  padding: 4px 10px;
+}
+
+.submenu li a:hover, .submenu li a.active {
+  color: var(--accent-cyan);
+  background: transparent;
+  padding-left: 15px;
+  border-left: 1px solid var(--accent-cyan);
+}
+
 /* --- MAIN CONTENT --- */
 main {
   padding: 40px;
