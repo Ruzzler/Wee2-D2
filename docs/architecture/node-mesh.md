@@ -1,30 +1,43 @@
 # Node Mesh
-> **ARCHITECTURE OVERVIEW** | **MODEL: v2.1.0-Zero-Infra**
+> **TECHNICAL ARCHITECTURE** | **v2.1.2-FINAL-STABLE**
 
-The Wee2-D2 project uses a **distributed MCU model** called the **Node Mesh**. This architecture eliminates the need for complex, heavy wiring through the slip ring by distributing intelligence into three specialized hubs.
+The Wee2-D2 project utilizes a distributed MCU architecture called the **Node Mesh**. This design handles high-amperage motor control, precision dome rotation, and cinematic AV triggering while minimizing physical wiring through the central slip ring by distributing intelligence into three specialized hubs.
 
 ---
 
-## 🏛️ Architecture Overview
-In a standard hobbyist build, parts often work in isolation. In the **Node Mesh** model, every action is synchronized across the droid's entire frame:
+## 🏛️ System Overview
+In a standard building model, components often work in isolation. In the **Node Mesh**, every action is synchronized across the droid's entire frame using low-latency **ESP-NOW** wireless bridging.
 
-*   **The Master (Node 3: Dome Motion)**: Handles all behavioral triggers and dome rotation. It acts as the "Behavioral Master."
-*   **The Slaves (Node 1: Sound Hub & Node 2: LED Distribution)**: High-performance **ESP32-S3 and ESP32-D nodes** that listen for broadcast packets. They react instantly to wireless instructions (e.g., "Play Sound: Happy," "Switch lights to High Alert").
+### Node 1: Sound Hub (ESP32-S3)
+- **Primary Role**: Behavioral execution and audio management.
+- **Key Hardware**: DFPlayer Mini, TPA3118 Amplifier, Drive ESC integration.
+- **Logic**: Listens for behavioral triggers from Node 3 to initiate synchronized audio/visual events.
+
+### Node 2: LED Distribution (ESP32)
+- **Primary Role**: Visual output and lighting management.
+- **Key Hardware**: Addressable LED arrays (WS2812B/PSI Logic).
+- **Logic**: Operates as a WLED-enabled node, translating motion-state triggers into specific lighting patterns.
+
+### Node 3: Dome Motion (ESP32-S3)
+- **Primary Role**: Behavioral Master and movement control.
+- **Key Hardware**: goBILDA 5203 Dome Motor, PWM Motor Controller.
+- **Logic**: Processes RC inputs and broadcasts state triggers (e.g., "Droid Thinking", "High Alert") to Nodes 1 and 2.
 
 ---
 
 ## 🛰️ How it Works: The Wireless Bridge (ESP-NOW)
 The Node Mesh uses **ESP-NOW**, a low-power, high-speed 2.4GHz wireless protocol, to bridge the gap between the body and the dome without physical data wires.
 
-1.  **Direct P2P Link**: Unlike standard Wi-Fi, ESP-NOW does not require a router. MCUs communicate directly with one another, ensuring sub-10ms latency for triggers.
-2.  **Broadcast Behavior**: When the Dome Motion master (Node 3) detects an event (like a specific rotation threshold or RC command), it broadcasts a behavioral packet to the Sound Hub (Node 1) and LED Distribution hub (Node 2) simultaneously.
-3.  **Radio Isolation**: By moving data to the 2.4GHz spectrum, we eliminate analog ground loops and EMI interference that typically plague UART signals running through a rotating slip ring.
+1.  **Direct P2P Link**: MCUs communicate directly with one another without a router, ensuring sub-10ms latency.
+2.  **Broadcast Behavior**: Node 3 broadcasts behavioral packets; Nodes 1 and 2 react instantly to these instructions.
+3.  **Radio Isolation**: Moving data to the 2.4GHz spectrum eliminates the analog ground loops and EMI interference common in slip ring environments.
 
 ### **Protocol Specifications**
-- **Type**: Connectionless (Unicast/Broadcast)
-- **Range**: ~50m (Internal Chassis Range optimized for stability)
-- **Latency**: <10ms (Real-time motor/audio sync)
-- **Framework**: `esp-idf` (Required on ESP32-S3 for stable RMT/Wireless threading)
+- **Protocol**: ESP-NOW @ 2.4GHz (Channel Locked)
+- **Frequency**: 50ms update cycle for real-time responsiveness.
+- **Security**: Device MAC-address binding (defined in `base-config.yaml`).
+- **Latency**: <10ms (Real-time motor/audio sync).
+- **Framework**: `esp-idf` (Required on ESP32-S3 for stable RMT/Wireless threading).
 
 ---
 

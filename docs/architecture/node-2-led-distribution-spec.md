@@ -34,6 +34,10 @@ To achieve cinematic logic scrolling:
 1.  **Front Logic**: In WLED 2D settings, set as a matrix of **10 Width x 2 Height**.
 2.  **Rear Logic**: Set as a matrix of **12 Width x 2 Height**. Even though they are physically separated, treating them as one 12x2 strip in WLED allows animations to flow across both windows.
 
+> [!TIP]
+> **[WLED Configuration Guide](../maintenance/wled-configuration-guide.md)**  
+> Master guide for setting up segments, presets, and sync triggers on Node 2.
+
 - **Total Pixels**: ~200 LEDs.
 - **PSI Boards**: 2x Grnwave PSI boards.
 - **Support Strips**: 1x 12-pixel strip, 2x 5-pixel strips.
