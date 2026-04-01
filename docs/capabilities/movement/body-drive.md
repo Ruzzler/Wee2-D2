@@ -2,7 +2,7 @@
 
 Wee2-D2 is an agile, 2-wheel-drive unit powered by two massive brushless hub motors embedded directly within its side feet. This system operates natively on the **Main 20V High-Power Rail** with zero Step-Down conversion.
 
-## <i data-lucide="cpu"></i> The VESC Speed Controllers
+## The VESC Speed Controllers
 
 Locomotion is orchestrated by two **Flipsky Mini FSESC 6.7 Pro** motor controllers, based heavily on the open-source VESC architecture.
 

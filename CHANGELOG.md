@@ -4,6 +4,16 @@ All notable changes to the Wee2-D2 project will be documented in this file. This
 
 ---
 
+## [2.1.2] - 2026-04-01
+
+### Aesthetic Graduation & IA Stabilization
+
+- **Aesthetic Standard (v2.1.2)**: Finalized the "Neutral Technical" theme by purging all non-primary header icons and standardizing on **Lucide Icons** for `#` headers only.
+- **Terminology Harmonization**: Globally aligned documentation with the mandated v2.1.2 standards: "Automations" (formerly Behavioral Logic) and "Cinematic Logic Display" (formerly Logic matrix/arrays).
+- **Information Architecture**: Stabilized the dual-tier documentation structure (Wiki Website + Technical Docs). Standardized on the `docs/` tree for core manuals while maintaining the `wiki/` folder for the project overview.
+- **Asset Optimization**: Decommissioned duplicate assets (`chassis-interior.jpg`) and corrected PDF path resolution across the Manuals Hub.
+- **Nomenclature**: Standardized all references to **"Node 1"**, **"Node 2"**, and **"Node 3"** (with space) to eliminate legacy naming fragmentation.
+
 ## [1.8.3] - 2026-03-31
 
 ### UI Refactor & Documentation Mapping

@@ -18,46 +18,46 @@ The droid operates on a **20V High-Power Standard**, sourcing energy from a gang
 
 ## 2. Power Rail Hierarchy
 
-Wee2-D2 utilizes two primary voltage rails to isolate high-current inductive motor noise from sensitive logic circuits.
+Wee2-D2 utilizes isolated voltage rails to protect sensitive logic from motor-induced EMF noise.
 
-### A. The 20V High-Power Rail
+### A. 20V High-Power Rail
+| Component | Function | Source |
+| :--- | :--- | :--- |
+| [Drive System](../hardware/flipsky-fsesc-67-pro-manual.md) | Dual Flipsky 6.7 Pro ESCs | Fuse Box (20V) |
+| [Dome Motion](../hardware/gobilda-motor-manual.md) | goBILDA 15A PWM ESC | Slip Ring (20V) |
+| [Audio Amp](..\capabilities\lights-and-sounds\audio-system.md) | TPA3118 60W Mono | Fuse Box (20V) |
 
-High-current components pull directly from the DeWalt batteries via the master fuse box:
-- **Drive System**: 2x [Flipsky Mini FSESC 6.7 Pro](../hardware/flipsky-fsesc-67-pro-manual.md) (Left/Right) draw direct 20V.
-- **Dome Motion**: The goBILDA 15A ESC draws 20V via the Slip Ring bridge.
-- **Audio System**: The **TPA3118 60W Amplifier** draws 20V for maximum sonic output.
-
-### B. The 5.1V Logic & Audio Rail
-
-Sensitive micro-electronics utilize step-down regulators to provide stable 5.1V logic power:
-- **Body Logic**: Steals 5.1V from the Flipsky ESC built-in BEC to power [Node 1 (Sound Hub)](node-1-sound-hub-spec.md) and the body receiver.
-- **Dome Logic**: [Node 2 (LEDs)](node-2-led-distribution-spec.md) uses a dedicated **Mini560 10A Buck Converter** to drive high-density LED arrays.
-- **Dome Motion Logic**: [Node 3 (Motion)](node-3-dome-motion-spec.md) steals 5.1V from the goBILDA BEC to power the motion controller and dome receiver.
+### B. 5.1V Logic & Audio Rail
+| Component | Role | Regulation Source |
+| :--- | :--- | :--- |
+| [Node 1 (Sound)](node-1-sound-hub-spec.md) | Body logic & sounds | Flipsky BEC (5.1V) |
+| [Node 2 (LEDs)](node-2-led-distribution-spec.md) | Dome lighting arrays | Mini560 Buck (5.1V) |
+| [Node 3 (Motion)](node-3-dome-motion-spec.md) | Dome motion processing | goBILDA BEC (5.1V) |
 
 ---
 
-## 3. The Slip Ring Bridge (Body Dome)
+## 3. The Slip Ring Bridge (Body to Dome)
 
-The **CNBTR Slip Ring** (6 wires) acts as the high-current bridge between the chassis and the rotating dome. To ensure stability, we utilize a **Dual-Circuit Isolation Strategy**:
+The **CNBTR Slip Ring** (6 wires) acts as the high-current bridge. We utilize a **Dual-Circuit Isolation Strategy** to separate motor noise from logic.
 
-| Circuit | Function | Current (Peak) | Slip Ring Wires |
+| Circuit | Function | Current (Peak) | Pinout |
 | :--- | :--- | :---: | :---: |
 | **Circuit 1** | **Dome Motor (20V)** | 10.0A | C1 (+) / C2 (-) |
 | **Circuit 2** | **Dome Logic & LEDs (20V)** | 10.0A | C3 (+) / C4 (-) |
 | **Expansion** | Reserved for Serial / Telemetry | — | C5 / C6 |
 
 > [!CAUTION]
-> **ISOLATION REQUIRED**: Never bridge the 20V (+) lines of Circuit 1 and Circuit 2. The dome motor generates significant inductive spikes that will destabilize the LED logic if the rails are not isolated through the slip ring.
+> **SIGNAL ISOLATION**: Never bridge the 20V (+) lines of Circuit 1 and Circuit 2. Inductive spikes from the dome motor will destabilize the LED logic if rails share a positive leg through the slip ring.
 
 ---
 
-## 4. Grounding & Safety
-### Grounding Rule
-Every component in the droid (Nodes, ESCs, Receivers, and LED Strips) **MUST** share a common ground reference. All grounds trace back to the central Negative Bus Bar.
-Without this shared reference, the UART and PWM data signals will become unreadable atmospheric noise.
+## 4. Grounding & Safety Protocols
 
-### Logic Clamping & Safety
-- **Motion Clamp**: Node 3 restricts the 20V source to 60% software power to simulate 12V for the goBILDA motor.
+### Star Ground Rule
+Every component in the droid (Nodes, ESCs, Receivers, and LED Strips) **MUST** share a common ground reference. All grounds trace back to the central **Negative Bus Bar**. Without this shared reference, PWM and UART data signals will become unreadable interference.
+
+### Processing Clamps
+- **Dynamic Speed Multiplier**: Node 3 provides a dashboard-adjustable speed cap (0.1 - 1.0) to ensure cinematic motion regardless of raw voltage level.
 - **Current Limiters**: Node 2 maintains an internal brightness limit of **3500mA** to protect the buck converters from thermal runaway.
 
 ---

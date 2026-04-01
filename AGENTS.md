@@ -16,7 +16,7 @@ This document provides critical context for AI coding assistants working on the 
 - **Visual Excellence**: Modern web design best practices (curated HSL palettes, smooth transitions, micro-animations) are mandatory. **Avoid Tailwind CSS**; use Vanilla CSS for maximum control.
 - **Tone**: Maintain a professional, straightforward, and technical tone. Avoid "cheesy" flavor text (e.g., "Production-Ready," "Professional") and "self-important" formalisms. Use plain technical language.
 - **Terminology**:
- - Use **"High Alert"** instead of "High Alert".
+ - Use **"Node 1"** instead of "Node1" (legacy).
  - Use **"Cinematic Logic Display"** for LED matrix scrolling animations.
  - **Physical Chassis**: Always refer to Mr. Baddeley's design as **"3D files"** (e.g., "The acclaimed 3D files created by Mr. Baddeley"). Avoid "engineering files" or "technical blueprints."
 
@@ -89,11 +89,21 @@ The droid operates on a **Distributed Node Mesh** model architecture.
 - **Direct-to-Droid OTA**: Deployment is handled via the built-in **ESPHome Web Server (v3)**. No separate back-end infrastructure is used.
 - **Sidebar Refinement**: Mantain the "Project Documentation / System Architecture / Hardware / Capabilities & Movement / Microcontroller Nodes / Operation & Maintenance" hierarchy (e.g., replace 'Behavioral Logic' with '**Automations**').
 - **Image Rendering**: Always use standard Markdown image syntax (`![alt](path)`) rather than HTML `<img>` tags. This ensures the `app.js` path-resolver correctly handles relative assets across all navigation nodes.
+- **Verification-First Documentation**: The Agent **MUST NEVER** update primary technical documentation (`docs/` or `wiki/`) with new features or configuration logic until the code has been bench-tested and verified as functional. Documentation **SHALL** reflect the **Stable Production** state only.
 
 ### 2. Versioning & Deployment
 
-- **Production Graduation**: All active code is localized in `firmware/production/`.
+- **Production Lock**: The Agent **MUST NEVER** modify files in `firmware/production/` for testing or experimental features. All active development **MUST** occur in `firmware/development/`.
+- **Graduation Process**: Production files **SHALL ONLY** be updated once features are bench-tested and graduation is explicitly approved by the user.
 - **Release Tiers**: Use `v2.1.x-Final-Stable` for harmonized, bench-tested releases.
+
+### 3. SOP Pre-Flight Checklist
+
+Before proposing or executing any firmware or documentation changes, the Agent **MUST** verify the following:
+1. **Target Tier**: Is this change for `production/` or `development/`? (Default: `development/`).
+1. **Verification Status**: Has this feature been bench-tested and compiled successfully?
+1. **Documentation Alignment**: Does this change adhere to the **Verification-First** rule (Stable only)?
+1. **Aesthetic Audit**: Does the UI/documentation follow the minimalist **Neutral Technical** standard?
 
 ---
 
@@ -102,5 +112,6 @@ The droid operates on a **Distributed Node Mesh** model architecture.
 - **Design Standards**: Use **Lucide Icons** (`<i data-lucide="..."></i>`) for primary page headers only. Avoid emojis repo-wide (cheese factor).
 - **Sidebar Minimalism**: The sidebar must remain **text-only**. No icons, no emojis. Minimalist, professional hierarchy.
 - **Don't** refer to Mr. Baddeley's work as "engineering files"; use **"3D files."**
-- **Don't** use legacy "Node 1/2/3" nomenclature; use **"Node 1/2/3."**
+- **Don't** use legacy "Node1" or "Node-1" nomenclature; use **"Node 1."**
+- **Don't** modify `firmware/production/` without explicit "Graduation" approval.
 - **Don't** hardcode credentials in documentation or firmware.

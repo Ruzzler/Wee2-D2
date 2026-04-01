@@ -2,7 +2,7 @@
 
 The visual personality of Wee2-D2 is driven by high-density **WS2812B addressable LED** matrices, controlled by **Node 2 (Lighting Controller)** running the **WLED** framework. Synchronized visual behaviors (e.g., "High Alert" red pulsing) are triggered wirelessly from the **Dome Motion (Node 3)** via the **ESP-NOW** bridge.
 
-## <i data-lucide="zap"></i> Power Constraints
+## Power Constraints
 
 Because there are hundreds of LEDs in the dome, they have their own dedicated **Mini560 5V Buck Converter (Buck 1)** tied to the 20V Ganged Wago Hub.
 > [!CAUTION]

@@ -6,6 +6,15 @@ This document tracks all production-verified firmware releases for the Wee2-D2. 
 
 ---
 
+## [v2.1.2] - 2026-04-01
+
+### Aesthetic Graduation & IA Stabilization
+
+- **Technical Docs**: Finalized the v2.1.2 Aesthetic Standard.
+- **Terminology**: Globally harmonized "Automations" and "Cinematic Logic Display".
+- **IA Strategy**: Standardized the dual-tier Wiki (Site Folder + Technical Manuals).
+- **Status**: **VERIFIED**
+
 ## [v1.8.4] - 2026-03-31
 
 ### Wireless Bridge Harmonization
@@ -33,8 +42,8 @@ Upgrade**: Transitioned from standard ESP32 Dev Boards to ESP32-S3 across the mo
 
 ## Release Standard Operating Procedure (SOP)
 
-To prevent droid downtime, follow the [v1.8.5 Firmware Workflow](../../AGENTS.md):
+To prevent droid downtime, follow the [v2.1.2 Production Lock](../../AGENTS.md):
 1. **Develop** in `firmware/development/`.
 1. **Verify** via bench test on a spare ESP32.
-1. **Graduate** to `firmware/production/` for deployment.
-1. **Snapshot** a copy to `firmware/archive/` with the version suffix (e.g., `FW-v1.8.4-body.yaml`).
+1. **Graduate** to `firmware/production/` ONLY after explicit user approval and bench verification.
+1. **Archive** a copy to `firmware/archive/` with the version suffix (e.g., `FW-v1.8.4-body.yaml`).

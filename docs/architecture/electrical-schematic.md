@@ -6,7 +6,7 @@ This document provides a high-fidelity visual and technical map of the Wee2-D2 e
 
 ---
 
-## <i data-lucide="zap"></i> Interactive Schematic
+## Interactive Schematic
 
 > [!TIP]
 > **INTERACTIVE INTERFACE**: Click on any component node to instantly access its technical manual or firmware specification.
@@ -95,7 +95,7 @@ flowchart TD
 
 ---
 
-## <i data-lucide="cpu"></i> Wiring & Pinout Reference
+## Wiring & Pinout Reference
 
 For detailed wire colors, GPIO assignments, and hardware-specific triggers, consult the master reference:
 

@@ -4,7 +4,7 @@ Safety and preventative maintenance are the foundations of a reliable droid syst
 
 ---
 
-## <i data-lucide="zap"></i> High-Voltage Safety (20V DC)
+## High-Voltage Safety (20V DC)
 
 The DeWalt battery is capable of high-current discharge. **Respect the power.**
 

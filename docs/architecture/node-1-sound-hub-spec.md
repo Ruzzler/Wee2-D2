@@ -12,7 +12,7 @@ The **Sound Hub** acts as the localized audio management and drive monitoring sy
 | **Visual ID (Logic)** | ![S3 Mini](../../assets/esp32-s3-super-mini.jpg) |
 | **Visual ID (Audio)** | ![TPA3118](../../assets/tpa3118-amplifier-module.jpg) |
 
-## <i data-lucide="rocket"></i> Core Purpose
+## Core Purpose
 
 - **ESP-NOW Wireless Link**: Low-latency behavioral synchronization with the Dome Master.
 - **DFPlayer UART Control**: High-fidelity track triggering and volume management via serial.
@@ -29,10 +29,6 @@ The **Sound Hub** acts as the localized audio management and drive monitoring sy
 | **DFPlayer RX** | GPIO 16 | Serial Status In (Optional) |
 | **Wireless Link** | N/A | ESP-NOW Behavioral Sync |
 | **Status LED** | GPIO 47 | Internal Neopixel (Logic) |
-
-## Configuration
-
-The configuration is defined in [`body-brain.yaml`](./body-brain.yaml).
 
 ### Auto-Mode Logic
 

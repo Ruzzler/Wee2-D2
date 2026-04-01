@@ -4,7 +4,7 @@ This guide explains how to connect your droid to your local Wi-Fi, manage the "D
 
 ---
 
-## <i data-lucide="construction"></i> Initial Connectivity
+## Initial Connectivity
 
 ### **1. ESPHome Secrets**
 

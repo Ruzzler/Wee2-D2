@@ -11,20 +11,12 @@ To drive this motor, the droid uses a **goBILDA 15A Cont PWM ESC** securely moun
 - **Signal (White)**: Connected to **Node 3 (GPIO 18)**.
 - **Safety Interlock**: The ESC boots up fully disengaged. It requires a neutral 1500μs PWM signal to arm, preventing the dome from wildly spinning when you turn on the main power.
 
-## 60% Software Throttling (Crucial)
+## Physical Voltage Handling
 
-The single most important firmware logic for Dome Rotation handles the power mismatch between the battery and the motor.
-> [!WARNING]
-> The droid's main bus is **20V** (DeWalt Battery). However, the goBILDA motor is only rated for **12V**. Do not plug it directly into the battery!
+Unlike common brushed ESCs that are strictly 12V-only, the specialized **goBILDA 1x15A** speed controller utilized in the dome is a robust, discontinued model that natively supports **12V-24V input**.
 
-Instead of buying a massive, expensive 12V Buck Converter just for the motor, I handle this in the **Node 3** software.
-Node 3 listens to your joystick, calculates how fast you *want* to spin, and scales the signal down by exactly 60%. Thus, applying "100% Throttle" on the joystick only commands the ESC to output an effective 12V.
-
-```cpp
-// ESPHome Dome Clamp Logic Example
-float val = (raw_pwm - 1.5e-3) / 0.5e-3; // Normalize input to -1.0 to 1.0
-return val * 0.6; // Scale down safely to 60% max output
-```
+- **Direct Rail Integration**: The ESC is wired directly to the **20V High-Power Rail** via the slip ring.
+- **Native Output**: The controller internally manages the power delivery for the 12V Yellow Jacket motor, eliminating the need for a bulky external Buck Converter or specialized software voltage-clamping for electrical protection.
 
 ## Control Mapping
 
@@ -34,13 +26,6 @@ The dome is separated from the main drive logic.
 Node 3 reads this PWM signal and filters out minor "stick drift" by employing a wide deadband around the 1500μs center point to ensure the dome rests perfectly still when the stick is released.
 
 ### Transmitter Mode: Standard (Unmixed)
-
-Unlike the body, the dome uses a single-axis rotation. To prevent "signal bleed" from other joystick movements:
-- **Correct Mode**: **[No Icon]** on the transmitter screen.
-- **To Cycle Modes**: Turn the remote **OFF**. Hold **Button 3** and turn the remote **ON**. Repeat until the circle on the screen is **Empty**.
-
-> [!TIP]
-> Using **Standard Mode** ensures that accidental Up/Down movement of the thumb joystick does not trigger the dome's rotation ESC.
 
 ## Master Relay Role
 

@@ -4,7 +4,7 @@ Welcome to the centralized Manuals and Files Hub. This page provides rapid acces
 
 ---
 
-## <i data-lucide="book-open"></i> 1. Technical Manuals
+## 1. Technical Manuals
 
 Comprehensive guides for hardware integration and system capabilities.
 
@@ -12,10 +12,10 @@ Comprehensive guides for hardware integration and system capabilities.
 
 These are the original manufacturer specifications for the core hardware.
 - [DFPlayer Mini (Sound Hub)](../manuals/dfplayer-mini-manual.pdf)
-- [HOTRC DS-600 Transmitter](../manuals/hotrc-ds600-manual.pdf)
-- [HOTRC F-06A PWM Receiver](../manuals/hotrc-f06a-manual.pdf)
-- [Flipsky Mini FSESC 6.7 Pro](../manuals/vesc-esc-manual.pdf)
-- [MgcSTEM LVP-R1.5 Logic](../manuals/low-voltage-protector-manual.pdf)
+- [HOTRC DS-600 Transmitter](../hardware/hotrc-ds600-manual.pdf)
+- [HOTRC F-06A PWM Receiver](../hardware/hotrc-f06a-manual.pdf)
+- [Flipsky Mini FSESC 6.7 Pro](../hardware/flipsky-fsesc-67-pro-manual.pdf)
+- [MgcSTEM LVP-R1.5 Logic](../hardware/mgcstem-lvp-r15-manual.pdf)
 
 ### ** Project Documentation (Markdown)**
 

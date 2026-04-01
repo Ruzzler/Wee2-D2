@@ -5,7 +5,7 @@ This design handles high-amperage motor control, precision dome rotation, and ci
 
 ---
 
-## <i data-lucide="layout-dashboard"></i> System Roles
+## System Roles
 
 Synchronization is achieved using low-latency **ESP-NOW** wireless bridging across three specialized nodes:
 
@@ -23,23 +23,23 @@ Synchronization is achieved using low-latency **ESP-NOW** wireless bridging acro
 
 ### Node 3: Dome Motion Master (ESP32-S3)
 
-- **Role**: Master behavioral logic and movement control.
+- **Role**: Master Automations and movement control.
 - **Hardware**: goBILDA 5203 Dome Motor, PWM Motor Controller.
 - **Logic**: Processes RC inputs and broadcasts state triggers (e.g., "Droid Happy", "High Alert") to the rest of the mesh.
 
 ---
 
-## <i data-lucide="radio"></i> The Wireless Bridge (ESP-NOW)
+## The Wireless Bridge (ESP-NOW)
 
 To prevent analog audio interference and reduce the risk of slip ring data corruption, the Node Mesh utilizes **ESP-NOW**, a high-speed 2.4GHz peer-to-peer protocol.
 
 - **Zero Router Latency**: MCUs communicate directly with <10ms response times.
 - **EMI Immunity**: Moving data to the 2.4G spectrum eliminates the ground loops and motor interference inherent in slip rings.
-- **Scalability**: New nodes (e.g., foot sensors or logic displays) can be added to the mesh without pulling additional wires through the central joint.
+- **Scalability**: New nodes (e.g., foot sensors or Cinematic Logic Displays) can be added to the mesh without pulling additional wires through the central joint.
 
 ---
 
-## <i data-lucide="shuffle"></i> Slip Ring Distribution (Body Dome)
+## Slip Ring Distribution (Body Dome)
 
 The **CNBTR Slip Ring** (6-Circuit) acts as the physical bridge for the dome's high-current requirements. We utilize the **Dual-Circuit Isolation Strategy** defined in the [Power Architecture](power-architecture.md):
 

@@ -1,3 +1,7 @@
+# [!] PRODUCTION LOCK: STABLE DEPLOYMENT (v2.1.2)
+# This file MUST NOT be modified for testing or feature development.
+# Use firmware/development/ for active experimentation.
+
 # Wee2-D2 Body Hub (Node 1)
 # v2.0-Hybrid | SECURE SECURE RECOVERY
 

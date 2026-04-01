@@ -2,17 +2,17 @@
 
 A comprehensive list of hardware used in the Wee2-D2 project, organized by system tier. Click on any thumbnail in the **Visual ID** column to enlarge it.
 
-## <i data-lucide="cpu"></i> Brains & Control
+## Brains & Control
 
 | Component | Qty | Specifications | Visual ID |
-| :--- | :---: | :--- | :---: |
+| :--- | :---: | :--- | :--- |
 | [Node 1: Sound Hub](architecture/node-1-sound-hub-spec.md) | 1 | ESP32-S3 Super Mini; Audio & Drive Sync | ![S3 Mini](../assets/esp32-s3-super-mini.jpg) |
 | [Node 2: LED Distribution](architecture/node-2-led-distribution-spec.md) | 1 | ESP32-Dev Board; **WLED** Matrix Controller | ![ESP32D](../assets/esp32d-dev-board.png) |
 | [Node 3: Dome Motion](architecture/node-3-dome-motion-spec.md) | 1 | ESP32-S3 Super Mini; Behavioral Master | ![Node 3 Master](../assets/esp32-s3-super-mini.jpg) |
 | [HOTRC DS-600](hardware/hotrc-ds600-manual.md) | 2 | 6-CH Transmitter (Silent Mod) [PDF](hardware/hotrc-ds600-manual.pdf) | ![Transmitter](../assets/hotrc-ds600-transmitter.webp) |
 | [HOTRC F-06A Receivers](hardware/hotrc-f06a-manual.md) | 2 | 6-CH PWM Output @ **115200 Baud (UDNS)** [PDF](hardware/hotrc-f06a-manual.pdf) | ![Receiver](../assets/hotrc-f06a-receiver.png) |
 
-## <i data-lucide="battery-charging"></i> Power & Protection
+## Power & Protection
 
 | Component | Qty | Specifications | Visual ID |
 | :--- | :---: | :--- | :---: |
@@ -24,7 +24,7 @@ A comprehensive list of hardware used in the Wee2-D2 project, organized by syste
 | 5-Port Wago Connectors | 4 | 2x Dome (Power Trunk), 2x Body (Signal/GND) | - |
 | [CNBTR Slip Ring](hardware/cnbtr-slip-ring-manual.md) | 1 | 12.7mm Bore, 6-Circuit @ 10A/ch (2x Ganged) | ![Slip Ring](../assets/slip-ring-cnbtr.jpg) |
 
-## <i data-lucide="volume-2"></i> Audio & Lights
+## Audio & Lights
 
 | Component | Qty | Specifications | Visual ID |
 | :--- | :---: | :--- | :---: |
@@ -34,7 +34,7 @@ A comprehensive list of hardware used in the Wee2-D2 project, organized by syste
 | [WS2812B Logic Arrays](capabilities/lights-and-sounds/led-system.md) | 1 | Addressable LED matrices (Front & Rear) | ![Logic Array](../assets/ws2812b-logic-arrays.webp) |
 | [GrnWave Circular PSI](hardware/grnwave-psi-manual.md) | 2 | 76x WS2812B-2020 LEDs (**5V ONLY**) | ![GrnWave PSI](../assets/grnwave-psi-logic.jpg) |
 
-## <i data-lucide="wrench"></i> 3D Print & Mechanical Assembly
+## 3D Print & Mechanical Assembly
 
 | Component | Qty | Specifications | Visual ID |
 | :--- | :---: | :--- | :---: |

@@ -2,7 +2,7 @@
 
 > **TECHNICAL SPECIFICATIONS** | **SYSTEM: LOCALHOST**
 
-### <i data-lucide="graduation-cap"></i> Launch Command
+### Launch Command
 
 ```bash
 python -m http.server 8001 --bind 127.0.0.1

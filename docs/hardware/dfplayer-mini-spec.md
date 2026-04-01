@@ -4,7 +4,7 @@
 
 The **DFPlayer Mini** is a specialized, serial-controlled MP3 module that serves as the "Voice" of Wee2-D2. It is managed by **Node 1 (Sound Hub)** via a low-latency UART serial link.
 
-## <i data-lucide="layout-grid"></i> Module Overview
+## Module Overview
 
 - **Storage**: Micro SD card (up to 32GB, **FAT32**).
 - **Control**: 9600 Baud Serial (TTL).

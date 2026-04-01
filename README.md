@@ -49,7 +49,7 @@ Wee2-D2 utilizes a decentralized architecture split across three ESP32 microcont
 - **Dome Motion**: [goBILDA 5203 Yellow Jacket](docs/hardware/gobilda-motor-manual.md) driven by a [1x15A Motor Controller](docs/hardware/gobilda-motor-manual.md).
 - **Audio**: [DFPlayer Mini](docs/bill-of-materials.md) triggered via ESP-NOW, feeding a [TPA3118 60W Amp](docs/bill-of-materials.md) and Pyle 3.5" driver.
 - **Power Hub**: [MgcSTEM LVP-R1.5](docs/hardware/mgcstem-lvp-r15-manual.md) mapping to a Positive Blade Fuse Box and central Negative Bus Bar.
-- **Lighting**: [GrnWave Circular PSIs](docs/hardware/grnwave-psi-manual.md) and custom logic arrays.
+- **Lighting**: [GrnWave Circular PSIs](docs/hardware/grnwave-psi-manual.md) and custom Cinematic Logic Displays.
 
 ---
  **[View Project Changelog](CHANGELOG.md)**
