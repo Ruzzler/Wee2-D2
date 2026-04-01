@@ -16,7 +16,7 @@ If your droid begins exhibiting unexpected behavior, use this matrix to diagnose
 
 ---
 
-## 🛠️ Diagnostics Bench
+##  Diagnostics Bench
 
 ### **1. ESPHome Logs**
 The most powerful tool at your disposal is the **ESPHome Logger**.

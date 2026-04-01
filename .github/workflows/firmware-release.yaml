@@ -1,4 +1,4 @@
-name: 🛸 Wee2-D2 Zero-Infra Release (v2.1)
+name:  Wee2-D2 Zero-Infra Release (v2.1)
 
 on:
   push:
@@ -16,39 +16,39 @@ jobs:
   build-and-release:
     runs-on: ubuntu-latest
     steps:
-      - name: 📥 Checkout Repository
+      - name:  Checkout Repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0 # Required for tagging/versioning
 
-      - name: 🔐 Prepare Dummy Secrets
+      - name:  Prepare Dummy Secrets
         run: |
           cp firmware/common/dummy-secrets.yaml firmware/production/secrets.yaml
 
-      - name: 🛠️ Setup ESPHome
+      - name:  Setup ESPHome
         uses: esphome/build-action@v2
         id: esphome-build
         with:
           version: latest
           yaml_file: firmware/production/node-1-sound-hub.yaml
 
-      - name: 🏗️ Compile Node 1 (Sound Hub)
+      - name:  Compile Node 1 (Sound Hub)
         run: esphome compile firmware/production/node-1-sound-hub.yaml
 
-      - name: 🏗️ Compile Node 3 (Dome Motion)
+      - name:  Compile Node 3 (Dome Motion)
         run: esphome compile firmware/production/node-3-dome-motion.yaml
 
-      - name: 🏗️ Compile Node 2 (LED Distribution)
+      - name:  Compile Node 2 (LED Distribution)
         run: esphome compile firmware/production/node-2-led-distribution.yaml
 
-      - name: 📂 Organize Artifacts
+      - name:  Organize Artifacts
         run: |
           mkdir -p public/firmware
           cp .esphome/build/wee2d2-body-hub/.pioenvs/wee2d2-body-hub/firmware.bin public/firmware/body-hub.bin
           cp .esphome/build/wee2d2-dome-master/.pioenvs/wee2d2-dome-master/firmware.bin public/firmware/dome-master.bin
           cp .esphome/build/wee2d2-lighting-ctrl/.pioenvs/wee2d2-lighting-ctrl/firmware.bin public/firmware/lighting-ctrl.bin
 
-      - name: 📜 Generate Manifest
+      - name:  Generate Manifest
         run: |
           cat <<EOF > public/manifest.json
           {
@@ -61,7 +61,7 @@ jobs:
           }
           EOF
 
-      - name: 🏷️ Determine Version
+      - name:  Determine Version
         id: versioning
         run: |
           # Simple versioning: based on date/time for unique release tags
@@ -69,22 +69,22 @@ jobs:
           echo "TAG_NAME=$TAG_NAME" >> $GITHUB_ENV
           echo "tag=$TAG_NAME" >> $GITHUB_OUTPUT
 
-      - name: 🚀 Create GitHub Release
+      - name:  Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ env.TAG_NAME }}
           name: Wee2-D2 Zero-Infra Release ${{ env.TAG_NAME }}
           body: |
-            ## 🛸 Wee2-D2 Firmware v2.1 (Zero-Infrastructure Pivot)
+            ##  Wee2-D2 Firmware v2.1 (Zero-Infrastructure Pivot)
             
             This release contains the latest production-ready firmware binaries for the Wee2-D2 project.
             
-            ### 🛠️ Installation Instructions:
+            ###  Installation Instructions:
             1. Download the `.bin` file for the node you wish to update.
             2. Connect to your droid via its local IP address (e.g., `http://wee2d2-body.local/`).
             3. Scroll to the **OTA Update** section and upload the `.bin` file.
             
-            ### 🛰️ Included Assets:
+            ###  Included Assets:
             - **body-hub.bin**: Main Body Hub (MCU 1)
             - **dome-master.bin**: Dome Motion Master (MCU 3)
             - **lighting-ctrl.bin**: Lighting/WLED Controller (MCU 2)
@@ -95,7 +95,7 @@ jobs:
           draft: false
           prerelease: false
 
-      - name: 🌐 Deploy Web-Flasher to GitHub Pages
+      - name:  Deploy Web-Flasher to GitHub Pages
         uses: actions/upload-pages-artifact@v3
         with:
           path: 'public'
@@ -110,6 +110,6 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - name: 🚀 Deploy to GitHub Pages
+      - name:  Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4

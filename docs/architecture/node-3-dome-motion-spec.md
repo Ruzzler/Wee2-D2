@@ -1,4 +1,4 @@
-# <i data-lucide="move"></i> Node 3: Dome Motion Spec
+# <i data-lucide="refresh-cw"></i> Node 3: Dome Motion Spec
 > **ESPHome Firmware** | **ESP32-S3 Super Mini**
 
 The **Dome Motion** node serves as the behavioral heart of Wee2-D2. It manages precision dome rotation via a goBILDA 15A ESC and orchestrates all droid actions by broadcasting **ESP-NOW** triggers to the Sound and LED hubs.
@@ -7,10 +7,10 @@ The **Dome Motion** node serves as the behavioral heart of Wee2-D2. It manages p
 | :--- | :--- |
 | **Logic Framework** | ESPHome (esp-idf) |
 | **Primary Function** | Behavioral Master & Motion |
-| **Source Code** | [🗄️ `node-3-dome-motion.yaml`](../../firmware/production/node-3-dome-motion.yaml) |
+| **Source Code** | [ `node-3-dome-motion.yaml`](../../firmware/production/node-3-dome-motion.yaml) |
 | **Visual ID** | ![Node 3 Master](../../assets/esp32-s3-super-mini.jpg) |
 
-## 🚀 Core Features
+##  Core Features
 *   **Behavioral Orchestration**: Broadcasts wireless triggers for audio tracks (Body) and light patterns (Dome) using the low-latency **ESP-NOW** protocol.
 *   **RC Passthrough / Interrupt**: Decodes CH1 from RC2 (GPIO 4) for manual dome control, overriding autonomous routines.
 *   **Dynamic Scripts**: Includes built-in behaviors for "Scan Patrol," "Mood Logic," and "Sync Dance."
@@ -18,16 +18,16 @@ The **Dome Motion** node serves as the behavioral heart of Wee2-D2. It manages p
     *   **Boot/Shutdown Stop**: Forces speed to 0% on controller power cycles.
     *   **Auto-Detach**: Motor controller signal detaches after 5s of inactivity to prevent hum.
 
-## 🔌 Pinout Configuration
+##  Pinout Configuration
 | Connection | ESP32 Pin | Wire Color | Logic |
 | :--- | :---: | :--- | :--- |
-| **RC CH1 (Steer)** | GPIO 4 | 🟨 Yellow | PWM Input (Pull-Down) |
+| **RC CH1 (Steer)** | GPIO 4 |  Yellow | PWM Input (Pull-Down) |
 | **Wireless TX** | N/A | ESP-NOW | Broadcast Master Link |
-| **ESC PWM Out** | GPIO 7 | ⬜/🟦 White/Blue | PWM Output to goBILDA |
+| **ESC PWM Out** | GPIO 7 | ⬜/ White/Blue | PWM Output to goBILDA |
 | **Rear PSI** | GPIO 5 | ⬜ White | RMT LED Output (WS2182B) |
-| **Front PSI** | GPIO 6 | 🟩 Green | RMT LED Output (WS2182B) |
+| **Front PSI** | GPIO 6 |  Green | RMT LED Output (WS2182B) |
 
-## ⚙️ ESP32-S3 Engineering Implementation
+##  ESP32-S3 Engineering Implementation
 The following hardware-specific constraints are unique to the S3 Super Mini platform and were identified during the domehub integration audit:
 
 ### 1. S3-Specific Constraints (Critical)

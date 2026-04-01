@@ -18,7 +18,7 @@ The DeWalt battery is capable of high-current discharge. **Respect the power.**
 
 ---
 
-## ⚙️ Periodic Maintenance
+##  Periodic Maintenance
 
 ### **1. Slip Ring Servicing**
 The rotating joint is the most sensitive mechanical link.
@@ -36,7 +36,7 @@ The Flipsky 6.7 ESCs can generate significant heat during long drives.
 
 ---
 
-## 🚫 Emergency Procedures
+##  Emergency Procedures
 
 ### **1. E-Stop Command**
 *   **Manual Kill**: Physically remove the DeWalt battery from the droid's rear compartment.
