@@ -48,7 +48,7 @@ To ensure Behavioral Sync, the SD card **MUST** be formatted as FAT32 and use th
 
 - **Resistor Padding**: A 1K ohm resistor is recommended on the RX line between the ESP32 and the DFPlayer to suppress serial noise and protect the logic levels.
 - **Isolation**: Power the DFPlayer from a clean 5.1V logic buck converter to prevent digital "pops" from the motor rails.
-- **Star Ground**: Ensure the DFPlayer shares a common ground with its controlling MCU and the TPA3118 amplifier to prevent audio hum.
+- **Star Ground**: Ensure the DFPlayer shares a common ground with its controlling Node and the TPA3118 amplifier to prevent audio hum.
 
 ---
 

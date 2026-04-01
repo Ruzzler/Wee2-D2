@@ -4,6 +4,18 @@ All notable changes to the Wee2-D2 project will be documented in this file. This
 
 ---
 
+## [2.2.0] - 2026-04-01
+
+### Node Mesh 2.0: Logical Renumbering & Normalization
+
+- **Architectural Refactor**: Renumbered the Node Mesh to follow a logical functional hierarchy:
+    - **Node 1**: **Dome Motion Master** (The "Brain").
+    - **Node 2**: **Sound Hub** (The "Mouth").
+    - **Node 3**: **LED Distribution** (The "Visuals").
+- **Terminology Sweep**: Globally replaced legacy "MCU" references with "Node" and standardized "Node X" formatting (ensuring a space before the ID).
+- **Documentation Migration**: Scaled and renamed all technical specification files and internal markdown links to reflect the new ID system.
+- **Wiki Navigation**: Synchronized the "Imperial Databank" sidebar and interactive schematic to the restructured node hierarchy.
+
 ## [2.1.2] - 2026-04-01
 
 ### Aesthetic Graduation & IA Stabilization
@@ -12,7 +24,7 @@ All notable changes to the Wee2-D2 project will be documented in this file. This
 - **Terminology Harmonization**: Globally aligned documentation with the mandated v2.1.2 standards: "Automations" (formerly Behavioral Logic) and "Cinematic Logic Display" (formerly Logic matrix/arrays).
 - **Information Architecture**: Stabilized the dual-tier documentation structure (Wiki Website + Technical Docs). Standardized on the `docs/` tree for core manuals while maintaining the `wiki/` folder for the project overview.
 - **Asset Optimization**: Decommissioned duplicate assets (`chassis-interior.jpg`) and corrected PDF path resolution across the Manuals Hub.
-- **Nomenclature**: Standardized all references to **"Node 1"**, **"Node 2"**, and **"Node 3"** (with space) to eliminate legacy naming fragmentation.
+- **Nomenclature**: Standardized all references to **"Node 1"**, **"Node 2"**, and **"Node 3"** to eliminate legacy naming fragmentation.
 
 ## [1.8.3] - 2026-03-31
 
@@ -232,5 +244,5 @@ All notable changes to the Wee2-D2 project will be documented in this file. This
 
 - Initial project structure including Markdown documentation and Mermaid diagrams.
 - Basic Bill of Materials (BOM) following the Star Wars aesthetic.
-- ESPHome firmware templates for Node 1 (Body Controller).
+- ESPHome firmware templates for Node 2 (Body Hub).
 - Core electrical schematic draft representing the initial 20V power system.

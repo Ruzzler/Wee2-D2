@@ -4,7 +4,21 @@ This document serves as the master wiring reference for the Wee2-D2 distributed 
 
 ---
 
-## 1. Node 1: Sound Hub (ESP32-S3 Super Mini)
+## 1. Node 1: Dome Motion Master (ESP32-S3 Super Mini)
+
+The **Motion Master** manages 360° dome rotation and broadcasts behavioral triggers via ESP-NOW.
+
+| ESP32 Pin | Wire Color | Role | Function |
+| :---: | :--- | :--- | :--- |
+| **5V** | Red | Power In | 5.1V BEC (from goBILDA ESC) |
+| **GND** | Black | Ground | Common Logic Ground |
+| **GPIO 4** | White | RC CH1 | Steering Input (PWM) |
+| **GPIO 7** | Yellow | Dome ESC | PWM Command Out |
+| **GPIO 47** | N/A | Status LED | Internal Neopixel (Logic) |
+
+---
+
+## 2. Node 2: Sound Hub (ESP32-S3 Super Mini)
 
 The **Sound Hub** manages behavioral audio triggers and drive system monitoring.
 
@@ -21,7 +35,7 @@ The **Sound Hub** manages behavioral audio triggers and drive system monitoring.
 
 ---
 
-## 2. Node 2: LED Distribution (ESP32 Dev Board)
+## 3. Node 3: LED Distribution (ESP32 Dev Board)
 
 The **Lighting Controller** runs the WLED framework to drive high-density addressable matrices.
 
@@ -37,25 +51,11 @@ The **Lighting Controller** runs the WLED framework to drive high-density addres
 
 ---
 
-## 3. Node 3: Dome Motion Master (ESP32-S3 Super Mini)
-
-The **Motion Master** manages 360° dome rotation and broadcasts behavioral triggers via ESP-NOW.
-
-| ESP32 Pin | Wire Color | Role | Function |
-| :---: | :--- | :--- | :--- |
-| **5V** | Red | Power In | 5.1V BEC (from goBILDA ESC) |
-| **GND** | Black | Ground | Common Logic Ground |
-| **GPIO 4** | White | RC CH1 | Steering Input (PWM) |
-| **GPIO 7** | Yellow | Dome ESC | PWM Command Out |
-| **GPIO 47** | N/A | Status LED | Internal Neopixel (Logic) |
-
----
-
 ## 4. Hardware Interconnects
 
 ### Audio Stack (DFPlayer + TPA3118)
 
-- **S3 TX (GPIO 17)** **DFPlayer RX**.
+- **Node 2 TX (GPIO 17)** --> **DFPlayer RX**.
 - **DFPlayer SPK_1/2** **TPA3118 Analog Input**.
 - **TPA3118 Power** 20V Positive Fuse Box.
 - **TPA3118 GND** **Star Ground** (-).
@@ -66,9 +66,9 @@ The **Motion Master** manages 360° dome rotation and broadcasts behavioral trig
 | :--- | :---: | :---: | :--- |
 | **Red (5V)** | Slot 5 (+) | `5V / VIN` | Master Logic Power |
 | **Black (GND)** | Slot 5 (-) | `GND` | Master Logic Ground |
-| **Grey/Black** | Slot 3 (S) | `Node 1: GPIO 4` | CH1 Pulse Data |
-| **Blue/Black** | Slot 4 (S) | `Node 1: GPIO 5` | CH2 Pulse Data |
-| **Purple/Black**| Slot 5 (S) | `Node 1: GPIO 6` | CH3 Pulse Data |
+| **Grey/Black** | Slot 3 (S) | `Node 1: GPIO 4` | CH1 (Dome Rotation) |
+| **Blue/Black** | Slot 4 (S) | `Node 2: GPIO 4` | CH3 (Sound Trigger A) |
+| **Purple/Black**| Slot 5 (S) | `Node 2: GPIO 5` | CH4 (Sound Trigger B) |
 
 ---
 

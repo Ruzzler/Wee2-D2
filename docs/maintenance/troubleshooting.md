@@ -23,7 +23,7 @@ If your droid begins exhibiting unexpected behavior, use this matrix to diagnose
 The most powerful tool at your disposal is the **ESPHome Logger**.
 1. Connect the ESP32 to your PC via USB.
 1. Open the ESPHome Dashboard.
-1. Click **Logs** on the problematic MCU.
+1. Click **Logs** on the problematic Node.
 1. **Watch for Errors**: UART timeouts, Wi-Fi disconnects, or I2C bus failures will appear in RED text.
 
 ### **2. Wireless Bridge (ESP-NOW) Synchronization Test**

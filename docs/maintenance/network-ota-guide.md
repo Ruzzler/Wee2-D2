@@ -12,15 +12,15 @@ Before flashing your ESP32s for the first time:
 1. Open `firmware/secrets.yaml.example`.
 1. Rename to `secrets.yaml`.
 1. Fill in your **Wi-Fi SSID** and **Password**.
-1. Optionally set a **Static IP** for each MCU to ensure your bookmarks always work.
+1. Optionally set a **Static IP** for each Node to ensure your bookmarks always work.
 
 ### **2. First Flash**
 
 - **USB Connection**: The first flash **MUST** be done via USB using the **ESPHome Dashboard** or command line.
-- **MCU IDs**:
- - `mcu1-body-controller`
- - `mcu2-lighting-controller`
- - `mcu3-motion-controller`
+- **Node IDs**:
+ - `node-1-dome-master`
+ - `node-2-sound-hub`
+ - `node-3-led-distribution`
 
 ---
 
@@ -28,7 +28,7 @@ Before flashing your ESP32s for the first time:
 
 ESPHome is natively designed for Home Assistant (HA).
 1. Open Home Assistant > **Settings > Devices & Services**.
-1. Your 3 droid MCUs should appear automatically under "Discovered."
+1. Your 3 droid Nodes should appear automatically under "Discovered."
 1. Click **Configure** and enter the API password (if you set one).
 1. **Control**: You can now add behavioral switches, battery sensors, and volume sliders to your HA dashboard.
 

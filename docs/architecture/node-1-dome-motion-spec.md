@@ -1,14 +1,12 @@
-# <i data-lucide="zap"></i> Node 3: Dome Motion
+# <i data-lucide="settings"></i> Node 1: Dome Motion Spec
 
-> **TECHNICAL SPECIFICATIONS** | **ESPHome Firmware** | **ESP32-S3 Super Mini**
+> **TECHNICAL SPECIFICATIONS** | **ESPHome v3** | **ESP32-S3 Super Mini** | **Behavioral Master**
 
-The **Dome Motion** node serves as the behavioral heart of Wee2-D2. It manages precision dome rotation via a goBILDA 15A ESC and orchestrates all droid actions by broadcasting **ESP-NOW** triggers to the Sound and LED hubs.
-
-| **Hardware Node** | ESP32-S3 Super Mini |
+| Component | Detail |
 | :--- | :--- |
-| **Logic Framework** | ESPHome (esp-idf) |
-| **Primary Function** | Behavioral Master & Motion |
-| **Source Code** | [ `node-3-dome-motion.yaml`](../../firmware/production/node-3-dome-motion.yaml) |
+| **Node ID** | **1** |
+| **Role** | Behavioral Master & Dome Motion Controller |
+| **Source Code** | [`node-1-dome-motion.yaml`](../../firmware/production/node-1-dome-motion.yaml) |
 | **Visual ID** | ![Node 3 Master](../../assets/esp32-s3-super-mini.jpg) |
 
 ## Core Features

@@ -29,11 +29,11 @@ Node 3 reads this PWM signal and filters out minor "stick drift" by employing a 
 
 ## Master Relay Role
 
-In the **v1.6.2 Architecture**, Node 3 acts as the primary "System Dispatcher" for the dome.
+In the **v1.6.2 Architecture**, Node 1 acts as the primary "System Dispatcher" for the dome.
 - **Listens** for serial commands from the body (GPIO 16).
 - **Triggers** the WLED board locally (GPIO 27) for synchronized effects.
 
 ---
 **Relevant Hardware & Code:**
-- [Node 3: Dome Motion Spec](../../architecture/node-3-dome-motion-spec.md)
+- [Node 1: Dome Master](../../architecture/node-1-dome-motion-spec.md)
 - [Node Pinout Guide](../../architecture/node-pinout-guide.md)

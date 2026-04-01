@@ -1,14 +1,14 @@
-# <i data-lucide="sun"></i> Node 2: LED Distribution
+# <i data-lucide="lightbulb"></i> Node 3: LED Distribution Spec
 
-> **TECHNICAL SPECIFICATIONS** | **WLED Firmware** | **ESP32 Dev Board (Standard)**
+> **TECHNICAL SPECIFICATIONS** | **WLED v0.14** | **ESP32D Dev Board** | **Visual Output Hub**
 
-The **LED Distribution** node is dedicated to orchestrating the WS2812 addressable LED system in the dome using **WLED**.
-
-| **Hardware Node** | ESP32-Dev Board (Standard) |
+| Component | Detail |
 | :--- | :--- |
+| **Node ID** | **3** |
+| **Role** | Cinematic Visual Output & Peripheral Sync |
+| **Source Code** | [`node-3-led-distribution.yaml`](../../firmware/production/node-3-led-distribution.yaml) |
 | **Logic Framework** | WLED |
 | **Primary Function** | Addressable LEDs |
-| **Source Code** | [ Install WLED](https://install.wled.me/) / [ `node-2-led-distribution-v2.1.yaml`](../../firmware/production/node-2-led-distribution-v2.1.yaml) |
 | **Visual ID** | ![ESP32D](../../assets/esp32d-dev-board.png) |
 | **Wireless Link** | **ESP-NOW** |
 | **Status LED** | **GPIO 2** |
@@ -47,7 +47,7 @@ To achieve cinematic logic scrolling:
 
 ## UDNS Serial Integration
 
-This MCU receives high-level commands from the Body Controller via the slip ring.
+This Node receives high-level commands from the Body Controller via the slip ring.
 - **Data Signal**: Connect the Yellow/Black wire (Body TX) to **GPIO 16**.
 - **Response Signal**: Connect the Green/Black wire (Body RX) to **GPIO 17**.
 - **Protocol**: 115200 Baud, 8N1. WLED can be configured to react to serial JSON payloads for synchronized animations.

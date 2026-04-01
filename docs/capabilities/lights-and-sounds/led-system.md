@@ -29,5 +29,5 @@ To achieve cinematic animations, the WLED interface is configured using **2D Mat
 
 ---
 **Relevant Hardware & Code:**
-- [Node 2: LED Distribution Spec](../../architecture/node-2-led-distribution-spec.md)
+- [Node 3: LED Distribution Spec](../../architecture/node-3-led-distribution-spec.md)
 - [Node Pinout Guide](../../architecture/node-pinout-guide.md)

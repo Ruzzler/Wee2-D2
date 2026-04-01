@@ -46,13 +46,13 @@ flowchart TD
 
  subgraph LOGIC_RAIL [5V LOGIC & SIGNALS]
  ESC1 -->|5V BEC| RC1["Body Receiver"]:::signal
- RC1 -->|5V| Node1["Node 1 (Sound S3)"]:::brain
+ RC1 -->|5V| Node1["Node 2 (Sound S3)"]:::brain
  Node1 -->|UART| AUDIO["DFPlayer Mini"]:::audio
  
  DOME_ESC -.->|Isolated| RC2["Dome Receiver"]:::signal
 
- DOME_WAGOS --> Node2["Node 2 (WLED)"]:::lights
- DOME_WAGOS --> Node3["Node 3 (Motion S3)"]:::brain
+ DOME_WAGOS --> Node2["Node 3 (Lights WLED)"]:::brain
+ DOME_ESC -->|PWM| Node3["Node 1 (Dome S3)"]:::brain
  DOME_WAGOS --> LEDS["LED Matrices"]:::lights
  end
 
@@ -79,9 +79,9 @@ flowchart TD
  click DOME_BUCK href "../bill-of-materials.md" "BOM"
  click RC1 href "../hardware/hotrc-f06a-manual.md" "Receiver Manual"
  click RC2 href "../hardware/hotrc-f06a-manual.md" "Receiver Manual"
- click Node1 href "node-1-sound-hub-spec.md" "Node 1 Spec"
- click Node2 href "node-2-led-distribution-spec.md" "Node 2 Spec"
- click Node3 href "node-3-dome-motion-spec.md" "Node 3 Spec"
+ click Node1 href "node-2-sound-hub-spec.md" "Node 2 Spec"
+ click Node2 href "node-3-led-distribution-spec.md" "Node 3 Spec"
+ click Node3 href "node-1-dome-motion-spec.md" "Node 1 Spec"
  click DOME_ESC href "../hardware/gobilda-motor-manual.md" "Motor Manual"
 
  classDef power fill:#ff9900,stroke:#333,stroke-width:2px,color:#000

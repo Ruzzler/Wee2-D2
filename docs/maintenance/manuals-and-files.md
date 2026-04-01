@@ -34,9 +34,9 @@ Direct links to the latest production-verified code and settings.
 
 ### ** ESPHome Firmware (YAML)**
 
-- [Sound Hub (Node 1)](../../firmware/production/node-1-sound-hub.yaml)
-- [LED Distribution (Node 2)](../../firmware/production/node-2-led-distribution.yaml)
-- [Dome Motion (Node 3)](../../firmware/production/node-3-dome-motion.yaml)
+- [Dome Master (Node 1)](../../firmware/production/node-1-dome-motion.yaml)
+- [Sound Hub (Node 2)](../../firmware/production/node-2-sound-hub.yaml)
+- [LED Distribution (Node 3)](../../firmware/production/node-3-led-distribution.yaml)
 
 ### ** VESC Motor Settings (XML)**
 

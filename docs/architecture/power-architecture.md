@@ -30,9 +30,9 @@ Wee2-D2 utilizes isolated voltage rails to protect sensitive logic from motor-in
 ### B. 5.1V Logic & Audio Rail
 | Component | Role | Regulation Source |
 | :--- | :--- | :--- |
-| [Node 1 (Sound)](node-1-sound-hub-spec.md) | Body logic & sounds | Flipsky BEC (5.1V) |
-| [Node 2 (LEDs)](node-2-led-distribution-spec.md) | Dome lighting arrays | Mini560 Buck (5.1V) |
-| [Node 3 (Motion)](node-3-dome-motion-spec.md) | Dome motion processing | goBILDA BEC (5.1V) |
+| [Node 1 (Motion)](node-1-dome-motion-spec.md) | Dome motion processing | goBILDA BEC (5.1V) |
+| [Node 2 (Sound)](node-2-sound-hub-spec.md) | Body logic & sounds | Flipsky BEC (5.1V) |
+| [Node 3 (LEDs)](node-3-led-distribution-spec.md) | Dome lighting arrays | Mini560 Buck (5.1V) |
 
 ---
 
@@ -57,8 +57,8 @@ The **CNBTR Slip Ring** (6 wires) acts as the high-current bridge. We utilize a 
 Every component in the droid (Nodes, ESCs, Receivers, and LED Strips) **MUST** share a common ground reference. All grounds trace back to the central **Negative Bus Bar**. Without this shared reference, PWM and UART data signals will become unreadable interference.
 
 ### Processing Clamps
-- **Dynamic Speed Multiplier**: Node 3 provides a dashboard-adjustable speed cap (0.1 - 1.0) to ensure cinematic motion regardless of raw voltage level.
-- **Current Limiters**: Node 2 maintains an internal brightness limit of **3500mA** to protect the buck converters from thermal runaway.
+- **Dynamic Speed Multiplier**: Node 1 provides a dashboard-adjustable speed cap (0.1 - 1.0) to ensure cinematic motion regardless of raw voltage level.
+- **Current Limiters**: Node 3 maintains an internal brightness limit of **3500mA** to protect the buck converters from thermal runaway.
 
 ---
 

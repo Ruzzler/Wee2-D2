@@ -23,7 +23,7 @@ logger:
  level: INFO
  baud_rate: 115200
 
-# Inter-MCU Communication (The UDNS Bus)
+# Inter-Node Communication (The UDNS Bus)
 uart:
  id: udns_bus
  tx_pin: GPIO17

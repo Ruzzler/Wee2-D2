@@ -54,4 +54,4 @@ Tracks must be named with a 3-digit prefix (e.g., `001_beep.mp3`) to enable rapi
 
 **Further Resources:**
 - [DFPlayer Mini Official Manual](../manuals/dfplayer-mini-manual.pdf)
-- [Node 1: Sound Hub Spec](../architecture/node-1-sound-hub-spec.md)
+- [Node 2: Sound Hub Spec](../architecture/node-2-sound-hub-spec.md)

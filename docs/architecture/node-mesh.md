@@ -9,23 +9,23 @@ This design handles high-amperage motor control, precision dome rotation, and ci
 
 Synchronization is achieved using low-latency **ESP-NOW** wireless bridging across three specialized nodes:
 
-### Node 1: Sound Hub (ESP32-S3)
-
-- **Role**: Behavioral audio execution and locomotion monitoring.
-- **Hardware**: DFPlayer Mini, TPA3118 Amplifier, Drive ESC integration.
-- **Logic**: Receives behavioral triggers from Node 3 via ESP-NOW to initiate synchronized sound events.
-
-### Node 2: LED Distribution (ESP32)
-
-- **Role**: Cinematic visual output.
-- **Hardware**: Addressable LED matrices (WS2812B/PSI Logic).
-- **Logic**: A WLED-embedded node that translates motion-state triggers into specific lighting patterns.
-
-### Node 3: Dome Motion Master (ESP32-S3)
+### Node 1: Dome Motion Master (ESP32-S3)
 
 - **Role**: Master Automations and movement control.
 - **Hardware**: goBILDA 5203 Dome Motor, PWM Motor Controller.
 - **Logic**: Processes RC inputs and broadcasts state triggers (e.g., "Droid Happy", "High Alert") to the rest of the mesh.
+
+### Node 2: Sound Hub (ESP32-S3)
+
+- **Role**: Behavioral audio execution and locomotion monitoring.
+- **Hardware**: DFPlayer Mini, TPA3118 Amplifier, Drive ESC integration.
+- **Logic**: Receives behavioral triggers from Node 1 via ESP-NOW to initiate synchronized sound events.
+
+### Node 3: LED Distribution (ESP32)
+
+- **Role**: Cinematic visual output.
+- **Hardware**: Addressable LED matrices (WS2812B/PSI Logic).
+- **Logic**: A WLED-embedded node that translates motion-state triggers into specific lighting patterns.
 
 ---
 
@@ -33,7 +33,7 @@ Synchronization is achieved using low-latency **ESP-NOW** wireless bridging acro
 
 To prevent analog audio interference and reduce the risk of slip ring data corruption, the Node Mesh utilizes **ESP-NOW**, a high-speed 2.4GHz peer-to-peer protocol.
 
-- **Zero Router Latency**: MCUs communicate directly with <10ms response times.
+- **Zero Router Latency**: Nodes communicate directly with <10ms response times.
 - **EMI Immunity**: Moving data to the 2.4G spectrum eliminates the ground loops and motor interference inherent in slip rings.
 - **Scalability**: New nodes (e.g., foot sensors or Cinematic Logic Displays) can be added to the mesh without pulling additional wires through the central joint.
 

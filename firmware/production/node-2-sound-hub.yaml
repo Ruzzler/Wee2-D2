@@ -2,12 +2,12 @@
 # This file MUST NOT be modified for testing or feature development.
 # Use firmware/development/ for active experimentation.
 
-# Wee2-D2 Body Hub (Node 1)
+# Wee2-D2 Body Hub (Node 2)
 # v2.0-Hybrid | SECURE SECURE RECOVERY
 
 substitutions:
- node_name: "wee2d2-body-hub"
- node_id: "1"
+  node_name: "wee2d2-body-hub"
+  node_id: "2"
  fw_version: "2.0.0"
 
 packages:

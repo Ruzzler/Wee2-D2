@@ -1,10 +1,10 @@
-# Wee2-D2 Dome Master (Node 3)
+# Wee2-D2 Dome Master (Node 1)
 # v2.2.0-test | DEVELOPMENT: Dynamic Speed Multiplier
 # SOP: DO NOT PROMOTE TO PRODUCTION WITHOUT BENCH TESTING
 
 substitutions:
   node_name: "wee2d2-dome-master-test"
-  node_id: "3-dev"
+  node_id: "1-dev"
   fw_version: "2.2.0-test"
 
 packages:

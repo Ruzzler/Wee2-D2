@@ -26,7 +26,7 @@ Your ESP32s need to know your Wi-Fi password so they can connect to your local n
 1. Plug your ESP32 into your computer via USB.
 1. Open your [ESPHome Dashboard](https://esphome.io/).
 1. Click **"New Device"**.
-1. Click **"Continue"**, give it the name corresponding to the MCU (e.g., `mcu1-body-controller`).
+1. Click **"Continue"**, give it the name corresponding to the Node (e.g., `node-2-sound-hub`).
 1. Click **"Connect"** and select the **USB/COM Port** that appears in your browser popup.
 1. Click **"Install"**.
 
@@ -38,8 +38,8 @@ Once the blank firmware is running on the device, it will connect to your Wi-Fi 
 
 1. Click **"Edit"** on your new node in the Dashboard.
 1. Erase the default code that ESPHome generated.
-1. Copy and paste the entire YAML configuration from the repository (e.g., `firmware/production/mcu1-body-controller/body-brain.yaml`).
+1. Copy and paste the entire YAML configuration from the repository (e.g., `firmware/production/node-2-sound-hub.yaml`).
 1. Hit **"Install"** in the top right corner. Because the device is now online, it will install wirelessly!
 
 > [!TIP]
-> **COMPLETED!** You never have to plug this MCU into your computer via USB ever again. All future updates can be deployed directly through the air. You can now refer to the [Network & OTA Guide](network-ota-guide.md) for long-term management.
+> **COMPLETED!** You never have to plug this Node into your computer via USB ever again. All future updates can be deployed directly through the air. You can now refer to the [Network & OTA Guide](network-ota-guide.md) for long-term management.

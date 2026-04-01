@@ -19,9 +19,9 @@ Wee2-D2 utilizes a decentralized architecture split across three ESP32 microcont
 
 ### Wireless Bridge (ESP-NOW)
 
-- **Node 1: Sound Hub**: **ESP32-S3 Super Mini** managing the **DFPlayer Mini** and drive system telemetry.
-- **Node 2: LED Distribution**: Standard **ESP32 Dev Board** running WLED for high-density addressable light matrices.
-- **Node 3: Dome Motion**: **ESP32-S3 Super Mini** acting as the "Behavioral Master," broadcasting wireless triggers to the body and lights.
+- **Node 1: Dome Motion**: **ESP32-S3 Super Mini** acting as the "Behavioral Master," broadcasting wireless triggers to the body and lights.
+- **Node 2: Sound Hub**: **ESP32-S3 Super Mini** managing the **DFPlayer Mini** and drive system telemetry.
+- **Node 3: LED Distribution**: Standard **ESP32 Dev Board** running WLED for high-density addressable light matrices.
 
 > [!WARNING]
 > **PROJECT SCOPE**: This repository exclusively documents my custom **Electrical Architecture** and **Firmware** ecosystem. It does **not** contain the 3D-printable STL files or mechanical assembly instructions for the droid chassis itself. Please refer to the official Mr. Baddeley Patreon or group hubs for structural files.

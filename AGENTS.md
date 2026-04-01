@@ -40,12 +40,12 @@ To ensure project-wide synchronization, use this map as a lookup table during re
 
 | Hardware Component | Primary Documentation | Firmware / Config Files |
 | :--- | :--- | :--- |
-| **Node 1 (Sound Hub)** | `node-pinout-guide.md`, `electrical-schematic.md` | `node-1-sound-hub.yaml`, `README.md` |
-| **Node 2 (LED Distribution)** | `node-2-led-distribution-spec.md`, `led-system.md` | `node-2-led-distribution.yaml` |
-| **Node 3 (Dome Motion)** | `node-3-dome-motion-spec.md`, `dome-rotation.md` | `node-3-dome-motion.yaml`, `README.md` |
+| **Node 1 (Dome Motion)** | `node-pinout-guide.md`, `dome-rotation.md` | `node-1-dome-motion.yaml`, `README.md` |
+| **Node 2 (Sound Hub)** | `node-pinout-guide.md`, `electrical-schematic.md` | `node-2-sound-hub.yaml`, `README.md` |
+| **Node 3 (LED Distribution)** | `node-2-led-distribution-spec.md`, `led-system.md` | `node-3-led-distribution.yaml` |
 | **Drive ESCs** | `body-drive.md`, `flipsky-fsesc-67-pro-manual.md` | `left-motor-settings.xml` |
-| **Audio (DFPlayer)**| `audio-system.md`, `dfplayer-mini-spec.md` | `node-1-sound-hub.yaml` (UART triggers) |
-| **WLED Display** | `led-system.md`, `node-2-led-distribution-spec.md` | `node-2-led-distribution.yaml` (RMT Timing) |
+| **Audio (DFPlayer)**| `audio-system.md`, `dfplayer-mini-spec.md` | `node-2-sound-hub.yaml` (UART triggers) |
+| **WLED Display** | `led-system.md`, `node-3-led-distribution-spec.md` | `node-3-led-distribution.yaml` (RMT Timing) |
 
 ---
 
@@ -53,9 +53,9 @@ To ensure project-wide synchronization, use this map as a lookup table during re
 
 The droid operates on a **Distributed Node Mesh** model architecture.
 
-- **Node 1 (Sound Hub)**: **ESP32-S3 Super Mini**. Manages the **DFPlayer Mini** and drive system monitoring. Listens for ESP-NOW triggers.
-- **Node 2 (LED Distribution)**: **ESP32D Dev Board**. Handles lighting (WLED). Listens for sync triggers.
-- **Node 3 (Dome Motion Master)**: **ESP32-S3 Super Mini**. Manages precision dome rotation (ESPHome) and acts as the **Behavioral Master**, broadcasting ESP-NOW triggers.
+- **Node 1 (Dome Motion Master)**: **ESP32-S3 Super Mini**. Manages precision dome rotation (ESPHome) and acts as the **Behavioral Master**, broadcasting ESP-NOW triggers.
+- **Node 2 (Sound Hub)**: **ESP32-S3 Super Mini**. Manages the **DFPlayer Mini** and drive system monitoring. Listens for ESP-NOW triggers.
+- **Node 3 (LED Distribution)**: **ESP32D Dev Board**. Handles lighting (WLED). Listens for sync triggers.
 - **Communication**: Extremely low-latency **ESP-NOW** (@ 2.4GHz). This eliminates the need for data wires through the slip ring.
 - **Firmware**: 100% **ESPHome** (Nodes 1 & 3) and **WLED** (Node 2). Both S3 nodes **MUST** use the `esp-idf` framework.
 
