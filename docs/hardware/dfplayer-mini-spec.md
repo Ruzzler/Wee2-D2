@@ -1,6 +1,6 @@
 # <i data-lucide="volume-2"></i> DFPlayer Mini (MP3-TF-16P)
 
-> **TECHNICAL SPECIFICATIONS** | **HARDWARE SPECIFICATION** | **NODE 1: SOUND HUB INTEGRATION**
+> **TECHNICAL SPECIFICATIONS** | **SERIAL MP3 PLAYER** | **NODE 1: SOUND HUB INTEGRATION**
 
 The **DFPlayer Mini** is a specialized, serial-controlled MP3 module that serves as the "Voice" of Wee2-D2. It is managed by **Node 1 (Sound Hub)** via a low-latency UART serial link.
 

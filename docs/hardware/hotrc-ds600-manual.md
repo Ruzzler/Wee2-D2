@@ -1,6 +1,6 @@
 # <i data-lucide="settings"></i> HOTRC DS-600
 
-## TECHNICAL SPECIFICATIONS
+> **TECHNICAL SPECIFICATIONS** | **6-CHANNEL TX** | **2.4GHz TRIGGER STYLE**
 
 The **HOTRC DS-600** is a 6-channel, one-handed "trigger style" 2.4GHz transmitter. In the Wee2-D2 project, it provides the primary interface for drive and dome movement.
 

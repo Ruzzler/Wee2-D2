@@ -1,6 +1,6 @@
 # <i data-lucide="sun"></i> GrnWave Circular PSI
 
-> **TECHNICAL SPECIFICATIONS**
+> **TECHNICAL SPECIFICATIONS** | **WS2812B-2020** | **76 LED CIRCULAR ARRAY**
 
 ![GrnWave PSI](../../assets/grnwave-psi-logic.jpg)
 

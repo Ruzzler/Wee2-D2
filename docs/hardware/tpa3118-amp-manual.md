@@ -1,6 +1,6 @@
 # <i data-lucide="volume-2"></i> TPA3118 60W Mono Amplifier
 
-> **TECHNICAL SPECIFICATIONS**
+> **TECHNICAL SPECIFICATIONS** | **AUDIO AMPLIFIER** | **60W MONO CLASS-D**
 
 The **TPA3118** is a high-efficiency Class-D mono audio amplifier module that serves as the primary sound projection hardware for the Wee2-D2. It receives a low-level analog signal from the **DFPlayer Mini** (Node 1) and drives the internal 3.5" speaker.
 

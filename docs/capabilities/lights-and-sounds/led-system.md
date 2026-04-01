@@ -1,5 +1,7 @@
 # <i data-lucide="sun"></i> LED Arrays & Displays
 
+> **TECHNICAL SPECIFICATIONS** | **WS2812B LOGIC** | **ADDRESSABLE MATRIX**
+
 The visual personality of Wee2-D2 is driven by high-density **WS2812B addressable LED** matrices, controlled by **Node 2 (Lighting Controller)** running the **WLED** framework. Synchronized visual behaviors (e.g., "High Alert" red pulsing) are triggered wirelessly from the **Dome Motion (Node 3)** via the **ESP-NOW** bridge.
 
 ## Power Constraints
