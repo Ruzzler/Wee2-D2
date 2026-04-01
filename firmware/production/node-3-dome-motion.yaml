@@ -2,25 +2,25 @@
 # v2.0-Hybrid | SECURE SECURE RECOVERY
 
 substitutions:
-  node_name: "wee2d2-dome-master"
-  node_id: "3"
-  fw_version: "2.0.0"
+ node_name: "wee2d2-dome-master"
+ node_id: "3"
+ fw_version: "2.0.0"
 
 packages:
-  remote_base: !include ../../common/base-config.yaml
-  hw_base: !include ../../common/s3-defaults.yaml
+ remote_base: !include ../../common/base-config.yaml
+ hw_base: !include ../../common/s3-defaults.yaml
 
 esphome:
-  on_boot:
-    priority: -10
-    then:
-      - servo.write: {id: dome_motor, level: 0.0}
-      - logger.log: "BOOT: Motor forced to STOP (Imperial Safety)"
-  
-  on_shutdown:
-    priority: 600
-    then:
-      - servo.write: {id: dome_motor, level: 0.0}
+ on_boot:
+ priority: -10
+ then:
+ - servo.write: {id: dome_motor, level: 0.0}
+ - logger.log: "BOOT: Motor forced to STOP (System Safety)"
+ 
+ on_shutdown:
+ priority: 600
+ then:
+ - servo.write: {id: dome_motor, level: 0.0}
 
 # ============================================
 # UNIQUE HARDWARE: Dome Master
@@ -32,255 +32,255 @@ esphome:
 # ============================================
 
 status_led:
-  pin: GPIO8
+ pin: GPIO8
 
 output:
-  - platform: ledc
-    pin: GPIO7
-    id: dome_pwm
-    frequency: 50Hz
+ - platform: ledc
+ pin: GPIO7
+ id: dome_pwm
+ frequency: 50Hz
 
 servo:
-  - id: dome_motor
-    output: dome_pwm
-    min_level: 0.05
-    idle_level: 0.075
-    max_level: 0.1
-    transition_length: 0.8s
-    auto_detach_time: 5s
+ - id: dome_motor
+ output: dome_pwm
+ min_level: 0.05
+ idle_level: 0.075
+ max_level: 0.1
+ transition_length: 0.8s
+ auto_detach_time: 5s
 
 light:
-  # REAR PSI (GPIO 5)
-  - platform: esp32_rmt_led_strip
-    rgb_order: GRB
-    pin: GPIO5
-    num_leds: 76
-    chipset: ws2812
-    rmt_symbols: 96
-    name: "Rear PSI"
-    id: rear_psi
-    
-    # 30% BRIGHTNESS CLAMP
-    on_turn_on:
-      then:
-        - if:
-            condition:
-              lambda: 'return id(rear_psi).remote_values.get_brightness() > 0.3;'
-            then:
-              - light.turn_on: {id: rear_psi, brightness: 30%}
-    effects: &psi_effects
-      - addressable_scan:
-          name: "Cinematic Wipe"
-          move_interval: 75ms
-          scan_width: 38
-      - addressable_flicker:
-          name: "TEST: High Alert"
-          intensity: 3%
-      - addressable_twinkle:
-          name: "T6: Leia/Hologram"
-          twinkle_probability: 10%
-          progress_interval: 20ms
-      - addressable_rainbow:
-          name: "Party Mode (Rainbow)"
-          speed: 10
-          width: 50
+ # REAR PSI (GPIO 5)
+ - platform: esp32_rmt_led_strip
+ rgb_order: GRB
+ pin: GPIO5
+ num_leds: 76
+ chipset: ws2812
+ rmt_symbols: 96
+ name: "Rear PSI"
+ id: rear_psi
+ 
+ # 30% BRIGHTNESS CLAMP
+ on_turn_on:
+ then:
+ - if:
+ condition:
+ lambda: 'return id(rear_psi).remote_values.get_brightness() > 0.3;'
+ then:
+ - light.turn_on: {id: rear_psi, brightness: 30%}
+ effects: &psi_effects
+ - addressable_scan:
+ name: "Cinematic Wipe"
+ move_interval: 75ms
+ scan_width: 38
+ - addressable_flicker:
+ name: "TEST: High Alert"
+ intensity: 3%
+ - addressable_twinkle:
+ name: "T6: Leia/Hologram"
+ twinkle_probability: 10%
+ progress_interval: 20ms
+ - addressable_rainbow:
+ name: "Party Mode (Rainbow)"
+ speed: 10
+ width: 50
 
-  # FRONT PSI (GPIO 6)
-  - platform: esp32_rmt_led_strip
-    rgb_order: GRB
-    pin: GPIO6
-    num_leds: 76
-    chipset: ws2812
-    rmt_symbols: 96
-    name: "Front PSI"
-    id: front_psi
-    
-    # 30% BRIGHTNESS CLAMP
-    on_turn_on:
-      then:
-        - if:
-            condition:
-              lambda: 'return id(front_psi).remote_values.get_brightness() > 0.3;'
-            then:
-              - light.turn_on: {id: front_psi, brightness: 30%}
-    effects: *psi_effects
+ # FRONT PSI (GPIO 6)
+ - platform: esp32_rmt_led_strip
+ rgb_order: GRB
+ pin: GPIO6
+ num_leds: 76
+ chipset: ws2812
+ rmt_symbols: 96
+ name: "Front PSI"
+ id: front_psi
+ 
+ # 30% BRIGHTNESS CLAMP
+ on_turn_on:
+ then:
+ - if:
+ condition:
+ lambda: 'return id(front_psi).remote_values.get_brightness() > 0.3;'
+ then:
+ - light.turn_on: {id: front_psi, brightness: 30%}
+ effects: *psi_effects
 
 # ============================================
 # SENSORS (RC REMOTE PASSTHROUGH)
 # ============================================
 sensor:
-  - platform: pulse_width
-    pin: 
-      number: GPIO4
-      mode: INPUT_PULLDOWN
-    name: "RC Stick Input"
-    id: rc_stick
-    update_interval: 50ms
-    filters:
-      - multiply: 1000000 
-      - delta: 20.0  
-    on_value:
-      then:
-        - lambda: |-
-            if (x < 1400 || x > 1600) {
-              // Stop autonomous behaviors if the pilot takes control
-              id(mood_standard_stuck).stop();
-              id(r2_angry).stop();
-              id(test_scan_patrol).stop();
-              id(test_party_dance).stop();
-              
-              float speed = 0.0;
-              if (x < 1400) {
-                speed = (x - 1400.0) / 400.0; 
-              } else if (x > 1600) {
-                speed = (x - 1600.0) / 400.0; 
-              }
-              
-              // --- VOLTAGE CLAMP LOGIC (UNTESTED - COMMENTED OUT) ---
-              // speed = speed * 0.6;
-              
-              // if (speed < -0.6) speed = -0.6;
-              // if (speed > 0.6) speed = 0.6;
-              
-              id(dome_motor).write(speed);
-              
-            } else {
-              if (!id(mood_standard_stuck).is_running() && 
-                  !id(r2_angry).is_running() && 
-                  !id(test_scan_patrol).is_running() && 
-                  !id(test_party_dance).is_running()) {
-                
-                id(dome_motor).write(0.0);
-              }
-            }
+ - platform: pulse_width
+ pin: 
+ number: GPIO4
+ mode: INPUT_PULLDOWN
+ name: "RC Stick Input"
+ id: rc_stick
+ update_interval: 50ms
+ filters:
+ - multiply: 1000000 
+ - delta: 20.0 
+ on_value:
+ then:
+ - lambda: |-
+ if (x < 1400 || x > 1600) {
+ // Stop autonomous behaviors if the pilot takes control
+ id(mood_standard_stuck).stop();
+ id(r2_angry).stop();
+ id(test_scan_patrol).stop();
+ id(test_party_dance).stop();
+ 
+ float speed = 0.0;
+ if (x < 1400) {
+ speed = (x - 1400.0) / 400.0; 
+ } else if (x > 1600) {
+ speed = (x - 1600.0) / 400.0; 
+ }
+ 
+ // --- VOLTAGE CLAMP LOGIC (UNTESTED - COMMENTED OUT) ---
+ // speed = speed * 0.6;
+ 
+ // if (speed < -0.6) speed = -0.6;
+ // if (speed > 0.6) speed = 0.6;
+ 
+ id(dome_motor).write(speed);
+ 
+ } else {
+ if (!id(mood_standard_stuck).is_running() && 
+ !id(r2_angry).is_running() && 
+ !id(test_scan_patrol).is_running() && 
+ !id(test_party_dance).is_running()) {
+ 
+ id(dome_motor).write(0.0);
+ }
+ }
 
 # ============================================
 # GLOBALS & TUNING
 # ============================================
 globals:
-  - id: last_script_time
-    type: unsigned long
-    initial_value: '0'
-  - id: script_cooldown_ms
-    type: int
-    initial_value: '800'
-  - id: search_speed
-    type: float
-    initial_value: '0.25'
+ - id: last_script_time
+ type: unsigned long
+ initial_value: '0'
+ - id: script_cooldown_ms
+ type: int
+ initial_value: '800'
+ - id: search_speed
+ type: float
+ initial_value: '0.25'
 
 # ============================================
 # LOCAL RELAY TRIGGER (General Purpose Sync OUT)
 # ============================================
 switch:
-  - platform: template
-    name: "Convention Mode"
-    id: con_mode
-    optimistic: true
+ - platform: template
+ name: "Convention Mode"
+ id: con_mode
+ optimistic: true
 
 number:
-  - platform: template
-    name: "Manual Dome Power"
-    id: manual_speed
-    min_value: -1.0
-    max_value: 1.0
-    step: 0.01
-    optimistic: true
-    set_action:
-      then:
-        - servo.write: {id: dome_motor, level: !lambda 'return x;'} # Clamp x * 0.6 removed for testing
+ - platform: template
+ name: "Manual Dome Power"
+ id: manual_speed
+ min_value: -1.0
+ max_value: 1.0
+ step: 0.01
+ optimistic: true
+ set_action:
+ then:
+ - servo.write: {id: dome_motor, level: !lambda 'return x;'} # Clamp x * 0.6 removed for testing
 
 # ============================================
 # DROID BEHAVIORAL SCRIPTS
 # ============================================
 script:
-  - id: mood_standard_stuck
-    mode: restart
-    then:
-      - while:
-          condition:
-            lambda: 'return true;'
-          then:
-            - light.turn_on: {id: front_psi, brightness: 30%, effect: "Cinematic Wipe"}
-            - light.turn_on: {id: rear_psi, brightness: 30%, effect: "Cinematic Wipe"}
-            - delay: !lambda 'return 5000 + (rand() % 10000);'
-            - if:
-                condition:
-                  lambda: 'return (rand() % 100) < 10;'
-                then:
-                  - logger.log: "PSI Logic: Mechanical Jam Detected"
-                  - light.turn_on: {id: front_psi, effect: "none", red: 100%, blue: 0%}
-                  - light.turn_on: {id: rear_psi, effect: "none", red: 100%, blue: 0%}
-                  - delay: 7s
+ - id: mood_standard_stuck
+ mode: restart
+ then:
+ - while:
+ condition:
+ lambda: 'return true;'
+ then:
+ - light.turn_on: {id: front_psi, brightness: 30%, effect: "Cinematic Wipe"}
+ - light.turn_on: {id: rear_psi, brightness: 30%, effect: "Cinematic Wipe"}
+ - delay: !lambda 'return 5000 + (rand() % 10000);'
+ - if:
+ condition:
+ lambda: 'return (rand() % 100) < 10;'
+ then:
+ - logger.log: "PSI Logic: Mechanical Jam Detected"
+ - light.turn_on: {id: front_psi, effect: "none", red: 100%, blue: 0%}
+ - light.turn_on: {id: rear_psi, effect: "none", red: 100%, blue: 0%}
+ - delay: 7s
 
-  - id: r2_angry
-    mode: restart
-    then:
-      - light.turn_on: {id: front_psi, brightness: 30%, red: 100%, effect: "S1: Random Mode"}
-      - light.turn_on: {id: rear_psi, brightness: 30%, red: 100%, effect: "S1: Random Mode"}
-      - repeat:
-          count: 8
-          then:
-            - servo.write: {id: dome_motor, level: 0.5} # Clamped 0.3 removed
-            - delay: 120ms
-            - servo.write: {id: dome_motor, level: -0.5}
-            - delay: 120ms
-      - servo.write: {id: dome_motor, level: 0.0}
-      - script.execute: mood_standard_stuck
+ - id: r2_angry
+ mode: restart
+ then:
+ - light.turn_on: {id: front_psi, brightness: 30%, red: 100%, effect: "S1: Random Mode"}
+ - light.turn_on: {id: rear_psi, brightness: 30%, red: 100%, effect: "S1: Random Mode"}
+ - repeat:
+ count: 8
+ then:
+ - servo.write: {id: dome_motor, level: 0.5} # Clamped 0.3 removed
+ - delay: 120ms
+ - servo.write: {id: dome_motor, level: -0.5}
+ - delay: 120ms
+ - servo.write: {id: dome_motor, level: 0.0}
+ - script.execute: mood_standard_stuck
 
-  - id: test_scan_patrol
-    mode: restart
-    then:
-      - light.turn_on: {id: front_psi, brightness: 30%, effect: "Cinematic Wipe"}
-      - light.turn_on: {id: rear_psi, brightness: 30%, effect: "Cinematic Wipe"}
-      - servo.write: {id: dome_motor, level: 0.25} # Clamped 0.15 removed
-      - delay: 1500ms
-      - servo.write: {id: dome_motor, level: 0.0}
-      - delay: 500ms
-      - servo.write: {id: dome_motor, level: -0.25}
-      - delay: 1500ms
-      - servo.write: {id: dome_motor, level: 0.0}
+ - id: test_scan_patrol
+ mode: restart
+ then:
+ - light.turn_on: {id: front_psi, brightness: 30%, effect: "Cinematic Wipe"}
+ - light.turn_on: {id: rear_psi, brightness: 30%, effect: "Cinematic Wipe"}
+ - servo.write: {id: dome_motor, level: 0.25} # Clamped 0.15 removed
+ - delay: 1500ms
+ - servo.write: {id: dome_motor, level: 0.0}
+ - delay: 500ms
+ - servo.write: {id: dome_motor, level: -0.25}
+ - delay: 1500ms
+ - servo.write: {id: dome_motor, level: 0.0}
 
-  - id: test_party_dance
-    mode: restart
-    then:
-      - light.turn_on: {id: front_psi, brightness: 30%, effect: "Party Mode (Rainbow)"}
-      - light.turn_on: {id: rear_psi, brightness: 30%, effect: "Party Mode (Rainbow)"}
-      - repeat:
-          count: 4
-          then:
-            - servo.write: {id: dome_motor, level: 0.35} # Clamped 0.21 removed
-            - delay: 250ms
-            - servo.write: {id: dome_motor, level: -0.35}
-            - delay: 250ms
-      - servo.write: {id: dome_motor, level: 0.0}
+ - id: test_party_dance
+ mode: restart
+ then:
+ - light.turn_on: {id: front_psi, brightness: 30%, effect: "Party Mode (Rainbow)"}
+ - light.turn_on: {id: rear_psi, brightness: 30%, effect: "Party Mode (Rainbow)"}
+ - repeat:
+ count: 4
+ then:
+ - servo.write: {id: dome_motor, level: 0.35} # Clamped 0.21 removed
+ - delay: 250ms
+ - servo.write: {id: dome_motor, level: -0.35}
+ - delay: 250ms
+ - servo.write: {id: dome_motor, level: 0.0}
 
 # ============================================
 # BUTTONS & SYSTEM
 # ============================================
 button:
-  - platform: template
-    name: "▶ Start: Standard Logic"
-    on_press: {script.execute: mood_standard_stuck}
-  
-  - platform: template
-    name: "▶ Run: Angry Reaction"
-    on_press: {script.execute: r2_angry}
+ - platform: template
+ name: "▶ Start: Standard Logic"
+ on_press: {script.execute: mood_standard_stuck}
+ 
+ - platform: template
+ name: "▶ Run: Angry Reaction"
+ on_press: {script.execute: r2_angry}
 
-  - platform: template
-    name: "▶ Test: Scan Patrol"
-    on_press: {script.execute: test_scan_patrol}
+ - platform: template
+ name: "▶ Test: Scan Patrol"
+ on_press: {script.execute: test_scan_patrol}
 
-  - platform: template
-    name: "▶ Test: Party Dance"
-    on_press: {script.execute: test_party_dance}
+ - platform: template
+ name: "▶ Test: Party Dance"
+ on_press: {script.execute: test_party_dance}
 
-  - platform: template
-    name: " EMERGENCY STOP"
-    on_press:
-      - script.stop: mood_standard_stuck
-      - script.stop: r2_angry
-      - script.stop: test_scan_patrol
-      - script.stop: test_party_dance
-      - servo.write: {id: dome_motor, level: 0.0}
-      - light.turn_off: front_psi
-      - light.turn_off: rear_psi
+ - platform: template
+ name: " EMERGENCY STOP"
+ on_press:
+ - script.stop: mood_standard_stuck
+ - script.stop: r2_angry
+ - script.stop: test_scan_patrol
+ - script.stop: test_party_dance
+ - servo.write: {id: dome_motor, level: 0.0}
+ - light.turn_off: front_psi
+ - light.turn_off: rear_psi

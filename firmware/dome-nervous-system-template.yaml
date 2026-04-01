@@ -1,78 +1,78 @@
 esphome:
-  name: dome-nervous-system-controller
-  friendly_name: Dome Nervous System Controller
+ name: dome-nervous-system-controller
+ friendly_name: Dome Nervous System Controller
 
 esp32:
-  board: esp32-s3-devkitc-1
-  framework:
-    type: arduino
+ board: esp32-s3-devkitc-1
+ framework:
+ type: arduino
 
 # Web Server for mobile control
 web_server:
-  port: 80
+ port: 80
 
 # Home Assistant API
 api:
 
 # OTA Updates
 ota:
-  platform: esphome
+ platform: esphome
 
 # Logging
 logger:
-  level: INFO
-  baud_rate: 115200
+ level: INFO
+ baud_rate: 115200
 
 # Inter-MCU Communication (The UDNS Bus)
 uart:
-  id: udns_bus
-  tx_pin: GPIO17
-  rx_pin: GPIO16
-  baud_rate: 115200
-  debug:
-    direction: BOTH
-    dummy_receiver: true
-    after:
-      delimiter: "\n"
-    sequence:
-      - lambda: |-
-          std::string cmd(x.begin(), x.end());
-          if (cmd == "ANGRY_START") {
-            id(angry_mode_preset).execute();
-          } else if (cmd == "ANGRY_STOP") {
-            id(idle_mode_preset).execute();
-          }
+ id: udns_bus
+ tx_pin: GPIO17
+ rx_pin: GPIO16
+ baud_rate: 115200
+ debug:
+ direction: BOTH
+ dummy_receiver: true
+ after:
+ delimiter: "\n"
+ sequence:
+ - lambda: |-
+ std::string cmd(x.begin(), x.end());
+ if (cmd == "ANGRY_START") {
+ id(angry_mode_preset).execute();
+ } else if (cmd == "ANGRY_STOP") {
+ id(idle_mode_preset).execute();
+ }
 
 # LIGHTING CONFIGURATION (NODE 2)
 light:
-  - platform: neopixelbus
-    type: GRB
-    variant: WS2812
-    pin: GPIO1
-    num_leds: 40
-    name: "Front Logics"
-    id: front_logics
-    effects:
-      - wled:
-          name: "Droid Idle"
-      - wled:
-          name: "Angry Strobe"
+ - platform: neopixelbus
+ type: GRB
+ variant: WS2812
+ pin: GPIO1
+ num_leds: 40
+ name: "Front Logics"
+ id: front_logics
+ effects:
+ - wled:
+ name: "Droid Idle"
+ - wled:
+ name: "Angry Strobe"
 
 # SCRIPTS FOR SERIAL COMMANDS
 script:
-  - id: high_alert_preset
-    then:
-      - light.turn_on:
-          id: front_logics
-          effect: "Strobe"
-          brightness: 100%
-          red: 100%
-          green: 0%
-          blue: 0%
-  
-  - id: idle_mode_preset
-    then:
-      - light.turn_on:
-          id: front_logics
-          effect: "Droid Idle"
-          brightness: 50%
+ - id: high_alert_preset
+ then:
+ - light.turn_on:
+ id: front_logics
+ effect: "Strobe"
+ brightness: 100%
+ red: 100%
+ green: 0%
+ blue: 0%
+ 
+ - id: idle_mode_preset
+ then:
+ - light.turn_on:
+ id: front_logics
+ effect: "Droid Idle"
+ brightness: 50%

@@ -25,7 +25,7 @@ Internal documentation optimized for the Wee2-D2 architecture.
 
 ---
 
-##  2. System Configuration Files (Firmware & Config)
+## 2. System Configuration Files (Firmware & Config)
 Direct links to the latest production-verified code and settings.
 
 ### ** ESPHome Firmware (YAML)**
@@ -41,7 +41,7 @@ Direct links to the latest production-verified code and settings.
 
 ---
 
-##  3. External Tooling & Cloud Links
+## 3. External Tooling & Cloud Links
 Direct links to external tools and cloud-based management systems.
 
 | Resource | URL / Source | Description |

@@ -16,23 +16,23 @@ If your droid begins exhibiting unexpected behavior, use this matrix to diagnose
 
 ---
 
-##  Diagnostics Bench
+## Diagnostics Bench
 
 ### **1. ESPHome Logs**
 The most powerful tool at your disposal is the **ESPHome Logger**.
-1.  Connect the ESP32 to your PC via USB.
-2.  Open the ESPHome Dashboard.
-3.  Click **Logs** on the problematic MCU.
-4.  **Watch for Errors**: UART timeouts, Wi-Fi disconnects, or I2C bus failures will appear in RED text.
+1. Connect the ESP32 to your PC via USB.
+2. Open the ESPHome Dashboard.
+3. Click **Logs** on the problematic MCU.
+4. **Watch for Errors**: UART timeouts, Wi-Fi disconnects, or I2C bus failures will appear in RED text.
 
 ### **2. Wireless Bridge (ESP-NOW) Synchronization Test**
 To verify the wireless behavioral triggers:
-1.  Open the **Dome Master (MCU 3)** Logs.
-2.  Trigger a movement or behavioral script.
-3.  Look for a broadcast entry: `[D][esp_now:xxx]: Broadcast behavioral EVENT_ID_XX`.
-4.  Open the **Body Audio Hub (MCU 1)** Logs and confirm it receives the event and triggers the DFPlayer: `[D][dfplayer:xxx]: Playing track XX`.
+1. Open the **Dome Master (MCU 3)** Logs.
+2. Trigger a movement or behavioral script.
+3. Look for a broadcast entry: `[D][esp_now:xxx]: Broadcast behavioral EVENT_ID_XX`.
+4. Open the **Body Audio Hub (MCU 1)** Logs and confirm it receives the event and triggers the DFPlayer: `[D][dfplayer:xxx]: Playing track XX`.
 
 ### **3. Multimeter Probe Points**
-*   **VCC Rail**: Should be **18V - 21V** (Main Battery).
-*   **Logic Rail**: Should be **5.0V - 5.2V** (Buck Output).
-*   **Signal GND**: Continuity should exist between ALL GND pins across ALL ESP32s.
+* **VCC Rail**: Should be **18V - 21V** (Main Battery).
+* **Logic Rail**: Should be **5.0V - 5.2V** (Buck Output).
+* **Signal GND**: Continuity should exist between ALL GND pins across ALL ESP32s.

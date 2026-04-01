@@ -2,384 +2,384 @@
 # v2.0-Hybrid | SECURE SECURE RECOVERY
 
 substitutions:
-  node_name: "wee2d2-body-hub"
-  node_id: "1"
-  fw_version: "2.0.0"
+ node_name: "wee2d2-body-hub"
+ node_id: "1"
+ fw_version: "2.0.0"
 
 packages:
-  remote_base: !include ../../common/base-config.yaml
-  hw_base: !include ../../common/s3-defaults.yaml
+ remote_base: !include ../../common/base-config.yaml
+ hw_base: !include ../../common/s3-defaults.yaml
 
 esphome:
-  on_boot:
-    priority: -100.0
-    then:
-      - lambda: |-
-          id(bank_status).publish_state("Bank " + to_string(id(current_bank) + 1));
+ on_boot:
+ priority: -100.0
+ then:
+ - lambda: |-
+ id(bank_status).publish_state("Bank " + to_string(id(current_bank) + 1));
 
 # --- UNIQUE HARDWARE: Body Hub ---
 
 # Status LED for Heartbeat (S3 Super Mini Pin)
 status_led:
-  pin: GPIO47 # Adjusted for S3 Super Mini
+ pin: GPIO47 # Adjusted for S3 Super Mini
 
 # UDNS Serial Bus (To Dome)
 uart:
-  id: udns_bus
-  tx_pin: GPIO17
-  rx_pin: GPIO18 # S3 Peripheral Swap
-  baud_rate: 115200
+ id: udns_bus
+ tx_pin: GPIO17
+ rx_pin: GPIO18 # S3 Peripheral Swap
+ baud_rate: 115200
 
 globals:
-  # Using -1 as the initial state forces the first reading to be registered as a change
-  - id: prev_ch3_state
-    type: int
-    initial_value: '-1'
-  - id: prev_ch4_state
-    type: int
-    initial_value: '-1'
-  - id: prev_ch5_state
-    type: int
-    initial_value: '-1'
-  - id: current_bank
-    type: int
-    initial_value: '0' # 0=Bank 1, 1=Bank 2, 2=Bank 3, 3=Bank 4 (Auto)
-  - id: auto_sound_timer
-    type: int
-    initial_value: '0'
+ # Using -1 as the initial state forces the first reading to be registered as a change
+ - id: prev_ch3_state
+ type: int
+ initial_value: '-1'
+ - id: prev_ch4_state
+ type: int
+ initial_value: '-1'
+ - id: prev_ch5_state
+ type: int
+ initial_value: '-1'
+ - id: current_bank
+ type: int
+ initial_value: '0' # 0=Bank 1, 1=Bank 2, 2=Bank 3, 3=Bank 4 (Auto)
+ - id: auto_sound_timer
+ type: int
+ initial_value: '0'
 
 text_sensor:
-  - platform: template
-    id: bank_status
-    name: "Sound Bank Status"
-    icon: "mdi:numeric"
+ - platform: template
+ id: bank_status
+ name: "Sound Bank Status"
+ icon: "mdi:numeric"
 
 switch:
-  - platform: gpio
-    pin: GPIO4
-    id: s1_trigger
-    name: "Sound S1"
-    inverted: true
-    on_turn_on:
-      - delay: 100ms
-      - switch.turn_off: s1_trigger
-  - platform: gpio
-    pin: GPIO5
-    id: s2_trigger
-    name: "Sound S2"
-    inverted: true
-    on_turn_on:
-      - delay: 100ms
-      - switch.turn_off: s2_trigger
-  - platform: gpio
-    pin: GPIO26
-    id: s3_trigger
-    name: "Sound S3"
-    inverted: true
-    on_turn_on:
-      - delay: 100ms
-      - switch.turn_off: s3_trigger
-  - platform: gpio
-    pin: GPIO27
-    id: s4_trigger
-    name: "Sound S4"
-    inverted: true
-    on_turn_on:
-      - delay: 100ms
-      - switch.turn_off: s4_trigger
-  - platform: gpio
-    pin: GPIO18
-    id: s5_trigger
-    name: "Sound S5"
-    inverted: true
-    on_turn_on:
-      - delay: 100ms
-      - switch.turn_off: s5_trigger
-  - platform: gpio
-    pin: GPIO19
-    id: s6_trigger
-    name: "Sound S6"
-    inverted: true
-    on_turn_on:
-      - delay: 100ms
-      - switch.turn_off: s6_trigger
-  - platform: gpio
-    pin: GPIO21
-    id: s7_trigger
-    name: "Sound S7"
-    inverted: true
-    on_turn_on:
-      - delay: 100ms
-      - switch.turn_off: s7_trigger
-  - platform: gpio
-    pin: GPIO22
-    id: s8_trigger
-    name: "Sound S8"
-    inverted: true
-    on_turn_on:
-      - delay: 100ms
-      - switch.turn_off: s8_trigger
-  - platform: gpio
-    pin: GPIO23
-    id: s9_trigger
-    name: "Sound S9"
-    inverted: true
-    on_turn_on:
-      - delay: 100ms
-      - switch.turn_off: s9_trigger
+ - platform: gpio
+ pin: GPIO4
+ id: s1_trigger
+ name: "Sound S1"
+ inverted: true
+ on_turn_on:
+ - delay: 100ms
+ - switch.turn_off: s1_trigger
+ - platform: gpio
+ pin: GPIO5
+ id: s2_trigger
+ name: "Sound S2"
+ inverted: true
+ on_turn_on:
+ - delay: 100ms
+ - switch.turn_off: s2_trigger
+ - platform: gpio
+ pin: GPIO26
+ id: s3_trigger
+ name: "Sound S3"
+ inverted: true
+ on_turn_on:
+ - delay: 100ms
+ - switch.turn_off: s3_trigger
+ - platform: gpio
+ pin: GPIO27
+ id: s4_trigger
+ name: "Sound S4"
+ inverted: true
+ on_turn_on:
+ - delay: 100ms
+ - switch.turn_off: s4_trigger
+ - platform: gpio
+ pin: GPIO18
+ id: s5_trigger
+ name: "Sound S5"
+ inverted: true
+ on_turn_on:
+ - delay: 100ms
+ - switch.turn_off: s5_trigger
+ - platform: gpio
+ pin: GPIO19
+ id: s6_trigger
+ name: "Sound S6"
+ inverted: true
+ on_turn_on:
+ - delay: 100ms
+ - switch.turn_off: s6_trigger
+ - platform: gpio
+ pin: GPIO21
+ id: s7_trigger
+ name: "Sound S7"
+ inverted: true
+ on_turn_on:
+ - delay: 100ms
+ - switch.turn_off: s7_trigger
+ - platform: gpio
+ pin: GPIO22
+ id: s8_trigger
+ name: "Sound S8"
+ inverted: true
+ on_turn_on:
+ - delay: 100ms
+ - switch.turn_off: s8_trigger
+ - platform: gpio
+ pin: GPIO23
+ id: s9_trigger
+ name: "Sound S9"
+ inverted: true
+ on_turn_on:
+ - delay: 100ms
+ - switch.turn_off: s9_trigger
 
 button:
-  - platform: template
-    name: "TEST: High Alert"
-    icon: "mdi:emoticon-angry"
-    on_press:
-      then:
-        - switch.turn_on: s5_trigger
-        - uart.write: '{"on":true,"seg":[{"fx":0,"col":[[255,0,0]]}]}\n'
+ - platform: template
+ name: "TEST: High Alert"
+ icon: "mdi:emoticon-angry"
+ on_press:
+ then:
+ - switch.turn_on: s5_trigger
+ - uart.write: '{"on":true,"seg":[{"fx":0,"col":[[255,0,0]]}]}\n'
 
-  - platform: template
-    name: "TEST: Happy Mode"
-    icon: "mdi:emoticon-happy"
-    on_press:
-      then:
-        - switch.turn_on: s1_trigger
-        - uart.write: '{"on":true,"seg":[{"fx":2,"sx":100,"col":[[0,255,0]]}]}\n'
+ - platform: template
+ name: "TEST: Happy Mode"
+ icon: "mdi:emoticon-happy"
+ on_press:
+ then:
+ - switch.turn_on: s1_trigger
+ - uart.write: '{"on":true,"seg":[{"fx":2,"sx":100,"col":[[0,255,0]]}]}\n'
 
-  - platform: template
-    name: "TEST: Processing"
-    icon: "mdi:chip"
-    on_press:
-      then:
-        - switch.turn_on: s3_trigger
-        - uart.write: '{"on":true,"seg":[{"fx":84,"sx":150,"col":[[0,0,255]]}]}\n'
+ - platform: template
+ name: "TEST: Processing"
+ icon: "mdi:chip"
+ on_press:
+ then:
+ - switch.turn_on: s3_trigger
+ - uart.write: '{"on":true,"seg":[{"fx":84,"sx":150,"col":[[0,0,255]]}]}\n'
 
-  - platform: template
-    name: "TEST: Alert Level"
-    icon: "mdi:alarm-light"
-    on_press:
-      then:
-        - switch.turn_on: s7_trigger
-        - uart.write: '{"on":true,"seg":[{"fx":45,"sx":200,"col":[[255,0,0],[0,0,255]]}]}\n'
+ - platform: template
+ name: "TEST: Alert Level"
+ icon: "mdi:alarm-light"
+ on_press:
+ then:
+ - switch.turn_on: s7_trigger
+ - uart.write: '{"on":true,"seg":[{"fx":45,"sx":200,"col":[[255,0,0],[0,0,255]]}]}\n'
 
-  - platform: template
-    name: "TEST: Restoration"
-    icon: "mdi:shield-check"
-    on_press:
-      then:
-        - uart.write: '{"on":true,"seg":[{"fx":0,"col":[[0,0,255]]}]}\n'
+ - platform: template
+ name: "TEST: Restoration"
+ icon: "mdi:shield-check"
+ on_press:
+ then:
+ - uart.write: '{"on":true,"seg":[{"fx":0,"col":[[0,0,255]]}]}\n'
 
-  - platform: template
-    name: "SOLID: Red"
-    icon: "mdi:palette"
-    on_press:
-      then:
-        - uart.write: '{"on":true,"seg":[{"id":0,"fx":0,"col":[[255,0,0]]}]}\n'
+ - platform: template
+ name: "SOLID: Red"
+ icon: "mdi:palette"
+ on_press:
+ then:
+ - uart.write: '{"on":true,"seg":[{"id":0,"fx":0,"col":[[255,0,0]]}]}\n'
 
-  - platform: template
-    name: "SOLID: Green"
-    icon: "mdi:palette"
-    on_press:
-      then:
-        - uart.write: '{"on":true,"seg":[{"id":0,"fx":0,"col":[[0,255,0]]}]}\n'
+ - platform: template
+ name: "SOLID: Green"
+ icon: "mdi:palette"
+ on_press:
+ then:
+ - uart.write: '{"on":true,"seg":[{"id":0,"fx":0,"col":[[0,255,0]]}]}\n'
 
-  - platform: template
-    name: "SOLID: Blue"
-    icon: "mdi:palette"
-    on_press:
-      then:
-        - uart.write: '{"on":true,"seg":[{"id":0,"fx":0,"col":[[0,0,255]]}]}\n'
+ - platform: template
+ name: "SOLID: Blue"
+ icon: "mdi:palette"
+ on_press:
+ then:
+ - uart.write: '{"on":true,"seg":[{"id":0,"fx":0,"col":[[0,0,255]]}]}\n'
 
-  - platform: template
-    name: "SOLID: Gold"
-    icon: "mdi:palette"
-    on_press:
-      then:
-        - uart.write: '{"on":true,"seg":[{"id":0,"fx":0,"col":[[255,180,0]]}]}\n'
+ - platform: template
+ name: "SOLID: Gold"
+ icon: "mdi:palette"
+ on_press:
+ then:
+ - uart.write: '{"on":true,"seg":[{"id":0,"fx":0,"col":[[255,180,0]]}]}\n'
 
-  - platform: template
-    name: "SOLID: White"
-    icon: "mdi:palette"
-    on_press:
-      then:
-        - uart.write: '{"on":true,"seg":[{"id":0,"fx":0,"col":[[255,255,255]]}]}\n'
+ - platform: template
+ name: "SOLID: White"
+ icon: "mdi:palette"
+ on_press:
+ then:
+ - uart.write: '{"on":true,"seg":[{"id":0,"fx":0,"col":[[255,255,255]]}]}\n'
 
-  - platform: template
-    name: "ANIM: Rainbow"
-    icon: "mdi:shimmer"
-    on_press:
-      then:
-        - uart.write: '{"on":true,"seg":[{"id":0,"fx":9,"sx":128,"ix":128}]}\n'
+ - platform: template
+ name: "ANIM: Rainbow"
+ icon: "mdi:shimmer"
+ on_press:
+ then:
+ - uart.write: '{"on":true,"seg":[{"id":0,"fx":9,"sx":128,"ix":128}]}\n'
 
-  - platform: template
-    name: "ANIM: Sweep"
-    icon: "mdi:rotate-right"
-    on_press:
-      then:
-        - uart.write: '{"on":true,"seg":[{"id":0,"fx":3,"sx":100,"col":[[0,255,255]]}]}\n'
+ - platform: template
+ name: "ANIM: Sweep"
+ icon: "mdi:rotate-right"
+ on_press:
+ then:
+ - uart.write: '{"on":true,"seg":[{"id":0,"fx":3,"sx":100,"col":[[0,255,255]]}]}\n'
 
-  - platform: template
-    name: "ANIM: Scanner"
-    icon: "mdi:ray-end-arrow"
-    on_press:
-      then:
-        - uart.write: '{"on":true,"seg":[{"id":0,"fx":10,"sx":150,"ix":200,"col":[[255,0,0]]}]}\n'
+ - platform: template
+ name: "ANIM: Scanner"
+ icon: "mdi:ray-end-arrow"
+ on_press:
+ then:
+ - uart.write: '{"on":true,"seg":[{"id":0,"fx":10,"sx":150,"ix":200,"col":[[255,0,0]]}]}\n'
 
-  - platform: template
-    name: "ANIM: Fire"
-    icon: "mdi:fire"
-    on_press:
-      then:
-        - uart.write: '{"on":true,"seg":[{"id":0,"fx":66,"sx":150,"ix":100}]}\n'
+ - platform: template
+ name: "ANIM: Fire"
+ icon: "mdi:fire"
+ on_press:
+ then:
+ - uart.write: '{"on":true,"seg":[{"id":0,"fx":66,"sx":150,"ix":100}]}\n'
 
 sensor:
-  # CH5 (Bank Cycle Switch)
-  - platform: pulse_width
-    pin: GPIO32
-    name: "RC CH5 Pulse Width"
-    unit_of_measurement: 'µs'
-    update_interval: 50ms
-    filters:
-      - multiply: 1000000.0
-    on_value:
-      then:
-        - lambda: |-
-            if (x > 0) {
-              int current_state = (x > 1500) ? 1 : 0;
-              if (current_state != id(prev_ch5_state)) {
-                id(current_bank) = (id(current_bank) + 1) % 4; // Now cycles through 4 banks
-                if (id(current_bank) == 3) {
-                  id(bank_status).publish_state("Bank 4 (Auto)");
-                } else {
-                  id(bank_status).publish_state("Bank " + to_string(id(current_bank) + 1));
-                }
-                id(prev_ch5_state) = current_state;
-                id(auto_sound_timer) = 0;  // Reset auto timer on any bank switch
-              }
-            }
+ # CH5 (Bank Cycle Switch)
+ - platform: pulse_width
+ pin: GPIO32
+ name: "RC CH5 Pulse Width"
+ unit_of_measurement: 'µs'
+ update_interval: 50ms
+ filters:
+ - multiply: 1000000.0
+ on_value:
+ then:
+ - lambda: |-
+ if (x > 0) {
+ int current_state = (x > 1500) ? 1 : 0;
+ if (current_state != id(prev_ch5_state)) {
+ id(current_bank) = (id(current_bank) + 1) % 4; // Now cycles through 4 banks
+ if (id(current_bank) == 3) {
+ id(bank_status).publish_state("Bank 4 (Auto)");
+ } else {
+ id(bank_status).publish_state("Bank " + to_string(id(current_bank) + 1));
+ }
+ id(prev_ch5_state) = current_state;
+ id(auto_sound_timer) = 0; // Reset auto timer on any bank switch
+ }
+ }
 
-  # CH3 (Sound Trigger)
-  - platform: pulse_width
-    pin: GPIO25
-    name: "RC CH3 Pulse Width"
-    unit_of_measurement: 'µs'
-    update_interval: 50ms
-    filters:
-      - multiply: 1000000.0
-    on_value:
-      then:
-        - lambda: |-
-            if (x > 0) {
-              // 3-Zone Logic: 1 = UP (>1700), 0 = NEUTRAL (1300-1700), 2 = DOWN (<1300)
-              int current_state = 0;
-              if (x > 1700) current_state = 1; else if (x < 1300) current_state = 2;
+ # CH3 (Sound Trigger)
+ - platform: pulse_width
+ pin: GPIO25
+ name: "RC CH3 Pulse Width"
+ unit_of_measurement: 'µs'
+ update_interval: 50ms
+ filters:
+ - multiply: 1000000.0
+ on_value:
+ then:
+ - lambda: |-
+ if (x > 0) {
+ // 3-Zone Logic: 1 = UP (>1700), 0 = NEUTRAL (1300-1700), 2 = DOWN (<1300)
+ int current_state = 0;
+ if (x > 1700) current_state = 1; else if (x < 1300) current_state = 2;
 
-              if (current_state != id(prev_ch3_state)) {
-                if (current_state != 0) { // Only trigger on enter UP or DOWN
-                  ESP_LOGD("custom", "CH3 Sound Trigger - State: %d (Bank: %d)", current_state, id(current_bank) + 1);
-                  if (id(current_bank) == 0) {
-                    if (current_state == 1) id(s1_trigger).turn_on(); else id(s2_trigger).turn_on();
-                  } else if (id(current_bank) == 1) {
-                    if (current_state == 1) id(s5_trigger).turn_on(); else id(s6_trigger).turn_on();
-                  } else if (id(current_bank) == 2) {
-                    if (current_state == 1) id(s9_trigger).turn_on();
-                  }
-                }
-                id(prev_ch3_state) = current_state;
-              }
-            }
+ if (current_state != id(prev_ch3_state)) {
+ if (current_state != 0) { // Only trigger on enter UP or DOWN
+ ESP_LOGD("custom", "CH3 Sound Trigger - State: %d (Bank: %d)", current_state, id(current_bank) + 1);
+ if (id(current_bank) == 0) {
+ if (current_state == 1) id(s1_trigger).turn_on(); else id(s2_trigger).turn_on();
+ } else if (id(current_bank) == 1) {
+ if (current_state == 1) id(s5_trigger).turn_on(); else id(s6_trigger).turn_on();
+ } else if (id(current_bank) == 2) {
+ if (current_state == 1) id(s9_trigger).turn_on();
+ }
+ }
+ id(prev_ch3_state) = current_state;
+ }
+ }
 
-  # CH4 (Sound Trigger)
-  - platform: pulse_width
-    pin: GPIO33
-    name: "RC CH4 Pulse Width"
-    unit_of_measurement: 'µs'
-    update_interval: 50ms
-    filters:
-      - multiply: 1000000.0
-    on_value:
-      then:
-        - lambda: |-
-            if (x > 0) {
-              // 3-Zone Logic: 1 = UP/RIGHT (>1700), 0 = NEUTRAL (1300-1700), 2 = DOWN/LEFT (<1300)
-              int current_state = 0;
-              if (x > 1700) current_state = 1; else if (x < 1300) current_state = 2;
+ # CH4 (Sound Trigger)
+ - platform: pulse_width
+ pin: GPIO33
+ name: "RC CH4 Pulse Width"
+ unit_of_measurement: 'µs'
+ update_interval: 50ms
+ filters:
+ - multiply: 1000000.0
+ on_value:
+ then:
+ - lambda: |-
+ if (x > 0) {
+ // 3-Zone Logic: 1 = UP/RIGHT (>1700), 0 = NEUTRAL (1300-1700), 2 = DOWN/LEFT (<1300)
+ int current_state = 0;
+ if (x > 1700) current_state = 1; else if (x < 1300) current_state = 2;
 
-              if (current_state != id(prev_ch4_state)) {
-                if (current_state != 0) { // Only trigger on enter UP or DOWN
-                  ESP_LOGD("custom", "CH4 Sound Trigger - State: %d (Bank: %d)", current_state, id(current_bank) + 1);
-                  if (id(current_bank) == 0) {
-                    if (current_state == 1) id(s3_trigger).turn_on(); else id(s4_trigger).turn_on();
-                  } else if (id(current_bank) == 1) {
-                    if (current_state == 1) id(s7_trigger).turn_on(); else id(s8_trigger).turn_on();
-                  }
-                }
-                id(prev_ch4_state) = current_state;
-              }
-            }
+ if (current_state != id(prev_ch4_state)) {
+ if (current_state != 0) { // Only trigger on enter UP or DOWN
+ ESP_LOGD("custom", "CH4 Sound Trigger - State: %d (Bank: %d)", current_state, id(current_bank) + 1);
+ if (id(current_bank) == 0) {
+ if (current_state == 1) id(s3_trigger).turn_on(); else id(s4_trigger).turn_on();
+ } else if (id(current_bank) == 1) {
+ if (current_state == 1) id(s7_trigger).turn_on(); else id(s8_trigger).turn_on();
+ }
+ }
+ id(prev_ch4_state) = current_state;
+ }
+ }
 
 # This section runs every second to handle the auto mode logic
 interval:
-  - interval: 1s
-    then:
-      - lambda: |-
-          if (id(current_bank) == 3) { // Check if we are in Bank 4 (Auto Mode)
-            if (id(auto_sound_timer) <= 0) {
-              int random_sound_index = esp_random() % 9; // 0-8 for 9 sounds
-              id(play_random_sound).execute(random_sound_index);
-              id(auto_sound_timer) = (esp_random() % 11) + 5; // Set next delay for 5-15 seconds
-            } else {
-              id(auto_sound_timer) = id(auto_sound_timer) - 1;
-            }
-          }
+ - interval: 1s
+ then:
+ - lambda: |-
+ if (id(current_bank) == 3) { // Check if we are in Bank 4 (Auto Mode)
+ if (id(auto_sound_timer) <= 0) {
+ int random_sound_index = esp_random() % 9; // 0-8 for 9 sounds
+ id(play_random_sound).execute(random_sound_index);
+ id(auto_sound_timer) = (esp_random() % 11) + 5; // Set next delay for 5-15 seconds
+ } else {
+ id(auto_sound_timer) = id(auto_sound_timer) - 1;
+ }
+ }
 
 # This script can be called to play a sound by its index (0-8)
 script:
-  - id: play_random_sound
-    parameters:
-      index: int
-    then:
-      - if:
-          condition:
-            lambda: 'return index == 0;'
-          then:
-            - switch.turn_on: s1_trigger
-      - if:
-          condition:
-            lambda: 'return index == 1;'
-          then:
-            - switch.turn_on: s2_trigger
-      - if:
-          condition:
-            lambda: 'return index == 2;'
-          then:
-            - switch.turn_on: s3_trigger
-      - if:
-          condition:
-            lambda: 'return index == 3;'
-          then:
-            - switch.turn_on: s4_trigger
-      - if:
-          condition:
-            lambda: 'return index == 4;'
-          then:
-            - switch.turn_on: s5_trigger
-      - if:
-          condition:
-            lambda: 'return index == 5;'
-          then:
-            - switch.turn_on: s6_trigger
-      - if:
-          condition:
-            lambda: 'return index == 6;'
-          then:
-            - switch.turn_on: s7_trigger
-      - if:
-          condition:
-            lambda: 'return index == 7;'
-          then:
-            - switch.turn_on: s8_trigger
-      - if:
-          condition:
-            lambda: 'return index == 8;'
-          then:
-            - switch.turn_on: s9_trigger
+ - id: play_random_sound
+ parameters:
+ index: int
+ then:
+ - if:
+ condition:
+ lambda: 'return index == 0;'
+ then:
+ - switch.turn_on: s1_trigger
+ - if:
+ condition:
+ lambda: 'return index == 1;'
+ then:
+ - switch.turn_on: s2_trigger
+ - if:
+ condition:
+ lambda: 'return index == 2;'
+ then:
+ - switch.turn_on: s3_trigger
+ - if:
+ condition:
+ lambda: 'return index == 3;'
+ then:
+ - switch.turn_on: s4_trigger
+ - if:
+ condition:
+ lambda: 'return index == 4;'
+ then:
+ - switch.turn_on: s5_trigger
+ - if:
+ condition:
+ lambda: 'return index == 5;'
+ then:
+ - switch.turn_on: s6_trigger
+ - if:
+ condition:
+ lambda: 'return index == 6;'
+ then:
+ - switch.turn_on: s7_trigger
+ - if:
+ condition:
+ lambda: 'return index == 7;'
+ then:
+ - switch.turn_on: s8_trigger
+ - if:
+ condition:
+ lambda: 'return index == 8;'
+ then:
+ - switch.turn_on: s9_trigger

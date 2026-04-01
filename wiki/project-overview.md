@@ -8,26 +8,23 @@ This repository tracks the subsequent electrical architecture, firmware configur
 
 ---
 
-## <i data-lucide="map"></i> Databank Navigation Guide
+## <i data-lucide="map"></i> Documentation Navigation Guide
 
-This databank is organized into several key technical sectors, as shown in the sidebar:
+This Documentation is organized into five distinct technical sectors, providing a comprehensive roadmap for the Wee2-D2's systems:
 
-### 1. Project Documentation
-These files provide the high-level context for the Wee2-D2 project, including a visual **Bill of Materials (BOM)**, a complete **Version History** for all firmware tiers, and the master **Changelog**.
-
-### 2. System Architecture
+### 1. System Architecture
 This sector details the core engineering logic of the droid. It includes **Interactive Schematics**, **Power Distribution** maps, and the master **Node Mesh** architecture that enables decentralized control.
 
-### 3. Hardware Tier
-A comprehensive library of technical manuals and data sheets for every individual component in the droid, from **ESC speed controllers** to **brushless hub motors** and **slip rings**.
+### 2. Hardware Tier
+A comprehensive visual ledger and assembly guide. Access the **Bill of Materials (BOM)** for a part-by-part breakdown and the **Mechanical Assembly** guides for the 3D-printed chassis.
 
-### 4. Capabilities & Movement
+### 3. Capabilities & Movement
 Detailed functional guides for the droid's primary output systems, including **LED Display Matrices**, **Audio/Voice Triggers**, **Dome Rotation**, and **Body Drive** configurations.
 
-### 5. Microcontroller Nodes
+### 4. Microcontroller Nodes
 Technical deep-dives into the three specific hubs that run the droid (**Node 1, 2, and 3**), including their specific GPIO pinouts and firmware deployment guides.
 
-### 6. Operation & Maintenance
+### 5. Operation & Maintenance
 The critical maintenance sector covering **Calibration**, **OTA Network Updates**, **Safety Protocols**, and a multi-tier **Troubleshooting Matrix** for field-duty repairs.
 
 ---

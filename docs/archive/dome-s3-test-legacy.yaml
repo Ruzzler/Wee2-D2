@@ -1,187 +1,187 @@
 substitutions:
-  name: "s3"
-  friendly_name: "S3 Dome Controller"
+ name: "s3"
+ friendly_name: "S3 Dome Controller"
 
 esphome:
-  name: ${name}
-  friendly_name: ${friendly_name}
-  on_boot:
-    priority: -10
-    then:
-      - servo.write: {id: dome_motor, level: 0.0}
-      - logger.log: "BOOT: Motor forced to STOP position"
-  
-  on_shutdown:
-    priority: 600
-    then:
-      - servo.write: {id: dome_motor, level: 0.0}
+ name: ${name}
+ friendly_name: ${friendly_name}
+ on_boot:
+ priority: -10
+ then:
+ - servo.write: {id: dome_motor, level: 0.0}
+ - logger.log: "BOOT: Motor forced to STOP position"
+ 
+ on_shutdown:
+ priority: 600
+ then:
+ - servo.write: {id: dome_motor, level: 0.0}
 
 esp32:
-  board: esp32-s3-devkitc-1
-  framework:
-    type: esp-idf
+ board: esp32-s3-devkitc-1
+ framework:
+ type: esp-idf
 
 status_led:
-  pin: GPIO8
+ pin: GPIO8
 
 logger:
-  hardware_uart: USB_SERIAL_JTAG
-  level: DEBUG
+ hardware_uart: USB_SERIAL_JTAG
+ level: DEBUG
 
 api:
-  encryption:
-    key: "PLACEHOLDER_KEY"
-  reboot_timeout: 0s 
+ encryption:
+ key: "PLACEHOLDER_KEY"
+ reboot_timeout: 0s 
 
 ota:
-  - platform: esphome
-    password: "PLACEHOLDER_PASSWORD"
+ - platform: esphome
+ password: "PLACEHOLDER_PASSWORD"
 
 wifi:
-  ssid: "PLACEHOLDER_SSID"
-  password: "PLACEHOLDER_PASSWORD"
-  fast_connect: off
+ ssid: "PLACEHOLDER_SSID"
+ password: "PLACEHOLDER_PASSWORD"
+ fast_connect: off
 
 web_server:
-  port: 80
+ port: 80
 
 # ============================================
 # HARDWARE OUTPUTS
 # ============================================
 
 output:
-  - platform: ledc
-    pin: GPIO7
-    id: dome_pwm
-    frequency: 50Hz
+ - platform: ledc
+ pin: GPIO7
+ id: dome_pwm
+ frequency: 50Hz
 
 servo:
-  - id: dome_motor
-    output: dome_pwm
-    min_level: 0.05
-    idle_level: 0.075
-    max_level: 0.1
-    transition_length: 0.8s
-    auto_detach_time: 5s
+ - id: dome_motor
+ output: dome_pwm
+ min_level: 0.05
+ idle_level: 0.075
+ max_level: 0.1
+ transition_length: 0.8s
+ auto_detach_time: 5s
 
 light:
-  - platform: esp32_rmt_led_strip
-    rgb_order: GRB
-    pin: GPIO5
-    num_leds: 76
-    chipset: ws2812
-    name: "Front PSI"
-    id: front_psi
-    
-    # 30% BRIGHTNESS CLAMP
-    on_turn_on:
-      then:
-        - if:
-            condition:
-              lambda: 'return id(front_psi).remote_values.get_brightness() > 0.3;'
-            then:
-              - light.turn_on: {id: front_psi, brightness: 30%}
+ - platform: esp32_rmt_led_strip
+ rgb_order: GRB
+ pin: GPIO5
+ num_leds: 76
+ chipset: ws2812
+ name: "Front PSI"
+ id: front_psi
+ 
+ # 30% BRIGHTNESS CLAMP
+ on_turn_on:
+ then:
+ - if:
+ condition:
+ lambda: 'return id(front_psi).remote_values.get_brightness() > 0.3;'
+ then:
+ - light.turn_on: {id: front_psi, brightness: 30%}
 
-    effects:
-      - addressable_scan:
-          name: "Cinematic Wipe"
-          move_interval: 75ms
-          scan_width: 38
-      - addressable_flicker:
-          name: "TEST: High Alert"
-          intensity: 3%
-      - addressable_twinkle:
-          name: "T6: Leia/Hologram"
-          twinkle_probability: 10%
-          progress_interval: 5ms
+ effects:
+ - addressable_scan:
+ name: "Cinematic Wipe"
+ move_interval: 75ms
+ scan_width: 38
+ - addressable_flicker:
+ name: "TEST: High Alert"
+ intensity: 3%
+ - addressable_twinkle:
+ name: "T6: Leia/Hologram"
+ twinkle_probability: 10%
+ progress_interval: 5ms
 
 # ============================================
 # GLOBALS & TUNING
 # ============================================
 
 globals:
-  - id: last_script_time
-    type: unsigned long
-    initial_value: '0'
-  - id: script_cooldown_ms
-    type: int
-    initial_value: '800'
-  - id: search_speed
-    type: float
-    initial_value: '0.25'
+ - id: last_script_time
+ type: unsigned long
+ initial_value: '0'
+ - id: script_cooldown_ms
+ type: int
+ initial_value: '800'
+ - id: search_speed
+ type: float
+ initial_value: '0.25'
 
 number:
-  - platform: template
-    name: "Manual Dome Power"
-    id: manual_speed
-    min_value: -1.0
-    max_value: 1.0
-    step: 0.01
-    optimistic: true
-    set_action:
-      then:
-        - servo.write: {id: dome_motor, level: !lambda 'return x;'}
+ - platform: template
+ name: "Manual Dome Power"
+ id: manual_speed
+ min_value: -1.0
+ max_value: 1.0
+ step: 0.01
+ optimistic: true
+ set_action:
+ then:
+ - servo.write: {id: dome_motor, level: !lambda 'return x;'}
 
 # ============================================
 # BEHAVIORAL SCRIPTS
 # ============================================
 
 script:
-  # Fixed the 'while' loop syntax for mood_standard_stuck
-  - id: mood_standard_stuck
-    mode: restart
-    then:
-      - while:
-          condition:
-            lambda: 'return true;'
-          then:
-            - light.turn_on: {id: front_psi, brightness: 30%, effect: "Cinematic Wipe"}
-            - delay: !lambda 'return 5000 + (rand() % 10000);'
-            - if:
-                condition:
-                  lambda: 'return (rand() % 100) < 10;'
-                then:
-                  - logger.log: "PSI Logic: Mechanical Jam Detected"
-                  - light.turn_on: {id: front_psi, effect: "none", red: 100%, blue: 0%}
-                  - delay: 7s
+ # Fixed the 'while' loop syntax for mood_standard_stuck
+ - id: mood_standard_stuck
+ mode: restart
+ then:
+ - while:
+ condition:
+ lambda: 'return true;'
+ then:
+ - light.turn_on: {id: front_psi, brightness: 30%, effect: "Cinematic Wipe"}
+ - delay: !lambda 'return 5000 + (rand() % 10000);'
+ - if:
+ condition:
+ lambda: 'return (rand() % 100) < 10;'
+ then:
+ - logger.log: "PSI Logic: Mechanical Jam Detected"
+ - light.turn_on: {id: front_psi, effect: "none", red: 100%, blue: 0%}
+ - delay: 7s
 
-  - id: high_alert_test
-    mode: restart
-    then:
-      - light.turn_on: {id: front_psi, brightness: 30%, red: 100%, effect: "TEST: High Alert"}
-      - repeat:
-          count: 8
-          then:
-            - servo.write: {id: dome_motor, level: 0.5}
-            - delay: 120ms
-            - servo.write: {id: dome_motor, level: -0.5}
-            - delay: 120ms
-      - servo.write: {id: dome_motor, level: 0.0}
-      - script.execute: mood_standard_stuck
+ - id: high_alert_test
+ mode: restart
+ then:
+ - light.turn_on: {id: front_psi, brightness: 30%, red: 100%, effect: "TEST: High Alert"}
+ - repeat:
+ count: 8
+ then:
+ - servo.write: {id: dome_motor, level: 0.5}
+ - delay: 120ms
+ - servo.write: {id: dome_motor, level: -0.5}
+ - delay: 120ms
+ - servo.write: {id: dome_motor, level: 0.0}
+ - script.execute: mood_standard_stuck
 
 # ============================================
 # BUTTONS & SYSTEM
 # ============================================
 
 button:
-  - platform: template
-    name: "▶ Start: Standard Logic"
-    on_press: {script.execute: mood_standard_stuck}
-  
-  - platform: template
-    name: "▶ Run: High Alert Test"
-    on_press: {script.execute: high_alert_test}
+ - platform: template
+ name: "▶ Start: Standard Logic"
+ on_press: {script.execute: mood_standard_stuck}
+ 
+ - platform: template
+ name: "▶ Run: High Alert Test"
+ on_press: {script.execute: high_alert_test}
 
-  - platform: template
-    name: " EMERGENCY STOP"
-    on_press:
-      - script.stop: mood_standard_stuck
-      - script.stop: high_alert_test
-      - servo.write: {id: dome_motor, level: 0.0}
-      - light.turn_off: front_psi
+ - platform: template
+ name: " EMERGENCY STOP"
+ on_press:
+ - script.stop: mood_standard_stuck
+ - script.stop: high_alert_test
+ - servo.write: {id: dome_motor, level: 0.0}
+ - light.turn_off: front_psi
 
 switch:
-  - platform: template
-    name: "Convention Mode"
-    id: con_mode
-    optimistic: true
+ - platform: template
+ name: "Convention Mode"
+ id: con_mode
+ optimistic: true

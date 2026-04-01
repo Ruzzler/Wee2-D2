@@ -20,8 +20,8 @@ The following autonomous behaviors are currently in development as high-density 
 ### 3. Synchronized Show Sequences (In-Progress)
 - **Logic**: Hard-coded routines that combine precision dome timing, specific WLED presets, and multi-track audio playback.
 - **Current Triggers**: 
-    - **Droid Thinking**: Standard synchronized "Logic" display and audio.
-    - **High Alert**: Synchronized red-alert sequence and alarm audio.
+ - **Droid Thinking**: Standard synchronized "Logic" display and audio.
+ - **High Alert**: Synchronized red-alert sequence and alarm audio.
 
 ---
 

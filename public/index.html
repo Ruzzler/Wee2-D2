@@ -1,150 +1,150 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WEE2-D2 | Imperial Web-Flasher</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg-color: #0b0c10;
-            --panel-color: #1f2833;
-            --accent-cyan: #66fcf1;
-            --accent-blue: #45a29e;
-            --text-primary: #c5c6c7;
-            --text-secondary: #c5c6c7;
-            --danger-red: #ff4c4c;
-        }
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>WEE2-D2 | Web-Flasher</title>
+ <link rel="preconnect" href="https://fonts.googleapis.com">
+ <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+ <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+ <style>
+ :root {
+ --bg-color: #0b0c10;
+ --panel-color: #1f2833;
+ --accent-cyan: #66fcf1;
+ --accent-blue: #45a29e;
+ --text-primary: #c5c6c7;
+ --text-secondary: #c5c6c7;
+ --danger-red: #ff4c4c;
+ }
 
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-primary);
-            font-family: 'Share Tech Mono', monospace;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            margin: 0;
-            overflow: hidden;
-        }
+ body {
+ background-color: var(--bg-color);
+ color: var(--text-primary);
+ font-family: 'Share Tech Mono', monospace;
+ display: flex;
+ flex-direction: column;
+ align-items: center;
+ justify-content: center;
+ min-height: 100vh;
+ margin: 0;
+ overflow: hidden;
+ }
 
-        /* Scanline Overlay */
-        body::before {
-            content: " ";
-            display: block;
-            position: absolute;
-            top: 0; left: 0; bottom: 0; right: 0;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
-                        linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
-            z-index: 2;
-            background-size: 100% 4px, 3px 100%;
-            pointer-events: none;
-        }
+ /* Scanline Overlay */
+ body::before {
+ content: " ";
+ display: block;
+ position: absolute;
+ top: 0; left: 0; bottom: 0; right: 0;
+ background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
+ linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+ z-index: 2;
+ background-size: 100% 4px, 3px 100%;
+ pointer-events: none;
+ }
 
-        .terminal {
-            width: 90%;
-            max-width: 600px;
-            background: rgba(31, 40, 51, 0.8);
-            border: 1px solid var(--accent-blue);
-            padding: 2rem;
-            box-shadow: 0 0 20px rgba(102, 252, 241, 0.1);
-            position: relative;
-            z-index: 3;
-            backdrop-filter: blur(5px);
-        }
+ .terminal {
+ width: 90%;
+ max-width: 600px;
+ background: rgba(31, 40, 51, 0.8);
+ border: 1px solid var(--accent-blue);
+ padding: 2rem;
+ box-shadow: 0 0 20px rgba(102, 252, 241, 0.1);
+ position: relative;
+ z-index: 3;
+ backdrop-filter: blur(5px);
+ }
 
-        .header {
-            border-bottom: 2px solid var(--accent-cyan);
-            padding-bottom: 1rem;
-            margin-bottom: 2rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
+ .header {
+ border-bottom: 2px solid var(--accent-cyan);
+ padding-bottom: 1rem;
+ margin-bottom: 2rem;
+ text-transform: uppercase;
+ letter-spacing: 2px;
+ }
 
-        .header h1 {
-            font-size: 1.5rem;
-            margin: 0;
-            color: var(--accent-cyan);
-        }
+ .header h1 {
+ font-size: 1.5rem;
+ margin: 0;
+ color: var(--accent-cyan);
+ }
 
-        .status-badge {
-            color: var(--accent-cyan);
-            font-size: 0.8rem;
-            margin-top: 0.5rem;
-        }
+ .status-badge {
+ color: var(--accent-cyan);
+ font-size: 0.8rem;
+ margin-top: 0.5rem;
+ }
 
-        .instructions {
-            margin-bottom: 2rem;
-            line-height: 1.6;
-            color: var(--text-secondary);
-        }
+ .instructions {
+ margin-bottom: 2rem;
+ line-height: 1.6;
+ color: var(--text-secondary);
+ }
 
-        .node-selector {
-            display: grid;
-            gap: 1rem;
-            margin-bottom: 2rem;
-        }
+ .node-selector {
+ display: grid;
+ gap: 1rem;
+ margin-bottom: 2rem;
+ }
 
-        .node-btn {
-            background: transparent;
-            border: 1px solid var(--accent-blue);
-            color: var(--accent-blue);
-            padding: 1rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-align: left;
-        }
+ .node-btn {
+ background: transparent;
+ border: 1px solid var(--accent-blue);
+ color: var(--accent-blue);
+ padding: 1rem;
+ cursor: pointer;
+ transition: all 0.3s ease;
+ text-align: left;
+ }
 
-        .node-btn:hover {
-            background: rgba(102, 252, 241, 0.1);
-            border-color: var(--accent-cyan);
-            color: var(--accent-cyan);
-        }
+ .node-btn:hover {
+ background: rgba(102, 252, 241, 0.1);
+ border-color: var(--accent-cyan);
+ color: var(--accent-cyan);
+ }
 
-        esp-web-install-button {
-            --esp-tools-button-color: var(--accent-cyan);
-            --esp-tools-button-text-color: var(--bg-color);
-            --esp-tools-button-border-radius: 0px;
-            display: block;
-            margin-top: 2rem;
-        }
+ esp-web-install-button {
+ --esp-tools-button-color: var(--accent-cyan);
+ --esp-tools-button-text-color: var(--bg-color);
+ --esp-tools-button-border-radius: 0px;
+ display: block;
+ margin-top: 2rem;
+ }
 
-        .footer {
-            margin-top: 2rem;
-            font-size: 0.7rem;
-            color: #45a29e;
-            opacity: 0.5;
-        }
-    </style>
+ .footer {
+ margin-top: 2rem;
+ font-size: 0.7rem;
+ color: #45a29e;
+ opacity: 0.5;
+ }
+ </style>
 </head>
 <body>
-    <div class="terminal">
-        <div class="header">
-            <h1>Wee2-D2 // Web-Flasher</h1>
-            <div class="status-badge">System: Production v2.0.0-Hybrid</div>
-        </div>
+ <div class="terminal">
+ <div class="header">
+ <h1>Wee2-D2 // Web-Flasher</h1>
+ <div class="status-badge">System: Production v2.0.0-Hybrid</div>
+ </div>
 
-        <div class="instructions">
-            <p>> SECURE CONVENTION-READY RECOVERY PIPELINE</p>
-            <p>> SELECT NODE TO REFLASH VIA USB CONNECTION</p>
-        </div>
+ <div class="instructions">
+ <p>> SECURE CONVENTION-READY RECOVERY PIPELINE</p>
+ <p>> SELECT NODE TO REFLASH VIA USB CONNECTION</p>
+ </div>
 
-        <div class="node-selector">
-            <esp-web-install-button manifest="manifest.json">
-                <button slot="activate" class="node-btn">
-                    [PROCEED] START FIRMWARE INJECTION
-                </button>
-            </esp-web-install-button>
-        </div>
+ <div class="node-selector">
+ <esp-web-install-button manifest="manifest.json">
+ <button slot="activate" class="node-btn">
+ [PROCEED] START FIRMWARE INJECTION
+ </button>
+ </esp-web-install-button>
+ </div>
 
-        <div class="footer">
-            COORDINATES: BADLANDS GARRISON // SECTOR 7G
-        </div>
-    </div>
+ <div class="footer">
+ COORDINATES: BADLANDS GARRISON // SECTOR 7G
+ </div>
+ </div>
 
-    <script type="module" src="https://unpkg.com/esp-web-tools@10/dist/web/install-button.js?module"></script>
+ <script type="module" src="https://unpkg.com/esp-web-tools@10/dist/web/install-button.js?module"></script>
 </body>
 </html>

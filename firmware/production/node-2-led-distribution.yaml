@@ -2,16 +2,16 @@
 # v2.0-Hybrid | SECURE SECURE RECOVERY
 
 substitutions:
-  node_name: "wee2d2-lighting-ctrl"
-  node_id: "2"
-  fw_version: "2.0.0"
+ node_name: "wee2d2-lighting-ctrl"
+ node_id: "2"
+ fw_version: "2.0.0"
 
 packages:
-  remote_base: !include ../../common/base-config.yaml
-  hw_base: !include ../../common/esp32-defaults.yaml
+ remote_base: !include ../../common/base-config.yaml
+ hw_base: !include ../../common/esp32-defaults.yaml
 
 esphome:
-  comment: "Lighting Node (WLED-Compatible Native ESPHome)"
+ comment: "Lighting Node (WLED-Compatible Native ESPHome)"
 
 # ============================================
 # UNIQUE HARDWARE: Lighting Controller
@@ -19,45 +19,45 @@ esphome:
 
 # Status LED for Heartbeat (Standard ESP32 Pin)
 status_led:
-  pin: GPIO2
+ pin: GPIO2
 
 # UDNS Serial Bus (From Body Hub)
 uart:
-  id: udns_bus
-  tx_pin: GPIO17
-  rx_pin: GPIO16
-  baud_rate: 115200
+ id: udns_bus
+ tx_pin: GPIO17
+ rx_pin: GPIO16
+ baud_rate: 115200
 
 # WLED-Compatible LED Outputs
 light:
-  - platform: neopixelbus
-    type: GRB
-    variant: WS2812
-    pin: GPIO18
-    num_leds: 20
-    name: "Front Logic"
-    id: front_logic
+ - platform: neopixelbus
+ type: GRB
+ variant: WS2812
+ pin: GPIO18
+ num_leds: 20
+ name: "Front Logic"
+ id: front_logic
 
-  - platform: neopixelbus
-    type: GRB
-    variant: WS2812
-    pin: GPIO19
-    num_leds: 24
-    name: "Rear Logic"
-    id: rear_logic
+ - platform: neopixelbus
+ type: GRB
+ variant: WS2812
+ pin: GPIO19
+ num_leds: 24
+ name: "Rear Logic"
+ id: rear_logic
 
-  - platform: neopixelbus
-    type: GRB
-    variant: WS2812
-    pin: GPIO21
-    num_leds: 76
-    name: "Front PSI (GrnWave)"
-    id: front_psi_grnwave
+ - platform: neopixelbus
+ type: GRB
+ variant: WS2812
+ pin: GPIO21
+ num_leds: 76
+ name: "Front PSI (GrnWave)"
+ id: front_psi_grnwave
 
-  - platform: neopixelbus
-    type: GRB
-    variant: WS2812
-    pin: GPIO22
-    num_leds: 76
-    name: "Rear PSI (GrnWave)"
-    id: rear_psi_grnwave
+ - platform: neopixelbus
+ type: GRB
+ variant: WS2812
+ pin: GPIO22
+ num_leds: 76
+ name: "Rear PSI (GrnWave)"
+ id: rear_psi_grnwave

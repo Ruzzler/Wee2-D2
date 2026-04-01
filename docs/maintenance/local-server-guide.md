@@ -6,7 +6,7 @@
 python -m http.server 8001 --bind 127.0.0.1
 ```
 
-###  Local URL
+### Local URL
 [http://127.0.0.1:8001/index.html](http://127.0.0.1:8001/index.html)
 
 > [!NOTE]

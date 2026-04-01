@@ -11,7 +11,7 @@ The **DFPlayer Mini** is a specialized, serial-controlled MP3 module that serves
 
 ---
 
-##  Pinout Reference
+## Pinout Reference
 The following pinout is used for integration into the Node 1 (Sound Hub) logic rail.
 
 ![DFPlayer Mini Pinout](../../assets/dfplayer-mini-pinout.png)
@@ -27,7 +27,7 @@ The following pinout is used for integration into the Node 1 (Sound Hub) logic r
 
 ---
 
-##  SD Card Logic & Formatting
+## SD Card Logic & Formatting
 For the DFPlayer to function in the "distributed behavior" mesh, the SD card **MUST** be formatted to FAT32 and use the industrial directory structure.
 
 ### Folder Mapping
@@ -41,7 +41,7 @@ Tracks must be named with a 3-digit prefix (e.g., `001_beep.mp3`) to enable rapi
 
 ---
 
-##  Calibration & Diagnostics
+## Calibration & Diagnostics
 - **UART Heartbeat**: If the Node 1 logo pulses **Yellow**, it indicates the DFPlayer is disconnected or the SD card is unreadable.
 - **Volume Limit**: WEE2-D2 firmware limits the DFPlayer volume to **26/30** to prevent clipping on the TPA3118 gain stage.
 
