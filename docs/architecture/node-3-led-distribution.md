@@ -1,4 +1,4 @@
-# <i data-lucide="lightbulb"></i> Node 3: LED Distribution Spec
+# <i data-lucide="lightbulb"></i> Node 3: LED Distribution
 
 > **TECHNICAL SPECIFICATIONS** | **WLED v0.14** | **ESP32D Dev Board** | **Visual Output Hub**
 

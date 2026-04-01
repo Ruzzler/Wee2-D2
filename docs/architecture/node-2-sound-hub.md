@@ -1,4 +1,4 @@
-# <i data-lucide="volume-2"></i> Node 2: Sound Hub Spec
+# <i data-lucide="volume-2"></i> Node 2: Sound Hub
 
 > **TECHNICAL SPECIFICATIONS** | **ESPHome v3** | **ESP32-S3 Super Mini** | **Audio & Drive Sync**
 

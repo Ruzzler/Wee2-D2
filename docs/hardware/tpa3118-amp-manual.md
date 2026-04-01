@@ -69,5 +69,5 @@ graph LR
 
 **Related Documentation:**
 - [DFPlayer Mini Spec](./dfplayer-mini-spec.md)
-- [Node 2: Sound Hub Spec](../architecture/node-2-sound-hub-spec.md)
+- [Node 2: Sound Hub](../architecture/node-2-sound-hub.md)
 - [Power Architecture](../architecture/power-architecture.md)

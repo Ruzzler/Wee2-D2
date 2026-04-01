@@ -79,9 +79,9 @@ flowchart TD
  click DOME_BUCK href "../bill-of-materials.md" "BOM"
  click RC1 href "../hardware/hotrc-f06a-manual.md" "Receiver Manual"
  click RC2 href "../hardware/hotrc-f06a-manual.md" "Receiver Manual"
- click Node1 href "node-1-dome-motion-spec.md" "Node 1 Spec"
- click Node2 href "node-2-sound-hub-spec.md" "Node 2 Spec"
- click Node3 href "node-3-led-distribution-spec.md" "Node 3 Spec"
+ click Node1 href "node-1-dome-motion.md" "Node 1"
+ click Node2 href "node-2-sound-hub.md" "Node 2"
+ click Node3 href "node-3-led-distribution.md" "Node 3"
  click DOME_ESC href "../hardware/gobilda-motor-manual.md" "Motor Manual"
 
  classDef power fill:#ff9900,stroke:#333,stroke-width:2px,color:#000

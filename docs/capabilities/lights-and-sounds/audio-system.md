@@ -62,4 +62,4 @@ Unlike the legacy 9-wire trigger system, the v1.8 stack uses a 4-wire serial bus
 ---
 **Relevant Hardware & Code:**
 - [DFPlayer Mini Data Sheet](../../manuals/dfplayer-mini-manual.pdf)
-- [Node 2: Sound Hub Spec](../../architecture/node-2-sound-hub-spec.md)
+- [Node 2: Sound Hub](../../architecture/node-2-sound-hub.md)

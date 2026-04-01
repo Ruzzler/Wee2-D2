@@ -35,5 +35,5 @@ In the **v1.6.2 Architecture**, Node 1 acts as the primary "System Dispatcher" f
 
 ---
 **Relevant Hardware & Code:**
-- [Node 1: Dome Master](../../architecture/node-1-dome-motion-spec.md)
+- [Node 1: Dome Master](../../architecture/node-1-dome-motion.md)
 - [Node Pinout Guide](../../architecture/node-pinout-guide.md)

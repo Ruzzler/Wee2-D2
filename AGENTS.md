@@ -42,10 +42,10 @@ To ensure project-wide synchronization, use this map as a lookup table during re
 | :--- | :--- | :--- |
 | **Node 1 (Dome Motion)** | `node-pinout-guide.md`, `dome-rotation.md` | `node-1-dome-motion.yaml`, `README.md` |
 | **Node 2 (Sound Hub)** | `node-pinout-guide.md`, `electrical-schematic.md` | `node-2-sound-hub.yaml`, `README.md` |
-| **Node 3 (LED Distribution)** | `node-3-led-distribution-spec.md`, `led-system.md` | `node-3-led-distribution.yaml` |
+| **Node 3 (LED Distribution)** | `node-3-led-distribution.md`, `led-system.md` | `node-3-led-distribution.yaml` |
 | **Drive ESCs** | `body-drive.md`, `flipsky-fsesc-67-pro-manual.md` | `left-motor-settings.xml` |
 | **Audio (DFPlayer)**| `audio-system.md`, `dfplayer-mini-spec.md` | `node-2-sound-hub.yaml` (UART triggers) |
-| **WLED Display** | `led-system.md`, `node-3-led-distribution-spec.md` | `node-3-led-distribution.yaml` (RMT Timing) |
+| **WLED Display** | `led-system.md`, `node-3-led-distribution.md` | `node-3-led-distribution.yaml` (RMT Timing) |
 
 ---
 

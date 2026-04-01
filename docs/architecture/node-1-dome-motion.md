@@ -1,4 +1,4 @@
-# <i data-lucide="settings"></i> Node 1: Dome Motion Spec
+# <i data-lucide="settings"></i> Node 1: Dome Motion
 
 > **TECHNICAL SPECIFICATIONS** | **ESPHome v3** | **ESP32-S3 Super Mini** | **Behavioral Master**
 

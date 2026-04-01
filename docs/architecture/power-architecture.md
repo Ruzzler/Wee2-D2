@@ -30,9 +30,9 @@ Wee2-D2 utilizes isolated voltage rails to protect sensitive logic from motor-in
 ### B. 5.1V Logic & Audio Rail
 | Component | Role | Regulation Source |
 | :--- | :--- | :--- |
-| [Node 1 (Motion)](node-1-dome-motion-spec.md) | Dome motion processing | goBILDA BEC (5.1V) |
-| [Node 2 (Sound)](node-2-sound-hub-spec.md) | Body logic & sounds | Flipsky BEC (5.1V) |
-| [Node 3 (LEDs)](node-3-led-distribution-spec.md) | Dome lighting arrays | Mini560 Buck (5.1V) |
+| [Node 1 (Motion)](node-1-dome-motion.md) | Dome motion processing | goBILDA BEC (5.1V) |
+| [Node 2 (Sound)](node-2-sound-hub.md) | Body logic & sounds | Flipsky BEC (5.1V) |
+| [Node 3 (LEDs)](node-3-led-distribution.md) | Dome lighting arrays | Mini560 Buck (5.1V) |
 
 ---
 
