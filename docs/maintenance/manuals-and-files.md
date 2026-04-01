@@ -10,6 +10,7 @@ Comprehensive guides for hardware integration and system capabilities.
 
 ### **📦 Hardware Data Sheets (PDF)**
 These are the original manufacturer specifications for the core hardware.
+- [DFPlayer Mini (Sound Hub)](../manuals/dfplayer-mini-manual.pdf)
 - [HOTRC DS-600 Transmitter](../manuals/hotrc-ds600-manual.pdf)
 - [HOTRC F-06A PWM Receiver](../manuals/hotrc-f06a-manual.pdf)
 - [Flipsky Mini FSESC 6.7 Pro](../manuals/vesc-esc-manual.pdf)
@@ -17,7 +18,7 @@ These are the original manufacturer specifications for the core hardware.
 
 ### **📖 Project Documentation (Markdown)**
 Internal documentation optimized for the Wee2-D2 architecture.
-- [DFPlayer Mini (Audio Hub)](../hardware/dfplayer-mini-manual.md)
+- [DFPlayer Mini (Audio Hub)](../hardware/dfplayer-mini-spec.md)
 - [GrnWave PSI Logic (LEDs)](../hardware/grnwave-psi-manual.md)
 - [goBILDA Drive & Motion](../hardware/gobilda-motor-manual.md)
 - [L-faster Hub Motors](../hardware/hub-motor-manual.md)

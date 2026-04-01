@@ -26,7 +26,7 @@ A comprehensive list of hardware used in the Wee2-D2 project, organized by syste
 ## 🔊 Audio & Lights
 | Component | Qty | Specifications | Visual ID |
 | :--- | :---: | :--- | :---: |
-| **DFPlayer Mini** | 1 | UART-Controlled MP3 Module; Dome S3 Master | ![DFPlayer](../assets/soundboard-top.jpg) |
+| **DFPlayer Mini** | 1 | UART-Controlled MP3 Module; Node 3 Broadcast Sink | ![DFPlayer](../assets/dfplayer-mini-module.jpg) |
 | **TPA3118 Amplifier** | 1 | 60W Mono Amp (Body Hub); Direct analog from DFPlayer | ![TPA3118](../assets/tpa3118-amplifier-module.jpg) |
 | **Pyle 3.5" Car Speaker**| 1 | 60W RMS / 4 Ohm High-Output Driver | ![Pyle Speaker](../assets/pyle-3.5-speaker.webp) |
 | **WS2812B Logic Arrays** | 1 | Addressable LED matrices (Front & Rear) | ![Logic Array](../assets/ws2812b-logic-arrays.webp) |
