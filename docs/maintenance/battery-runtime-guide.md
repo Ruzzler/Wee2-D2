@@ -8,7 +8,7 @@ The 20V DeWalt battery operates at **18.5V Nominal**. A 4Ah pack contains **74 W
 
 ---
 
-##  Power Consumption Breakdown
+## ⚡ Power Consumption Breakdown
 *Real-world estimates for a "Con Day" duty cycle.*
 
 ### **1. Baseline (Always-On Logic & Lights)**
@@ -35,7 +35,7 @@ The 20V DeWalt battery operates at **18.5V Nominal**. A 4Ah pack contains **74 W
 
 ---
 
-##  Operational Estimates (4Ah Battery)
+## 🕒 Operational Estimates (4Ah Battery)
 
 | Usage Mode | Total Average Load | Estimated Runtime |
 | :--- | :---: | :--- |
@@ -46,5 +46,5 @@ The 20V DeWalt battery operates at **18.5V Nominal**. A 4Ah pack contains **74 W
 > [!TIP]
 > **ENDURANCE UPGRADE**: For a full 6-hour convention day with minimal battery swaps, it is recommended to transition to a **6Ah or 9Ah** DeWalt FlexVolt pack, which provides **133Wh to 200Wh** of capacity.
 
-##  Battery Safety Note
+## 🔋 Battery Safety Note
 The **MgcSTEM LVP-R1.5** will automatically cut power at **17.5V**. If your droid suddenly goes dark, please replace the battery immediately. **Do not** attempt to bypass the LVC, as discharging below 16V will cause permanent cell damage to your power tool batteries.

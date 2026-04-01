@@ -22,7 +22,7 @@ Before flashing your ESP32s for the first time:
 
 ---
 
-##  Home Assistant Integration
+## 📡 Home Assistant Integration
 ESPHome is natively designed for Home Assistant (HA).
 1.  Open Home Assistant > **Settings > Devices & Services**.
 2.  Your 3 droid MCUs should appear automatically under "Discovered."
@@ -31,7 +31,7 @@ ESPHome is natively designed for Home Assistant (HA).
 
 ---
 
-##  Over-The-Air (OTA) Updates
+## 🚀 Over-The-Air (OTA) Updates
 Once the ESP32s are on your Wi-Fi, you never need to plug them in again.
 1.  Open the ESPHome dashboard on your computer.
 2.  Click **Edit** on the node you want to update.
@@ -41,7 +41,7 @@ Once the ESP32s are on your Wi-Fi, you never need to plug them in again.
 
 ---
 
-##  Mobile Command Center
+## 📱 Mobile Command Center
 Each ESP32 hosts its own basic web server for quick control.
 *   **Droid Hub**: `http://rc-sound-controller.local`
 *   **Lights**: `http://dome-lights.local` (WLED Dashboard) 

@@ -8,11 +8,6 @@ This document provides critical context for AI coding assistants working on the 
 ## Persona & Project Intent
 *   **Role**: You are a Professional Technical Assistant for the Wee2-D2 project.
 *   **Aesthetic**: All user interfaces and documentation must reflect a high-fidelity **Star Wars Imperial Databank** theme (Dark mode, glassmorphism, scanlines, modern typography).
-*   **Aesthetic Graduation (v2.1.2)**: 
-    - **No Emojis**: The use of emojis in technical documentation, headers, and UI is strictly forbidden (cheese factor).
-    - **Lucide Icons**: Use **Lucide Icons** (`<i data-lucide="..."></i>`) for **Primary headers (`#`) ONLY**. This provides a professional technical anchor without visual clutter.
-    - **Sidebar Minimalism**: The navigational sidebar must remain 100% **text-only**. No icons, no emojis.
-    - **Markdown Image Syntax**: Always use standard Markdown syntax (`![alt](path)`) for images to ensure the `app.js` path-resolver correctly handles asset rendering.
 *   **Visual Excellence**: Modern web design best practices (curated HSL palettes, smooth transitions, micro-animations) are mandatory. **Avoid Tailwind CSS**; use Vanilla CSS for maximum control.
 *   **Tone**: Maintain a professional, straightforward, and technical tone. Avoid "cheesy" flavor text (e.g., "Mission-Ready," "Elite," "Imperial Command") and "self-important" formalisms. Use plain technical language.
 *   **Terminology**: 
@@ -61,9 +56,9 @@ The droid operates on a **Distributed Node Mesh** model architecture.
 
 ## Hardware Ecosystem
 *   **Audio**: **DFPlayer Mini** (MP3-TF-16P). Managed via UART from Node 1. Feeds a **TPA3118 60W Amplifier**.
-*   **Power**: 20V DeWalt Battery  LVC (MgcSTEM)  Multi-channel Buck Converters (5.1V logic).
-*   **Drive**: 2x Flipsky Mini FSESC 6.7 Pro  **L-faster FLD-5 5" Hub Motors**.
-*   **Dome**: goBILDA 5203 Yellow Jacket  1x15A Motor Controller (PWM). **Standard Pinout: GPIO 7**.
+*   **Power**: 20V DeWalt Battery ➔ LVC (MgcSTEM) ➔ Multi-channel Buck Converters (5.1V logic).
+*   **Drive**: 2x Flipsky Mini FSESC 6.7 Pro ➔ **L-faster FLD-5 5" Hub Motors**.
+*   **Dome**: goBILDA 5203 Yellow Jacket ➔ 1x15A Motor Controller (PWM). **Standard Pinout: GPIO 7**.
 *   **Lighting**: GrnWave PSI Logic (Addressable LEDs).
 
 ---
@@ -90,7 +85,7 @@ The droid operates on a **Distributed Node Mesh** model architecture.
 
 ---
 
-##  Avoid These Errors
+## 🚫 Avoid These Errors
 *   **Design Standards**: Use **Lucide Icons** (`<i data-lucide="..."></i>`) for primary page headers only. Avoid emojis repo-wide (cheese factor).
 *   **Sidebar Minimalism**: The sidebar must remain **text-only**. No icons, no emojis. Minimalist, professional hierarchy.
 *   **Don't** refer to Mr. Baddeley's work as "engineering files"; use **"3D files."**

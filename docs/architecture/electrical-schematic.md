@@ -1,4 +1,4 @@
-#  Droid Electrical Schematic
+# ⚡ Droid Electrical Schematic
 
 This document provides a high-fidelity visual and technical map of the Wee2-D2 electrical system. 
 
@@ -6,7 +6,7 @@ This document provides a high-fidelity visual and technical map of the Wee2-D2 e
 
 ---
 
-## <i data-lucide="zap"></i> Interactive Schematic & Pinouts
+## 🧠 Interactive System Architecture (Mermaid)
 > [!TIP]
 > **INTERACTIVE INTERFACE**: Click on any component node to instantly decrypt its technical manual in the databank.
 
@@ -93,7 +93,7 @@ flowchart TD
 
 ---
 
-## <i data-lucide="cpu"></i> Pinout Lookup Tables
+## 📌 Pinout Lookup Tables
 
 ### **MCU 1: Body Audio (ESP32-S3 Super Mini)**
 Primary controller for sounds and drive system monitoring.
@@ -131,7 +131,7 @@ Dedicated controller for 360° dome rotation and behavior broadcasting.
 
 ---
 
-##  Best Practices
+## 🛡️ Best Practices
 *   **Common Ground**: All ESP32 grounds, Receiver grounds, and ESC signal grounds **MUST** be tied together at a central star-ground point.
 *   **Dual Drive: Parallel Signal Isolation**: The drive system uses two Flipsky Mini 6.7 Pro ESCs. Because the remote is in **Mode 1 (Mixed)**, each ESC receives its own PWM/PPM signal independently. To prevent ground loops, **only ESC 1** provides power and a ground reference to the receiver; **ESC 2** is connected via the **Signal Pin only**.
 *   **Signal Cleanliness**: Since the dome motor is a large DC motor, ensure logic wires are positioned away from the main motor leads to prevent EMI noise.

@@ -13,7 +13,7 @@ Before applying the 20V main power, verify:
 
 ---
 
-##  Technical Calibration
+## 🏗️ Technical Calibration
 
 ### **1. ESC Throttle Calibration (Flipsky & goBILDA)**
 To ensure the drive system and dome motor respond accurately:
@@ -41,7 +41,7 @@ The dome motor (goBILDA 15A ESC) operates on standard PWM (Servo) signals.
 
 ---
 
-##  Startup Sequence
+## 🚀 Startup Sequence
 Follow this exact order to prevent "ghosting" signals:
 1.  **Power ON Transmitters** (Body first, then Dome).
 2.  **Slide DeWalt 20V Battery** into the LVC core.

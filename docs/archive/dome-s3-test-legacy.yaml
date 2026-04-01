@@ -173,7 +173,7 @@ button:
     on_press: {script.execute: high_alert_test}
 
   - platform: template
-    name: " EMERGENCY STOP"
+    name: "⛔ EMERGENCY STOP"
     on_press:
       - script.stop: mood_standard_stuck
       - script.stop: high_alert_test

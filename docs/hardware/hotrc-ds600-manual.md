@@ -1,4 +1,4 @@
-#  HOTRC DS-600
+# 🏛️ HOTRC DS-600
 > **TECHNICAL SPECIFICATIONS**
 
 The **HOTRC DS-600** is a 6-channel, one-handed "trigger style" 2.4GHz transmitter. In the Wee2-D2 project, it provides the primary interface for drive and dome movement.
@@ -6,7 +6,7 @@ The **HOTRC DS-600** is a 6-channel, one-handed "trigger style" 2.4GHz transmitt
 > [!NOTE]
 > **Owner Mod (Silent Mode)**: The internal speakers have been physically removed from these units to eliminate beeping. Always rely on the **Status LEDs** on the front panel for pairing and mixing mode confirmation.
 
-##  Technical Specifications
+## ⚡ Technical Specifications
 *   **Channels**: 6 Channels
 *   **Frequency**: 2.4GHz ISM (2.4005 – 2.4835 GHz)
 *   **Spread Spectrum**: FHSS
@@ -15,14 +15,14 @@ The **HOTRC DS-600** is a 6-channel, one-handed "trigger style" 2.4GHz transmitt
 *   **Transmitter Power**: Built-in 3.7V / 1200mAh Lithium Battery (USB 5V Charging)
 *   **Manual**: [Download Local PDF Manual](hotrc-ds600-manual.pdf)
 
-##  Control Layout
+## 🕹️ Control Layout
 *   **Trigger (CH2)**: Forward / Backward.
 *   **Thumb Joystick (CH1)**: Left / Right Steering.
 *   **CH3 Switch**: Auxiliary (Toggle).
 *   **CH4 Switch**: Auxiliary (Toggle).
 *   **CH5/CH6**: Side buttons/knobs.
 
-##  Essential Configuration
+## 🛠️ Essential Configuration
 
 ### 1. Mixing Mode (Tank Steering)
 The DS-600 can internally "mix" CH1 and CH2 for dual-motor control.
@@ -40,7 +40,7 @@ If your droid drives backward when you pull the trigger:
 3. Turn the remote **ON** (you will hear a beep).
 4. Move the trigger (CH2) or joystick (CH1) to its limit. A long beep confirms the reversal.
 
-##  Wiring to ESP32 (MCU 1)
+## 📡 Wiring to ESP32 (MCU 1)
 The **F-06A Receiver** should be connected to the MCU 1 ESP32 using standard 3-pin servo cables.
 
 | Receiver Port | MCU 1 Pin | Wire Color | Function |

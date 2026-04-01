@@ -1,4 +1,4 @@
-# <i data-lucide="network"></i> Node Mesh
+# Node Mesh
 > **TECHNICAL ARCHITECTURE** | **v2.1.2-FINAL-STABLE**
 
 The Wee2-D2 project utilizes a distributed MCU architecture called the <i data-lucide="network"></i> **Node Mesh**. This design handles high-amperage motor control, precision dome rotation, and cinematic AV triggering while minimizing physical wiring through the central slip ring by distributing intelligence into three specialized hubs.
@@ -41,7 +41,7 @@ The Node Mesh uses **ESP-NOW**, a low-power, high-speed 2.4GHz wireless protocol
 
 ---
 
-##  Why Wireless? (Architectural Evolution)
+## 🚀 Why Wireless? (Architectural Evolution)
 
 ### **1. Audio Signal Integrity**
 By communicating wirelessly, we can keep the **DFPlayer Mini** and its analog audio paths entirely within the body. This prevents analog audio from ever crossing the noisy slip ring environment, ensuring a hiss-free sound floor.
@@ -54,14 +54,14 @@ ESP-NOW provides the same "physical wire" feel as UART but handles packet collis
 
 ---
 
-##  Components of the System
+## 🛠️ Components of the System
 *   **Node 1: Sound Hub (Audio)**: ESP32-S3 Super Mini (Behavioral Slave).
 *   **Node 3: Dome Motion (Motion)**: ESP32-S3 Super Mini (Behavioral Master).
 *   **Node 2: LED Distribution (Lights)**: ESP32-Dev Board (Slave WLED).
 
 ---
 
-##  Slip Ring Integration (6-Circuit)
+## 🛞 Slip Ring Integration (6-Circuit)
 The slip ring is the physical "Spinal Cord" of the droid. Every signal must be shared across this rotating joint perfectly to ensure the Node Mesh bus does not drop packets. Because the dome contains a heavy motor and sensitive 5V logic chips, power is separated into two clean lines.
 
 | Circuit | Function | Color (Typical) | Wire Gauge | Destination |
@@ -75,7 +75,7 @@ The slip ring is the physical "Spinal Cord" of the droid. Every signal must be s
 
 ---
 
-##  Signal Integrity Standards
+## 🛠️ Signal Integrity Standards
 To ensure the Node Mesh remains stable across multiple nodes and through the slip ring, the following engineering standards are applied to all firmware configurations:
 
 1.  **Sensor Update Intervals**: General ESPHome sensors default to 60-second intervals. For real-time RC control, an `update_interval: 50ms` is used on the `pulse_width` component to ensure reactive motion.
@@ -84,7 +84,7 @@ To ensure the Node Mesh remains stable across multiple nodes and through the sli
 
 ---
 
-##  ESP-NOW Behavioral Events
+## 💾 ESP-NOW Behavioral Events
 For reliability, the Wireless Bridge utilizes the broadcast protocol with the following logic:
 
 ### **2. ESP-NOW Mesh (Wireless)**
@@ -98,5 +98,5 @@ The core behavioral link is the **ESP-NOW Wireless Bridge**. Node 3 broadcasts s
 - **Node 3 (Dome Motion)** broadcasts: `SOUND_ID_01`
 - **Node 1 (Sound Hub)** receives: `PLAY TRACK 01` on DFPlayer Mini.
 
-##  GPIO Interconnects
+## 📊 GPIO Interconnects
 If you need the specific GPIO pins used by the DFPlayer or ESCs, refer to the **Pinout Lookup Tables** in the [Interactive Electrical Schematic](electrical-schematic.md).
