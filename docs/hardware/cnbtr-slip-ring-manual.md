@@ -1,12 +1,10 @@
 # <i data-lucide="refresh-cw"></i> CNBTR Slip Ring
 
-> **TECHNICAL SPECIFICATIONS**
+## TECHNICAL SPECIFICATIONS
 
 The **CNBTR Through-Hole Slip Ring** allows for 360° continuous rotation of the droid's dome while transferring power and data from the body.
 
 ![CNBTR Slip Ring](../../assets/slip-ring-cnbtr.jpg)
-
-## Technical Specifications
 
 - **Bore Diameter**: 12.7mm (1/2 inch) — *Fits over the central dome shaft.*
 - **Circuits**: 6 Circuits.

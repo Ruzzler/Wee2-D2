@@ -1,6 +1,6 @@
 # <i data-lucide="sun"></i> GrnWave Circular PSI
 
-> **TECHNICAL SPECIFICATIONS**
+## TECHNICAL SPECIFICATIONS
 
 ![GrnWave PSI](../../assets/grnwave-psi-logic.jpg)
 
@@ -13,8 +13,6 @@ The **GrnWave Circular PSI** is a high-density addressable LED display used for 
 > - **DO NOT** power these from the 6V BEC of the goBILDA motor controller.
 > - **DO NOT** share power with 6V servos.
 > - **ALWAYS** use a high-quality 5V regulator (like the Mini560).
-
-## Technical Specifications
 
 - **LED Type**: WS2812B-2020 (Addressable RGB with integrated IC).
 - **Pixel Count**: 76 LEDs per board.

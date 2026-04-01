@@ -1,6 +1,8 @@
-# <i data-lucide="volume-2"></i> Node 1: Sound Hub Spec
+# <i data-lucide="volume-2"></i> Node 1: Sound Hub
 
 > **ESPHome Firmware** | **ESP32-S3 Super Mini**
+
+## TECHNICAL SPECIFICATIONS
 
 The **Sound Hub** acts as the localized audio management and drive monitoring system for Wee2-D2. It listens for **ESP-NOW** behavioral triggers from the Dome Motion master and translates them into serial commands for the **DFPlayer Mini**.
 

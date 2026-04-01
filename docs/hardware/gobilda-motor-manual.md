@@ -1,6 +1,6 @@
 # <i data-lucide="settings"></i> goBILDA Drive & Motion
 
-> **TECHNICAL SPECIFICATIONS**
+## TECHNICAL SPECIFICATIONS
 
 This entry covers the high-torque dome rotation motor and its dedicated speed controller.
 

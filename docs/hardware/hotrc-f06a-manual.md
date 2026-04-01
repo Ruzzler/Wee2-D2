@@ -1,12 +1,10 @@
 # <i data-lucide="wifi"></i> HOTRC F-06A Receiver
 
-> **TECHNICAL SPECIFICATIONS**
+## TECHNICAL SPECIFICATIONS
 
 The **HOTRC F-06A** is the native 6-channel 2.4GHz receiver paired with the DS-600 transmitter. In the Wee2-D2 project, these receivers capture wireless PWM signals and pass them to the ESP32 microcontrollers for drive and sound processing.
 
 ---
-
-## Technical Specifications
 
 - **Channels**: 6 Channels (PWM Output)
 - **Frequency Range**: 2.4GHz ISM

@@ -2,6 +2,8 @@
 
 > **HARDWARE SPECIFICATION** | **NODE 1: SOUND HUB INTEGRATION**
 
+## TECHNICAL SPECIFICATIONS
+
 The **DFPlayer Mini** is a specialized, serial-controlled MP3 module that serves as the "Voice" of Wee2-D2. It is managed by **Node 1 (Sound Hub)** via a low-latency UART serial link.
 
 ## Module Overview

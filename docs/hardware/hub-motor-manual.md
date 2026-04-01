@@ -1,6 +1,6 @@
 # <i data-lucide="zap"></i> L-Faster Hub Motor (FLD-5)
 
-> **TECHNICAL SPECIFICATIONS**
+## TECHNICAL SPECIFICATIONS
 
 ![L-faster Hub Motor](../../assets/l-faster-hub-motor.jpg)
 

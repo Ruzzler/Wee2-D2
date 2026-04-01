@@ -1,12 +1,12 @@
 # <i data-lucide="zap"></i> Flipsky FSESC 6.7 Pro
 
-> **TECHNICAL SPECIFICATIONS**
+> **VESC Firmware** | **Flipsky Mini FSESC 6.7 Pro**
+
+## TECHNICAL SPECIFICATIONS
 
 The **Flipsky Mini FSESC 6.7 Pro** is a high-performance electronic speed controller based on the VESC 6.6 architecture. It is used in the Wee2-D2 to drive the high-torque hub motors.
 
 ![Flipsky FSESC 6.7 Pro](../../assets/flipsky-fsesc-67-pro.jpg)
-
-## Technical Specifications
 
 - **Current**: 70A Continuous, 200A Instantaneous Peak.
 - **Voltage Range**: 14V – 60V (Support for 4S to 13S LiPo; **Safe Limit: 12S**).
