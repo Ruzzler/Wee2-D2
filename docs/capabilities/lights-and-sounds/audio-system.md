@@ -1,4 +1,4 @@
-# <i data-lucide="volume-2"></i> Audio & Behavioral Triggers
+# <i data-lucide="volume-2"></i> Audio & Voice Triggers
 > **FUNCTIONAL CAPABILITY**
 
 Wee2-D2's voice and sound system is a distributed modular stack built around the **DFPlayer Mini** (MP3 Hub) and a **TPA3118 60W Amplifier**. Triggers are managed wirelessly via the **ESP-NOW** bridge.
@@ -12,7 +12,7 @@ Instead of physical wires running through the slip ring, the droid uses a **Wire
 3.  **Command Translation**: The **Sound Hub (Node 1)** receives the wireless packet and sends a precise **Serial (UART)** command to the **DFPlayer Mini**.
 4.  **Amplification**: The DFPlayer outputs a low-level analog signal to the **TPA3118 Amplifier**, which drives the 60W Pyle speaker at 20V.
 
-## 💾 SD Card Formatting (DFPlayer Standard)
+##  SD Card Formatting (DFPlayer Standard)
 For the DFPlayer Mini to recognize tracks, the SD card must follow the standard industrial naming convention. Ensure the card is formatted to **FAT32**.
 
 The folders must be named `01` through `99`, and files must start with a 3-digit prefix.
@@ -32,7 +32,7 @@ SD_ROOT/
 ```
 *Note: The DFPlayer supports up to 255 tracks per folder, allowing for massive behavioral variety.*
 
-## 🔄 Behavioral Bank Logic
+##  Behavioral Bank Logic
 By flicking **CH5** on your transmitter, the droid cycles through functional "Mood Banks." Node 3 broadcasts the bank change wirelessly, which updates the lighting patterns and the sound selection in Node 1:
 
 | Behavioral Bank | Lighting Mode | Audio Character |
@@ -42,10 +42,10 @@ By flicking **CH5** on your transmitter, the droid cycles through functional "Mo
 | **Bank 3 (High Alert)** | Pulsing Red | Alarms / Screams |
 | **Bank 4 (Silent)** | Dim Blue | Stealth / Event Safe |
 
-## 🤖 Ambient Mode
+##  Ambient Mode
 When set to **Ambient Mode (Bank 1)**, the Body Hub will automatically fire random tracks from Folder `03` every 15-45 seconds to simulate droid "thinking" during idle periods.
 
-## 🧰 Audio Stack Interconnect (UART)
+##  Audio Stack Interconnect (UART)
 Unlike the legacy 9-wire trigger system, the v1.8 stack uses a 4-wire serial bus for absolute control:
 
 | Pin | Source (S3) | Destination (DFPlayer) | Role |

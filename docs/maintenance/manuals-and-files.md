@@ -7,7 +7,7 @@ Welcome to the centralized Manuals and Files Hub. This page provides rapid acces
 ## <i data-lucide="book-open"></i> 1. Technical Manuals
 Comprehensive guides for hardware integration and system capabilities.
 
-### **📦 Hardware Data Sheets (PDF)**
+### ** Hardware Data Sheets (PDF)**
 These are the original manufacturer specifications for the core hardware.
 - [DFPlayer Mini (Sound Hub)](../manuals/dfplayer-mini-manual.pdf)
 - [HOTRC DS-600 Transmitter](../manuals/hotrc-ds600-manual.pdf)
@@ -15,7 +15,7 @@ These are the original manufacturer specifications for the core hardware.
 - [Flipsky Mini FSESC 6.7 Pro](../manuals/vesc-esc-manual.pdf)
 - [MgcSTEM LVP-R1.5 Logic](../manuals/low-voltage-protector-manual.pdf)
 
-### **📖 Project Documentation (Markdown)**
+### ** Project Documentation (Markdown)**
 Internal documentation optimized for the Wee2-D2 architecture.
 - [DFPlayer Mini (Audio Hub)](../hardware/dfplayer-mini-spec.md)
 - [GrnWave PSI Logic (LEDs)](../hardware/grnwave-psi-manual.md)
@@ -25,15 +25,15 @@ Internal documentation optimized for the Wee2-D2 architecture.
 
 ---
 
-## 💾 2. System Configuration Files (Firmware & Config)
+##  2. System Configuration Files (Firmware & Config)
 Direct links to the latest production-verified code and settings.
 
-### **🧠 ESPHome Firmware (YAML)**
+### ** ESPHome Firmware (YAML)**
 - [Sound Hub (Node 1)](../../firmware/production/node-1-sound-hub.yaml)
 - [LED Distribution (Node 2)](../../firmware/production/node-2-led-distribution.yaml)
 - [Dome Motion (Node 3)](../../firmware/production/node-3-dome-motion.yaml)
 
-### **🛞 VESC Motor Settings (XML)**
+### ** VESC Motor Settings (XML)**
 - [Left Drive Motor](../../firmware/esc-configs/left-motor-settings.xml)
 - [Right Drive Motor](../../firmware/esc-configs/right-motor-settings.xml)
 - [Left App Settings](../../firmware/esc-configs/left-app-settings.xml)
@@ -41,7 +41,7 @@ Direct links to the latest production-verified code and settings.
 
 ---
 
-## 🛰️ 3. External Tooling & Cloud Links
+##  3. External Tooling & Cloud Links
 Direct links to external tools and cloud-based management systems.
 
 | Resource | URL / Source | Description |

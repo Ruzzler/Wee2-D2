@@ -1,4 +1,4 @@
-# <i data-lucide="list"></i> Bill of Materials (BOM)
+# <i data-lucide="graduation-cap"></i> Bill of Materials (BOM)
 
 A comprehensive list of hardware used in the Wee2-D2 project, organized by system tier. Click on any thumbnail in the **Visual ID** column to enlarge it.
 

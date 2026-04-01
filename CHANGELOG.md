@@ -1,18 +1,18 @@
-# 📜 Project Changelog: Wee2-D2 Imperial Databank
+# <i data-lucide="history"></i> Project Changelog: Wee2-D2 Imperial Databank
 
 All notable changes to the Wee2-D2 project will be documented in this file. This project adheres to [Semantic Versioning](https://semver.org/) and the [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) standard.
 
 ---
 
 ## [1.8.3] - 2026-03-31
-### 🛰️ UI Refactor & Databank Mapping
+###  UI Refactor & Databank Mapping
 - **Manuals and Files Hub**: Replaced the legacy `Component Manuals` registry with a consolidated **Manuals and Files** hub. This provides direct download links for latest Firmware (YAML), VESC configs (XML), and Cloud Uplinks for engineering tools.
 - **Databank Dependency Map**: Integrated a project-wide mapping strategy into `AGENTS.md` (v1.8.2 briefing). This establishes a **MANDATORY FIRST STEP** for all AI agents to audit related documentation/firmware clusters before proposing changes.
 - **Confusing Metadata Scrub**: Removed decorative but confusing "SERIAL: CAP-..." identifiers across 17+ capability and hardware guides.
 - **BOM Cleanup**: Removed redundant "Integrity Check" tips from the Bill of Materials, replacing them with direct links to the Interactive Schematic.
 
 ## [1.8.0] - 2026-03-31
-### 🛰️ Wireless Bridge Pivot (ESP-NOW)
+###  Wireless Bridge Pivot (ESP-NOW)
 - **Architectural Shift**: Decommissioned the physical UDNS UART bus (GPIO 16/17) through the slip ring in favor of a distributed **ESP-NOW** wireless bridge.
 - **Node Consolidation**: Standardized **MCU 1 (Body)** and **MCU 3 (Dome)** as **ESP32-S3 Super Mini** nodes, utilizing the `esp-idf` framework for stabilized wireless and RMT performance.
 - **Audio Overhaul**: Replaced the PEMENOL 60W soundboard with a modular **DFPlayer Mini** (MP3 serial hub) and **TPA3118 60W Amplifier**.

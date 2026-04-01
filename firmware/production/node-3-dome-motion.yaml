@@ -275,7 +275,7 @@ button:
     on_press: {script.execute: test_party_dance}
 
   - platform: template
-    name: "⛔ EMERGENCY STOP"
+    name: " EMERGENCY STOP"
     on_press:
       - script.stop: mood_standard_stuck
       - script.stop: r2_angry
