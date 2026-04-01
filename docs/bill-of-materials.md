@@ -6,9 +6,9 @@ A comprehensive list of hardware used in the Wee2-D2 project, organized by syste
 ## 🧠 Brains & Control
 | Component | Qty | Specifications | Visual ID |
 | :--- | :---: | :--- | :---: |
-| **Node 1: Sound Hub** | 1 | ESP32-S3 Super Mini; Audio & Drive Sync | ![S3 Mini](../assets/esp32-s3-super-mini.jpg) |
-| **Node 2: LED Distribution** | 1 | ESP32-Dev Board; **WLED** Matrix Controller | ![ESP32D](../assets/esp32d-dev-board.png) |
-| **Node 3: Dome Motion** | 1 | ESP32-S3 Super Mini; Behavioral Master | ![Node 3 Master](../assets/esp32-s3-super-mini.jpg) |
+| [**Node 1: Sound Hub**](architecture/node-1-sound-hub-spec.md) | 1 | ESP32-S3 Super Mini; Audio & Drive Sync | ![S3 Mini](../assets/esp32-s3-super-mini.jpg) |
+| [**Node 2: LED Distribution**](architecture/node-2-led-distribution-spec.md) | 1 | ESP32-Dev Board; **WLED** Matrix Controller | ![ESP32D](../assets/esp32d-dev-board.png) |
+| [**Node 3: Dome Motion**](architecture/node-3-dome-motion-spec.md) | 1 | ESP32-S3 Super Mini; Behavioral Master | ![Node 3 Master](../assets/esp32-s3-super-mini.jpg) |
 | [HOTRC DS-600](hardware/hotrc-ds600-manual.md) | 2 | 6-CH Transmitter (Silent Mod) [PDF](hardware/hotrc-ds600-manual.pdf) | ![Transmitter](../assets/hotrc-ds600-transmitter.webp) |
 | [HOTRC F-06A Receivers](hardware/hotrc-f06a-manual.md) | 2 | 6-CH PWM Output @ **115200 Baud (UDNS)** [PDF](hardware/hotrc-f06a-manual.pdf) | ![Receiver](../assets/hotrc-f06a-receiver.png) |
 
@@ -26,10 +26,10 @@ A comprehensive list of hardware used in the Wee2-D2 project, organized by syste
 ## 🔊 Audio & Lights
 | Component | Qty | Specifications | Visual ID |
 | :--- | :---: | :--- | :---: |
-| **DFPlayer Mini** | 1 | UART-Controlled MP3 Module; Node 3 Broadcast Sink | ![DFPlayer](../assets/dfplayer-mini-module.jpg) |
-| **TPA3118 Amplifier** | 1 | 60W Mono Amp (Body Hub); Direct analog from DFPlayer | ![TPA3118](../assets/tpa3118-amplifier-module.jpg) |
-| **Pyle 3.5" Car Speaker**| 1 | 60W RMS / 4 Ohm High-Output Driver | ![Pyle Speaker](../assets/pyle-3.5-speaker.webp) |
-| **WS2812B Logic Arrays** | 1 | Addressable LED matrices (Front & Rear) | ![Logic Array](../assets/ws2812b-logic-arrays.webp) |
+| [**DFPlayer Mini**](hardware/dfplayer-mini-spec.md) | 1 | UART-Controlled MP3 Module; Node 3 Broadcast Sink | ![DFPlayer](../assets/dfplayer-mini-module.jpg) |
+| [**TPA3118 Amplifier**](capabilities/lights-and-sounds/audio-system.md) | 1 | 60W Mono Amp (Body Hub); Direct analog from DFPlayer | ![TPA3118](../assets/tpa3118-amplifier-module.jpg) |
+| [**Pyle 3.5" Car Speaker**](capabilities/lights-and-sounds/audio-system.md) | 1 | 60W RMS / 4 Ohm High-Output Driver | ![Pyle Speaker](../assets/pyle-3.5-speaker.webp) |
+| [**WS2812B Logic Arrays**](capabilities/lights-and-sounds/led-system.md) | 1 | Addressable LED matrices (Front & Rear) | ![Logic Array](../assets/ws2812b-logic-arrays.webp) |
 | [GrnWave Circular PSI](hardware/grnwave-psi-manual.md) | 2 | 76x WS2812B-2020 LEDs (**5V ONLY**) | ![GrnWave PSI](../assets/grnwave-psi-logic.jpg) |
 
 ## ⚙️ Mechanical / Drive
