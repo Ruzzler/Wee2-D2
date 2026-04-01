@@ -23,7 +23,7 @@ To ensure project-wide synchronization, use this map as a lookup table during re
 | Dependency Cluster | Core Components | Primary Documentation & Firmware Links |
 | :--- | :--- | :--- |
 | **🧠 Control Hub** | Node 1, 2, 3 | `AGENTS.md`, `electrical-schematic.md`, `firmware/**/README.md` |
-| **📡 Comm Bridge** | ESP-NOW, RC | `unified-nervous-system.md`, `hotrc-ds600-manual.md`, `hotrc-f06a-manual.md` |
+| **📡 Comm Bridge** | ESP-NOW, RC | `node-mesh.md`, `hotrc-ds600-manual.md`, `hotrc-f06a-manual.md` |
 | **⚡ Power Grid** | Battery, LVP, Buck | `power-architecture.md`, `battery-runtime-guide.md`, `mgcstem-lvp-r15-manual.md` |
 | **🛞 Drive System** | Motors, ESCs | `body-drive.md`, `hub-motor-manual.md`, `flipsky-fsesc-67-pro-manual.md`, `ESC-XML-Settings` |
 | **🔊 Audio/Visual** | DFPlayer, LEDs | `audio-system.md`, `led-system.md`, `dfplayer-mini-spec.md`, `grnwave-psi-manual.md` |

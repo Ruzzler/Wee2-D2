@@ -1,4 +1,4 @@
-# 🕸️ Unified Nervous System: distributed Node Mesh
+# Node Mesh
 > **ARCHITECTURE OVERVIEW** | **MODEL: v2.1.0-Zero-Infra**
 
 The Wee2-D2 project uses a **distributed MCU model** called the **Node Mesh**. This architecture eliminates the need for complex, heavy wiring through the slip ring by distributing intelligence into three specialized hubs.
