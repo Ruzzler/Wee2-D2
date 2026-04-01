@@ -46,13 +46,13 @@ flowchart TD
 
  subgraph LOGIC_RAIL [5V LOGIC & SIGNALS]
  ESC1 -->|5V BEC| RC1["Body Receiver"]:::signal
- RC1 -->|5V| Node1["Node 2 (Sound S3)"]:::brain
- Node1 -->|UART| AUDIO["DFPlayer Mini"]:::audio
+ RC1 -->|5V| Node2["Node 2 (Sound Hub)"]:::brain
+ Node2 -->|UART| AUDIO["DFPlayer Mini"]:::audio
  
  DOME_ESC -.->|Isolated| RC2["Dome Receiver"]:::signal
 
- DOME_WAGOS --> Node2["Node 3 (Lights WLED)"]:::brain
- DOME_ESC -->|PWM| Node3["Node 1 (Dome S3)"]:::brain
+ DOME_WAGOS --> Node3["Node 3 (Lights WLED)"]:::brain
+ DOME_ESC -->|PWM| Node1["Node 1 (Dome S3)"]:::brain
  DOME_WAGOS --> LEDS["LED Matrices"]:::lights
  end
 
@@ -61,12 +61,12 @@ flowchart TD
  TX2 -.->|2.4GHz| RC2
  RC1 -->|PWM| ESC1
  RC1 -->|PWM| ESC2
- RC1 -->|PWM| Node1
- RC2 -->|PWM| Node3
- Node3 -->|PWM| DOME_ESC
+ RC1 -->|PWM| Node2
+ RC2 -->|PWM| Node1
+ Node1 -->|PWM| DOME_ESC
  AUDIO -->|Analog| AMP
- Node3 -.->|ESP-NOW| Node1
- Node3 -.->|ESP-NOW| Node2
+ Node1 -.->|ESP-NOW| Node2
+ Node1 -.->|ESP-NOW| Node3
  end
 
  %% Technical Manual Links
@@ -79,9 +79,9 @@ flowchart TD
  click DOME_BUCK href "../bill-of-materials.md" "BOM"
  click RC1 href "../hardware/hotrc-f06a-manual.md" "Receiver Manual"
  click RC2 href "../hardware/hotrc-f06a-manual.md" "Receiver Manual"
- click Node1 href "node-2-sound-hub-spec.md" "Node 2 Spec"
- click Node2 href "node-3-led-distribution-spec.md" "Node 3 Spec"
- click Node3 href "node-1-dome-motion-spec.md" "Node 1 Spec"
+ click Node1 href "node-1-dome-motion-spec.md" "Node 1 Spec"
+ click Node2 href "node-2-sound-hub-spec.md" "Node 2 Spec"
+ click Node3 href "node-3-led-distribution-spec.md" "Node 3 Spec"
  click DOME_ESC href "../hardware/gobilda-motor-manual.md" "Motor Manual"
 
  classDef power fill:#ff9900,stroke:#333,stroke-width:2px,color:#000
