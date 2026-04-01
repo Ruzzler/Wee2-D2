@@ -1,4 +1,4 @@
-<img src="../assets/droid-actual.jpg" alt="Wee2-D2 Hero" width="400">
+![Wee2-D2 Hero](../assets/droid-actual.jpg)
 
 # <i data-lucide="layout"></i> Project Overview
 
