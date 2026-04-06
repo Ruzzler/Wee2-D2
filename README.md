@@ -19,8 +19,10 @@ Wee2-D2 utilizes a decentralized architecture split across three ESP32 microcont
 
 ### Wireless Bridge (ESP-NOW)
 
-- **Node 1: Dome Motion**: **ESP32-S3 Super Mini** acting as the "Behavioral Master," broadcasting wireless triggers to the body and lights.
-- **Node 2: Sound Hub**: **ESP32-S3 Super Mini** managing the **DFPlayer Mini** and drive system telemetry.
+![Neural Command Dashboard](assets/neural-command-dashboard.jpg)
+
+- **Node 1: Dome Motion**: **ESP32-S3 Super Mini** acting as the "Behavioral Master," executing autonomous scripts and motion profiles.
+- **Node 2: Sound Hub**: **ESP32-S3 Super Mini** hosting the "Neural Command Center" Dashboard. It captures web UI commands and securely relays them back to Node 1 via ESP-NOW.
 - **Node 3: LED Distribution**: Standard **ESP32 Dev Board** running WLED for high-density addressable light matrices.
 
 > [!WARNING]

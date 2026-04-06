@@ -1,290 +1,482 @@
-# [!] PRODUCTION LOCK: STABLE DEPLOYMENT (v2.1.2)
-# AUTHORIZED EDITS ONLY: REQUIRES GRADUATION APPROVAL
-# TARGET TIER: PRODUCTION
-
-# Wee2-D2 Dome Master (Node 1)
-# v2.2.1 | PRODUCTION: TEST CODE GRADUATION
+# ==============================================================================
+# Wee2-D2: Dome Controller / Brain (Node 1)
+# v2.6.0-Dashboard | BIDIRECTIONAL MESH + RELAY RECEIVER
+# ==============================================================================
 
 substitutions:
   node_name: "wee2d2-dome-master"
-  node_id: "1"
-  fw_version: "2.1.2"
+  fw_version: "2.6.0-Dashboard"
 
-packages:
-  remote_base: !include ../../common/base-config.yaml
-  hw_base: !include ../../common/s3-defaults.yaml
+  # --- PINS ---
+  dome_servo_pin: "GPIO7"
+  rc_stick_pin: "GPIO4"
+  wled_tx_pin: "GPIO5"
 
+  # --- TUNING ---
+  dome_speed_target: "0.60"
+
+  # --- MESH PEERS ---
+  node2_mac: !secret node2_mac
+
+# --- CORE CONFIGURATION ---
 esphome:
- on_boot:
- priority: -10
- then:
- - servo.write: {id: dome_motor, level: 0.0}
- - logger.log: "BOOT: Motor forced to STOP (System Safety)"
- 
- on_shutdown:
- priority: 600
- then:
- - servo.write: {id: dome_motor, level: 0.0}
+  name: ${node_name}
+  friendly_name: "Wee2-D2 Brain"
+  project:
+    name: "ruzzler.wee2-d2"
+    version: ${fw_version}
+  libraries:
+    - FS
+  platformio_options:
+    idf_component_manager: "no"
 
-# ============================================
-# UNIQUE HARDWARE: Dome Master
-# ============================================
+esp32:
+  board: esp32-s3-devkitc-1
+  variant: esp32s3
+  framework:
+    type: arduino
 
+wifi:
+  # The main network connection
+  networks:
+    - ssid: !secret wifi_ssid
+      password: !secret wifi_password
+      channel: 11
+      priority: 0
 
-# ============================================
-# HARDWARE OUTPUTS
-# ============================================
+  # Fallback Hotspot
+  ap:
+    ssid: "WEE2-D2_SETUP"
+    password: "wee2d2setup"
+    ap_timeout: 1min
+    channel: 11
 
-status_led:
- pin: GPIO8
+  fast_connect: true
+  power_save_mode: none
+  output_power: 8.5dBm
 
+api:
+  encryption:
+    key: !secret api_encryption_key
+
+ota:
+  - platform: esphome
+    password: !secret ota_password
+
+logger:
+  level: DEBUG
+  hardware_uart: USB_CDC
+  baud_rate: 115200
+  logs:
+    pulse_width: INFO  # Mutes the RC Stick debug spam
+
+web_server:
+  port: 80
+
+# --- WIRELESS MESH ---
+# ===========================================================================
+# PROTOCOL MAP
+# ---------------------------------------------------------------------------
+# Outbound (Node 1 -> Node 2)  [1 byte — legacy sound triggers]
+#   0x01 idle chirps    0x02 angry    0x03 dance    0x04 cantina    0x99 stop
+#
+# Inbound  (Node 2 -> Node 1)  [2+ bytes — dashboard relay]
+#   0xA0 <anim_id>      Animation: 0x01=idle 0x02=angry 0x03=dance
+#                                  0x04=cantina 0xFF=estop
+#   0xA1 <preset_id>    Lighting preset override (0-15)
+#   0xA2 <speed_x100>   Dome speed tuning (10-100 = 0.10-1.00)
+#
+# Outbound heartbeat (Node 1 -> Node 2, every 5s)
+#   0xB0                "I'm alive" ping — Node 2 uses for status card
+# ===========================================================================
+espnow:
+  # Formally registers Node 2 so the ESP32 allows the unicast message to send
+  peers:
+    - "${node2_mac}"
+  on_receive:
+    - lambda: |-
+        if (size < 1) return;
+        uint8_t cmd = data[0];
+
+        // 0xA0 — Animation trigger
+        if (cmd == 0xA0 && size >= 2) {
+          uint8_t anim = data[1];
+          ESP_LOGI("relay", "Animation cmd from Node 2: 0x%02X", anim);
+          switch (anim) {
+            case 0x01: id(animation_idle).execute(); break;
+            case 0x02: id(animation_angry).execute(); break;
+            case 0x03: id(animation_dance).execute(); break;
+            case 0x04: id(animation_cantina).execute(); break;
+            case 0xFF: // Emergency Stop
+              id(animation_idle).stop();
+              id(animation_angry).stop();
+              id(animation_dance).stop();
+              id(animation_cantina).stop();
+              id(set_light_preset).execute(0);
+              id(trigger_sound).execute(0x99);
+              id(dome_motor).write(0.0f);
+              break;
+          }
+        }
+        // 0xA1 — Lighting preset override
+        else if (cmd == 0xA1 && size >= 2) {
+          int ps = (int)data[1];
+          ESP_LOGI("relay", "Lighting cmd from Node 2: preset %d", ps);
+          id(set_light_preset).execute(ps);
+        }
+        // 0xA2 — Dome speed tuning (speed * 100)
+        else if (cmd == 0xA2 && size >= 2) {
+          float speed = data[1] / 100.0f;
+          if (speed >= 0.1f && speed <= 1.0f) {
+            id(dome_speed_tuning) = speed;
+            ESP_LOGI("relay", "Dome speed cmd from Node 2: %.2f", speed);
+          }
+        }
+
+# --- WIRED COMMS (To Node 3 WLED) ---
+uart:
+  - id: wled_bus
+    tx_pin: ${wled_tx_pin}
+    baud_rate: 115200
+
+# --- OUTPUTS: Motor Only ---
 output:
- - platform: ledc
- pin: GPIO7
- id: dome_pwm
- frequency: 50Hz
+  - platform: ledc
+    pin: ${dome_servo_pin}
+    id: dome_pwm
+    frequency: 50Hz
 
 servo:
- - id: dome_motor
- output: dome_pwm
- min_level: 0.05
- idle_level: 0.075
- max_level: 0.1
- transition_length: 0.8s
- auto_detach_time: 5s
+  - id: dome_motor
+    output: dome_pwm
+    min_level: 0.05
+    idle_level: 0.075
+    max_level: 0.1
+    transition_length: 0.8s
+    auto_detach_time: 5s
 
-light:
- # REAR PSI (GPIO 5)
- - platform: esp32_rmt_led_strip
- rgb_order: GRB
- pin: GPIO5
- num_leds: 76
- chipset: ws2812
- rmt_symbols: 96
- name: "Rear PSI"
- id: rear_psi
- 
- # 30% BRIGHTNESS CLAMP
- on_turn_on:
- then:
- - if:
- condition:
- lambda: 'return id(rear_psi).remote_values.get_brightness() > 0.3;'
- then:
- - light.turn_on: {id: rear_psi, brightness: 30%}
- effects: &psi_effects
- - addressable_scan:
- name: "Cinematic Wipe"
- move_interval: 75ms
- scan_width: 38
- - addressable_flicker:
- name: "TEST: High Alert"
- intensity: 3%
- - addressable_twinkle:
- name: "T6: Leia/Hologram"
- twinkle_probability: 10%
- progress_interval: 20ms
- - addressable_rainbow:
- name: "Party Mode (Rainbow)"
- speed: 10
- width: 50
-
- # FRONT PSI (GPIO 6)
- - platform: esp32_rmt_led_strip
- rgb_order: GRB
- pin: GPIO6
- num_leds: 76
- chipset: ws2812
- rmt_symbols: 96
- name: "Front PSI"
- id: front_psi
- 
- # 30% BRIGHTNESS CLAMP
- on_turn_on:
- then:
- - if:
- condition:
- lambda: 'return id(front_psi).remote_values.get_brightness() > 0.3;'
- then:
- - light.turn_on: {id: front_psi, brightness: 30%}
- effects: *psi_effects
-
-# ============================================
-# SENSORS (RC REMOTE PASSTHROUGH)
-# ============================================
+# --- SENSORS: RC Manual Override ---
 sensor:
- - platform: pulse_width
- pin: 
- number: GPIO4
- mode: INPUT_PULLDOWN
- name: "RC Stick Input"
- id: rc_stick
- update_interval: 50ms
- filters:
- - multiply: 1000000 
- - delta: 20.0 
- on_value:
- then:
- - lambda: |-
- if (x < 1400 || x > 1600) {
- // Stop autonomous behaviors if the pilot takes control
- id(mood_standard_stuck).stop();
- id(r2_angry).stop();
- id(test_scan_patrol).stop();
- id(test_party_dance).stop();
- 
- float speed = 0.0;
- if (x < 1400) {
- speed = (x - 1400.0) / 400.0; 
- } else if (x > 1600) {
- speed = (x - 1600.0) / 400.0; 
- }
- 
- // --- VOLTAGE CLAMP LOGIC (UNTESTED - COMMENTED OUT) ---
- // speed = speed * 0.6;
- 
- // if (speed < -0.6) speed = -0.6;
- // if (speed > 0.6) speed = 0.6;
- 
- id(dome_motor).write(speed);
- 
- } else {
- if (!id(mood_standard_stuck).is_running() && 
- !id(r2_angry).is_running() && 
- !id(test_scan_patrol).is_running() && 
- !id(test_party_dance).is_running()) {
- 
- id(dome_motor).write(0.0);
- }
- }
+  - platform: pulse_width
+    pin: 
+      number: ${rc_stick_pin}
+      mode: INPUT_PULLDOWN
+    name: "RC Stick Input"
+    update_interval: 50ms
+    filters:
+      - multiply: 1000000 
+      - delta: 20.0 
+    on_value:
+      then:
+        - lambda: |-
+            static int sync_count = 0;
+            float speed = 0.0;
+            
+            if (x > 500) {
+              sync_count++;
+              if (sync_count > 10) {
+                if (x < 1450) speed = (x - 1450.0) / 450.0;
+                else if (x > 1550) speed = (x - 1550.0) / 450.0;
+              }
+            } else {
+              sync_count = 0;
+            }
+            
+            if (speed != 0.0) {
+              id(animation_idle).stop();
+              id(animation_angry).stop();
+              id(animation_dance).stop();
+              id(animation_cantina).stop();
+            }
+            
+            if (speed < -1.0) speed = -1.0;
+            if (speed > 1.0) speed = 1.0;
+            
+            id(dome_motor).write(speed * id(dome_speed_tuning));
 
-# ============================================
-# GLOBALS & TUNING
-# ============================================
+# --- TUNING ---
 globals:
- - id: last_script_time
- type: unsigned long
- initial_value: '0'
- - id: script_cooldown_ms
- type: int
- initial_value: '800'
- - id: search_speed
- type: float
- initial_value: '0.25'
+  - id: dome_speed_tuning
+    type: float
+    initial_value: ${dome_speed_target}
+    restore_value: true
 
-# ============================================
-# LOCAL RELAY TRIGGER (General Purpose Sync OUT)
-# ============================================
-switch:
- - platform: template
- name: "Convention Mode"
- id: con_mode
- optimistic: true
-
-number:
- - platform: template
- name: "Manual Dome Power"
- id: manual_speed
- min_value: -1.0
- max_value: 1.0
- step: 0.01
- optimistic: true
- set_action:
- then:
- - servo.write: {id: dome_motor, level: !lambda 'return x;'} # Clamp x * 0.6 removed for testing
-
-# ============================================
-# DROID BEHAVIORAL SCRIPTS
-# ============================================
+# --- STATE SYNC & ANIMATION LOGIC ---
 script:
- - id: mood_standard_stuck
- mode: restart
- then:
- - while:
- condition:
- lambda: 'return true;'
- then:
- - light.turn_on: {id: front_psi, brightness: 30%, effect: "Cinematic Wipe"}
- - light.turn_on: {id: rear_psi, brightness: 30%, effect: "Cinematic Wipe"}
- - delay: !lambda 'return 5000 + (rand() % 10000);'
- - if:
- condition:
- lambda: 'return (rand() % 100) < 10;'
- then:
- - logger.log: "PSI Logic: Mechanical Jam Detected"
- - light.turn_on: {id: front_psi, effect: "none", red: 100%, blue: 0%}
- - light.turn_on: {id: rear_psi, effect: "none", red: 100%, blue: 0%}
- - delay: 7s
+  # TOOL 1: LIGHTS (UART to WLED Node 3)
+  - id: set_light_preset
+    parameters:
+      preset_id: int
+    then:
+      - lambda: |-
+          char buf[32];
+          if (preset_id == 0) {
+            sprintf(buf, "{\"on\":false}\r\n");
+          } else {
+            sprintf(buf, "{\"on\":true,\"ps\":%d}\r\n", preset_id);
+          }
+          id(wled_bus).write_str(buf);
+          id(wled_bus).flush();
+          ESP_LOGD("wled", "Triggered Light Preset: %d", preset_id);
 
- - id: r2_angry
- mode: restart
- then:
- - light.turn_on: {id: front_psi, brightness: 30%, red: 100%, effect: "S1: Random Mode"}
- - light.turn_on: {id: rear_psi, brightness: 30%, red: 100%, effect: "S1: Random Mode"}
- - repeat:
- count: 8
- then:
- - servo.write: {id: dome_motor, level: 0.5} # Clamped 0.3 removed
- - delay: 120ms
- - servo.write: {id: dome_motor, level: -0.5}
- - delay: 120ms
- - servo.write: {id: dome_motor, level: 0.0}
- - script.execute: mood_standard_stuck
+  # TOOL 2: SOUND (ESP-NOW to Sound Node 2)
+  - id: trigger_sound
+    parameters:
+      sound_cmd: int
+    then:
+      - espnow.send:
+          # Directly targets Node 2 for a guaranteed, noise-free handshake
+          address: "${node2_mac}" 
+          data: !lambda 'return {(uint8_t)sound_cmd};'
+      - logger.log: 
+          format: "Mesh: Sound Triggered (0x%02X)"
+          args: [sound_cmd]
 
- - id: test_scan_patrol
- mode: restart
- then:
- - light.turn_on: {id: front_psi, brightness: 30%, effect: "Cinematic Wipe"}
- - light.turn_on: {id: rear_psi, brightness: 30%, effect: "Cinematic Wipe"}
- - servo.write: {id: dome_motor, level: 0.25} # Clamped 0.15 removed
- - delay: 1500ms
- - servo.write: {id: dome_motor, level: 0.0}
- - delay: 500ms
- - servo.write: {id: dome_motor, level: -0.25}
- - delay: 1500ms
- - servo.write: {id: dome_motor, level: 0.0}
+  # ANIMATIONS
+  - id: animation_idle
+    mode: restart
+    then:
+      - script.execute: {id: set_light_preset, preset_id: 1}
+      - script.execute: {id: trigger_sound, sound_cmd: 0x01}
+      - while:
+          condition: {lambda: "return true;"}
+          then:
+            - delay: 10s
 
- - id: test_party_dance
- mode: restart
- then:
- - light.turn_on: {id: front_psi, brightness: 30%, effect: "Party Mode (Rainbow)"}
- - light.turn_on: {id: rear_psi, brightness: 30%, effect: "Party Mode (Rainbow)"}
- - repeat:
- count: 4
- then:
- - servo.write: {id: dome_motor, level: 0.35} # Clamped 0.21 removed
- - delay: 250ms
- - servo.write: {id: dome_motor, level: -0.35}
- - delay: 250ms
- - servo.write: {id: dome_motor, level: 0.0}
+  - id: animation_angry
+    mode: restart
+    then:
+      - script.execute: {id: set_light_preset, preset_id: 3}
+      - script.execute: {id: trigger_sound, sound_cmd: 0x02}
+      - repeat:
+          count: 8
+          then:
+            - servo.write: {id: dome_motor, level: !lambda 'return 0.5 * id(dome_speed_tuning);'}
+            - delay: 120ms
+            - servo.write: {id: dome_motor, level: !lambda 'return -0.5 * id(dome_speed_tuning);'}
+            - delay: 120ms
+      - servo.write: {id: dome_motor, level: 0.0}
+      - script.execute: animation_idle
 
-# ============================================
-# BUTTONS & SYSTEM
-# ============================================
+  - id: animation_dance
+    mode: restart
+    then:
+      - script.execute: {id: set_light_preset, preset_id: 10}
+      - script.execute: {id: trigger_sound, sound_cmd: 0x03}
+      - repeat:
+          count: 4
+          then:
+            - servo.write: {id: dome_motor, level: 0.35}
+            - delay: 400ms
+            - servo.write: {id: dome_motor, level: -0.35}
+            - delay: 400ms
+      - servo.write: {id: dome_motor, level: 0.0}
+      - script.execute: animation_idle
+
+  # ── CANTINA BAND — Beat-synced choreography ──────────────
+  # Track: Cantina Band (Full) ~ folder 13 file 2
+  # Tempo: ~110 BPM (545ms/beat), half-time sway ~1090ms
+  # Structure: 4-bar intro → main groove → ending flourish
+  #
+  # Phase 1 (0-4s):   Warm-up — gentle sway, lights come alive
+  # Phase 2 (4-14s):  Main groove — full dome swing on the beat
+  # Phase 3 (14-16s): Finale — quick snaps, lights flash, pose
+  #
+  - id: animation_cantina
+    mode: restart
+    then:
+      # Start music & disco lights
+      - script.execute: {id: trigger_sound, sound_cmd: 0x04}
+      - script.execute: {id: set_light_preset, preset_id: 10}
+      # Brief pause for DFPlayer to buffer
+      - delay: 300ms
+
+      # ── Phase 1: Intro sway (bars 1-4, ~4s) ──────────────
+      # Gentle head bobs on the opening brass stabs
+      - repeat:
+          count: 4
+          then:
+            - servo.write: {id: dome_motor, level: !lambda 'return 0.25 * id(dome_speed_tuning);'}
+            - delay: 545ms
+            - servo.write: {id: dome_motor, level: !lambda 'return -0.25 * id(dome_speed_tuning);'}
+            - delay: 545ms
+
+      # ── Phase 2: Main groove (bars 5-14, ~10s) ───────────
+      # Wider swings, synced to the melody
+      # Switch lights to celebration for variety
+      - script.execute: {id: set_light_preset, preset_id: 14}
+      - repeat:
+          count: 5
+          then:
+            # Full beat swing right
+            - servo.write: {id: dome_motor, level: !lambda 'return 0.5 * id(dome_speed_tuning);'}
+            - delay: 545ms
+            # Full beat swing left
+            - servo.write: {id: dome_motor, level: !lambda 'return -0.5 * id(dome_speed_tuning);'}
+            - delay: 545ms
+            # Quick double-tap (half-beat accents)
+            - servo.write: {id: dome_motor, level: !lambda 'return 0.35 * id(dome_speed_tuning);'}
+            - delay: 272ms
+            - servo.write: {id: dome_motor, level: !lambda 'return -0.35 * id(dome_speed_tuning);'}
+            - delay: 272ms
+            - servo.write: {id: dome_motor, level: 0.0}
+            - delay: 545ms
+
+      # ── Phase 3: Finale flourish (~2s) ───────────────────
+      # Quick snappy moves, lights to full alert flash
+      - script.execute: {id: set_light_preset, preset_id: 3}
+      - repeat:
+          count: 4
+          then:
+            - servo.write: {id: dome_motor, level: !lambda 'return 0.6 * id(dome_speed_tuning);'}
+            - delay: 250ms
+            - servo.write: {id: dome_motor, level: !lambda 'return -0.6 * id(dome_speed_tuning);'}
+            - delay: 250ms
+
+      # ── Curtain call — hold center, back to idle ─────────
+      - servo.write: {id: dome_motor, level: 0.0}
+      - delay: 1s
+      - script.execute: animation_idle
+
+# --- HOME ASSISTANT INTERFACE ---
+number:
+  - platform: template
+    name: "Dome Speed Tuning"
+    id: dome_speed_slider
+    min_value: 0.1
+    max_value: 1.0
+    step: 0.05
+    optimistic: true
+    initial_value: ${dome_speed_target}
+    on_value:
+      then:
+        - globals.set:
+            id: dome_speed_tuning
+            value: !lambda 'return x;'
+
+select:
+  - platform: template
+    name: "Lighting Preset Override"
+    id: light_preset_select
+    optimistic: true
+    options:
+      - "1977 Idle"
+      - "Neural Processing"
+      - "Full Alert"
+      - "All Off"
+      - "Front Logic Only"
+      - "Rear Logic Only"
+      - "PSI Scan"
+      - "Data Transfer"
+      - "Leia Message"
+      - "Disco Mode"
+      - "Stealth"
+      - "Startup Sequence"
+      - "Malfunction"
+      - "Celebration"
+      - "Imperial March"
+    initial_option: "1977 Idle"
+    on_value:
+      - lambda: |-
+          int ps = -1;
+          if (x == "1977 Idle") ps = 1;
+          else if (x == "Neural Processing") ps = 2;
+          else if (x == "Full Alert") ps = 3;
+          else if (x == "All Off") ps = 0;
+          else if (x == "Front Logic Only") ps = 5;
+          else if (x == "Rear Logic Only") ps = 6;
+          else if (x == "PSI Scan") ps = 7;
+          else if (x == "Data Transfer") ps = 8;
+          else if (x == "Leia Message") ps = 9;
+          else if (x == "Disco Mode") ps = 10;
+          else if (x == "Stealth") ps = 11;
+          else if (x == "Startup Sequence") ps = 12;
+          else if (x == "Malfunction") ps = 13;
+          else if (x == "Celebration") ps = 14;
+          else if (x == "Imperial March") ps = 15;
+          if (ps >= 0) id(set_light_preset).execute(ps);
+
 button:
- - platform: template
- name: " Start: Standard Logic"
- on_press: {script.execute: mood_standard_stuck}
- 
- - platform: template
- name: " Run: Angry Reaction"
- on_press: {script.execute: r2_angry}
+  - platform: template
+    name: "Animation: Reset to Idle"
+    icon: "mdi:robot-dead"
+    on_press:
+      - script.execute: animation_idle
 
- - platform: template
- name: " Test: Scan Patrol"
- on_press: {script.execute: test_scan_patrol}
+  - platform: template
+    name: "Animation: Angry Tantrum"
+    icon: "mdi:emoticon-angry"
+    on_press:
+      - script.execute: animation_angry
 
- - platform: template
- name: " Test: Party Dance"
- on_press: {script.execute: test_party_dance}
+  - platform: template
+    name: "Animation: Dance Party"
+    icon: "mdi:party-popper"
+    on_press:
+      - script.execute: animation_dance
 
- - platform: template
- name: " EMERGENCY STOP"
- on_press:
- - script.stop: mood_standard_stuck
- - script.stop: r2_angry
- - script.stop: test_scan_patrol
- - script.stop: test_party_dance
- - servo.write: {id: dome_motor, level: 0.0}
- - light.turn_off: front_psi
- - light.turn_off: rear_psi
+  - platform: template
+    name: "Animation: Cantina"
+    icon: "mdi:music-clef-treble"
+    on_press:
+      - script.execute: animation_cantina
+
+  - platform: template
+    name: "Emergency Stop"
+    icon: "mdi:stop-octagon"
+    on_press:
+      - script.stop: animation_idle
+      - script.stop: animation_angry
+      - script.stop: animation_dance
+      - script.stop: animation_cantina
+      - script.execute: { id: set_light_preset, preset_id: 0 }
+      - script.execute: { id: trigger_sound, sound_cmd: 0x99 }
+      - servo.write: {id: dome_motor, level: 0.0}
+
+# --- DIAGNOSTICS ---
+text_sensor:
+  - platform: template
+    name: "Node 1 Firmware Version"
+    id: fw_ver_sensor
+    lambda: return {"${fw_version}"};
+    icon: "mdi:alpha-v-circle-outline"
+    entity_category: diagnostic
+    update_interval: 1h
+
+# ===========================================================================
+# --- DIAGNOSTIC PULSE (HEARTBEAT TO WLED) ---
+# Purpose: Sends a periodic "keep-alive" ping to the WLED board (Node 3).
+# Why: Serial connections can sometimes "fall asleep" if ignored for too long.
+#      Sending the JSON string {"v":true} (Version Request) over the TX wire 
+#      forces WLED to wake up, parse the command, and keep the line active.
+#
+# Note: Node 1 is currently "deaf" to WLED (no RX pin configured). It yells 
+#       the command, WLED replies, but Node 1 simply ignores the response to 
+#       save processing power. It is strictly a one-way heartbeat.
+#
+# Future Management:
+# - To reduce log spam: Change '60s' to '5min' or '10min'.
+# - To completely disable: Add a '#' at the start of every line in this block.
+# ===========================================================================
+interval:
+  - interval: 60s  # How often the heartbeat fires
+    then:
+      - lambda: |-
+          // 1. Print a debug message to the Node 1 web logs
+          ESP_LOGD("neural", "Diagnostic Pulse: Sending Version Request to Node 3 (WLED)...");
+
+          // 2. Push the JSON string down the physical UART TX wire
+          id(wled_bus).write_str("{\"v\":true}\r\n");
+
+          // 3. Flush forces the ESP32 to push the entire message out immediately, preventing jams
+          id(wled_bus).flush();
+
+  # ── MESH HEARTBEAT — lets Node 2's dashboard show Node 1 as "online" ──
+  # Fires a 1-byte ESP-NOW ping (0xB0) every 5 seconds. Node 2 tracks the
+  # last-seen timestamp and marks Node 1 offline if > 15s without a ping.
+  # Works over pure radio — no WiFi/AP needed for this to function.
+  - interval: 5s
+    then:
+      - espnow.send:
+          address: "${node2_mac}"  # Node 2
+          data: [0xB0]

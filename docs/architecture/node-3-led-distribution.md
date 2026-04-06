@@ -45,7 +45,7 @@ To achieve cinematic logic scrolling:
 - **PSI Boards**: 2x Grnwave PSI boards.
 - **Support Strips**: 1x 12-pixel strip, 2x 5-pixel strips.
 
-## UDNS Serial Integration
+## WLED Serial Sync
 
 This Node receives high-level commands from the Body Controller via the slip ring.
 - **Data Signal**: Connect the Yellow/Black wire (Body TX) to **GPIO 16**.

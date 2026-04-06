@@ -7,13 +7,13 @@
 | **Node ID** | **1** |
 | **Role** | Behavioral Master & Dome Motion Controller |
 | **Source Code** | [`node-1-dome-motion.yaml`](../../firmware/production/node-1-dome-motion.yaml) |
-| **Visual ID** | ![Node 3 Master](../../assets/esp32-s3-super-mini.jpg) |
+| **Visual ID** | ![Node 1 Master](../../assets/esp32-s3-super-mini.jpg) |
 
 ## Core Features
 
-- **Behavioral Orchestration**: Broadcasts wireless triggers for audio tracks (Body) and light patterns (Dome) using the low-latency **ESP-NOW** protocol.
-- **RC Passthrough / Interrupt**: Decodes CH1 from RC2 (GPIO 4) for manual dome control, overriding autonomous routines.
-- **Dynamic Scripts**: Includes built-in behaviors for "Scan Patrol," "Mood Logic," and "Sync Dance."
+- **Behavioral Orchestration**: Reads raw RC steering. Captures ESP-NOW dashboard triggers (`0xA0`, `0xA1`, `0xA2`) relayed from Node 2.
+- **ESP-NOW Heartbeat**: Broadcasts a 5-second `0xB0` continuous heartbeat back to the Dashboard to maintain mesh health validation.
+- **Dynamic Scripts**: Includes built-in behaviors for "Scan Patrol", "Animation Logic", and "WLED Sync Heartbeats" (via UART).
 - **Safety Interlocks**:
  - **Boot/Shutdown Stop**: Forces speed to 0% on controller power cycles.
  - **Auto-Detach**: Motor controller signal detaches after 5s of inactivity to prevent hum.
@@ -23,10 +23,9 @@
 | Connection | ESP32 Pin | Wire Color | Logic |
 | :--- | :---: | :--- | :--- |
 | **RC CH1 (Steer)** | GPIO 4 | Yellow | PWM Input (Pull-Down) |
-| **Wireless TX** | N/A | ESP-NOW | Broadcast Master Link |
+| **Wireless Link** | Ch. 11 | ESP-NOW | Mesh Heartbeat / Automation Rx |
 | **ESC PWM Out** | GPIO 7 | / White/Blue | PWM Output to goBILDA |
-| **Rear PSI** | GPIO 5 | White | RMT LED Output (WS2182B) |
-| **Front PSI** | GPIO 6 | Green | RMT LED Output (WS2182B) |
+| **WLED Sync** | GPIO 5 | Blue | Single Wire UART TX (JSON) |
 
 ## ESP32-S3 Engineering Implementation
 

@@ -1,0 +1,188 @@
+{
+  "1": {
+    "n": "1977 Idle",
+    "on": true,
+    "bri": 77,
+    "transition": 15,
+    "mainseg": 0,
+    "seg": [
+      { "id": 0, "start": 0, "stop": 76, "n": "Front PSI", "on": true, "bri": 255, "col": [[0,0,255],[255,0,0],[0,0,0]], "fx": 108, "sx": 80, "ix": 128, "pal": 0 },
+      { "id": 1, "start": 76, "stop": 152, "n": "Rear PSI", "on": true, "bri": 255, "col": [[0,255,64],[255,255,0],[0,0,0]], "fx": 108, "sx": 60, "ix": 128, "pal": 0 },
+      { "id": 2, "start": 152, "stop": 172, "n": "Front Logic", "on": true, "bri": 255, "col": [[0,80,255],[255,255,255],[0,0,0]], "fx": 70, "sx": 120, "ix": 200, "pal": 0 },
+      { "id": 3, "start": 172, "stop": 196, "n": "Rear Logic", "on": true, "bri": 255, "col": [[0,80,255],[255,255,255],[0,0,0]], "fx": 70, "sx": 100, "ix": 200, "pal": 0 }
+    ]
+  },
+  "2": {
+    "n": "Neural Processing",
+    "on": true,
+    "bri": 77,
+    "transition": 5,
+    "mainseg": 0,
+    "seg": [
+      { "id": 0, "start": 0, "stop": 76, "n": "Front PSI", "on": true, "bri": 255, "col": [[0,255,200],[128,0,255],[0,0,0]], "fx": 9, "sx": 200, "ix": 255, "pal": 11 },
+      { "id": 1, "start": 76, "stop": 152, "n": "Rear PSI", "on": true, "bri": 255, "col": [[0,255,200],[128,0,255],[0,0,0]], "fx": 9, "sx": 180, "ix": 255, "pal": 11 },
+      { "id": 2, "start": 152, "stop": 172, "n": "Front Logic", "on": true, "bri": 255, "col": [[0,200,255],[255,255,255],[0,0,0]], "fx": 28, "sx": 220, "ix": 200, "pal": 0 },
+      { "id": 3, "start": 172, "stop": 196, "n": "Rear Logic", "on": true, "bri": 255, "col": [[0,200,255],[255,255,255],[0,0,0]], "fx": 28, "sx": 200, "ix": 200, "pal": 0 }
+    ]
+  },
+  "3": {
+    "n": "Full Alert",
+    "on": true,
+    "bri": 77,
+    "transition": 0,
+    "mainseg": 0,
+    "seg": [
+      { "id": 0, "start": 0, "stop": 76, "n": "Front PSI", "on": true, "bri": 255, "col": [[255,0,0],[255,60,0],[0,0,0]], "fx": 25, "sx": 255, "ix": 255, "pal": 0 },
+      { "id": 1, "start": 76, "stop": 152, "n": "Rear PSI", "on": true, "bri": 255, "col": [[255,0,0],[255,60,0],[0,0,0]], "fx": 25, "sx": 255, "ix": 255, "pal": 0 },
+      { "id": 2, "start": 152, "stop": 172, "n": "Front Logic", "on": true, "bri": 255, "col": [[255,0,0],[255,100,0],[0,0,0]], "fx": 74, "sx": 255, "ix": 255, "pal": 0 },
+      { "id": 3, "start": 172, "stop": 196, "n": "Rear Logic", "on": true, "bri": 255, "col": [[255,0,0],[255,100,0],[0,0,0]], "fx": 74, "sx": 255, "ix": 255, "pal": 0 }
+    ]
+  },
+  "4": {
+    "n": "All Off",
+    "on": false
+  },
+  "5": {
+    "n": "Front Logic Only",
+    "on": true,
+    "bri": 77,
+    "transition": 7,
+    "mainseg": 2,
+    "seg": [
+      { "id": 0, "start": 0, "stop": 76, "n": "Front PSI", "on": false },
+      { "id": 1, "start": 76, "stop": 152, "n": "Rear PSI", "on": false },
+      { "id": 2, "start": 152, "stop": 172, "n": "Front Logic", "on": true, "bri": 255, "col": [[0,80,255],[255,255,255],[0,0,0]], "fx": 70, "sx": 128, "ix": 200, "pal": 0 },
+      { "id": 3, "start": 172, "stop": 196, "n": "Rear Logic", "on": false }
+    ]
+  },
+  "6": {
+    "n": "Rear Logic Only",
+    "on": true,
+    "bri": 77,
+    "transition": 7,
+    "mainseg": 3,
+    "seg": [
+      { "id": 0, "start": 0, "stop": 76, "n": "Front PSI", "on": false },
+      { "id": 1, "start": 76, "stop": 152, "n": "Rear PSI", "on": false },
+      { "id": 2, "start": 152, "stop": 172, "n": "Front Logic", "on": false },
+      { "id": 3, "start": 172, "stop": 196, "n": "Rear Logic", "on": true, "bri": 255, "col": [[0,80,255],[255,255,255],[0,0,0]], "fx": 70, "sx": 128, "ix": 200, "pal": 0 }
+    ]
+  },
+  "7": {
+    "n": "PSI Scan",
+    "on": true,
+    "bri": 77,
+    "transition": 7,
+    "mainseg": 0,
+    "seg": [
+      { "id": 0, "start": 0, "stop": 76, "n": "Front PSI", "on": true, "bri": 255, "col": [[255,0,0],[0,0,255],[0,0,0]], "fx": 28, "sx": 128, "ix": 200, "pal": 0 },
+      { "id": 1, "start": 76, "stop": 152, "n": "Rear PSI", "on": true, "bri": 255, "col": [[0,255,64],[255,180,0],[0,0,0]], "fx": 28, "sx": 128, "ix": 200, "pal": 0 },
+      { "id": 2, "start": 152, "stop": 172, "n": "Front Logic", "on": false },
+      { "id": 3, "start": 172, "stop": 196, "n": "Rear Logic", "on": false }
+    ]
+  },
+  "8": {
+    "n": "Data Transfer",
+    "on": true,
+    "bri": 77,
+    "transition": 0,
+    "mainseg": 0,
+    "seg": [
+      { "id": 0, "start": 0, "stop": 76, "n": "Front PSI", "on": true, "bri": 255, "col": [[255,255,255],[0,100,255],[0,0,0]], "fx": 28, "sx": 255, "ix": 255, "pal": 0 },
+      { "id": 1, "start": 76, "stop": 152, "n": "Rear PSI", "on": true, "bri": 255, "col": [[255,255,255],[0,100,255],[0,0,0]], "fx": 28, "sx": 240, "ix": 255, "pal": 0 },
+      { "id": 2, "start": 152, "stop": 172, "n": "Front Logic", "on": true, "bri": 255, "col": [[255,255,255],[0,150,255],[0,0,0]], "fx": 28, "sx": 255, "ix": 255, "pal": 0 },
+      { "id": 3, "start": 172, "stop": 196, "n": "Rear Logic", "on": true, "bri": 255, "col": [[255,255,255],[0,150,255],[0,0,0]], "fx": 28, "sx": 240, "ix": 255, "pal": 0 }
+    ]
+  },
+  "9": {
+    "n": "Leia Message",
+    "on": true,
+    "bri": 77,
+    "transition": 10,
+    "mainseg": 2,
+    "seg": [
+      { "id": 0, "start": 0, "stop": 76, "n": "Front PSI", "on": true, "bri": 255, "col": [[20,20,80],[0,0,0],[0,0,0]], "fx": 0, "sx": 0, "ix": 128, "pal": 0 },
+      { "id": 1, "start": 76, "stop": 152, "n": "Rear PSI", "on": true, "bri": 255, "col": [[20,20,80],[0,0,0],[0,0,0]], "fx": 0, "sx": 0, "ix": 128, "pal": 0 },
+      { "id": 2, "start": 152, "stop": 172, "n": "Front Logic", "on": true, "bri": 255, "col": [[200,200,255],[255,255,255],[0,0,0]], "fx": 88, "sx": 80, "ix": 200, "pal": 0 },
+      { "id": 3, "start": 172, "stop": 196, "n": "Rear Logic", "on": true, "bri": 255, "col": [[20,20,60],[0,0,0],[0,0,0]], "fx": 0, "sx": 0, "ix": 64, "pal": 0 }
+    ]
+  },
+  "10": {
+    "n": "Disco Mode",
+    "on": true,
+    "bri": 77,
+    "transition": 5,
+    "mainseg": 0,
+    "seg": [
+      { "id": 0, "start": 0, "stop": 76, "n": "Front PSI", "on": true, "bri": 255, "col": [[255,0,0],[0,255,0],[0,0,255]], "fx": 9, "sx": 200, "ix": 255, "pal": 11 },
+      { "id": 1, "start": 76, "stop": 152, "n": "Rear PSI", "on": true, "bri": 255, "col": [[255,0,0],[0,255,0],[0,0,255]], "fx": 9, "sx": 180, "ix": 255, "pal": 11 },
+      { "id": 2, "start": 152, "stop": 172, "n": "Front Logic", "on": true, "bri": 255, "col": [[255,0,0],[0,255,0],[0,0,255]], "fx": 9, "sx": 220, "ix": 255, "pal": 11 },
+      { "id": 3, "start": 172, "stop": 196, "n": "Rear Logic", "on": true, "bri": 255, "col": [[255,0,0],[0,255,0],[0,0,255]], "fx": 9, "sx": 200, "ix": 255, "pal": 11 }
+    ]
+  },
+  "11": {
+    "n": "Stealth",
+    "on": true,
+    "bri": 25,
+    "transition": 20,
+    "mainseg": 2,
+    "seg": [
+      { "id": 0, "start": 0, "stop": 76, "n": "Front PSI", "on": false },
+      { "id": 1, "start": 76, "stop": 152, "n": "Rear PSI", "on": false },
+      { "id": 2, "start": 152, "stop": 172, "n": "Front Logic", "on": true, "bri": 255, "col": [[0,30,80],[0,0,0],[0,0,0]], "fx": 0, "sx": 0, "ix": 40, "pal": 0 },
+      { "id": 3, "start": 172, "stop": 196, "n": "Rear Logic", "on": false }
+    ]
+  },
+  "12": {
+    "n": "Startup Sequence",
+    "on": true,
+    "bri": 77,
+    "transition": 20,
+    "mainseg": 0,
+    "seg": [
+      { "id": 0, "start": 0, "stop": 76, "n": "Front PSI", "on": true, "bri": 255, "col": [[0,100,255],[255,255,255],[0,0,0]], "fx": 108, "sx": 40, "ix": 200, "pal": 0 },
+      { "id": 1, "start": 76, "stop": 152, "n": "Rear PSI", "on": true, "bri": 255, "col": [[0,100,255],[255,255,255],[0,0,0]], "fx": 108, "sx": 30, "ix": 200, "pal": 0 },
+      { "id": 2, "start": 152, "stop": 172, "n": "Front Logic", "on": true, "bri": 255, "col": [[0,80,255],[255,255,255],[0,0,0]], "fx": 70, "sx": 80, "ix": 200, "pal": 0 },
+      { "id": 3, "start": 172, "stop": 196, "n": "Rear Logic", "on": true, "bri": 255, "col": [[0,80,255],[255,255,255],[0,0,0]], "fx": 70, "sx": 60, "ix": 200, "pal": 0 }
+    ]
+  },
+  "13": {
+    "n": "Malfunction",
+    "on": true,
+    "bri": 77,
+    "transition": 0,
+    "mainseg": 0,
+    "seg": [
+      { "id": 0, "start": 0, "stop": 76, "n": "Front PSI", "on": true, "bri": 255, "col": [[255,0,0],[255,200,0],[0,0,0]], "fx": 88, "sx": 200, "ix": 255, "pal": 0 },
+      { "id": 1, "start": 76, "stop": 152, "n": "Rear PSI", "on": true, "bri": 255, "col": [[255,0,0],[255,200,0],[0,0,0]], "fx": 88, "sx": 180, "ix": 255, "pal": 0 },
+      { "id": 2, "start": 152, "stop": 172, "n": "Front Logic", "on": true, "bri": 255, "col": [[255,60,0],[255,255,0],[0,0,0]], "fx": 88, "sx": 255, "ix": 255, "pal": 0 },
+      { "id": 3, "start": 172, "stop": 196, "n": "Rear Logic", "on": true, "bri": 255, "col": [[255,60,0],[255,255,0],[0,0,0]], "fx": 88, "sx": 240, "ix": 255, "pal": 0 }
+    ]
+  },
+  "14": {
+    "n": "Celebration",
+    "on": true,
+    "bri": 77,
+    "transition": 5,
+    "mainseg": 0,
+    "seg": [
+      { "id": 0, "start": 0, "stop": 76, "n": "Front PSI", "on": true, "bri": 255, "col": [[255,200,50],[255,255,255],[0,0,0]], "fx": 90, "sx": 180, "ix": 255, "pal": 0 },
+      { "id": 1, "start": 76, "stop": 152, "n": "Rear PSI", "on": true, "bri": 255, "col": [[255,200,50],[255,255,255],[0,0,0]], "fx": 90, "sx": 160, "ix": 255, "pal": 0 },
+      { "id": 2, "start": 152, "stop": 172, "n": "Front Logic", "on": true, "bri": 255, "col": [[255,180,0],[255,255,200],[0,0,0]], "fx": 90, "sx": 200, "ix": 255, "pal": 0 },
+      { "id": 3, "start": 172, "stop": 196, "n": "Rear Logic", "on": true, "bri": 255, "col": [[255,180,0],[255,255,200],[0,0,0]], "fx": 90, "sx": 180, "ix": 255, "pal": 0 }
+    ]
+  },
+  "15": {
+    "n": "Imperial March",
+    "on": true,
+    "bri": 77,
+    "transition": 10,
+    "mainseg": 0,
+    "seg": [
+      { "id": 0, "start": 0, "stop": 76, "n": "Front PSI", "on": true, "bri": 255, "col": [[255,0,0],[0,0,0],[0,0,0]], "fx": 74, "sx": 128, "ix": 200, "pal": 0 },
+      { "id": 1, "start": 76, "stop": 152, "n": "Rear PSI", "on": true, "bri": 255, "col": [[255,0,0],[0,0,0],[0,0,0]], "fx": 74, "sx": 100, "ix": 200, "pal": 0 },
+      { "id": 2, "start": 152, "stop": 172, "n": "Front Logic", "on": true, "bri": 255, "col": [[150,0,0],[0,0,0],[0,0,0]], "fx": 0, "sx": 0, "ix": 128, "pal": 0 },
+      { "id": 3, "start": 172, "stop": 196, "n": "Rear Logic", "on": true, "bri": 255, "col": [[150,0,0],[0,0,0],[0,0,0]], "fx": 0, "sx": 0, "ix": 128, "pal": 0 }
+    ]
+  }
+}

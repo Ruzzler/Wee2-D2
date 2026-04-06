@@ -6,6 +6,9 @@ This document tracks all production-verified firmware releases for the Wee2-D2. 
 
 ---
 
+> [!NOTE]
+> **NODE RENUMBERING**: Please note that in `v2.2.0`, the system nodes were physically renumbered. In `v1.x` and `v2.0` logs below, **Node 1** refers to the Body Hub and **Node 3** refers to the Dome Master. In `v2.2.0` and beyond, Node 1 officially became the Dome Master.
+
 ## [v2.1.2] - 2026-04-01
 
 ### Aesthetic Graduation & IA Stabilization

@@ -32,9 +32,17 @@ Your ESP32s need to know your Wi-Fi password so they can connect to your local n
 
 *Note: The first compilation process can take up to 5 minutes as it generates the C++ bin file. Do not unplug the cable!*
 
-## Step 3: Copy the Configuration
+## Step 3: Retrieve your MAC Addresses (ESP-NOW)
 
-Once the blank firmware is running on the device, it will connect to your Wi-Fi and appear online in your Dashboard.
+Before you can upload the final Wee2-D2 firmware, you must record the physical MAC addresses of Node 1 and Node 2 so they can form the secure ESP-NOW wireless bridge.
+
+1. While the device is plugged in via USB and running the blank firmware, click **"Logs"** in the ESPHome Dashboard.
+2. In the resulting output, look for the line stating `MAC Address: XX:XX:XX:XX:XX:XX`.
+3. Copy this address into your `secrets.yaml` file (as `node1_mac` or `node2_mac` depending on which chip you are currently flashing).
+
+## Step 4: Copy the Configuration
+
+Once the MAC addresses are stored in your secrets file and the blank firmware is running on the device, it will appear online in your Dashboard.
 
 1. Click **"Edit"** on your new node in the Dashboard.
 1. Erase the default code that ESPHome generated.

@@ -1,6 +1,6 @@
 # <i data-lucide="workflow"></i> Automations
 
-This section serves as the technical roadmap for **Behavioral Automations**. While the droid currently operates on direct manual triggers (RC), the future architecture will utilize a modular automation layer to execute synchronized movement, lighting, and audio routines autonomously.
+This section serves as the technical roadmap for **Behavioral Automations**. While the droid currently operates on direct Neural Dashboard triggers, the future architecture will utilize a modular automation layer to execute synchronized movement, lighting, and audio routines autonomously.
 
 ---
 
@@ -11,7 +11,7 @@ The following autonomous behaviors are currently in development as high-density 
 ### 1. Idle Scanning (Future)
 
 - **Logic**: Autonomous dome rotation in a slow, pseudo-random "scanning" pattern.
-- **Trigger**: Activates after **120 seconds** of RC inactivity.
+- **Trigger**: Activates after **120 seconds** of Dashboard inactivity.
 - **Goal**: Simulates droid curiosity and environmental monitoring.
 
 ### 2. Event-Based Response (Future)
@@ -30,7 +30,7 @@ The following autonomous behaviors are currently in development as high-density 
 
 ## Programming Strategy
 
-Automations will be programmed as **ESPHome Scripts** on **Node 3 (Dome Motion Master)** and broadcasted to the mesh via the **ESP-NOW** bridge. This ensures that even complex autonomous routines remain perfectly synchronized across all three microcontroller hubs.
+Automations will be programmed as **ESPHome Scripts** on **Node 1 (Dome Motion Master)** and broadcasted to the mesh via the **ESP-NOW** bridge. This ensures that even complex autonomous routines remain perfectly synchronized across all three microcontroller hubs.
 
 > [!NOTE]
 > **DEVELOPMENT NOTICE**: This page is a functional stakeholder for future software updates. Refined automation logic will be graduated to this guide as it moves from bench-testing to production.

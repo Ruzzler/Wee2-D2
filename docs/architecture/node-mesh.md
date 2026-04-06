@@ -13,19 +13,19 @@ Synchronization is achieved using low-latency **ESP-NOW** wireless bridging acro
 
 - **Role**: Master Automations and movement control.
 - **Hardware**: goBILDA 5203 Dome Motor, PWM Motor Controller.
-- **Logic**: Processes RC inputs and broadcasts state triggers (e.g., "Droid Happy", "High Alert") to the rest of the mesh.
+- **Logic**: Reads raw RC steering. Captures ESP-NOW dashboard triggers (`0xA0`, `0xA1`, `0xA2`) from Node 2. Broadcasts a 60-second WLED heartbeat (via UART) and 5-second radio heartbeat.
 
-### Node 2: Sound Hub (ESP32-S3)
+### Node 2: Neural Command Center (ESP32-S3)
 
-- **Role**: Behavioral audio execution and locomotion monitoring.
-- **Hardware**: DFPlayer Mini, TPA3118 Amplifier, Drive ESC integration.
-- **Logic**: Receives behavioral triggers from Node 1 via ESP-NOW to initiate synchronized sound events.
+- **Role**: Dashboard Gateway and behavioral audio execution.
+- **Hardware**: DFPlayer Mini, TPA3118 Amplifier.
+- **Logic**: Hosts the interactive Web UI. Captures user commands and securely relays them across the ESP-NOW bridge to Node 1.
 
 ### Node 3: LED Distribution (ESP32)
 
 - **Role**: Cinematic visual output.
 - **Hardware**: Addressable LED matrices (WS2812B/PSI Logic).
-- **Logic**: A WLED-embedded node that translates motion-state triggers into specific lighting patterns.
+- **Logic**: A WLED-embedded node that receives serial JSON triggers from Node 1 via UART synchronization.
 
 ---
 

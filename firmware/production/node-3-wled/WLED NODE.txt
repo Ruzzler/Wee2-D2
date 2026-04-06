@@ -1,0 +1,14 @@
+ESP32D with WLED firmware. Pin RX receiving UART from NODE 1.
+
+Proposed pinout
+GPIO 16: Front PSI (76 LEDs)
+
+GPIO 17: Rear PSI (76 LEDs)
+
+GPIO 18: Front Logic (20 LEDs)
+
+GPIO 19: Rear Logic (24 LEDs)
+
+GPIO 3 (RX0): Serial RX (Connects to Node 1's TX pin to receive commands)
+
+Confirm once tested that it confirms and doesn't interfere with anything.

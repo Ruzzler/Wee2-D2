@@ -1,6 +1,6 @@
-# <i data-lucide="wifi"></i> Network & OTA Guide: UDNS
+# <i data-lucide="wifi"></i> Network & OTA Guide
 
-This guide explains how to connect your droid to your local Wi-Fi, manage the "Droid Hub" (Home Assistant), and perform wireless firmware updates (OTA) across the **System Bus (UDNS)**.
+This guide explains how to connect your droid to your local Wi-Fi, manage the "Droid Hub" (Home Assistant), and perform wireless firmware updates (OTA).
 
 ---
 

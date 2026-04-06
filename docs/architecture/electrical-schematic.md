@@ -28,12 +28,14 @@ flowchart TD
  POS_FUSE --> ESC1["FSESC (Left)"]:::drive
  POS_FUSE --> ESC2["FSESC (Right)"]:::drive
  POS_FUSE --> AMP["TPA3118 Amp"]:::audio
+ POS_FUSE --> BODY_BUCK["Mini560 (5V Logic)"]:::logic
  POS_FUSE --> SLIP1["Slip C1/C2 (Motor)"]:::power
  POS_FUSE --> SLIP2["Slip C3/C4 (Logic)"]:::power
 
  NEG_BUS --> ESC1
  NEG_BUS --> ESC2
  NEG_BUS --> AMP
+ NEG_BUS --> BODY_BUCK
  NEG_BUS --> SLIP1
  NEG_BUS --> SLIP2
  end
@@ -46,13 +48,13 @@ flowchart TD
 
  subgraph LOGIC_RAIL [5V LOGIC & SIGNALS]
  ESC1 -->|5V BEC| RC1["Body Receiver"]:::signal
- RC1 -->|5V| Node2["Node 2 (Sound Hub)"]:::brain
+ BODY_BUCK -->|5V| Node2["Node 2 (Sound Hub)"]:::brain
  Node2 -->|UART| AUDIO["DFPlayer Mini"]:::audio
  
  DOME_ESC -.->|Isolated| RC2["Dome Receiver"]:::signal
 
  DOME_WAGOS --> Node3["Node 3 (Lights WLED)"]:::brain
- DOME_ESC -->|PWM| Node1["Node 1 (Dome S3)"]:::brain
+ DOME_ESC -->|5V BEC| Node1["Node 1 (Dome S3)"]:::brain
  DOME_WAGOS --> LEDS["LED Matrices"]:::lights
  end
 
@@ -61,12 +63,11 @@ flowchart TD
  TX2 -.->|2.4GHz| RC2
  RC1 -->|PWM| ESC1
  RC1 -->|PWM| ESC2
- RC1 -->|PWM| Node2
  RC2 -->|PWM| Node1
  Node1 -->|PWM| DOME_ESC
  AUDIO -->|Analog| AMP
- Node1 -.->|ESP-NOW| Node2
- Node1 -.->|ESP-NOW| Node3
+ Node1 <.->|ESP-NOW Mesh| Node2
+ Node1 -->|UART| Node3
  end
 
  %% Technical Manual Links
@@ -83,6 +84,7 @@ flowchart TD
  click Node2 href "node-2-sound-hub.md" "Node 2"
  click Node3 href "node-3-led-distribution.md" "Node 3"
  click DOME_ESC href "../hardware/gobilda-motor-manual.md" "Motor Manual"
+ click BODY_BUCK href "../bill-of-materials.md" "BOM"
 
  classDef power fill:#ff9900,stroke:#333,stroke-width:2px,color:#000
  classDef drive fill:#cc3300,stroke:#fff,color:#fff

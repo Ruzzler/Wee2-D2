@@ -4,49 +4,21 @@ To synchronize your 4-pin dome layout, follow these precise configuration steps 
 
 ---
 
-### 1. LED Preferences
+### 1. The Automation Override
 
-**Navigate to: Config LED Preferences**
+Instead of manually configuring the 2D matrices and GPIO mapping, the v2.6.0 architecture uses a pre-compiled JSON deployment to guarantee perfect synchronization with the Web Dashboard.
 
-| Hardware Line | LED Type | GPIO | Length | wire Color |
-| :--- | :--- | :---: | :---: | :--- |
-| **Output 1: Front Logic** | WS2812B | **18** | 20 | Yellow |
-| **Output 2: Rear Logic** | WS2812B | **19** | 24 | / Yellow/Blk |
-| **Output 3: Front PSI** | WS2812B | **21** | 76 | Green |
-| **Output 4: Back PSI** | WS2812B | **22** | 76 | White |
+1. In your repository, locate the `firmware/production/node-3-wled/` directory.
+1. It contains three files: `cfg.json` (Hardware settings), `presets.json` (Animations), and `ledmap.json` (Matrix routing).
 
-> [!IMPORTANT]
-> **POWER LIMITER**: Ensure the **"Maximum Current"** is set to **3500mA**. This protects your Mini560 Buck Converter from blowing during high-intensity white flash effects.
+### 2. Restoring the Configuration
 
----
-
-### 2. 2D Matrix Calibration
-
-**Navigate to: Config 2D Configuration**
-*This ensures your logic scrolls correctly rather than just blinking in a straight line.*
-
-- **Matrix 1 (Front)**:
- - Width: **10** | Height: **2**
- - Layout: **Serpentine** (If your strip zig-zags)
-- **Matrix 2 (Rear)**:
- - Width: **12** | Height: **2**
- - Layout: **Serpentine**
-
----
-
-### 3. Segment Mapping (Visual Layout)
-
-**Navigate to: Main Dashboard Segments**
-Divide your pixels into these blocks to allow different effects on different windows:
-
-| Segment ID | Start | Stop | Component | Recommended Effect |
-| :---: | :---: | :---: | :--- | :--- |
-| **0** | 0 | 20 | Front Logic | **2-D Matrix (Scanning)** |
-| **1** | 20 | 44 | Rear Logic | **2-D Matrix (Scanning)** |
-| **2** | 44 | 120 | Front PSI | **Breathing** (Blue/Green) |
-| **3** | 120 | 196 | Back PSI | **Flicker** (Amber/Red) |
-
----
+1. Connect to the **WLED Web Interface** via your browser (`http://dome-lights.local` or its static IP).
+1. Navigate to **Config > Security & Updates**.
+1. Scroll down to the **Backup & Restore** section.
+1. Upload the `cfg.json` file and click **Restore**. The Node will reboot.
+1. Navigate back to the same page. Upload the `presets.json` file.
+1. Finally, go to **Config > LED Preferences**, scroll to the bottom, and upload `ledmap.json` to lock in the 2D matrix warping.
 
 > [!TIP]
-> **OTA UPDATE**: Once your WLED board is on the network, you can push these settings wirelessly. Use the [Local Server Guide](docs/maintenance/local-server-guide.md) to keep your Documentation and WLED synced!
+> **COMPLETED!** Your lighting node is now fully synchronized with the 15 standard Cinematic Logic states managed by the Neural Command Center. No further pin mapping is required.

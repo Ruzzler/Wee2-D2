@@ -2,7 +2,7 @@
 
 > **TECHNICAL SPECIFICATIONS** | **SERIAL MP3 PLAYER** | **NODE 1: SOUND HUB INTEGRATION**
 
-The **DFPlayer Mini** is a specialized, serial-controlled MP3 module that serves as the "Voice" of Wee2-D2. It is managed by **Node 1 (Sound Hub)** via a low-latency UART serial link.
+The **DFPlayer Mini** is a specialized, serial-controlled MP3 module that serves as the "Voice" of Wee2-D2. It is managed by **Node 2 (Sound Hub)** via a low-latency UART serial link.
 
 ## Module Overview
 
@@ -15,15 +15,15 @@ The **DFPlayer Mini** is a specialized, serial-controlled MP3 module that serves
 
 ## Pinout Reference
 
-The following pinout is used for integration into the Node 1 (Sound Hub) logic rail.
+The following pinout is used for integration into the Node 2 (Sound Hub) logic rail.
 
 ![DFPlayer Mini Pinout](../../assets/dfplayer-mini-pinout.png)
 
 | Pin | Name | Role | Connection |
 | :---: | :--- | :--- | :--- |
 | **1** | **VCC** | Power In | 5.1V Stable Logic Rail |
-| **2** | **RX** | Data In | Node 1 (GPIO 17 / Yellow) |
-| **3** | **TX** | Data Out | Node 1 (GPIO 16 / Green) |
+| **2** | **RX** | Data In | Node 2 (GPIO 12 / Yellow) |
+| **3** | **TX** | Data Out | Node 2 (GPIO 13 / Green) |
 | **6** | **SPK1** | Audio (+) | TPA3118 Audio In |
 | **7** | **GND** | Ground | Common Star Ground |
 | **8** | **SPK2** | Audio (-) | TPA3118 Audio In |
@@ -49,7 +49,7 @@ Tracks must be named with a 3-digit prefix (e.g., `001_beep.mp3`) to enable rapi
 
 ## Calibration & Diagnostics
 
-- **UART Heartbeat**: If the Node 1 logo pulses **Yellow**, it indicates the DFPlayer is disconnected or the SD card is unreadable.
+- **UART Heartbeat**: If the Node 2 logo pulses **Yellow**, it indicates the DFPlayer is disconnected or the SD card is unreadable.
 - **Volume Limit**: WEE2-D2 firmware limits the DFPlayer volume to **26/30** to prevent clipping on the TPA3118 gain stage.
 
 **Further Resources:**

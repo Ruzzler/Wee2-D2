@@ -13,6 +13,7 @@ The **Motion Master** manages 360° dome rotation and broadcasts behavioral trig
 | **5V** | Red | Power In | 5.1V BEC (from goBILDA ESC) |
 | **GND** | Black | Ground | Common Logic Ground |
 | **GPIO 4** | White | RC CH1 | Steering Input (PWM) |
+| **GPIO 5** | Blue | WLED Sync | Single Wire UART TX |
 | **GPIO 7** | Yellow | Dome ESC | PWM Command Out |
 | **GPIO 47** | N/A | Status LED | Internal Neopixel (Logic) |
 
@@ -24,13 +25,10 @@ The **Sound Hub** manages behavioral audio triggers and drive system monitoring.
 
 | ESP32 Pin | Wire Color | Role | Function |
 | :---: | :--- | :--- | :--- |
-| **5V** | Red | Power In | 5.1V BEC (Primary Logic) |
+| **5V** | Red | Power In | 5.0V (Mini560 Buck) |
 | **GND** | Black | Ground | Common Logic Ground |
-| **GPIO 4** | White | RC CH3 | Behavioral Trigger A |
-| **GPIO 5** | Green | RC CH4 | Behavioral Trigger B |
-| **GPIO 6** | Purple | RC CH5 | Bank Switch / Mode |
-| **GPIO 17** | Yellow | DFPlayer TX | Serial Command Out |
-| **GPIO 16** | Green | DFPlayer RX | Serial Status In (Optional) |
+| **GPIO 12** | Yellow | DFPlayer TX | Serial Command Out |
+| **GPIO 13** | Green | DFPlayer RX | Serial Status In (Optional) |
 | **GPIO 47** | N/A | Status LED | Internal Neopixel (Logic) |
 
 ---
@@ -43,11 +41,11 @@ The **Lighting Controller** runs the WLED framework to drive high-density addres
 | :---: | :--- | :--- | :--- |
 | **5V** | Red | Power In | 5.1V (Dedicated 10A Buck) |
 | **GND** | Black | Ground | Common Logic Ground |
+| **GPIO 3** | Blue/Blk | UART RX | Serial Command In (Sync) |
+| **GPIO 16** | Green | Data Out | Front PSI Logic |
+| **GPIO 17** | White | Data Out | Back PSI Logic |
 | **GPIO 18** | Yellow | Data Out | Front Logic (10x2) |
 | **GPIO 19** | Yel/Blk | Data Out | Rear Logic (12x2) |
-| **GPIO 21** | Green | Data Out | Front PSI Logic |
-| **GPIO 22** | White | Data Out | Back PSI Logic |
-| **GPIO 16** | Blue/Blk | UART RX | Serial Command In (Sync) |
 
 ---
 
@@ -55,7 +53,7 @@ The **Lighting Controller** runs the WLED framework to drive high-density addres
 
 ### Audio Stack (DFPlayer + TPA3118)
 
-- **Node 2 TX (GPIO 17)** --> **DFPlayer RX**.
+- **Node 2 TX (GPIO 12)** --> **DFPlayer RX**.
 - **DFPlayer SPK_1/2** **TPA3118 Analog Input**.
 - **TPA3118 Power** 20V Positive Fuse Box.
 - **TPA3118 GND** **Star Ground** (-).
@@ -67,8 +65,6 @@ The **Lighting Controller** runs the WLED framework to drive high-density addres
 | **Red (5V)** | Slot 5 (+) | `5V / VIN` | Master Logic Power |
 | **Black (GND)** | Slot 5 (-) | `GND` | Master Logic Ground |
 | **Grey/Black** | Slot 3 (S) | `Node 1: GPIO 4` | CH1 (Dome Rotation) |
-| **Blue/Black** | Slot 4 (S) | `Node 2: GPIO 4` | CH3 (Sound Trigger A) |
-| **Purple/Black**| Slot 5 (S) | `Node 2: GPIO 5` | CH4 (Sound Trigger B) |
 
 ---
 

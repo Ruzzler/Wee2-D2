@@ -33,7 +33,7 @@ The DS-600 can internally "mix" CH1 and CH2 for dual-motor control.
  1. Press and hold the **[CH3]** button.
  1. Turn the remote **ON**.
  1. **Status**: Green light = Mixing ON. No light = Mixing OFF.
-- **Recommendation for Wee2-D2**: Keep Mixing **OFF**. The ESP32 (Node 1) performs more precise software-based mixing and safety clamping.
+- **Recommendation for Wee2-D2**: Keep Mixing **OFF**. The Flipsky ESCs natively handle software mixing through their internal VESC Tool configuration, making external transmitter mixing unnecessary.
 
 ### 2. Channel Reversal
 
@@ -43,17 +43,19 @@ If your droid drives backward when you pull the trigger:
 1. Turn the remote **ON** (you will hear a beep).
 1. Move the trigger (CH2) or joystick (CH1) to its limit. A long beep confirms the reversal.
 
-## Wiring to ESP32 (Node 1)
+## Wiring Topography
 
-The **F-06A Receiver** should be connected to the Node 1 ESP32 using standard 3-pin servo cables.
+Wee2-D2 utilizes two separate DS-600 transmitters and identical F-06A receivers to isolate drive operations from dome movement.
 
-| Receiver Port | Node 1 Pin | Wire Color | Function |
-| :--- | :--- | :--- | :--- |
-| **CH3** (Data Pin 3) | **GPIO 25** | Grey/Black | Audio Bank/Trigger A |
-| **CH4** (Data Pin 4) | **GPIO 33** | Blue/Black | Audio Bank/Trigger B |
-| **CH5** (Data Pin 5) | **GPIO 32** | Purple/Black | Audio Bank Cycle Switch |
-| **Slot 5 (+)** | **5V / VIN** | Red | Power Bridge (5V Rail) |
-| **Slot 5 (-)** | **GND** | Black | Common Ground |
+### 1. Drive Receiver (Body)
+The Body F-06A receiver bypasses microcontrollers entirely.
+- **CH1 (Left/Right)**: Connects directly to the Left and Right Flipsky ESC PWM inputs.
+- **CH2 (Throttle)**: Connects directly to the Left and Right Flipsky ESC PWM inputs via a Y-Splitter.
+
+### 2. Dome Receiver (Head)
+The Dome F-06A receiver is strictly for manual dome control, communicating through the Node 1 Behavioral Master.
+- **CH1 (Left/Right)**: Connects to **Node 1 (GPIO 4)** for deadband clamping and autonomous routine overrides.
+- **CH2-CH6**: Unused.
 
 > [!IMPORTANT]
 > **Failsafe Setup**:

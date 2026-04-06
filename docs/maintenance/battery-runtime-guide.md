@@ -16,7 +16,7 @@ The 20V DeWalt battery operates at **18.5V Nominal**. A 4Ah pack contains **74 W
 
 ### **1. Baseline (Always-On Logic & Lights)**
 
-- **Logic Nodes**: 3x ESP32-S3 + RC Receivers.
+- **Logic Nodes**: 2x ESP32-S3 Super Minis (Nodes 1 & 2), 1x ESP32-D (Node 3), + RC Receivers.
 - **Lighting Pattern**: Front/Rear Logics + Circular PSIs @ 40% Brightness.
 - **Conversion Loss**: Buck converter overhead (15%).
 - **Estimated Load**: **11.0 Watts**

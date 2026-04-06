@@ -7,9 +7,9 @@ Wee2-D2's voice and sound system is a distributed modular stack built around the
 ## How it Works: The Wireless Trigger
 
 Instead of physical wires running through the slip ring, the droid uses a **Wireless Behavioral Bridge**.
-1. **Event Capture**: The **Dome Motion (Node 3)** or **Sound Hub (Node 1)** detects an RC command or autonomous event.
-1. **Broadcast**: Node 3 broadcasts an **ESP-NOW** packet (e.g., `TRIGGER_SOUND_01`) across the 2.4GHz spectrum.
-1. **Command Translation**: The **Sound Hub (Node 1)** receives the wireless packet and sends a precise **Serial (UART)** command to the **DFPlayer Mini**.
+1. **Event Capture**: The **Sound Hub (Node 2)** captures an event via the Web Dashboard or autonomous script.
+1. **Command Execution**: Node 2 executes the **Serial (UART)** command directly to the local **DFPlayer Mini**.
+1. **Broadcast Sync**: Node 2 simultaneously broadcasts an **ESP-NOW** packet (e.g., `0xA0` Animation ID) across the 2.4GHz spectrum to Node 1 for dome and lighting synchronization.
 1. **Amplification**: The DFPlayer outputs a low-level analog signal to the **TPA3118 Amplifier**, which drives the 60W Pyle speaker at 20V.
 
 ## SD Card Formatting (DFPlayer Standard)
@@ -33,16 +33,16 @@ SD_ROOT/
 ```
 *Note: The DFPlayer supports up to 255 tracks per folder, allowing for massive behavioral variety.*
 
-## Behavioral Bank Logic
+## Behavioral Animation Logic
 
-By flicking **CH5** on your transmitter, the droid cycles through functional "Mood Banks." Node 3 broadcasts the bank change wirelessly, which updates the lighting patterns and the sound selection in Node 1:
+By interacting with the **Neural Command Center Dashboard**, users can trigger pre-compiled behavioral banks. Node 2 broadcasts the Animation ID wirelessly, which perfectly syncs the lighting patterns and the sound selection:
 
-| Behavioral Bank | Lighting Mode | Audio Character |
+| Animation ID | Lighting Sync (WLED) | Audio Character |
 | :--- | :--- | :--- |
-| **Bank 1 (Default)** | Blue/White | Happy / Inquisitive |
-| **Bank 2 (Patrol)** | Cyan | Processing / Static |
-| **Bank 3 (High Alert)** | Pulsing Red | Alarms / Screams |
-| **Bank 4 (Silent)** | Dim Blue | Stealth / Event Safe |
+| **0xA0, 0x01** | Default / Idle | Happy / Inquisitive |
+| **0xA0, 0x02** | 1977 Analog | Processing / Static |
+| **0xA0, 0x03** | High Alert (Red) | Alarms / Screams |
+| **0xA0, 0x04** | Cantina | Musical / Joyful |
 
 ## Ambient Mode
 
@@ -54,8 +54,8 @@ Unlike the legacy 9-wire trigger system, the v1.8 stack uses a 4-wire serial bus
 
 | Pin | Source (S3) | Destination (DFPlayer) | Role |
 | :---: | :--- | :--- | :--- |
-| **TX** | **GPIO 17** | RX Pin | Serial Data Output |
-| **RX** | **GPIO 16** | TX Pin | Status Data Input |
+| **TX** | **GPIO 12** | RX Pin | Serial Data Output |
+| **RX** | **GPIO 13** | TX Pin | Status Data Input |
 | **VCC** | 5V Rail | VCC Pin | Power (5V/1A Peak) |
 | **GND** | Star Ground | GND Pin | Logic Reference |
 

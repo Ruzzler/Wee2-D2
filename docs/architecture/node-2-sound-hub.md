@@ -12,22 +12,23 @@
 
 ## Core Purpose
 
-- **ESP-NOW Wireless Link**: Low-latency behavioral synchronization with the Dome Master.
-- **DFPlayer UART Control**: High-fidelity track triggering and volume management via serial.
-- **RC Signal Monitoring**: Decodes PWM from RC1 for localized drive fail-safes.
-- **Telemetry Projection**: Reports audio status and battery health back to Home Assistant.
-- **OTA Updates**: Fully support Over-The-Air updates via the [Documentation Dashboard](docs/maintenance/network-ota-guide.md).
+![Neural Command Dashboard](../../assets/neural-command-dashboard.jpg)
+
+- **Neural Command Center**: Hosts the responsive web dashboard (`system_dashboard.h`) serving as the interactive entry point to the droid.
+- **ESP-NOW Wireless Relay**: Securely relays dashboard commands (`0xA0-0xA2`) to Node 1 via a bidirectional 2.4GHz bridge.
+- **DFPlayer UART Control**: High-fidelity track triggering and system volume management.
+- **OTA Updates**: Fully support Over-The-Air updates directly from the Web UI.
 
 ## Pinout Configuration
 
 | Connection | ESP32 Pin | Logic |
 | :--- | :---: | :--- |
-| **RC CH3-5 (In)** | 4, 5, 6 | Trigger Pulse Data (Input) |
-| **DFPlayer TX** | GPIO 17 | Serial Command Out |
-| **DFPlayer RX** | GPIO 16 | Serial Status In (Optional) |
-| **Wireless Link** | N/A | ESP-NOW Behavioral Sync |
+| **Dashboard** | Wi-Fi | TCP/IP Interface `port 80` |
+| **DFPlayer TX** | GPIO 12 | Serial Command Out |
+| **DFPlayer RX** | GPIO 13 | Serial Status In (Optional) |
+| **Wireless Relay** | Ch. 11 | ESP-NOW Behavioral Sync |
 | **Status LED** | GPIO 47 | Internal Neopixel (Logic) |
 
-### Auto-Mode Logic
+### Watchdog Link
 
-When the `current_bank` is set to `3` (Bank 4), an internal 1-second interval timer decrements. When it reaches zero, a random trigger is fired and the timer is reset to a value between 5s and 15s.
+Node 2 actively listens for a 5-second `0xB0` heartbeat sent from Node 1. If this connection drops, the Web Dashboard UI elements physically lock out and report "MESH DEGRADED" to prevent blind data transmission.

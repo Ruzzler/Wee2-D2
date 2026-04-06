@@ -4,6 +4,16 @@ All notable changes to the Wee2-D2 project will be documented in this file. This
 
 ---
 
+## [2.6.0] - 2026-04-06
+
+### Neural Command Center & Dashboard Integration
+
+- **Architectural Shift**: Decoupled physical RC audio triggers entirely. Node 2 is now formally established as the **Neural Command Center**, hosting an advanced web dashboard (`system_dashboard.h`) serving as the interactive entry point to the droid.
+- **ESP-NOW Relay Gateway**: Node 2 securely captures dashboard commands and relays hex triggers (`0xA0-0xA2`) via a bidirectional ESP-NOW bridge to Node 1.
+- **WLED Configuration JSONs**: Migrated the manual WLED mapping workflows into standard json GUI restores (`cfg.json`, `presets.json`, `ledmap.json`), complete with standard Cinematic Animation assignments (1-15).
+- **Security Audit Protocol**: Abstracted sensitive Wi-Fi and ESP-NOW MAC addresses from the firmware files to ensure safety for public codebase distribution, formalizing `secrets.yaml` MAC retrieval.
+- **UDNS Decommissioning**: Completed thorough system sweep identifying and purging all legacy UDNS and Mode bindings across architectural diagrams, schematics, and UI guides.
+
 ## [2.2.1] - 2026-04-01
 
 ### Added
