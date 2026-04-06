@@ -6,11 +6,11 @@
 | :--- | :--- |
 | **Node ID** | **3** |
 | **Role** | Cinematic Visual Output & Peripheral Sync |
-| **Source Code** | [`node-3-led-distribution.yaml`](../../firmware/production/node-3-led-distribution.yaml) |
-| **Logic Framework** | WLED |
+| **Source Code** | [`node-3-wled/`](../../firmware/production/node-3-wled/) |
+| **Logic Framework** | WLED (Native) |
 | **Primary Function** | Addressable LEDs |
 | **Visual ID** | ![ESP32D](../../assets/esp32d-dev-board.png) |
-| **Wireless Link** | **ESP-NOW** |
+| **Sync Protocol** | **UART (Serial)** |
 | **Status LED** | **GPIO 2** |
 
 ## Power Management & Safety
@@ -24,7 +24,7 @@
 | Device | LED Type | Qty | wire Color | Pin (GPIO) |
 | :--- | :--- | :---: | :---: | :---: |
 | **Front Logic** | WS2812B | 20 | Yellow | **18** |
-| **Rear Logic** | WS2812B | 24 | / Yellow/Blk | **19** |
+| **Rear Logic** | WS2812B | 24 | Yel/Blk | **19** |
 | **Front PSI** | GrnWave | 76 | Green | **21** |
 | **Back PSI** | GrnWave | 76 | White | **22** |
 
@@ -47,10 +47,10 @@ To achieve cinematic logic scrolling:
 
 ## WLED Serial Sync
 
-This Node receives high-level commands from the Body Controller via the slip ring.
-- **Data Signal**: Connect the Yellow/Black wire (Body TX) to **GPIO 16**.
-- **Response Signal**: Connect the Green/Black wire (Body RX) to **GPIO 17**.
-- **Protocol**: 115200 Baud, 8N1. WLED can be configured to react to serial JSON payloads for synchronized animations.
+This Node receives high-level commands from **Node 1 (Dome Master)** via a hardwired UART connection.
+- **Data Signal**: Connect the Blue wire (Node 1 TX) to **GPIO 16**.
+- **Response Signal**: Connect the Green wire (Node 3 TX) to **Node 1 RX** (Optional).
+- **Protocol**: 115200 Baud, 8N1. WLED is configured to react to serial JSON payloads representing the 15 standard Cinematic Logic states.
 
 ## Useful Links
 

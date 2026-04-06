@@ -35,17 +35,18 @@ The **Sound Hub** manages behavioral audio triggers and drive system monitoring.
 
 ## 3. Node 3: LED Distribution (ESP32 Dev Board)
 
-The **Lighting Controller** runs the WLED framework to drive high-density addressable matrices.
+The **Lighting Controller** runs the **Native WLED (v0.14+)** framework to drive high-density addressable matrices.
 
 | ESP32 Pin | Wire Color | Role | Function |
 | :---: | :--- | :--- | :--- |
-| **5V** | Red | Power In | 5.1V (Dedicated 10A Buck) |
+| **5V** | Red | Power In | 5.0V (Mini560 Buck) |
 | **GND** | Black | Ground | Common Logic Ground |
-| **GPIO 3** | Blue/Blk | UART RX | Serial Command In (Sync) |
-| **GPIO 16** | Green | Data Out | Front PSI Logic |
-| **GPIO 17** | White | Data Out | Back PSI Logic |
+| **GPIO 16** | Yellow/Blk | UART RX | Serial Sync In (from Node 1) |
+| **GPIO 17** | Green/Blk | UART TX | Serial Sync Out (Optional) |
 | **GPIO 18** | Yellow | Data Out | Front Logic (10x2) |
 | **GPIO 19** | Yel/Blk | Data Out | Rear Logic (12x2) |
+| **GPIO 21** | Green | Data Out | Front PSI (GrnWave) |
+| **GPIO 22** | White | Data Out | Rear PSI (GrnWave) |
 
 ---
 

@@ -1,7 +1,0 @@
-# Standard ESP32 Hardware Defaults
-# v2.0-Hybrid | NODE 2 (WLED)
-
-esp32:
- board: esp32dev
- framework:
- type: arduino # WLED/Legacy compatibility

@@ -17,13 +17,16 @@ To view the documented system with a premium, interactive technical interface, v
 
 Wee2-D2 utilizes a decentralized architecture split across three ESP32 microcontrollers. This ensures non-blocking operation between the audio processing, LED lighting, and mechanical drive systems. The droid is piloted via **Dual HOTRC DS-600 transmitters** (one for drive logic, one for dome motion).
 
-### Wireless Bridge (ESP-NOW)
+### Behavioral Mesh (Node 1 & 2)
 
 ![Neural Command Dashboard](assets/neural-command-dashboard.jpg)
 
 - **Node 1: Dome Motion**: **ESP32-S3 Super Mini** acting as the "Behavioral Master," executing autonomous scripts and motion profiles.
 - **Node 2: Sound Hub**: **ESP32-S3 Super Mini** hosting the "Neural Command Center" Dashboard. It captures web UI commands and securely relays them back to Node 1 via ESP-NOW.
-- **Node 3: LED Distribution**: Standard **ESP32 Dev Board** running WLED for high-density addressable light matrices.
+
+### Cinematic Hub (Node 3)
+
+- **Node 3: LED Distribution**: Standard **ESP32 Dev Board** running **Native WLED** for high-density light matrices. Synchronized via a **UART Serial Loop** from Node 1.
 
 > [!WARNING]
 > **PROJECT SCOPE**: This repository exclusively documents my custom **Electrical Architecture** and **Firmware** ecosystem. It does **not** contain the 3D-printable STL files or mechanical assembly instructions for the droid chassis itself. Please refer to the official Mr. Baddeley Patreon or group hubs for structural files.

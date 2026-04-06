@@ -25,13 +25,14 @@ Synchronization is achieved using low-latency **ESP-NOW** wireless bridging acro
 
 - **Role**: Cinematic visual output.
 - **Hardware**: Addressable LED matrices (WS2812B/PSI Logic).
-- **Logic**: A WLED-embedded node that receives serial JSON triggers from Node 1 via UART synchronization.
+- **Sync**: A **UART-synced** node that receives serial JSON triggers from **Node 1 (Dome Master)**. 
+- **Framework**: Native WLED (v0.14+).
 
 ---
 
 ## The Wireless Bridge (ESP-NOW)
 
-To prevent analog audio interference and reduce the risk of slip ring data corruption, the Node Mesh utilizes **ESP-NOW**, a high-speed 2.4GHz peer-to-peer protocol.
+To prevent analog audio interference and reduce the risk of slip ring data corruption, the Behavioral Mesh (Nodes 1 and 2) utilizes **ESP-NOW**, a high-speed 2.4GHz peer-to-peer protocol. Node 3 does not participate in the wireless mesh to maximize radio bandwidth for timing-critical dome and audio triggers.
 
 - **Zero Router Latency**: Nodes communicate directly with <10ms response times.
 - **EMI Immunity**: Moving data to the 2.4G spectrum eliminates the ground loops and motor interference inherent in slip rings.
