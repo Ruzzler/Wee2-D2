@@ -27,7 +27,7 @@ The **GrnWave Circular PSI** is a high-density addressable LED display used for 
 
 To achieve the cinematic scanning look in **WLED**, use the following settings for **Node 2: Lighting Controller**:
 
-### 1⃣ LED Settings
+### 1. LED Settings
 
 - **LED Type**: WS2812B
 - **Color Order**: GRB

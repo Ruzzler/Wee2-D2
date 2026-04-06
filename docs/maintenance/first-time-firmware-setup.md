@@ -38,7 +38,7 @@ Before you can upload the final Wee2-D2 firmware, you must record the physical M
 
 1. While the device is plugged in via USB and running the blank firmware, click **"Logs"** in the ESPHome Dashboard.
 2. In the resulting output, look for the line stating `MAC Address: XX:XX:XX:XX:XX:XX`.
-3. Copy this address into your `secrets.yaml` file (as `node1_mac` or `node2_mac` depending on which chip you are currently flashing).
+3. Copy this address into your `secrets.yaml` file (as `node_1_mac` or `node_2_mac` depending on which chip you are currently flashing).
 
 ## Step 4: Copy the Configuration
 

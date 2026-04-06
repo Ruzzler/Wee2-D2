@@ -8,7 +8,7 @@ This repository tracks the subsequent electrical architecture, firmware configur
 
 ---
 
-## <i data-lucide="map"></i> Documentation Navigation Guide
+## Documentation Navigation Guide
 
 This Documentation is organized into five distinct technical sectors, providing a comprehensive roadmap for the Wee2-D2's systems:
 
