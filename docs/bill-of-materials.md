@@ -1,6 +1,7 @@
 # <i data-lucide="graduation-cap"></i> Bill of Materials (BOM)
 
-A comprehensive list of hardware used in the Wee2-D2 project, organized by system tier. Click on any thumbnail in the **Visual ID** column to enlarge it.
+A list of the parts used in the Wee2-D2 project, organized by system. Click on any thumbnail in the **Visual ID** column to enlarge it.
+
 
 ## Brains & Control
 
@@ -11,6 +12,7 @@ A comprehensive list of hardware used in the Wee2-D2 project, organized by syste
 | [Node 3: LED Distribution](architecture/node-3-led-distribution.md) | 1 | ESP32D Dev Board; Cinematic Visuals | ![ESP32D](../assets/esp32d-dev-board.png) |
 | [HOTRC DS-600](hardware/hotrc-ds600-manual.md) | 2 | 6-CH Transmitter (Silent Mod) [PDF](hardware/hotrc-ds600-manual.pdf) | ![Transmitter](../assets/hotrc-ds600-transmitter.webp) |
 | [HOTRC F-06A Receivers](hardware/hotrc-f06a-manual.md) | 2 | 6-CH PWM Output (Receiver 2 strictly Dome) [PDF](hardware/hotrc-f06a-manual.pdf) | ![Receiver](../assets/hotrc-f06a-receiver.png) |
+
 
 ## Power & Protection
 
@@ -24,15 +26,17 @@ A comprehensive list of hardware used in the Wee2-D2 project, organized by syste
 | 5-Port Wago Connectors | 4 | 2x Dome (Power Trunk), 2x Body (Signal/GND) | - |
 | [CNBTR Slip Ring](hardware/cnbtr-slip-ring-manual.md) | 1 | 12.7mm Bore, 6-Circuit @ 10A/ch (2x Ganged) | ![Slip Ring](../assets/slip-ring-cnbtr.jpg) |
 
+
 ## Audio & Lights
 
 | Component | Qty | Specifications | Visual ID |
 | :--- | :---: | :--- | :--- |
-| [DFPlayer Mini](hardware/dfplayer-mini-spec.md) | 1 | UART-Controlled MP3 Module; Node 3 Broadcast Sink | ![DFPlayer](../assets/dfplayer-mini-module.jpg) |
+| [DFPlayer Mini](hardware/dfplayer-mini-spec.md) | 1 | UART-Controlled MP3 Module; Node 1 Broadcast Sink | ![DFPlayer](../assets/dfplayer-mini-module.jpg) |
 | [TPA3118 Amplifier](hardware/tpa3118-amp-manual.md) | 1 | 60W Mono Amp (Body Hub); Direct analog from DFPlayer | ![TPA3118](../assets/tpa3118-amplifier-module.jpg) |
 | [Pyle 3.5" Car Speaker](capabilities/lights-and-sounds/audio-system.md) | 1 | 60W RMS / 4 Ohm High-Output Driver | ![Pyle Speaker](../assets/pyle-3.5-speaker.webp) |
 | [WS2812B Logic Arrays](capabilities/lights-and-sounds/led-system.md) | 1 | Addressable LED matrices (Front & Rear) | ![Logic Array](../assets/ws2812b-logic-arrays.webp) |
 | [GrnWave Circular PSI](hardware/grnwave-psi-manual.md) | 2 | 76x WS2812B-2020 LEDs (**5V ONLY**) | ![GrnWave PSI](../assets/grnwave-psi-logic.jpg) |
+
 
 ## 3D Print & Mechanical Assembly
 
@@ -43,7 +47,9 @@ A comprehensive list of hardware used in the Wee2-D2 project, organized by syste
 | [goBILDA 1x15A ESC](hardware/gobilda-motor-manual.md) | 1 | 12-24VDC, 15A Cont PWM Controller | ![goBILDA ESC](../assets/gobilda-esc-top.png) |
 | [goBILDA 5203 Motor](hardware/gobilda-motor-manual.md) | 1 | 117 RPM (12V Hub) Yellow Jacket Gearmotor | ![Yellow Jacket](../assets/gobilda-5203-motor.webp) |
 
+
 ---
+
 
 > [!NOTE]
 > **TECHNICAL REPOSITORY**: For detailed wiring and signal paths, please refer to the [Interactive Electrical Schematic](architecture/electrical-schematic.md).

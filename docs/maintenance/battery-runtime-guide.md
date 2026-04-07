@@ -2,9 +2,8 @@
 
 > **POWER MANAGEMENT** | **SYSTEM: DEWALT 20V (4Ah/6Ah/9Ah)** | **LVP: 17.5V**
 
-This guide provides high-fidelity operational durations for the Wee2-D2 project, factoring in resistive line losses (I2R) and RF mesh drainage across the distributed node network.
+This guide provides high-fidelity power estimates for the Wee2-D2 project. It factors in resistive line losses (I2R) and RF mesh drainage across the distributed node network.
 
----
 
 ## Energy Capacity (Real-World Usable)
 
@@ -13,16 +12,16 @@ The 20V DeWalt battery system operates at **18.5V Nominal**. While raw Watt-Hour
 | Pack Size | Raw Energy (18.5V Nom) | Usable Energy (17.5V LVP) | Sector Duty (Patrol) |
 | :--- | :---: | :---: | :--- |
 | **4Ah (Standard)** | 74Wh | **~60Wh** | Short Deployment |
-| **6Ah (FlexVolt)** | 111Wh | **~94Wh** | Professional Day |
-| **9Ah (FlexVolt)** | 166Wh | **~142Wh** | Endurance Duty |
+| **6Ah (FlexVolt)** | 111Wh | **~94Wh** | Full Day Usage |
+| **9Ah (FlexVolt)** | 166Wh | **~142Wh** | Full Day Usage |
 
----
 
 ## Power Consumption Breakdown (Deep-Audit)
 
 *Recalibrated calculations factoring in resistive losses and active logic mesh drainage.*
 
-### **1. Baseline (Always-On Signal & Logic)**
+
+### 1. Baseline (Always-On Signal & Logic)
 
 This represents the "Stationary" draw when the droid is on and the mesh is active.
 - **RF Mesh Logic**: 3x ESP32 nodes (Nodes 1, 2, 3) + RC Receivers. Sustained Wi-Fi/ESP-NOW active draw. (**5.5W**)
@@ -30,13 +29,15 @@ This represents the "Stationary" draw when the droid is on and the mesh is activ
 - **Conversion & Line Loss**: Cumulative Mini560 Pro buck efficiency (90%) + I2R resistive loss through the slip ring. (**15% Overhead**)
 - **Total Baseline Average**: **~28.0 Watts**
 
-### **2. Audio System (Chatter & Processing)**
+
+### 2. Audio System (Chatter & Processing)
 
 - **System**: DFPlayer Mini + TPA3118 Amplifier + Pyle 3.5" Driver.
 - **Duty Cycle**: Variable (Chatter every 15–30s).
 - **Average Load**: **~2.5 Watts**
 
-### **3. Drive System (VESC Kinetic Peaks)**
+
+### 3. Drive System (VESC Kinetic Peaks)
 
 Recalibrated requirements based on your specific **15A Software Clamp** ($30A$ total battery draw).
 - **Current Limit Max**: 70A. (Software Clamped to **15A** for Wee2-D2).

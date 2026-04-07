@@ -20,7 +20,7 @@ The droid operates on a **20V High-Power Standard**, sourcing energy from a gang
 
 ## 2. Power Rail Hierarchy
 
-Wee2-D2 utilizes isolated voltage rails to protect sensitive logic from motor-induced EMF noise.
+Wee2-D2 uses isolated voltage rails to protect sensitive logic from motor-induced EMF noise.
 
 ### A. 20V High-Power Rail
 | Component | Function | Source |
@@ -41,11 +41,13 @@ Wee2-D2 utilizes isolated voltage rails to protect sensitive logic from motor-in
 | LED Matrices (Logic) | Visual Display | Dome LED Buck: Mini560 Pro (5A) |
 | GrnWave PSIs | Circular Displays | Dome LED Buck: Mini560 Pro (5A) |
 
+
 ---
+
 
 ## 3. The Slip Ring Bridge (Body to Dome)
 
-The **CNBTR Slip Ring** (6 wires) acts as the high-current bridge. We utilize a **Ganged Trunk Strategy** to provide maximum current overhead to the dome via the Slip Ring's multi-circuit capability.
+The **CNBTR Slip Ring** (6 wires) acts as the high-current bridge. We use a **Ganged Trunk Strategy** to provide maximum current overhead to the dome via the Slip Ring's multi-circuit capability.
 
 | Circuit | Function | Current (Peak) | Pinout |
 | :--- | :--- | :---: | :---: |

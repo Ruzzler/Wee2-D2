@@ -1,6 +1,7 @@
 # <i data-lucide="alert-circle"></i> Troubleshooting Matrix: Wee2-D2
 
-If your droid begins exhibiting unexpected behavior, use this matrix to diagnose the specific point of failure in the system architecture.
+If your droid isn't acting right, use this table to find the problem.
+
 
 | Symptom | Probable Cause | Corrective Action |
 | :--- | :--- | :--- |
@@ -15,27 +16,33 @@ If your droid begins exhibiting unexpected behavior, use this matrix to diagnose
 | **Sync Failure** | Wireless Bridge Fault | Check ESP-NOW MAC pairing; ensure all nodes on WiFi Channel 11. |
 | **Validation Failure** | Missing `secrets.yaml` | Automated health-check fails without a secrets file; logic is still valid. |
 
+
 ---
+
 
 ## Diagnostics Bench
 
-### **1. ESPHome Logs**
+### 1. ESPHome Logs
 
-The most powerful tool at your disposal is the **ESPHome Logger**.
+The **ESPHome Logger** is the best way to see what's happening.
+
 1. Connect the ESP32 to your PC via USB.
-1. Open the ESPHome Dashboard.
-1. Click **Logs** on the problematic Node.
-1. **Watch for Errors**: UART timeouts, Wi-Fi disconnects, or I2C bus failures will appear in RED text.
+2. Open the ESPHome Dashboard.
+3. Click **Logs** on the problematic Node.
+4. **Watch for Errors**: UART timeouts, Wi-Fi disconnects, or I2C bus failures will appear in RED text.
 
-### **2. Wireless Bridge (ESP-NOW) Synchronization Test**
+
+### 2. Wireless Bridge (ESP-NOW) Synchronization Test
 
 To verify the wireless behavioral triggers:
-1. Open the **Dome Master (Node 1)** Logs.
-1. Trigger a movement or behavioral script.
-1. Look for a broadcast entry: `[D][esp_now:xxx]: Broadcast behavioral EVENT_ID_XX`.
-1. Open the **Sound Hub (Node 2)** Logs and confirm it receives the event and triggers the DFPlayer: `[D][dfplayer:xxx]: Playing track XX`.
 
-### **3. Multimeter Probe Points**
+1. Open the **Dome Master (Node 1)** Logs.
+2. Trigger a movement or behavioral script.
+3. Look for a broadcast entry: `[D][esp_now:xxx]: Broadcast behavioral EVENT_ID_XX`.
+4. Open the **Sound Hub (Node 2)** Logs and confirm it receives the event and triggers the DFPlayer: `[D][dfplayer:xxx]: Playing track XX`.
+
+
+### 3. Multimeter Probe Points
 
 - **VCC Rail**: Should be **18V - 21V** (Main Battery).
 - **Logic Rail**: Should be **5.0V - 5.2V** (Buck Output).

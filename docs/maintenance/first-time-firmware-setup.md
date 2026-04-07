@@ -9,7 +9,7 @@ Before your ESP32 microcontrollers can be updated wirelessly over your local net
 ## Prerequisites
 
 1. **A Computer**: PC, Mac, or Linux machine.
-1. **Google Chrome or Microsoft Edge**: The physical USB flash utilizes the [Web Serial API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Serial_API), which is only supported in Chromium-based browsers. Safari/Firefox will not work.
+1. **Google Chrome or Microsoft Edge**: The physical USB flash uses the [Web Serial API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Serial_API), which is only supported in Chromium-based browsers. Safari/Firefox will not work.
 1. **Data-Capable USB Cable**: A high-quality USB-Micro (for ESP32D) or USB-C (for S3 Mini) cable. *Warning: Many cheap cables only provide power and cannot transmit data.*
 
 ## Step 1: Prepare the Secrets File

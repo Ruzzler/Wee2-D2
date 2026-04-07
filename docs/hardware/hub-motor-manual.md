@@ -32,7 +32,7 @@ The **FLD-5** provides silent, high-efficiency direct-drive power with integrate
 
 ## Wiring & Interface (8-Wire)
 
-Each motor utilizes **8 wires** total (3 Phase + 5 Hall) for high-fidelity commutation control.
+Each motor uses **8 wires** total (3 Phase + 5 Hall) for high-fidelity commutation control.
 
 | Signal Type | Color Code | Description |
 | :--- | :---: | :--- |

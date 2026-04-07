@@ -1,13 +1,14 @@
-# <i data-lucide="network"></i> Node Mesh Architecture
+# Node Mesh Architecture
 
-The Wee2-D2 utilizes a distributed MCU architecture called the **Node Mesh**.
-This design handles high-amperage motor control, precision dome rotation, and cinematic AV triggers while minimizing physical wiring through the central slip ring.
+This guide explains how the droid communicates internally using a distributed messaging system.
 
----
+The droid's movement is handled by a **Decentralized Node Mesh** consisting of three primary ESP32-S3 controllers. This design handles high-amperage motor control, precision dome rotation, and cinematic AV triggers while minimizing physical wiring through the central slip ring.
+
 
 ## System Roles
 
 Synchronization is achieved using low-latency **ESP-NOW** wireless bridging across three specialized nodes:
+
 
 ### Node 1: Dome Motion Master (ESP32-S3)
 
@@ -15,11 +16,13 @@ Synchronization is achieved using low-latency **ESP-NOW** wireless bridging acro
 - **Hardware**: goBILDA 5203 Dome Motor, PWM Motor Controller.
 - **Logic**: Reads raw RC steering. Captures ESP-NOW dashboard triggers (`0xA0`, `0xA1`, `0xA2`) from Node 2. Broadcasts a 60-second WLED heartbeat (via UART) and 5-second radio heartbeat.
 
+
 ### Node 2: Neural Command Center (ESP32-S3)
 
 - **Role**: Dashboard Gateway and behavioral audio execution.
 - **Hardware**: DFPlayer Mini, TPA3118 Amplifier.
 - **Logic**: Hosts the interactive Web UI. Captures user commands and securely relays them across the ESP-NOW bridge to Node 1.
+
 
 ### Node 3: LED Distribution (ESP32)
 
@@ -28,7 +31,6 @@ Synchronization is achieved using low-latency **ESP-NOW** wireless bridging acro
 - **Sync**: A **UART-synced** node that receives serial JSON triggers from **Node 1 (Dome Master)**. 
 - **Framework**: Native WLED (v0.14+).
 
----
 
 ## The Wireless Bridge (ESP-NOW)
 
@@ -38,9 +40,8 @@ To prevent analog audio interference and reduce the risk of slip ring data corru
 - **EMI Immunity**: Moving data to the 2.4G spectrum eliminates the ground loops and motor interference inherent in slip rings.
 - **Scalability**: New nodes (e.g., foot sensors or Cinematic Logic Displays) can be added to the mesh without pulling additional wires through the central joint.
 
----
 
-## Slip Ring Distribution (Body Dome)
+## Distributed Network Topology
 
 The **CNBTR Slip Ring** (6-Circuit) acts as the physical bridge for the dome's high-current requirements. We utilize the **Dual-Circuit Isolation Strategy** defined in the [Power Architecture](power-architecture.md):
 
@@ -56,7 +57,7 @@ The **CNBTR Slip Ring** (6-Circuit) acts as the physical bridge for the dome's h
 
 1. **Star-Grounding**: All node grounds must converge at the central Negative Bus Bar in the body to ensure a clean signal reference.
 1. **Safety Heartbeat**: If the ESP-NOW signal is lost for >100ms, receiving nodes (1 and 2) automatically enter a "Hold" state to prevent stuck audio or drive patterns.
-1. **Firmware Strategy**: Nodes 1 and 3 utilize the `esp-idf` framework within ESPHome for high-stability wireless threading.
+1. **Firmware Strategy**: Nodes 1 and 3 use the `esp-idf` framework within ESPHome for high-stability wireless threading.
 
 ---
 

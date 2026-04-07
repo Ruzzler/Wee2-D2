@@ -1,22 +1,33 @@
 # <i data-lucide="volume-2"></i> Audio & Voice Triggers
 
-Wee2-D2's voice and sound system is a distributed modular stack built around the **DFPlayer Mini** (MP3 Hub) and a **TPA3118 60W Amplifier**. Triggers are managed wirelessly via the **ESP-NOW** bridge.
+Wee2-D2's voice and sound system uses a distributed modular stack with the **DFPlayer Mini** (MP3 Hub) and a **TPA3118 60W Amplifier**. Triggers are handled wirelessly via the **ESP-NOW** bridge.
+
 
 ![TPA3118 Amplifier Module](../../../assets/tpa3118-amplifier-module.jpg)
+
+
+---
+
 
 ## How it Works: The Wireless Trigger
 
 Instead of physical wires running through the slip ring, the droid uses a **Wireless Behavioral Bridge**.
+
 1. **Event Capture**: The **Sound Hub (Node 2)** captures an event via the Web Dashboard or autonomous script.
-1. **Command Execution**: Node 2 executes the **Serial (UART)** command directly to the local **DFPlayer Mini**.
-1. **Broadcast Sync**: Node 2 simultaneously broadcasts an **ESP-NOW** packet (e.g., `0xA0` Animation ID) across the 2.4GHz spectrum to Node 1 for dome and lighting synchronization.
-1. **Amplification**: The DFPlayer outputs a low-level analog signal to the **TPA3118 Amplifier**, which drives the 60W Pyle speaker at 20V.
+2. **Command Execution**: Node 2 executes the **Serial (UART)** command directly to the local **DFPlayer Mini**.
+3. **Broadcast Sync**: Node 2 also broadcasts an **ESP-NOW** packet (e.g., `0xA0` Animation ID) to Node 1 for dome and lighting synchronization.
+4. **Amplification**: The DFPlayer outputs a low-level analog signal to the **TPA3118 Amplifier**, which drives the 60W Pyle speaker at 20V.
+
+
+---
+
 
 ## SD Card Formatting (DFPlayer Standard)
 
-For the DFPlayer Mini to recognize tracks, the SD card must follow the standard industrial naming convention. Ensure the card is formatted to **FAT32**.
+For the DFPlayer Mini to recognize tracks, the SD card must follow the standard naming layout. Ensure the card is formatted to **FAT32**.
 
 The folders must be named `01` through `99`, and files must start with a 3-digit prefix.
+
 
 ```text
 SD_ROOT/
@@ -31,11 +42,17 @@ SD_ROOT/
  002_processing.mp3
  04/ # Folder 4: High Alert (Red)
 ```
+
+
 *Note: The DFPlayer supports up to 255 tracks per folder, allowing for massive behavioral variety.*
+
+
+---
+
 
 ## Behavioral Animation Logic
 
-By interacting with the **Neural Command Center Dashboard**, users can trigger pre-compiled behavioral banks. Node 2 broadcasts the Animation ID wirelessly, which perfectly syncs the lighting patterns and the sound selection:
+By interacting with the **Neural Command Center Dashboard**, users can trigger saved sound banks. Node 2 broadcasts the Animation ID wirelessly, which syncs the lighting patterns and the sound selection:
 
 | Animation ID | Lighting Sync (WLED) | Audio Character |
 | :--- | :--- | :--- |
@@ -44,9 +61,17 @@ By interacting with the **Neural Command Center Dashboard**, users can trigger p
 | **0xA0, 0x03** | High Alert (Red) | Alarms / Screams |
 | **0xA0, 0x04** | Cantina | Musical / Joyful |
 
+
+---
+
+
 ## Ambient Mode
 
 When set to **Ambient Mode (Bank 1)**, the Body Hub will automatically fire random tracks from Folder `03` every 15-45 seconds to simulate droid "thinking" during idle periods.
+
+
+---
+
 
 ## Audio Stack Interconnect (UART)
 
@@ -59,7 +84,10 @@ Unlike the legacy 9-wire trigger system, the v1.8 stack uses a 4-wire serial bus
 | **VCC** | 5V Rail | VCC Pin | Power (5V/1A Peak) |
 | **GND** | Star Ground | GND Pin | Logic Reference |
 
+
 ---
+
+
 **Relevant Hardware & Code:**
 - [DFPlayer Mini Data Sheet](../../manuals/dfplayer-mini-manual.pdf)
 - [Node 2: Sound Hub](../../architecture/node-2-sound-hub.md)

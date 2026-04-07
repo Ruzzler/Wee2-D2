@@ -1,15 +1,19 @@
 # Droid Electrical Schematic
 
-This document provides a high-fidelity visual and technical map of the Wee2-D2 electrical system.
+This guide is a visual and technical map of the Wee2-D2 electrical system.
+
 
 ![Chassis Electronics Layout](../../assets/chassis-electronics-layout.png)
 
+
 ---
+
 
 ## Interactive Schematic
 
 > [!TIP]
 > **INTERACTIVE INTERFACE**: Click on any component node to instantly access its technical manual or firmware specification.
+
 
 ```mermaid
 flowchart TD
@@ -71,7 +75,8 @@ flowchart TD
     end
 
     subgraph DOME_MOTION["DOME MOTION STACK"]
-      DOME_ESC["goBILDA 15A ESC"]:::drive
+      DOME_ESC["goBILDA 1x15A ESC"]:::drive
+      DOME_MOTOR["Yellow Jacket Motor"]:::drive
     end
 
     subgraph DOME_LIGHTS["CINEMATIC LED ARRAYS"]
@@ -87,6 +92,7 @@ flowchart TD
     DOME_WAGO_5V -->|5V| RC2
 
     NODE_1 -->|PWM| DOME_ESC
+    DOME_ESC ==>|12V-24V| DOME_MOTOR
 
     BUCK_LEDS -.->|5V Rail| F_PSI
     BUCK_LEDS -.->|5V Rail| B_PSI
@@ -131,6 +137,7 @@ flowchart TD
   click DOME_ESC href "../hardware/gobilda-motor-manual.md" "15A PWM Peak (30V Capable)"
   click BUCK_LOGIC href "../bill-of-materials.md" "Mini560 Pro (5A) Logic"
   click BUCK_LEDS href "../bill-of-materials.md" "Dedicated High-Current LED Supply (Mini560 Pro)"
+  click DOME_MOTOR href "../hardware/gobilda-motor-manual.md" "117 RPM / 12V High-Torque Gearmotor"
   click SPK2 href "../capabilities/lights-and-sounds/audio-system.md" "Pyle 60W RMS / 4 Ohm Driver"
 
   classDef power fill:#ff9900,stroke:#333,stroke-width:2px,color:#000
@@ -142,24 +149,31 @@ flowchart TD
   classDef lights fill:#6600cc,stroke:#fff,color:#fff
 ```
 
+
 ---
+
 
 ## Wiring & Pinout Reference
 
 For detailed wire colors, GPIO assignments, and hardware-specific triggers, consult the master reference:
 
+
 > [!IMPORTANT]
 > **[Master Node Pinout & Wiring Guide](node-pinout-guide.md)**
-> This document contains the absolute source of truth for all node wiring, BEC isolation, and star-grounding practices.
+> This document contains the source of truth for all node wiring, BEC isolation, and star-grounding practices.
+
 
 ---
+
 
 ## Engineering Best Practices
 
-- **Star-Grounding**: All system grounds **MUST** terminate at the central Negative Bus Bar to prevent signal noise.
+- **Star-Grounding**: All system grounds **must** terminate at the central Negative Bus Bar to prevent signal noise.
 - **Slip Ring Isolation**: The 20V Dome Motor line and 20V Dome Logic line must remain isolated through the slip ring.
 - **ESC BEC Isolation**: When using multiple speed controllers, only one BEC (typically ESC 1) should provide 5V logic power to the receiver.
 
+
 ---
 
-[View Power Architecture](power-architecture.md)
+
+[View Power Architecture](power-architecture.md)

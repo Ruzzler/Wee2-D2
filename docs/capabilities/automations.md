@@ -18,7 +18,7 @@ Wee2-D2's autonomous personality is driven by a series of high-fidelity behavior
 
 ## Technical Deep-Dive: The Cantina Sync
 
-The "Cantina Band" animation (ID 0x04) is the most complex behavioral script in the current firmware. It utilizes a **545ms beat-interval** to harmonize dome sways with logic light pulses.
+The "Cantina Band" animation (ID 0x04) is the most complex behavioral script in the current firmware. It uses a **545ms beat-interval** to harmonize dome sways with logic light pulses.
 
 ### Synchronization Logic (545ms Interval)
 

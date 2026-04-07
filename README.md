@@ -8,7 +8,7 @@ This repository tracks the subsequent electrical architecture, firmware configur
 
 ## <i data-lucide="book-open"></i> Technical Documentation
 
-To view the documented system with a premium, interactive technical interface, visit the official Project Wiki:
+To view the documented system with an interactive technical interface, visit the official Project Wiki:
 **[Wee2-D2 Project Wiki](https://ruzzler.github.io/Wee2-D2/)**
 
 ---

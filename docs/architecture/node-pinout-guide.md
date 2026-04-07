@@ -1,8 +1,10 @@
 # <i data-lucide="cpu"></i> Master Node Pinout & Wiring Guide
 
-This document serves as the master wiring reference for the Wee2-D2 distributed node mesh. It integrates all verified pin assignments, wire colors, and hardware interfaces for the ESP32 platforms.
+This guide is the main wiring reference for the Wee2-D2 distributed node mesh. It includes all verified pin assignments, wire colors, and hardware interfaces for the ESP32 platforms.
+
 
 ---
+
 
 ## 1. Node 1: Dome Motion Master (ESP32-S3 Super Mini)
 
@@ -17,7 +19,9 @@ The **Motion Master** manages 360° dome rotation and broadcasts behavioral trig
 | **GPIO 7** | Yellow | Dome ESC | PWM Command Out |
 | **GPIO 47** | N/A | Status LED | Internal Neopixel (Logic) |
 
+
 ---
+
 
 ## 2. Node 2: Sound Hub (ESP32-S3 Super Mini)
 
@@ -31,7 +35,9 @@ The **Sound Hub** manages behavioral audio triggers and drive system monitoring.
 | **GPIO 13** | Green | DFPlayer RX | Serial Status In (Optional) |
 | **GPIO 47** | N/A | Status LED | Internal Neopixel (Logic) |
 
+
 ---
+
 
 ## 3. Node 3: LED Distribution (ESP32 Dev Board)
 
@@ -48,7 +54,9 @@ The **Lighting Controller** runs the **Native WLED (v0.14+)** framework to drive
 | **GPIO 21** | Green | Data Out | Front PSI (GrnWave) |
 | **GPIO 22** | White | Data Out | Rear PSI (GrnWave) |
 
+
 ---
+
 
 ## 4. Hardware Interconnects
 
@@ -59,6 +67,7 @@ The **Lighting Controller** runs the **Native WLED (v0.14+)** framework to drive
 - **TPA3118 Power** 20V Positive Fuse Box.
 - **TPA3118 GND** **Star Ground** (-).
 
+
 ### Receiver Interface (HOTRC F-06A)
 
 | Wire Color | Rec Slot | Node Pin | Role |
@@ -67,29 +76,34 @@ The **Lighting Controller** runs the **Native WLED (v0.14+)** framework to drive
 | **Black (GND)** | Slot 5 (-) | `GND` | Master Logic Ground |
 | **Grey/Black** | Slot 3 (S) | `Node 1: GPIO 4` | CH1 (Dome Rotation) |
 
+
 ---
+
 
 ## 5. Dome Distribution: Power Hubs
 
-To handle peak loads and ensure stable logic voltage, the dome utilizes two ganged Wago hubs, each consisting of **2x 5-port connectors** (Dedicated Positive and Negative rails).
+To handle peak loads and ensure stable logic voltage, the dome uses two ganged Wago hubs, each consisting of **2x 5-port connectors** (Dedicated Positive and Negative rails).
+
 
 ### 20V High-Power Hub (2x 5-Port Wago)
 
 1. **IN**: Slip Ring Circuit 1 (20V)
-1. **IN**: Slip Ring Circuit 2 (20V)
-1. **OUT**: goBILDA 15A Speed Controller
-1. **OUT**: Mini560 Pro (5A) - **Logic Rail**
-1. **OUT**: Mini560 Pro (5A) - **LED Rail**
+2. **IN**: Slip Ring Circuit 2 (20V)
+3. **OUT**: goBILDA 15A Speed Controller
+4. **OUT**: Mini560 Pro (5A) - **Logic Rail**
+5. **OUT**: Mini560 Pro (5A) - **LED Rail**
+
 
 ### 5V Logic Hub (2x 5-Port Wago)
 
 1. **IN**: Mini560 Pro (Logic Rail)
-1. **OUT**: Node 1 (Dome Master)
-1. **OUT**: Node 3 (LED Distribution)
-1. **OUT**: HOTRC F-06A Receiver
-1. **OUT**: Reserved / Expansion
+2. **OUT**: Node 1 (Dome Master)
+3. **OUT**: Node 3 (LED Distribution)
+4. **OUT**: HOTRC F-06A Receiver
+5. **OUT**: Reserved / Expansion
+
 
 ---
 
+
 [View Power Architecture](power-architecture.md)
-gic.

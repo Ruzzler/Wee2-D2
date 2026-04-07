@@ -1,6 +1,6 @@
 # <i data-lucide="settings"></i> Calibration & Startup Guide: Wee2-D2
 
-This guide ensures your droid is safely initialized and that all electronic systems are calibrated for professional operation.
+This guide ensures your droid is safely initialized and helps you calibrate all electronics so they're ready to run safely.
 
 ---
 
@@ -16,7 +16,7 @@ Before applying the 20V main power, verify:
 
 ## Technical Calibration
 
-### **1. ESC Throttle Calibration (Flipsky & goBILDA)**
+### 1. ESC Throttle Calibration (Flipsky & goBILDA)
 
 To ensure the drive system and dome motor respond accurately:
 1. Remove the drive wheels (standard safety procedure).
@@ -27,7 +27,7 @@ To ensure the drive system and dome motor respond accurately:
 1. Pull the stick to **Full Reverse** (or Neutral, depending on ESC model).
 1. Wait for the confirmation beep. **Calibration is complete.**
 
-### **2. WLED Preset Configuration (UART Link)**
+### 2. WLED Preset Configuration (UART Link)
 
 To sync your behavioral triggers:
 1. Navigate to the WLED Web UI via your phone (`http://WLED_IP`).
@@ -36,7 +36,7 @@ To sync your behavioral triggers:
 1. Under "Button 0" (GPIO5 on S3 Mini), set the action to `P1=5&P2=1` (Pushes preset 5).
 1. Test by triggering a sound on Node 2 via the Dashboard; the dome should instantly turn red via the **UART Serial Sync**.
 
-### **3. Dome Center Alignment**
+### 3. Dome Center Alignment
 
 The dome motor (goBILDA 15A ESC) operates on standard PWM (Servo) signals.
 1. Center the Dome Steering stick on your **Dome Transmitter** (TX #2).
@@ -47,7 +47,7 @@ The dome motor (goBILDA 15A ESC) operates on standard PWM (Servo) signals.
 
 ## Startup Sequence
 
-Follow this exact order to prevent "ghosting" signals:
+Use this order so you don't get "ghost" signals:
 1. **Power ON Transmitters** (Body first, then Dome).
 1. **Slide DeWalt 20V Battery** into the LVC core.
 1. **Wait 10 Seconds** for the **ESP-NOW Mesh** to initialize and the **System Status LED** (GPIO 2) to start blinking.

@@ -40,12 +40,13 @@ The DS-600 can internally "mix" CH1 and CH2 for dual-motor control.
 If your droid drives backward when you pull the trigger:
 1. Turn the remote **OFF**.
 1. Press and hold the **[CH4]** button.
-1. Turn the remote **ON** (you will hear a beep).
+1. Turn the remote **ON**.
 1. Move the trigger (CH2) or joystick (CH1) to its limit. A long beep confirms the reversal.
+
 
 ## Wiring Topography
 
-Wee2-D2 utilizes two separate DS-600 transmitters and identical F-06A receivers to isolate drive operations from dome movement.
+Wee2-D2 uses two separate DS-600 transmitters and identical F-06A receivers to isolate drive operations from dome movement.
 
 ### 1. Drive Receiver (Body)
 The Body F-06A receiver bypasses microcontrollers entirely.
