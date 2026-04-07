@@ -46,8 +46,8 @@ The **CNBTR Slip Ring** (6-Circuit) acts as the physical bridge for the dome's h
 
 | Circuit | Role | Current (Peak) | Destination |
 | :--- | :--- | :---: | :--- |
-| **C1 / C2** | **High-Power (20V)** | 10.0A | **Motor Line**: Direct to goBILDA ESC |
-| **C3 / C4** | **Logic Power (20V)** | 10.0A | **Logic Line**: To Mini560 Buck Hub |
+| **C1 / C2** | **Ganged 20V Trunk** | 10.0A | **High-Power**: To 20V Wago Hub |
+| **C3 / C4** | **Ganged 20V Trunk** | 10.0A | **High-Power**: To 20V Wago Hub |
 | **C5 / C6** | **RESERVED** | — | Future Logic / Telemetry Expansion |
 
 ---

@@ -16,10 +16,10 @@
 ## Power Management & Safety
 
 > [!IMPORTANT]
-> To protect the Mini560 5V buck converter from overheating or melting during high-intensity light shows (e.g., full-white flashes), the WLED brightness limiter **MUST** be enabled.
+> To protect the **Mini560 Pro (5A) Buck Converter** from overheating or melting during high-intensity light shows (e.g., full-white flashes), the WLED brightness limiter **MUST** be enabled.
 
 - **Current Limit**: Clamp to **3500mA** in the WLED "LED Preferences" menu.
-- **Hardware**: Mini560 5V Buck Converter powered by 20V from the slip ring.
+- **Hardware**: Mini560 Pro (5A) Buck Converter powered by 20V from the slip ring.
 
 | Device | LED Type | Qty | wire Color | Pin (GPIO) |
 | :--- | :--- | :---: | :---: | :---: |
@@ -29,7 +29,7 @@
 | **Back PSI** | GrnWave | 76 | White | **22** |
 
 > [!CAUTION]
-> **VOLTAGE SENSITIVITY**: The GrnWave PSI boards use micro 2020-size LEDs that are extremely sensitive. **Do not exceed 5.0V**. Powering them from the 6V BEC of the motor controller will cause immediate failure. Use the dedicated **Mini560 5V Regulator**.
+> **VOLTAGE SENSITIVITY**: The GrnWave PSI boards use micro 2020-size LEDs that are extremely sensitive. **Do not exceed 5.0V**. Powering them from the 6V BEC of the motor controller will cause immediate failure. Use the dedicated **Mini560 Pro (5A) Regulator**.
 
 ## WLED 2D Configuration
 

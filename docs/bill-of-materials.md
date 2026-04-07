@@ -20,7 +20,7 @@ A comprehensive list of hardware used in the Wee2-D2 project, organized by syste
 | [MgcSTEM LVP-R1.5](hardware/mgcstem-lvp-r15-manual.md) | 1 | 40A LVC; **17.5V** Safety Floor [PDF](hardware/mgcstem-lvp-r15-manual.pdf) | ![LVC](../assets/mgcstem-lvp-r15.jpg) |
 | Positive Blade Fuse Box | 1 | 20V Positive distribution to main electronics | ![Fuse Box](../assets/fuse-bus-bar.jpg) |
 | Negative Bus Bar | 1 | Central Star Ground connection point | ![Negative Bus](../assets/negative-bus-bar.jpg) |
-| Mini560 Pro Buck Converter | 2 | 20V to 5V Step-Down (Dome Logic & LEDs) | ![Buck Converter](../assets/mini560-buck-converter.jpg) |
+| Mini560 Pro (5A) | 2 | 20V to 5V Step-Down (Dome Logic & LEDs) | ![Buck Converter](../assets/mini560-buck-converter.jpg) |
 | 5-Port Wago Connectors | 4 | 2x Dome (Power Trunk), 2x Body (Signal/GND) | - |
 | [CNBTR Slip Ring](hardware/cnbtr-slip-ring-manual.md) | 1 | 12.7mm Bore, 6-Circuit @ 10A/ch (2x Ganged) | ![Slip Ring](../assets/slip-ring-cnbtr.jpg) |
 

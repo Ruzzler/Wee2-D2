@@ -10,7 +10,7 @@ The **Motion Master** manages 360° dome rotation and broadcasts behavioral trig
 
 | ESP32 Pin | Wire Color | Role | Function |
 | :---: | :--- | :--- | :--- |
-| **5V** | Red | Power In | 5.1V BEC (from goBILDA ESC) |
+| **5V** | Red | Power In | 5.0V (Mini560 Pro 5A) |
 | **GND** | Black | Ground | Common Logic Ground |
 | **GPIO 4** | White | RC CH1 | Steering Input (PWM) |
 | **GPIO 5** | Blue | WLED Sync | Single Wire UART TX |
@@ -69,23 +69,25 @@ The **Lighting Controller** runs the **Native WLED (v0.14+)** framework to drive
 
 ---
 
-## 5. Dome Distribution: Ganged Wagos
+## 5. Dome Distribution: Power Hubs
 
-To handle the 15A+ peak loads, the slip ring circuits are ganged at the entry points.
+To handle peak loads and ensure stable logic voltage, the dome utilizes two ganged Wago hubs, each consisting of **2x 5-port connectors** (Dedicated Positive and Negative rails).
 
-### Positive 20V Wago (5-Port)
+### 20V High-Power Hub (2x 5-Port Wago)
 
 1. **IN**: Slip Ring Circuit 1 (20V)
 1. **IN**: Slip Ring Circuit 2 (20V)
-1. **OUT**: goBILDA 15A Speed Controller (+)
-1. **OUT**: Mini560 Pro Buck (Logic Power)
+1. **OUT**: goBILDA 15A Speed Controller
+1. **OUT**: Mini560 Pro (5A) - **Logic Rail**
+1. **OUT**: Mini560 Pro (5A) - **LED Rail**
 
-### Negative GND Wago (5-Port)
+### 5V Logic Hub (2x 5-Port Wago)
 
-1. **IN**: Slip Ring Circuit 3 (GND)
-1. **IN**: Slip Ring Circuit 4 (GND)
-1. **OUT**: goBILDA 15A Speed Controller (-)
-1. **OUT**: Mini560 Pro Buck (GND)
+1. **IN**: Mini560 Pro (Logic Rail)
+1. **OUT**: Node 1 (Dome Master)
+1. **OUT**: Node 3 (LED Distribution)
+1. **OUT**: HOTRC F-06A Receiver
+1. **OUT**: Reserved / Expansion
 
 ---
 

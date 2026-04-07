@@ -41,9 +41,15 @@ flowchart TD
  end
 
  subgraph DOME_DISTRIBUTION [DOME POWER]
- SLIP1 --> DOME_ESC["goBILDA 15A ESC"]:::drive
- SLIP2 --> DOME_BUCK["Mini560 (5V Logic)"]:::logic
- DOME_BUCK --> DOME_WAGOS["Dome Wago Hub"]:::power
+ SLIP1["Slip Ring C1/C2 (Motor)"]:::power --> DOME_WAGO_20V["20V Wago Hub (2x5)"]:::power
+ SLIP2["Slip Ring C3/C4 (Logic)"]:::power --> DOME_WAGO_20V
+ 
+ DOME_WAGO_20V --> DOME_ESC["goBILDA 15A ESC"]:::drive
+ DOME_WAGO_20V --> BUCK_LEDS["Mini560 Pro (5A): LEDs"]:::logic
+ DOME_WAGO_20V --> BUCK_LOGIC["Mini560 Pro (5A): Logic"]:::logic
+ 
+ BUCK_LEDS --> LEDS["LED Matrices"]:::lights
+ BUCK_LOGIC --> DOME_WAGO_5V["5V Wago Hub (2x5)"]:::power
  end
 
  subgraph LOGIC_RAIL [5V LOGIC & SIGNALS]
@@ -53,9 +59,9 @@ flowchart TD
  
  DOME_ESC -.->|Isolated| RC2["Dome Receiver"]:::signal
 
- DOME_WAGOS --> NODE_3["Node 3 (Lights WLED)"]:::brain
- DOME_ESC -->|5V BEC| NODE_1["Node 1 (Dome S3)"]:::brain
- DOME_WAGOS --> LEDS["LED Matrices"]:::lights
+ DOME_WAGO_5V --> NODE_3["Node 3 (Lights WLED)"]:::brain
+ DOME_WAGO_5V --> NODE_1["Node 1 (Dome S3)"]:::brain
+ DOME_WAGO_5V --> RC2
  end
 
  subgraph INTERCONNECTS [COMMUNICATION]
@@ -77,7 +83,7 @@ flowchart TD
  click ESC2 href "../hardware/flipsky-fsesc-67-pro-manual.md" "ESC Manual"
  click AUDIO href "../hardware/dfplayer-mini-spec.md" "Audio Hub Spec"
  click SLIP1 href "node-pinout-guide.md" "Slip Ring Pinouts"
- click DOME_BUCK href "../bill-of-materials.md" "BOM"
+ click BUCK_LOGIC href "../bill-of-materials.md" "BOM"
  click RC1 href "../hardware/hotrc-f06a-manual.md" "Receiver Manual"
  click RC2 href "../hardware/hotrc-f06a-manual.md" "Receiver Manual"
  click NODE_1 href "node-1-dome-motion.md" "Node 1"
