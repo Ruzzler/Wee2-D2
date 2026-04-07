@@ -1,73 +1,81 @@
+![manual-hero](../../assets/esp32-s3-super-mini.jpg)
+
+
 # <i data-lucide="cpu"></i> Node Pinout & Wiring Guide
 
-> **TECHNICAL SPECIFICATIONS** | **SYSTEM: PINOUT & WIRING** | **MODEL: ESP32-S3 / ESP32**
+> **TECHNICAL SPECIFICATIONS** | **SYSTEM: DISTRIBUTED MESH** | **VERSION: v2.6.0-STABLE**
 
 
-This guide lists the physical wiring and GPIO assignments for every microcontroller node in the Wee2-D2 project. These connections are verified for the `v2.6.0-Dashboard` firmware sequence.
-
-
----
-
-
-## Node 1: Dome Master (ESP32-S3)
-
-The Dome Master manages dome rotation, RC inputs, and logic communication. It is powered by a dedicated 5V buck converter in the dome.
-
-
-| Assignment | GPIO Pin | Function | Citation |
-| :--- | :--- | :--- | :--- |
-| **Dome Motor (PWM)** | **GPIO 7** | Output to 15A Servo ESC | [node-1.yaml:11](../../firmware/production/node-1-dome-motion.yaml#L11) |
-| **RC Stick (X-Axis)** | **GPIO 4** | Input from HotRC Receiver | [node-1.yaml:12](../../firmware/production/node-1-dome-motion.yaml#L12) |
-| **WLED Data (TX)** | **GPIO 5** | Serial Out to Node 3 | [node-1.yaml:13](../../firmware/production/node-1-dome-motion.yaml#L13) |
-| **UART Heartbeat** | **TX0** | Hardware Serial Logging | [node-1.yaml:68](../../firmware/production/node-1-dome-motion.yaml#L68) |
+This guide provides a comprehensive technical reference for the distributed microcontroller nodes. It documents every GPIO mapping, physical wiring slot, and logic-bus role for the ESP32-S3 and ESP32 hardware.
 
 
 ---
 
 
-## Node 2: Sound Hub (ESP32-S3)
+## Node 1: Dome Motion Master (ESP32-S3)
 
-The Sound Hub manages the DFPlayer Mini and hosts the Web Dashboard. It receives radio triggers from Node 1.
+Node 1 is the primary behavioral controller. It reads RC steering and manages the high-torque goBILDA rotation system.
 
-
-| Assignment | GPIO Pin | Function | Protocol |
-| :--- | :--- | :--- | :--- |
-| **DFPlayer TX** | **GPIO 43** | Serial Out to MP3 Player | UART (9600) |
-| **DFPlayer RX** | **GPIO 44** | Serial In (Diagnostics) | UART (9600) |
-| **Status LED** | **GPIO 15** | Onboard NeoPixel (Optional) | WS2812B |
-
-
----
-
-
-## Node 3: LED Distro (ESP32 Dev V1)
-
-Node 3 is a dedicated WLED controller that handles all addressable visuals. It follows the RMT timing protocol for WS2812 signals.
-
-
-| Assignment | GPIO Pin | Function | Specification |
-| :--- | :--- | :--- | :--- |
-| **Logic Display** | **GPIO 13** | Main LED Matrix Array | WS2812B (RMT) |
-| **PSI Lights** | **GPIO 12** | Front/Rear PSI Status | WS2812B (RMT) |
-| **Sync Data (RX)** | **GPIO 3** | Serial In from Node 1 | UART (115200) |
+### 📊 Pinout Table (GPIO)
+| Pin | Function | Role | Target Component |
+| :--- | :--- | :---: | :--- |
+| **GPIO 7** | **PWM Out** | Signal 1 | Dome ESC (White Wire) |
+| **GPIO 3** | **UART TX** | Logic Bus | To Node 3 (Lighting) |
+| **GPIO 4** | **UART RX** | Logic Bus | From Node 3 (Logic) |
+| **GPIO 38** | **ESP-NOW** | Sync | Mesh Heartbeat |
+| **GPIO 43** | **TX (Debug)** | UART | PC Monitoring |
+| **GPIO 44** | **RX (Debug)** | UART | PC Monitoring |
+| **5V** | **Vin** | Power | Buck 2 Output |
+| **GND** | **GND** | Ref | Star Ground |
 
 
 ---
 
 
-## Standard Wiring Colors
+## Node 2: Sound Hub & Gateway (ESP32-S3)
 
-Follow the project color code to prevent ground loops or reverse-polarity events in the dome logic stack.
+Node 2 hosts the interactive dashboard and initiates all behavioral audio triggers via the DFPlayer Mini.
 
-
-- **Red (18AWG)**: 20V Raw Trunk (Battery)
-- **Orange (20AWG)**: 5V Regulated (Logic Rail)
-- **Black (18AWG)**: Common Negative (GND)
-- **Blue (24AWG)**: Serial Data (Nodes 1 to 3)
-- **White (24AWG)**: PWM PWM Signals (Node 1 to Dome ESC)
+### 📊 Pinout Table (GPIO)
+| Pin | Function | Role | Target Component |
+| :--- | :--- | :---: | :--- |
+| **GPIO 1** | **UART TX** | Audio Bus | DFPlayer Mini (RX) |
+| **GPIO 2** | **UART RX** | Audio Bus | DFPlayer Mini (TX) |
+| **GPIO 9** | **I2C SDA** | Sensors | Future LiDAR Expansion |
+| **GPIO 10** | **I2C SCL** | Sensors | Future LiDAR Expansion |
+| **GPIO 18** | **ESP-NOW** | Sync | Mesh Heartbeat |
+| **5V** | **Vin** | Power | Buck 1 Output |
+| **GND** | **GND** | Ref | Star Ground |
 
 
 ---
 
 
-[View Master Schematic](electrical-schematic.md) | [View Power Architecture](power-architecture.md)
+## Node 3: Lighting Distribution (ESP32)
+
+Node 3 is a dedicated visual hub running WLED. It is physically synced to Node 1 via the Dome Logic Bus.
+
+### 📊 Pinout Table (GPIO)
+| Pin | Function | Role | Target Component |
+| :--- | :--- | :---: | :--- |
+| **GPIO 2** | **Data Out** | WLED 1 | Front PSI Logic |
+| **GPIO 4** | **Data Out** | WLED 2 | Rear PSI Logic |
+| **GPIO 5** | **Data Out** | WLED 3 | Logic Display (Matrix) |
+| **GPIO 16** | **UART RX** | Logic Bus | From Node 1 (Dome Master) |
+| **5V** | **Vin** | Power | Buck 3 Output |
+| **GND** | **GND** | Ref | Star Ground |
+
+
+---
+
+
+## Physical Interconnect Standards
+
+- **Logic Grounding**: Every node ground must terminate at the central **Negative Bus Bar** to ensure clean signal resolution for ESP-NOW and UART.
+- **UART Isolation**: Use 100-ohm series resistors on long UART runs (Body to Dome) to prevent ringing and EMI interference from motors.
+
+
+---
+
+
+[View Interactive Schematic](electrical-schematic.md) | [View Power Architecture](power-architecture.md)

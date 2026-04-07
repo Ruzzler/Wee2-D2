@@ -1,3 +1,6 @@
+![manual-hero](../../assets/esp32-s3-super-mini.jpg)
+
+
 # <i data-lucide="cpu"></i> Node 2: Sound Hub
 
 > **TECHNICAL SPECIFICATIONS** | **SYSTEM: SOUND HUB MASTER** | **MODEL: ESP32-S3 SUPER MINI**

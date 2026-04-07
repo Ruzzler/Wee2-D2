@@ -1,3 +1,6 @@
+![manual-hero](../../assets/dfplayer-mini-module.jpg)
+
+
 # <i data-lucide="music"></i> DFPlayer Mini Specification
 
 > **TECHNICAL SPECIFICATIONS** | **SYSTEM: AUDIO HUB** | **MODEL: DFPLAYER MINI (MP3-TF-16P)**

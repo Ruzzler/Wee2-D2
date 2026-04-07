@@ -1,4 +1,7 @@
-# <i data-lucide="settings"></i> Hub Motor Manual
+![manual-hero](../../assets/l-faster-hub-motor.jpg)
+
+
+# <i data-lucide="cog"></i> FLD-5 Hub Motor Manual
 
 > **TECHNICAL SPECIFICATIONS** | **SYSTEM: BODY DRIVE** | **MODEL: L-FASTER FLD-5 HUB MOTOR**
 

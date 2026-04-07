@@ -1,9 +1,59 @@
+![manual-hero](../../assets/mgcstem-lvp-r15.jpg)
+
+
 # <i data-lucide="zap"></i> Power Architecture
 
 > **TECHNICAL SPECIFICATIONS** | **SYSTEM: POWER GRID** | **MODEL: GANGED TRUNK 20V**
 
 
 This guide explains the electrical design of the Wee2-D2 project. It covers the high-current ganged trunk, voltage regulation, and grounding strategies used across all microcontroller nodes.
+
+
+---
+
+
+## Interactive Power Distribution (PDN)
+
+*Click on any component (Battery, LVP, or Buck) to navigate to its specific technical documentation.*
+
+
+```mermaid
+flowchart TD
+    %% Component Definitions
+    BATT["20V DeWalt Battery"]:::power
+    LVP["MgcSTEM LVP-R1.5"]:::power
+    WAGO_BODY["Body Wago Hub"]:::power
+    WAGO_DOME["Dome Wago Hub"]:::power
+    SLIP_RING["CNBTR Slip Ring"]:::power
+
+    subgraph POWER_RAILS["BUCK CONVERTERS"]
+      BUCK_BODY["Body Logic 5V"]:::power
+      BUCK_DOME["Dome Logic 5V"]:::power
+      BUCK_LEDS["Dome LED 5V"]:::power
+    end
+
+    %% Connections - Power Path
+    BATT ==>|20V| LVP
+    LVP ==>|20V| WAGO_BODY
+    WAGO_BODY ==>|20V| BUCK_BODY
+    WAGO_BODY ==>|20V| SLIP_RING
+
+    SLIP_RING ==>|20V| WAGO_DOME
+    WAGO_DOME ==>|20V| BUCK_DOME
+    WAGO_DOME ==>|20V| BUCK_LEDS
+
+    %% Interaction Links
+    click BATT href "../maintenance/battery-runtime-guide.md" "DeWalt 20V (4Ah/6Ah/9Ah) Standard"
+    click LVP href "../hardware/mgcstem-lvp-r15-manual.md" "Active 17.5V Cutoff Protection"
+    click SLIP_RING href "../hardware/cnbtr-slip-ring-manual.md" "6-Circuit 20A Ganged Trunk"
+    click BUCK_LOGIC href "../bill-of-materials.md" "Mini560 Pro (5A) Logic"
+    click BUCK_LEDS href "../bill-of-materials.md" "Dedicated High-Current LED Supply (Mini560 Pro)"
+
+    classDef power fill:#ff9900,stroke:#333,stroke-width:2px,color:#000
+    classDef logic fill:#00f2ff,stroke:#333,stroke-width:2px,color:#000
+    classDef drive fill:#ff003c,stroke:#333,stroke-width:2px,color:#000
+    classDef lights fill:#ffb400,stroke:#333,stroke-width:2px,color:#000
+```
 
 
 ---

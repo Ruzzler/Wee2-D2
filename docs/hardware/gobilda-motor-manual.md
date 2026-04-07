@@ -1,3 +1,6 @@
+![manual-hero](../../assets/gobilda-5203-motor.webp)
+
+
 # <i data-lucide="cog"></i> goBILDA Motor Manual
 
 > **TECHNICAL SPECIFICATIONS** | **SYSTEM: DOME MOTION** | **MODEL: YELLOW JACKET 5203**

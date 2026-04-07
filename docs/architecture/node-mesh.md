@@ -47,6 +47,8 @@ Synchronization is achieved using low-latency **ESP-NOW** wireless bridging acro
 To prevent analog audio interference and reduce the risk of slip ring data corruption, the Behavioral Mesh (Nodes 1 and 2) uses **ESP-NOW**, a high-speed 2.4GHz peer-to-peer protocol. Node 3 does not participate in the wireless mesh to maintain maximum radio bandwidth for timing-critical dome and audio triggers.
 
 
+- **Update Frequency**: **50ms** (Internal Heartbeat) for real-time behavioral response.
+- **Security**: **MAC-Address Binding** (Hardware-locked in `base-config.yaml`) to prevent mesh hijacking.
 - **Zero Router Latency**: Nodes communicate directly with <10ms response times.
 - **EMI Immunity**: Moving movement data to the 2.4G spectrum eliminates the ground loops and motor interference inherent in slip rings.
 - **Scalability**: New nodes (e.g., foot sensors or Cinematic Logic Displays) can be added to the mesh without pulling additional wires through the central joint.

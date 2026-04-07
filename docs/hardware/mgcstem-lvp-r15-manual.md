@@ -1,4 +1,7 @@
-# <i data-lucide="battery-charging"></i> LVP Protection Manual
+![manual-hero](../../assets/mgcstem-lvp-r15.jpg)
+
+
+# <i data-lucide="shield-check"></i> MgcSTEM LVP-R15 Manual
 
 > **TECHNICAL SPECIFICATIONS** | **SYSTEM: POWER PROTECTION** | **MODEL: MGCSTEM LVP-R1.5**
 

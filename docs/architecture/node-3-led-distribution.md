@@ -1,3 +1,6 @@
+![manual-hero](../../assets/esp32d-dev-board.png)
+
+
 # <i data-lucide="lightbulb"></i> Node 3: LED Distribution
 
 > **TECHNICAL SPECIFICATIONS** | **SYSTEM: LIGHTING HUB** | **MODEL: ESP32 DEVKIT V1 / WLED**

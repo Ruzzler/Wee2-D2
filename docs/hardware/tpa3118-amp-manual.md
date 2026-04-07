@@ -1,4 +1,7 @@
-# <i data-lucide="volume-1"></i> TPA3118 Amplifier Manual
+![manual-hero](../../assets/tpa3118-amplifier-module.jpg)
+
+
+# <i data-lucide="speaker"></i> TPA3118 Amplifier Manual
 
 > **TECHNICAL SPECIFICATIONS** | **SYSTEM: AUDIO HUB** | **MODEL: TPA3118 (MONO)**
 

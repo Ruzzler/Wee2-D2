@@ -1,4 +1,7 @@
-# <i data-lucide="activity"></i> GrnWave PSI Manual
+![manual-hero](../../assets/grnwave-psi-logic.jpg)
+
+
+# <i data-lucide="scan"></i> GrnWave PSI Manual
 
 > **TECHNICAL SPECIFICATIONS** | **SYSTEM: CINEMATIC LIGHTING** | **MODEL: GRNWAVE PSI (ADDRESSABLE)**
 

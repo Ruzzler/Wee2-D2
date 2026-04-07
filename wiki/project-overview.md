@@ -1,9 +1,12 @@
+![wee2d2-hero](../assets/droid-actual.jpg)
+
+
 # <i data-lucide="book-open"></i> Project Overview
 
 > **TECHNICAL SPECIFICATIONS** | **SYSTEM: PROJECT OVERVIEW** | **VERSION: v2.6.0-STABLE**
 
 
-The Wee2-D2 project is a distributed microcontroller mesh designed to power the 3D files created by Mr. Baddeley. This wiki serves as the primary technical reference for the droid's architecture, hardware stack, and behavioral logic.
+Welcome to the official repository for **Wee2-D2**, a custom-built, active-duty astromech built in 2025 for use in the **Badlands Droid Builders** and the **501st Legion's Badlands Garrison**. This repository documents the custom **Electrical Architecture**, **firmware** configurations, and custom hardware documentation I engineered to bring the droid's decentralized logic to life. This project supports the acclaimed 3D files created by Mr. Baddeley.
 
 
 ---

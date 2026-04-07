@@ -350,6 +350,28 @@ main {
   font-variant-numeric: tabular-nums;
 }
 
+/* --- HERO & MANUAL PHOTOS --- */
+#content img[alt*="hero"] {
+  display: block;
+  margin: 2.5rem auto;
+  max-width: 400px;
+  border-radius: 8px;
+  border: 1px solid var(--accent-cyan);
+  box-shadow: 0 0 20px rgba(0, 242, 255, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+#content img[alt*="hero"]:hover {
+  transform: scale(1.02);
+  box-shadow: 0 0 30px rgba(0, 242, 255, 0.4);
+}
+
+/* Specific scaling for manual items */
+#content img[alt*="manual-hero"] {
+  max-width: 320px;
+}
+
 #content hr {
   margin: 2.6rem 0;
   border: none;

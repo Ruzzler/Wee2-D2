@@ -1,3 +1,6 @@
+![manual-hero](../../assets/slip-ring-cnbtr.jpg)
+
+
 # <i data-lucide="refresh-cw"></i> CNBTR Slip Ring Manual
 
 > **TECHNICAL SPECIFICATIONS** | **SYSTEM: POWER GRID** | **MODEL: CNBTR 6-CIRCUIT 20A**

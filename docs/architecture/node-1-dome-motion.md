@@ -1,3 +1,6 @@
+![manual-hero](../../assets/esp32-s3-super-mini.jpg)
+
+
 # <i data-lucide="cpu"></i> Node 1: Dome Master
 
 > **TECHNICAL SPECIFICATIONS** | **SYSTEM: DOME MOTION MASTER** | **MODEL: ESP32-S3 SUPER MINI**

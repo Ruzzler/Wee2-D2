@@ -11,12 +11,13 @@ The Wee2-D2 project uses a combination of random and triggered automations to cr
 
 ## System Logic (Autonomous Master)
 
-All automations are processed by **Node 1 (Dome Master)**. The droid monitors its idle state and triggers random movement and sound events to maintain character realism.
+The Wee2-D2 droid uses a **Modular Behavioral System** based on **ESPHome States** and **Wireless Triggers**. All autonomy is processed by **Node 1 (Dome Master)**, which monitors its idle state and triggers synchronized movement/AV events to maintain character realism.
 
 
+- **Update Frequency**: **50ms** (Internal Heartbeat) for real-time behavioral response.
 - **Interval**: A random trigger is calculated every **30 to 60 seconds** (firmware/production/node-1-dome-motion.yaml:454).
-- **Inhibition**: Automations are immediately paused if a manual RC stick command is detected on GPIO 4.
-- **Mesh Status**: Triggers are only sent if the ESP-NOW mesh connection to the Sound Hub is verified.
+- **Inhibition**: Automations are immediately paused if a manual RC stick command is detected.
+- **Mesh Status**: Triggers are only sent if the **MAC-Address Binding** to the Sound Hub is verified.
 
 
 ---
@@ -24,19 +25,16 @@ All automations are processed by **Node 1 (Dome Master)**. The droid monitors it
 
 ## Behavioral Animation Library
 
-The project includes a library of verified animation sequences that coordinate dome speed, audio tracks, and lighting presets.
+The project includes a library of verified animation sequences that coordinate dome speed, audio tracks, and **Cinematic Logic Display** presets.
 
 
-These settings are verified in the `v2.6.0-Dashboard` firmware sequence.
-
-
-| Trigger | Movement Result | Sound CMD | Lighting PS |
+| Trigger | Movement Result | Sound CMD | Cinematic Logic |
 | :--- | :--- | :---: | :---: |
-| **Idle Chirp** | Slow 15-degree scan | 0x01 | P1 |
-| **Random Beep** | Rapid 5-degree snap | 0x01 (Random) | P1 |
-| **Angry Tantrum**| Rapid jitter (8Hz) | 0x02 | P3 |
-| **Dance Groove** | Synchronized 360 spin | 0x03 | P10 |
-| **Cantina Band** | Continuous scan pattern | 0x04 | P14 |
+| **Idle Chirp** | Slow 15-degree scan | 0x01 | Preset 1 |
+| **Random Beep** | Rapid 5-degree snap | 0x01 (Random) | Preset 1 |
+| **Angry Tantrum**| Rapid jitter (8Hz) | 0x02 | Preset 3 |
+| **Dance Groove** | Synchronized 360 spin | 0x03 | Preset 10 |
+| **Cantina Band** | Continuous scan pattern | 0x04 | Preset 14 |
 
 
 ---
