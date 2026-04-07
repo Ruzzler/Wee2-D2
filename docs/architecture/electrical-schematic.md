@@ -52,25 +52,33 @@ flowchart TD
     SLIP ==>|20V| DOME_WAGO_20V["20V Wago Hub (2x5)"]:::power
 
     DOME_WAGO_20V ==>|20V| DOME_ESC["goBILDA 15A ESC"]:::drive
-    DOME_WAGO_20V ==>|20V| BUCK_LEDS["Dome LED Buck (5A)"]:::logic
     DOME_WAGO_20V ==>|20V| BUCK_LOGIC["Dome Logic Buck (5A)"]:::logic
-
-    BUCK_LEDS -->|5V| F_PSI["Front PSI Display"]:::lights
-    BUCK_LEDS -->|5V| B_PSI["Back PSI Display"]:::lights
-    BUCK_LEDS -->|5V| F_LOGIC["Front Logic Display"]:::lights
-    BUCK_LEDS -->|5V| B_LOGIC["Rear Logic Display"]:::lights
+    DOME_WAGO_20V ==>|20V| BUCK_LEDS["Dome LED Buck (5A)"]:::logic
 
     BUCK_LOGIC -->|5V| DOME_WAGO_5V["5V Wago Hub (2x5)"]:::power
 
-    DOME_WAGO_5V -->|5V| NODE_3["Node 3 (Lights WLED)"]:::brain
     DOME_WAGO_5V -->|5V| NODE_1["Node 1 (Dome S3)"]:::brain
+    DOME_WAGO_5V -->|5V| NODE_3["Node 3 (Lights WLED)"]:::brain
     DOME_WAGO_5V -->|5V| RC2["Dome Receiver"]:::signal
 
     NODE_1 -->|PWM| DOME_ESC
-    NODE_3 -->|GPIO 18| F_LOGIC
-    NODE_3 -->|GPIO 19| B_LOGIC
+
+    subgraph DOME_LIGHTS["DOME LED ARRAYS"]
+      F_PSI["Front PSI LED"]:::lights
+      B_PSI["Back PSI LED"]:::lights
+      F_LOGIC["Front Logic LED"]:::lights
+      B_LOGIC["Rear Logic LED"]:::lights
+    end
+
+    BUCK_LEDS -.->|5V Rail| F_PSI
+    BUCK_LEDS -.->|5V Rail| B_PSI
+    BUCK_LEDS -.->|5V Rail| F_LOGIC
+    BUCK_LEDS -.->|5V Rail| B_LOGIC
+
     NODE_3 -->|GPIO 21| F_PSI
     NODE_3 -->|GPIO 22| B_PSI
+    NODE_3 -->|GPIO 18| F_LOGIC
+    NODE_3 -->|GPIO 19| B_LOGIC
   end
 
   subgraph INTERCONNECTS["COMMUNICATION"]
@@ -79,6 +87,10 @@ flowchart TD
     RC2 -->|PWM| NODE_1
     NODE_1 <-.->|ESP-NOW Mesh| NODE_2
     NODE_1 -->|UART| NODE_3
+    
+    AUDIO -->|I2S Analog| AMP
+    AMP -->|Audio Out| SPK["Pyle 3.5-inch Car Speaker"]:::audio
+    NODE_2 -->|UART| AUDIO
   end
 
   %% --- ABSOLUTE TERMINATION: Styling & Interaction ---
@@ -98,7 +110,7 @@ flowchart TD
   click DOME_ESC href "../hardware/gobilda-motor-manual.md" "15A PWM Peak (30V Capable)"
   click BODY_BUCK href "../bill-of-materials.md" "Mini560 Pro (5A) Logic"
   click BUCK_LEDS href "../bill-of-materials.md" "Dedicated High-Current LED Supply (Mini560 Pro)"
-  click SPK href "../capabilities/lights-and-sounds/audio-system.md" "Visaton 4W Speaker"
+  click SPK href "../capabilities/lights-and-sounds/audio-system.md" "Pyle 60W RMS / 4 Ohm Driver"
 
   classDef power fill:#ff9900,stroke:#333,stroke-width:2px,color:#000
   classDef drive fill:#cc3300,stroke:#fff,color:#fff
