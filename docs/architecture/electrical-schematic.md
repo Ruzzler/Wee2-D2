@@ -118,7 +118,7 @@ For detailed wire colors, GPIO assignments, and hardware-specific triggers, cons
 
 - **Star-Grounding**: All system grounds **MUST** terminate at the central Negative Bus Bar to prevent signal noise.
 - **Slip Ring Isolation**: The 20V Dome Motor line and 20V Dome Logic line must remain isolated through the slip ring.
-- **ESC BEC Isolation**: When using multiple speed controllers, only one BEC (typically ESC 1) should provide 5.1V logic power to the receiver.
+- **ESC BEC Isolation**: When using multiple speed controllers, only one BEC (typically ESC 1) should provide 5V logic power to the receiver.
 
 ---
 

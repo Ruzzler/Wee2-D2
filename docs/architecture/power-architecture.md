@@ -29,7 +29,7 @@ Wee2-D2 utilizes isolated voltage rails to protect sensitive logic from motor-in
 | [Dome Motion](../hardware/gobilda-motor-manual.md) | goBILDA 15A PWM ESC | Slip Ring (20V) |
 | [Audio Amp](..\capabilities\lights-and-sounds\audio-system.md) | TPA3118 60W Mono | Fuse Box (20V) |
 
-### B. 5.1V Logic & Audio Rail
+### B. 5V Logic & Audio Rail
 | Component | Role | Regulation Source |
 | :--- | :--- | :--- |
 | [Node 1 (Motion)](node-1-dome-motion.md) | Dome motion processing | Dome Logic Buck: Mini560 Pro (5A) |
@@ -66,6 +66,7 @@ Every component in the droid (Nodes, ESCs, Receivers, and LED Strips) **MUST** s
 ### BEC & Buck Isolation
 To prevent ground loops and inductive spikes from motor transients, the following isolation rules are enforced:
 - **Body isolation**: Only **FSESC 1** provides BEC power to the body receiver. FSESC 2's BEC is isolated (not connected).
+- **ESC BEC Isolation**: When using multiple speed controllers, only one BEC (typically ESC 1) should provide 5V logic power to the receiver.
 - **Dome isolation**: The goBILDA 15A ESC's internal BEC is isolated. Logic power is sourced strictly from the ganged trunk via the Dome Logic Buck: Mini560 Pro (5A).
 
 ### Processing Clamps

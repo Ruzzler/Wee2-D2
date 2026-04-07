@@ -21,7 +21,7 @@ The following pinout is used for integration into the Node 2 (Sound Hub) logic r
 
 | Pin | Name | Role | Connection |
 | :---: | :--- | :--- | :--- |
-| **1** | **VCC** | Power In | 5.1V Stable Logic Rail |
+| **1** | **VCC** | Power In | 5V Stable Logic Rail |
 | **2** | **RX** | Data In | Node 2 (GPIO 12 / Yellow) |
 | **3** | **TX** | Data Out | Node 2 (GPIO 13 / Green) |
 | **6** | **SPK1** | Audio (+) | TPA3118 Audio In |
@@ -51,6 +51,7 @@ Tracks must be named with a 3-digit prefix (e.g., `001_beep.mp3`) to enable rapi
 
 - **UART Heartbeat**: If the Node 2 logo pulses **Yellow**, it indicates the DFPlayer is disconnected or the SD card is unreadable.
 - **Volume Limit**: WEE2-D2 firmware limits the DFPlayer volume to **26/30** to prevent clipping on the TPA3118 gain stage.
+- **Isolation**: Power the DFPlayer from a clean 5V logic buck converter to prevent digital "pops" from the motor rails.
 
 **Further Resources:**
 - [DFPlayer Mini Official Manual](../manuals/dfplayer-mini-manual.pdf)
