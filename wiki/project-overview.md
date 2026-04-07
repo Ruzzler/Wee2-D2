@@ -30,8 +30,8 @@ Technical deep-dives into the three specific hubs that run the droid (**Node 1, 
 
 ### 5. Operation & Maintenance
 
-The critical maintenance sector covering **Calibration**, **OTA Network Updates**, **Safety Protocols**, and a multi-tier **Troubleshooting Matrix** for field-duty repairs.
+The critical maintenance sector covering **Calibration**, **OTA Network Updates**, **Safety Protocols**, and a multi-tier field-duty repair roadmap.
 
 ---
 
-[View Maintenance Log (Changelog)](../../CHANGELOG.md)
+[View Maintenance Log (Changelog)](../CHANGELOG.md)

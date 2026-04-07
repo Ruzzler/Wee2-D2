@@ -27,11 +27,11 @@ flowchart TD
       RC1["Body Receiver"]:::signal
     end
 
-    subgraph BODY_SOUND["NEURAL SOUND HUB"]
+    subgraph BODY_SOUND["SOUND HUB"]
       NODE_2["Node 2 (Sound Hub)"]:::brain
       AUDIO["DFPlayer Mini"]:::audio
       AMP["TPA3118 Amp"]:::audio
-      SPK["Visaton 4W Speaker"]:::audio
+      SPK2["Pyle 3.5-inch Car Speaker"]:::audio
     end
 
     POS_FUSE ==>|20V| ESC1
@@ -111,7 +111,7 @@ flowchart TD
     
     NODE_2 -->|UART| AUDIO
     AUDIO -->|Analog| AMP
-    AMP -->|Audio Out| SPK2["Pyle 3.5-inch Car Speaker"]:::audio
+    AMP -->|Audio Out| SPK2
   end
 
   %% --- ABSOLUTE TERMINATION: Styling & Interaction ---
@@ -126,12 +126,12 @@ flowchart TD
   click RC1 href "../hardware/hotrc-f06a-manual.md" "Body RC Receiver"
   click RC2 href "../hardware/hotrc-f06a-manual.md" "Dome RC Receiver"
   click NODE_1 href "node-1-dome-motion.md" "ESP32-S3 | Dome Master Movement Controller"
-  click NODE_2 href "node-2-sound-hub.md" "ESP32-S3 | Neural Command Gateway & Sound Hub"
+  click NODE_2 href "node-2-sound-hub.md" "ESP32-S3 | Tactical Command Gateway & Sound Hub"
   click NODE_3 href "node-3-led-distribution.md" "ESP32D | WLED Lighting Distribution Hub"
   click DOME_ESC href "../hardware/gobilda-motor-manual.md" "15A PWM Peak (30V Capable)"
   click BUCK_LOGIC href "../bill-of-materials.md" "Mini560 Pro (5A) Logic"
   click BUCK_LEDS href "../bill-of-materials.md" "Dedicated High-Current LED Supply (Mini560 Pro)"
-  click SPK href "../capabilities/lights-and-sounds/audio-system.md" "Pyle 60W RMS / 4 Ohm Driver"
+  click SPK2 href "../capabilities/lights-and-sounds/audio-system.md" "Pyle 60W RMS / 4 Ohm Driver"
 
   classDef power fill:#ff9900,stroke:#333,stroke-width:2px,color:#000
   classDef drive fill:#cc3300,stroke:#fff,color:#fff

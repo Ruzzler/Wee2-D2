@@ -12,9 +12,9 @@
 
 ## Core Purpose
 
-![Neural Command Dashboard](../../assets/neural-command-dashboard.jpg)
+![Sound Hub Dashboard](../../assets/sound-hub-dashboard.jpg)
 
-- **Neural Command Center**: Hosts the responsive web dashboard (`system_dashboard.h`) serving as the interactive entry point to the droid.
+- **Sound Hub Command Center**: Hosts the responsive web dashboard (`system_dashboard.h`) serving as the interactive entry point to the droid.
 - **ESP-NOW Wireless Relay**: Securely relays dashboard commands (`0xA0-0xA2`) to Node 1 via a bidirectional 2.4GHz bridge.
 - **DFPlayer UART Control**: High-fidelity track triggering and system volume management.
 - **OTA Updates**: Fully support Over-The-Air updates directly from the Web UI.
@@ -32,3 +32,7 @@
 ### Watchdog Link
 
 Node 2 actively listens for a 5-second `0xB0` heartbeat sent from Node 1. If this connection drops, the Web Dashboard UI elements physically lock out and report "MESH DEGRADED" to prevent blind data transmission.
+
+---
+
+[View Maintenance Log (CHANGELOG.md)](../../CHANGELOG.md)

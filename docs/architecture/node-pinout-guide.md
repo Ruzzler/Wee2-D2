@@ -55,7 +55,7 @@ The **Lighting Controller** runs the **Native WLED (v0.14+)** framework to drive
 ### Audio Stack (DFPlayer + TPA3118)
 
 - **Node 2 TX (GPIO 12)** --> **DFPlayer RX**.
-- **DFPlayer SPK_1/2** **TPA3118 Analog Input**.
+- **DFPlayer DAC_R / DAC_L** --> **TPA3118 Analog Input** (High Fidelity).
 - **TPA3118 Power** 20V Positive Fuse Box.
 - **TPA3118 GND** **Star Ground** (-).
 
