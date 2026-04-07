@@ -11,7 +11,7 @@ Wee2-D2's autonomous personality is driven by a series of high-fidelity behavior
 | **1977 Idle** | `0x01` | `14/01` | `1` | Static Center / Level 0.0 |
 | **Angry Tantrum** | `0x02` | `14/02` | `3` | High-frequency Jitter |
 | **Dance Party** | `0x03` | `14/17` | `10` | Wide Rhythmic Sways |
-| **Cantina Band** | `0x04` | `13/02` | `10 → 14 → 3` | 3-Phase Choreography |
+| **Cantina Band** | `0x04` | `13/02` | `10 -> 14 -> 3` | 3-Phase Choreography |
 | **Emergency Stop** | `0x99` | `14/99` | `0` | Immediate Brake |
 
 ---
