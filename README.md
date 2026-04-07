@@ -11,7 +11,7 @@ Welcome to the **Wee2-D2** project. This repository is a distributed microcontro
 
 ## <i data-lucide="book-open"></i> Project Wiki
 
-The primary documentation for this project is hosted in the [Project Wiki](wiki/project-overview.md). Consult the wiki for technical specifications, node mesh architecture, and hardware manuals.
+The primary documentation for this project is hosted in the [Project Wiki](https://ruzzler.github.io/Wee2-D2/). Consult the wiki for technical specifications, node mesh architecture, and hardware manuals.
 
 
 ---
