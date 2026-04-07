@@ -61,6 +61,11 @@ flowchart TD
     DOME_WAGO_5V -->|5V| NODE_3["Node 3 (Lights WLED)"]:::brain
     DOME_WAGO_5V -->|5V| RC2["Dome Receiver"]:::signal
 
+    %% Ghost Constraints (Push nodes apart to prevent line overlap)
+    DOME_WAGO_20V ~~~ DOME_WAGO_5V
+    NODE_1 ~~~ NODE_3
+    BUCK_LEDS ~~~ B_LOGIC
+
     NODE_1 -->|PWM| DOME_ESC
 
     subgraph DOME_LIGHTS["DOME LED ARRAYS"]

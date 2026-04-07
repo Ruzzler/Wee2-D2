@@ -472,6 +472,35 @@ main {
 .mermaid .marker {
     fill: rgba(0, 242, 255, 0.4) !important;
 }
+
+/* --- ADVANCED INTERACTION: CONNECTION TRACING --- */
+
+/* High-Fidelity Connection Glow */
+.mermaid .flowchart-link:hover path {
+  stroke: var(--accent-cyan) !important;
+  stroke-width: 4px !important;
+  filter: drop-shadow(0 0 8px var(--accent-cyan));
+  transition: all 0.2s ease-in-out;
+  cursor: crosshair;
+}
+
+/* Trace Arrowheads on Hover */
+.mermaid .flowchart-link:hover .marker {
+  fill: var(--accent-cyan) !important;
+  stroke: var(--accent-cyan) !important;
+}
+
+/* Dim non-hovered paths for tracing clarity */
+.mermaid svg:hover .flowchart-link:not(:hover) path {
+  opacity: 0.15;
+  transition: opacity 0.4s ease;
+}
+
+/* Node Hover Glow Enhancements */
+.mermaid .node:hover rect, .mermaid .node:hover circle, .mermaid .node:hover polygon {
+  stroke-width: 4px !important;
+  box-shadow: 0 0 15px var(--accent-cyan);
+}
 /* --- MOBILE MENU TOGGLE --- */
 #mobile-menu-toggle {
     display: none;
@@ -701,4 +730,33 @@ main {
 
 .toolbar-spacer {
     pointer-events: none;
+}
+
+/* --- ADVANCED INTERACTION: CONNECTION TRACING --- */
+
+/* High-Fidelity Connection Glow */
+.mermaid .flowchart-link:hover path {
+  stroke: var(--accent-cyan) !important;
+  stroke-width: 4px !important;
+  filter: drop-shadow(0 0 8px var(--accent-cyan));
+  transition: all 0.2s ease-in-out;
+  cursor: crosshair;
+}
+
+/* Trace Arrowheads on Hover */
+.mermaid .flowchart-link:hover .marker {
+  fill: var(--accent-cyan) !important;
+  stroke: var(--accent-cyan) !important;
+}
+
+/* Dim non-hovered paths for tracing clarity */
+.mermaid svg:hover .flowchart-link:not(:hover) path {
+  opacity: 0.15;
+  transition: opacity 0.4s ease;
+}
+
+/* Node Hover Glow Enhancements */
+.mermaid .node:hover rect, .mermaid .node:hover circle, .mermaid .node:hover polygon {
+  stroke-width: 4px !important;
+  box-shadow: 0 0 15px var(--accent-cyan);
 }
