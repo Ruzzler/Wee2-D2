@@ -1,66 +1,67 @@
-# Installing Firmware & Field Recovery
+# <i data-lucide="download"></i> Installing Firmware Guide
 
-The Wee2-D2 project uses a **Zero-Infrastructure** deployment standard. Once your microcontrollers are "injected" with their initial code, all future updates and configuration changes are handled directly through the air—even when you are away from your home network (e.g., at a 501st convention, parade, or hospital visit).
-
-
----
+> **TECHNICAL SPECIFICATIONS** | **SYSTEM: FIRMWARE DEPLOYMENT** | **TOOL: ESPHOME DASHBOARD**
 
 
-## Step 0: Initial USB Flash
-
-Before a node can be updated wirelessly, it must be flashed via USB once to establish its identity and Wi-Fi credentials.
-
-
-> [!IMPORTANT]
-> **[First-Time Firmware Setup](first-time-firmware-setup.md)**
-> Follow this guide if you are starting with a factory-new ESP32 or need to perform a complete manual reset.
+This guide explains how to install the firmware for the Wee2-D2 project. It covers the initial USB flashing for new nodes and the Over-The-Air (OTA) update procedure for the `v2.6.0-Dashboard` firmware sequence.
 
 
 ---
 
 
-## Method 1: Direct Web OTA (Standard Update)
+## Initial Deployment (Wired USB)
 
-This is the primary method for deploying production updates (`.bin` files) without needing a local build server.
-
-1. **Download**: Obtain the latest firmware binaries for your specific nodes.
-1. **Navigate**: On your laptop or phone, go to the node's individual Dashboard (e.g., `http://wee2d2-sound.local/`).
-1. **Upload**:
-   - Scroll to the bottom of the dashboard to the **OTA Update** section.
-   - Select the appropriate `.bin` file and click **Update**.
-1. **Confirm**: The node will reboot and apply the new firmware in seconds.
+New microcontroller nodes (ESP32-S3 or ESP32) require a physical USB connection for their first update. Once the initial firmware is installed, all future updates can be handled wirelessly.
 
 
----
-
-
-## Method 2: The Captive Portal (Network Provisioning)
-
-Use this method if the droid is powered on but cannot find its known network, or if you need to move it to a new location.
-
-1. **Wait for Fallback**: If a node cannot find its home Wi-Fi for **60 seconds**, it will automatically broadcast its own network.
-1. **Connect**: On your mobile device, look for the Wi-Fi network named **`WEE2-D2_SETUP`**.
-1. **Authentication**: Use the convention-standard password: `wee2d2setup`.
-1. **Configure**: A "Sign in to network" page should automatically appear. Select the local Wi-Fi from the list and enter its password to migrate the node.
+1. **Connect**: Use a high-quality USB-C cable to connect your ESP32-S3 node (firmware/production/node-1-dome-motion.yaml:34) to your computer.
+2. **Launch**: Open the ESPHome dashboard or the ESPHome Web site.
+3. **Flash**: Pick the correct `.yaml` configuration file and select "Install". Choose the "Plug into this computer" option.
+4. **Monitor**: Watch the initialization logs (firmware/production/node-1-dome-motion.yaml:66) to ensure the node successfully connects to your Wi-Fi network.
 
 
 ---
 
 
-## Method 3: Browser-Based Web Phasing (Cloud Recovery)
+## OTA Updates (Wireless Bridge)
 
-Use this method if the firmware is corrupted or the Wi-Fi stack is unresponsive.
+Once a node is connected to the network, you can deploy updates wirelessly. This is the primary method for managing the "Golden State" configurations in the `v2.6.0` sequence.
 
-1. **Connect**: Plug the node into your computer via a data-capable USB cable.
-1. **Visit**: Open the public Documentation portal in a Chromium-based browser (Chrome/Edge).
-1. **Flash**:
-   - Select **[PROCEED] START FIRMWARE INJECTION**.
-   - Select the **COM Port** from the browser popup.
-   - The browser will securely flash the latest stable production firmware directly from the cloud.
+
+- **Procedure**: Navigate to the node's local web-dashboard (port 80) and upload the compiled binary.
+- **Verification**: The node will check the `ota_password` (firmware/production/node-1-dome-motion.yaml:62) before initiating the write cycle.
+- **Monitoring**: You can watch the flashing progress in the web-logs to ensure no radio interference occurs.
 
 
 ---
 
 
-> [!TIP]
-> **Operational Density**: These methods ensure that the Documentation is 100% serverless. All code compilation happens in the cloud, and all deployment is handled directly between your device and the droid's built-in web server.
+## Standard Node Addresses
+
+The project uses a predictable naming convention to ensure you are deploying the correct firmware to the correct physical node.
+
+
+| Node | Local Hostname | Target Firmware |
+| :--- | :--- | :--- |
+| **Node 1** | `wee2d2-dome-master.local` | [node-1-dome-motion.yaml](../../firmware/production/node-1-dome-motion.yaml) |
+| **Node 2** | `wee2d2-sound-hub.local` | [node-2-sound-hub.yaml](../../firmware/production/node-2-sound-hub.yaml) |
+| **Node 3** | `wled-dome.local` | [node-3-segments.json](../../firmware/production/node-3-segments.json) |
+
+
+---
+
+
+## Hardware Diagnostics & Troubleshooting
+
+Successful deployment is confirmed by the appearance of the "Diagnostic" cards in Home Assistant (firmware/production/node-1-dome-motion.yaml:436).
+
+
+- **USB Driver**: Ensure you have the CP2102 or CH340 drivers installed if the node is not detected by your computer.
+- **Encryption**: If the OTA update fails, check that the `api_encryption_key` in your `secrets.yaml` matches the node configuration.
+- **Safe Mode**: If a node enters a bootloop, it will automatically launch a fallback hotspot for recovery.
+
+
+---
+
+
+[View Status Schematic](../architecture/electrical-schematic.md) | [View Calibration](calibration-guide.md)

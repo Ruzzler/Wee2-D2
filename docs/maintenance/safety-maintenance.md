@@ -1,65 +1,66 @@
-# <i data-lucide="shield"></i> Maintenance & Safety Manual: Wee2-D2
+# <i data-lucide="shield-check"></i> Safety & Maintenance
 
-Safety and maintenance keep your droid running right. These protocols protect your hardware and anyone near the droid.
-
-
----
+> **TECHNICAL SPECIFICATIONS** | **SYSTEM: SAFETY & UPKEEP** | **MODEL: ALL COMPONENTS**
 
 
-## High-Voltage Safety (20V DC)
-
-The DeWalt battery is capable of high-current discharge. **Respect the power.**
-
-
-### 1. Lithium Battery Hazards
-
-- **Storage**: Never store the DeWalt battery below 16V or above 21V for long periods. Use the **DeWalt standard charger** for storage-mode charging if available.
-- **LVC Mode**: The **MgcSTEM LVP-R1.5** Low-Voltage Cutoff is your main safety feature. Ensure it is set to **1.6V/Cell** (16V total) to prevent permanent battery damage.
-- **Physical Shock**: If the droid suffers a major impact, inspect the battery for casing cracks immediately.
-
-
-### 2. Fuse Protocol
-
-- **Main Fuse**: Always use a **30A-40A** automotive fuse.
-- **Replacement**: If the droid goes dead, **DO NOT** replace the fuse until you have checked for a 20V-to-GND short circuit on the main power rails.
+This guide lists the mandatory safety and maintenance procedures for the Wee2-D2 project. Proper upkeep is required to prevent electrical fires, gear damage, and motor failures during long convention deployments.
 
 
 ---
 
 
-## Periodic Maintenance
+## Electrical Safety (Power Trunk)
 
-### 1. Slip Ring Servicing
-
-The rotating joint is the most sensitive mechanical link.
-- **Noise Check**: If your dome rotation begins to "twitch" or LEDs flicker, your slip ring contacts may have accumulated carbon dust.
-- **Cleaning**: Use **DeoxIT D5** or a high-quality electrical contact cleaner. Spray a small amount through-hole and rotate the dome 20+ times to clear contacts.
+The droid's power source is a high-current 20V Lithium-Ion battery. The electrical trunk must be inspected regularly to ensure all connections are tight and free of thermal damage.
 
 
-### 2. Fastener Integrity
-
-The vibration from the drive motors can loosen screws.
-- **Checkpoints**: Periodically tighten the **motor mount bolts** and the **dome rotation gear** set screws.
-- **Threadlock**: Use **Blue Loctite (242)** on any metal-to-metal fasteners exposed to high vibration.
-
-
-### 3. ESC Cooling
-
-The Flipsky 6.7 ESCs can generate significant heat during long drives.
-- **Airflow**: Ensure the internal body vents are not blocked. Clean any dust from the ESC heatsinks every 2 months.
+1. **Voltage Range**: The DeWalt battery system operates at **20V (18.5V Nom)**. Ensure the MgcSTEM LVP module is set to a **17.5V safety cutoff** (firmware/production/node-1-dome-motion.yaml:425).
+2. **Terminal Inspection**: Check the central Negative Bus Bar and Wago hubs for loose wires. High-current loads (30A peak) from the FLD-5 motors can cause localized heat if a terminal is loose.
+3. **Emergency Shutdown**: If you smell "burning" or see smoke, immediately pull the battery from the body mount. The system does not have a software e-stop for electrical short-circuits.
 
 
 ---
 
 
-## Emergency Procedures
+## Drive & Mechanical Upkeep
 
-### 1. E-Stop Command
-
-- **Manual Kill**: Physically remove the DeWalt battery from the droid's rear compartment.
-- **Radio Kill**: Set your **Fail-Safe** on the HOTRC to "Neutral" so the droid stops if it loses signal.
+Hub motors and domestic gears are subject to mechanical wear and require regular inspection before each deployment.
 
 
-### 2. Thermal Runaway
+| Component | Frequency | Action | Citation |
+| :--- | :--- | :--- | :--- |
+| **Hub Motors** | Daily | Check M8 axle nuts for torque | [Drive Guide](../capabilities/body-drive.md) |
+| **Dome Ring Gear**| Monthly | Lubricate with lithium grease | [Motion Guide](../capabilities/dome-rotation.md) |
+| **Slip Ring** | Monthly | Check for physical wire fatigue | [Power Guide](../architecture/power-architecture.md) |
 
-- If you smell "burning electronics" or see smoke, **DISCONNECT THE BATTERY IMMEDIATELY.** Do not attempt to diagnose with the power applied.
+
+---
+
+
+## Firmware & Software Stability
+
+The droid relies on three ESP32 nodes to function. These nodes should be running the verified `v2.6.0-Dashboard` firmware sequence.
+
+
+- **OTA Updates**: Only perform Over-The-Air updates when the battery is at >50% charge to prevent brownouts during the write cycle.
+- **Mesh Integrity**: If the droid behaves erratically, reboot Node 1 (Dome Master) to re-establish the ESP-NOW handshake (firmware/production/node-1-dome-motion.yaml:474).
+- **Log Review**: Use the `wee2d2-dome-master.local` web dashboard to check for recurring technical errors in the system logs.
+
+
+---
+
+
+## Con-Floor Best Practices
+
+When operating the droid in a public space, follow these safety standards to avoid accidents or hardware failures.
+
+
+- **Carpeting**: Driving on thick convention carpet increases the current draw for the hub motors. Monitor battery sag frequently.
+- **Battery Swap**: Swap the battery at **18.2V** to ensure the droid has enough reserve power for a safe, controlled motor shutdown. 
+- **Crowds**: Use the dashboard's "Speed Slider" to cap movement at 40% when in high-density areas. 
+
+
+---
+
+
+[View Status Schematic](../architecture/electrical-schematic.md) | [View Troubleshooting](troubleshooting.md)

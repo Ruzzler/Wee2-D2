@@ -1,80 +1,82 @@
-# <i data-lucide="battery-charging"></i> Power Architecture
+# <i data-lucide="zap"></i> Power Architecture
 
-This document tracks the electrical routing, distribution, and protection systems for Wee2-D2. Locomotion and logic systems are isolated into distinct rails to ensure signal integrity and operational stability.
+> **TECHNICAL SPECIFICATIONS** | **SYSTEM: POWER GRID** | **MODEL: GANGED TRUNK 20V**
 
----
 
-## 1. The Core Source
-
-The droid operates on a **20V High-Power Standard**, sourcing energy from a ganged **DeWalt 20V Battery** array.
-
-### Protection Layer
-
-| Component | Role | Technical Specification |
-| :--- | :--- | :--- |
-| **Master LVP (MgcSTEM)** | 40A Safety Layer | Monitors battery source; **17.5V Cutoff** to prevent over-discharge. |
-| **Positive Fuse Box** | Circuit Protection | Distributes 20V Positive to individually fused subsystems. |
-| **Negative Bus Bar** | Star Ground Anchor | Central ground reference for all system logic and noise isolation. |
-
----
-
-## 2. Power Rail Hierarchy
-
-Wee2-D2 uses isolated voltage rails to protect sensitive logic from motor-induced EMF noise.
-
-### A. 20V High-Power Rail
-| Component | Function | Source |
-| :--- | :--- | :--- |
-| [Drive System](../hardware/flipsky-fsesc-67-pro-manual.md) | Dual Flipsky 6.7 Pro ESCs | Fuse Box (20V) |
-| [Dome Motion](../hardware/gobilda-motor-manual.md) | goBILDA 15A PWM ESC | Slip Ring (20V) |
-| [Audio Amp](..\capabilities\lights-and-sounds\audio-system.md) | TPA3118 60W Mono | Fuse Box (20V) |
-
-### B. 5V Logic & Audio Rail
-| Component | Role | Regulation Source |
-| :--- | :--- | :--- |
-| [Node 1 (Motion)](node-1-dome-motion.md) | Dome motion processing | Dome Logic Buck: Mini560 Pro (5A) |
-| [Node 2 (Sound)](node-2-sound-hub.md) | Body logic & sounds | Body Logic Buck: Mini560 Pro (5A) |
-| [Node 3 (LEDs)](node-3-led-distribution.md) | Dome lighting arrays | Dome LED Buck: Mini560 Pro (5A) |
-| [Body Receiver](node-pinout-guide.md#4-hardware-interconnects) | Body RC Input | FSESC 1 BEC (5V) |
-| [Dome Receiver](node-pinout-guide.md#4-hardware-interconnects) | Dome RC Input | Dome Logic Buck: Mini560 Pro (5A) |
-| [DFPlayer Mini](../hardware/dfplayer-mini-spec.md) | Audio Hub | Body Logic Buck: Mini560 Pro (5A) |
-| LED Matrices (Logic) | Visual Display | Dome LED Buck: Mini560 Pro (5A) |
-| GrnWave PSIs | Circular Displays | Dome LED Buck: Mini560 Pro (5A) |
+This guide explains the electrical design of the Wee2-D2 project. It covers the high-current ganged trunk, voltage regulation, and grounding strategies used across all microcontroller nodes.
 
 
 ---
 
 
-## 3. The Slip Ring Bridge (Body to Dome)
+## System Overview (Ganged Trunk Strategy)
 
-The **CNBTR Slip Ring** (6 wires) acts as the high-current bridge. We use a **Ganged Trunk Strategy** to provide maximum current overhead to the dome via the Slip Ring's multi-circuit capability.
+The droid uses a central **20V Battery Hub** that distributes power through a ganged trunk line. This strategy doubles the current-carrying capacity by using paired wires, reducing resistive losses through the slip ring.
 
-| Circuit | Function | Current (Peak) | Pinout |
-| :--- | :--- | :---: | :---: |
-| **Circuit 1** | **Ganged 20V Trunk** | 10.0A | C1 (+) / C2 (-) |
-| **Circuit 2** | **Ganged 20V Trunk** | 10.0A | C3 (+) / C4 (-) |
-| **Expansion** | Reserved for Serial / Telemetry | — | C5 / C6 |
 
-> [!IMPORTANT]
-> **REFINED ISOLATION**: While the 20V lines are now ganged at the **Dome 2x 5-Port Wago Hub** to ensure amperage stability, isolation from motor noise is maintained downstream via **Dual Mini560 Pro (5A)** buck converters. One converter is dedicated to logic (Node 1/3/RC), while the other is dedicated solely to LED arrays.
+| Component | Voltage | Protection | Role |
+| :--- | :--- | :---: | :--- |
+| **Battery** | 20V (18.5V Nom) | MgcSTEM LVP | Primary Trunk Power |
+| **Body Logic Rail** | 5V DC | Mini560 Pro | Node 2 & RC Sensors |
+| **Dome Logic Rail** | 5V DC | Mini560 Pro | Node 1 & Dome Motor Logic |
+| **Dome LED Rail** | 5V DC | Mini560 Pro | Node 3 & Cinematic Visuals |
 
----
-
-## 4. Grounding & Safety Protocols
-
-### Star Ground Rule
-Every component in the droid (Nodes, ESCs, Receivers, and LED Strips) **MUST** share a common ground reference. All grounds trace back to the central **Negative Bus Bar**. Without this shared reference, PWM and UART data signals will become unreadable interference.
-
-### BEC & Buck Isolation
-To prevent ground loops and inductive spikes from motor transients, the following isolation rules are enforced:
-- **Body isolation**: Only **FSESC 1** provides BEC power to the body receiver. FSESC 2's BEC is isolated (not connected).
-- **ESC BEC Isolation**: When using multiple speed controllers, only one BEC (typically ESC 1) should provide 5V logic power to the receiver.
-- **Dome isolation**: The goBILDA 15A ESC's internal BEC is isolated. Logic power is sourced strictly from the ganged trunk via the Dome Logic Buck: Mini560 Pro (5A).
-
-### Processing Clamps
-- **Dynamic Speed Multiplier**: Node 1 provides a dashboard-adjustable speed cap (0.1 - 1.0) to ensure cinematic motion regardless of raw voltage level.
-- **Current Limiters**: Node 3 maintains an internal brightness limit of **3500mA** to protect the Dome LED Buck: Mini560 Pro (5A) buck converters from thermal runaway.
 
 ---
 
-[View Electrical Schematic](electrical-schematic.md)
+
+## Voltage Regulation & Filtering
+
+The power grid uses three specialized **Mini560 Pro** buck converters to stabilize the logic rails. These converters are chosen for their high efficiency and low electromagnetic interference (EMI).
+
+
+### 1. The Body Logic Rail
+This rail powers the Sound Hub (Node 2) and the DFPlayer Mini. It is isolated from the motor rails to prevent audio popping.
+- **Output**: 5.0V @ 5A Peak
+- **Location**: Mounted near the central Negative Bus Bar.
+
+
+### 2. The Dome Logic Rail
+This rail powers the Dome Master (Node 1) and the dome rotation controller.
+- **Output**: 5.0V @ 5A Peak (firmware/production/node-1-dome-motion.yaml:24)
+- **Signal**: Powers the GPIO 7 PWM signal for the dome motor.
+
+
+### 3. The Dome LED Rail
+Dedicated to the addressable LED arrays (WS2812B). This rail provides high current for bright visual patterns.
+- **Output**: 5.01V @ 5A Peak (firmware/production/node-1-dome-motion.yaml:137)
+- **Reflow**: This rail is physically decoupled from the Node 1 logic rail to prevent "voltage brownouts" during bright flashes.
+
+
+---
+
+
+## Slip Ring Utilization (Circuits 1–6)
+
+To minimize signal noise, the project uses the **Dual-Circuit Isolation Strategy** through the slip ring. Logic-level signals (UART/PWM) are kept separate from the high-current motor trunks.
+
+
+| Circuit | Function | Current | Protocol |
+| :--- | :--- | :---: | :--- |
+| **C1 / C2** | **20V Positive (Paired)** | 10A | Raw Trunk |
+| **C3 / C4** | **Ground (Paired)** | 10A | Common - |
+| **C5 / C6** | **RESERVED** | — | Future Expansion |
+
+
+---
+
+
+## Safety Standards & LVC
+
+The project includes an **Active Low Voltage Cutoff (LVP)** system that monitors the trunk voltage. If the battery dips below **17.5V**, the system enters a "Safe Shutdown" mode (firmware/production/node-1-dome-motion.yaml:425).
+
+
+- **Protection**: Prevents deep discharge of Li-ion batteries.
+- **Recovery**: Requires a fresh 20V battery swap and a system power cycle.
+- **Manual Overpass**: None. Safety is hard-wired at the LVP module.
+
+
+---
+
+
+[View Master Schematic](electrical-schematic.md) | [View Battery Runtime Guide](../maintenance/battery-runtime-guide.md)

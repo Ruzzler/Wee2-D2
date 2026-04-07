@@ -1,38 +1,71 @@
-# <i data-lucide="volume-2"></i> Node 2: Sound Hub
+# <i data-lucide="cpu"></i> Node 2: Sound Hub
 
-> **TECHNICAL SPECIFICATIONS** | **ESPHome v3** | **ESP32-S3 Super Mini** | **Audio & Drive Sync**
+> **TECHNICAL SPECIFICATIONS** | **SYSTEM: SOUND HUB MASTER** | **MODEL: ESP32-S3 SUPER MINI**
 
-| Component | Detail |
-| :--- | :--- |
-| **Node ID** | **2** |
-| **Role** | Audio Execution & ESC Telemetry Monitoring |
-| **Source Code** | [`node-2-sound-hub.yaml`](../../firmware/production/node-2-sound-hub.yaml) |
-| **Visual ID (Logic)** | ![S3 Mini](../../assets/esp32-s3-super-mini.jpg) |
-| **Visual ID (Audio)** | ![TPA3118](../../assets/tpa3118-amplifier-module.jpg) |
 
-## Core Purpose
+Node 2 is the primary audio controller and web gateway for the Wee2-D2 project. It manages the DFPlayer Mini sound module and hosts the droid's interactive dashboard for remote behavioral control.
 
-![Sound Hub Dashboard](../../assets/sound-hub-dashboard.jpg)
-
-- **Sound Hub Command Center**: Hosts the responsive web dashboard (`system_dashboard.h`) serving as the interactive entry point to the droid.
-- **ESP-NOW Wireless Relay**: Securely relays dashboard commands (`0xA0-0xA2`) to Node 1 via a bidirectional 2.4GHz bridge.
-- **DFPlayer UART Control**: High-fidelity track triggering and system volume management.
-- **OTA Updates**: Fully support Over-The-Air updates directly from the Web UI.
-
-## Pinout Configuration
-
-| Connection | ESP32 Pin | Logic |
-| :--- | :---: | :--- |
-| **Dashboard** | Wi-Fi | TCP/IP Interface `port 80` |
-| **DFPlayer TX** | GPIO 12 | Serial Command Out |
-| **DFPlayer RX** | GPIO 13 | Serial Status In (Optional) |
-| **Wireless Relay** | Ch. 11 | ESP-NOW Behavioral Sync |
-| **Status LED** | GPIO 47 | Internal Neopixel (Logic) |
-
-### Watchdog Link
-
-Node 2 actively listens for a 5-second `0xB0` heartbeat sent from Node 1. If this connection drops, the Web Dashboard UI elements physically lock out and report "MESH DEGRADED" to prevent blind data transmission.
 
 ---
 
-[View Maintenance Log (CHANGELOG.md)](../../CHANGELOG.md)
+
+## Hardware Specifications (Logic Focus)
+
+The **ESP32-S3 Super Mini** is used for its dual-core performance, allowing it to handle real-time ESP-NOW radio mesh triggers while simultaneously running the glassmorphic dashboard web-server.
+
+
+- **Processor**: Dual-Core ESP32-S3
+- **Voltage**: 5V Logic Rail (Mini560 Pro)
+- **GPIO Pins**: [Node Pinout Guide](../architecture/node-pinout-guide.md)
+- **Framework**: ESPHome (esp-idf)
+
+
+---
+
+
+## GPIO Pinout & Logic Assignments
+
+The Sound Hub manages a high-speed UART serial bus to trigger the MP3-TF-16P decoder and listens for mesh commands from the Dome Master.
+
+
+These settings are verified in the `v2.6.0-Dashboard` firmware sequence.
+
+
+| Assignment | GPIO Pin | Function | Citation |
+| :--- | :--- | :--- | :--- |
+| **DFPlayer TX** | **GPIO 43** | Serial Out to Audio Hub | [node-2.yaml:43](../../firmware/production/node-2-sound-hub.yaml#L43) |
+| **DFPlayer RX** | **GPIO 44** | Serial In from Audio Hub | [node-2.yaml:44](../../firmware/production/node-2-sound-hub.yaml#L44) |
+| **Status LED** | **GPIO 15** | Onboard Diagnostics | [node-2.yaml:70](../../firmware/production/node-2-sound-hub.yaml#L70) |
+| **Dashboard** | **Internal** | Web API Port 80 | [node-2.yaml:73](../../firmware/production/node-2-sound-hub.yaml#L73) |
+
+
+---
+
+
+## Web Gateway & Dashboard Logic
+
+Node 2 acts as the **Dashboard Master**. It generates the web-based UI that allows the pilot to trigger manual animations, adjust dome speed, and manage audio presets.
+
+
+1. **Trigger Handling**: When a button is pushed on the dashboard, Node 2 pushes a radio broadcast back to Node 1 over the 2.4GHz mesh.
+2. **Audio Sync**: If Node 2 receives a `0x01` broadcast trigger from Node 1, it instantly sends the corresponding serial command to the DFPlayer Mini.
+3. **Safety Timeout**: If the mesh bridge is lost, Node 2 entries a "Stationary" state to prevent audio/lighting desync.
+
+
+---
+
+
+## Maintenance & Debugging
+
+You can access the sound hub's diagnostic logs wirelessly (`wee2d2-sound-hub.local`) or via the physical USB-C port at 115200 baud.
+
+
+- **OTA Password**: Required for wireless updates (firmware/production/node-2-sound-hub.yaml:62).
+- **Audio Lag**: If you experience delays in sound playback, check the signal strength between the body logic stack and the Wi-Fi router. 
+- **Baud Rate**: Ensure the DFPlayer is communicating at **9600 bps** as verified in the [Audio System Guide](../capabilities/audio-system.md).
+
+
+---
+
+
+[View Master Schematic](electrical-schematic.md) | [View Power Architecture](power-architecture.md)

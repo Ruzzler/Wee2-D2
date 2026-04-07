@@ -1,109 +1,73 @@
-# <i data-lucide="cpu"></i> Master Node Pinout & Wiring Guide
+# <i data-lucide="cpu"></i> Node Pinout & Wiring Guide
 
-This guide is the main wiring reference for the Wee2-D2 distributed node mesh. It includes all verified pin assignments, wire colors, and hardware interfaces for the ESP32 platforms.
-
-
----
+> **TECHNICAL SPECIFICATIONS** | **SYSTEM: PINOUT & WIRING** | **MODEL: ESP32-S3 / ESP32**
 
 
-## 1. Node 1: Dome Motion Master (ESP32-S3 Super Mini)
-
-The **Motion Master** manages 360° dome rotation and broadcasts behavioral triggers via ESP-NOW.
-
-| ESP32 Pin | Wire Color | Role | Function |
-| :---: | :--- | :--- | :--- |
-| **5V** | Red | Power In | 5.0V (Mini560 Pro 5A) |
-| **GND** | Black | Ground | Common Logic Ground |
-| **GPIO 4** | White | RC CH1 | Steering Input (PWM) |
-| **GPIO 5** | Blue | WLED Sync | Single Wire UART TX |
-| **GPIO 7** | Yellow | Dome ESC | PWM Command Out |
-| **GPIO 47** | N/A | Status LED | Internal Neopixel (Logic) |
+This guide lists the physical wiring and GPIO assignments for every microcontroller node in the Wee2-D2 project. These connections are verified for the `v2.6.0-Dashboard` firmware sequence.
 
 
 ---
 
 
-## 2. Node 2: Sound Hub (ESP32-S3 Super Mini)
+## Node 1: Dome Master (ESP32-S3)
 
-The **Sound Hub** manages behavioral audio triggers and drive system monitoring.
-
-| ESP32 Pin | Wire Color | Role | Function |
-| :---: | :--- | :--- | :--- |
-| **5V** | Red | Power In | 5.0V (Mini560 Buck) |
-| **GND** | Black | Ground | Common Logic Ground |
-| **GPIO 12** | Yellow | DFPlayer TX | Serial Command Out |
-| **GPIO 13** | Green | DFPlayer RX | Serial Status In (Optional) |
-| **GPIO 47** | N/A | Status LED | Internal Neopixel (Logic) |
+The Dome Master manages dome rotation, RC inputs, and logic communication. It is powered by a dedicated 5V buck converter in the dome.
 
 
----
-
-
-## 3. Node 3: LED Distribution (ESP32 Dev Board)
-
-The **Lighting Controller** runs the **Native WLED (v0.14+)** framework to drive high-density addressable matrices.
-
-| ESP32 Pin | Wire Color | Role | Function |
-| :---: | :--- | :--- | :--- |
-| **5V** | Red | Power In | 5.0V (Mini560 Buck) |
-| **GND** | Black | Ground | Common Logic Ground |
-| **GPIO 16** | Yellow/Blk | UART RX | Serial Sync In (from Node 1) |
-| **GPIO 17** | Green/Blk | UART TX | Serial Sync Out (Optional) |
-| **GPIO 18** | Yellow | Data Out | Front Logic (10x2) |
-| **GPIO 19** | Yel/Blk | Data Out | Rear Logic (12x2) |
-| **GPIO 21** | Green | Data Out | Front PSI (GrnWave) |
-| **GPIO 22** | White | Data Out | Rear PSI (GrnWave) |
+| Assignment | GPIO Pin | Function | Citation |
+| :--- | :--- | :--- | :--- |
+| **Dome Motor (PWM)** | **GPIO 7** | Output to 15A Servo ESC | [node-1.yaml:11](../../firmware/production/node-1-dome-motion.yaml#L11) |
+| **RC Stick (X-Axis)** | **GPIO 4** | Input from HotRC Receiver | [node-1.yaml:12](../../firmware/production/node-1-dome-motion.yaml#L12) |
+| **WLED Data (TX)** | **GPIO 5** | Serial Out to Node 3 | [node-1.yaml:13](../../firmware/production/node-1-dome-motion.yaml#L13) |
+| **UART Heartbeat** | **TX0** | Hardware Serial Logging | [node-1.yaml:68](../../firmware/production/node-1-dome-motion.yaml#L68) |
 
 
 ---
 
 
-## 4. Hardware Interconnects
+## Node 2: Sound Hub (ESP32-S3)
 
-### Audio Stack (DFPlayer + TPA3118)
-
-- **Node 2 TX (GPIO 12)** --> **DFPlayer RX**.
-- **DFPlayer DAC_R / DAC_L** --> **TPA3118 Analog Input** (High Fidelity).
-- **TPA3118 Power** 20V Positive Fuse Box.
-- **TPA3118 GND** **Star Ground** (-).
+The Sound Hub manages the DFPlayer Mini and hosts the Web Dashboard. It receives radio triggers from Node 1.
 
 
-### Receiver Interface (HOTRC F-06A)
-
-| Wire Color | Rec Slot | Node Pin | Role |
-| :--- | :---: | :---: | :--- |
-| **Red (5V)** | Slot 5 (+) | `5V / VIN` | Master Logic Power |
-| **Black (GND)** | Slot 5 (-) | `GND` | Master Logic Ground |
-| **Grey/Black** | Slot 3 (S) | `Node 1: GPIO 4` | CH1 (Dome Rotation) |
+| Assignment | GPIO Pin | Function | Protocol |
+| :--- | :--- | :--- | :--- |
+| **DFPlayer TX** | **GPIO 43** | Serial Out to MP3 Player | UART (9600) |
+| **DFPlayer RX** | **GPIO 44** | Serial In (Diagnostics) | UART (9600) |
+| **Status LED** | **GPIO 15** | Onboard NeoPixel (Optional) | WS2812B |
 
 
 ---
 
 
-## 5. Dome Distribution: Power Hubs
+## Node 3: LED Distro (ESP32 Dev V1)
 
-To handle peak loads and ensure stable logic voltage, the dome uses two ganged Wago hubs, each consisting of **2x 5-port connectors** (Dedicated Positive and Negative rails).
-
-
-### 20V High-Power Hub (2x 5-Port Wago)
-
-1. **IN**: Slip Ring Circuit 1 (20V)
-2. **IN**: Slip Ring Circuit 2 (20V)
-3. **OUT**: goBILDA 15A Speed Controller
-4. **OUT**: Mini560 Pro (5A) - **Logic Rail**
-5. **OUT**: Mini560 Pro (5A) - **LED Rail**
+Node 3 is a dedicated WLED controller that handles all addressable visuals. It follows the RMT timing protocol for WS2812 signals.
 
 
-### 5V Logic Hub (2x 5-Port Wago)
-
-1. **IN**: Mini560 Pro (Logic Rail)
-2. **OUT**: Node 1 (Dome Master)
-3. **OUT**: Node 3 (LED Distribution)
-4. **OUT**: HOTRC F-06A Receiver
-5. **OUT**: Reserved / Expansion
+| Assignment | GPIO Pin | Function | Specification |
+| :--- | :--- | :--- | :--- |
+| **Logic Display** | **GPIO 13** | Main LED Matrix Array | WS2812B (RMT) |
+| **PSI Lights** | **GPIO 12** | Front/Rear PSI Status | WS2812B (RMT) |
+| **Sync Data (RX)** | **GPIO 3** | Serial In from Node 1 | UART (115200) |
 
 
 ---
 
 
-[View Power Architecture](power-architecture.md)
+## Standard Wiring Colors
+
+Follow the project color code to prevent ground loops or reverse-polarity events in the dome logic stack.
+
+
+- **Red (18AWG)**: 20V Raw Trunk (Battery)
+- **Orange (20AWG)**: 5V Regulated (Logic Rail)
+- **Black (18AWG)**: Common Negative (GND)
+- **Blue (24AWG)**: Serial Data (Nodes 1 to 3)
+- **White (24AWG)**: PWM PWM Signals (Node 1 to Dome ESC)
+
+
+---
+
+
+[View Master Schematic](electrical-schematic.md) | [View Power Architecture](power-architecture.md)

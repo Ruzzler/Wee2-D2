@@ -1,68 +1,74 @@
-# <i data-lucide="sun"></i> GrnWave Circular PSI
+# <i data-lucide="activity"></i> GrnWave PSI Manual
 
-> **TECHNICAL SPECIFICATIONS** | **WS2812B-2020** | **76 LED CIRCULAR ARRAY**
+> **TECHNICAL SPECIFICATIONS** | **SYSTEM: CINEMATIC LIGHTING** | **MODEL: GRNWAVE PSI (ADDRESSABLE)**
 
-![GrnWave PSI](../../assets/grnwave-psi-logic.jpg)
 
-The **GrnWave Circular PSI** is a high-density addressable LED display used for the Processor Status Indicators in the dome.
+The cinematic lighting for the Wee2-D2 project is powered by GrnWave addressable LED arrays. These units provide movie-accurate logic and PSI status visuals, managed by Node 3 (LED Distro) using the WLED framework.
 
-## CRITICAL POWER WARNING
 
-> [!CAUTION]
-> **5V DC ONLY**: These boards use **WS2812B-2020** micro-LEDs. They are extremely sensitive to over-voltage. Do not exceed **5.2V**.
-> - **DO NOT** power these from the 6V BEC of the goBILDA motor controller.
-> - **DO NOT** share power with 6V servos.
-> - **Regulation**: All logic signals for these boards MUST come from the dedicated **Dome LED Buck: Mini560 Pro (5A)**.
+---
 
-- **LED Type**: WS2812B-2020 (Addressable RGB with integrated IC).
-- **Pixel Count**: 76 LEDs per board.
-- **Data Sequence**: The LEDs are chained in a specific sequence labeled **D1 through D76** on the PCB.
-- **Physical Topology**:
- 1. **Outer Ring**: LEDs **D1 - D24** (Clockwise from top-center).
- 1. **Inner Ring 1**: LEDs **D25 - D44**.
- 1. **Inner Ring 2**: LEDs **D45 - D60**.
- 1. **Core / Matrix**: LEDs **D61 - D76** (Central logic cluster).
 
-## Configuration Guide (WLED)
+## Hardware Specifications (Visual Focus)
 
-To achieve the cinematic scanning look in **WLED**, use the following settings for **Node 2: Lighting Controller**:
+The **GrnWave PSI** is a specialized addressable LED matrix. It is designed to physically fit within the 3.5" sensor ports of the aluminum dome assembly and provide high-fidelity visual output.
 
-### 1. LED Settings
 
-- **LED Type**: WS2812B
-- **Color Order**: GRB
-- **Maximum Current**: Set to **2000mA (2A)**.
- - *Why?* 76 LEDs at full brightness (white) can pull over 4.5A, which will overheat the micro-2020 LEDs and potentially melt your 3D-printed housing. 2A provides plenty of brightness for a droid.
+| Parameter | Specification | Value |
+| :--- | :--- | :--- |
+| **Model** | PSI Logic (Addressable) | WS2812B |
+| **LED Count** | 48 (Matrix Layout) | High Density |
+| **Voltage** | 5V DC (Logic Rail) | PWM |
+| **Signal In** | DI (Data In) | WS2812B RMT |
+| **Baud Rate** | ~800 KHz (RMT Protocol) | Node 3 Logic |
 
-### 2⃣ Segment Mapping (Crucial)
 
-Define these segments in the WLED UI to allow for layered animations:
+---
 
-| Segment Name | Start LED | Stop LED | Description |
-| :--- | :---: | :---: | :--- |
-| **Full PSI** | 0 | 76 | The entire board. |
-| **Outer Ring** | 0 | 24 | The boundary ring (Use 'Sweep' or 'Spin'). |
-| **Mid & Inner** | 24 | 60 | The intermediate flickering logic rings. |
-| **Core** | 60 | 76 | The central logic cluster. |
 
-### 3⃣ Recommended Effects
+## Logic Integration: Node 3 (LED Distro)
 
-- **Classic Idle**: Set Segment 0 (Outer) to a slow **Breathing** effect in Blue/Green. Set Segment 2 (Core) to a rapid **Flicker** or **Strobe** in White/Amber.
-- **Spinning Disc**: Apply the **Wiper** or **Scan** effect to the **Outer Ring** segment only.
-- **2D Matrix**: In WLED's 2D settings, you can define this as a "Ring" layout with a diameter of 10 to create even more complex geometric patterns.
+The PSI lighting is managed by **Node 3 (LED Distro)**, which follows the RMT timing protocol for WS2812 signals. Node 3 receives serial JSON triggers from **Node 1 (Dome Master)** to sync visuals with audio.
 
-## Pinout & Wiring
 
-The board typically features a 3-pin interface:
+These settings are verified in the `v2.6.0-Dashboard` hardware sequence.
 
-| Pin | Label | Function | Connection |
-| :--- | :--- | :--- | :--- |
-| **1** | **5V / VCC** | Power Input | Connect to **5V Regulator (Mini560 Pro 5A) (+)** |
-| **2** | **GND** | Ground | Connect to **Common Ground (-)** |
-| **3** | **DIN / DATA** | Data Input | Connect to **Node 2 (ESP32) GPIO** |
 
-## Firmware Configuration (WLED / ESPHome)
+- **Master Node**: Node 3 (LED Distro / ESP32 Dev Board)
+- **Data Pin (Front)**: **GPIO 13** (WS2812B Output)
+- **Data Pin (Rear)**: **GPIO 12** (WS2812B Output)
+- **Framework**: WLED (v0.14+ / Serial Trigger Synced)
+- **Sync Prot**: [UART Sync Guide](../capabilities/led-system.md)
 
-- **LED Type**: WS2812B / SK6812.
-- **Color Order**: GRB (Standard).
-- **Control**: Can be mapped as a 1D segment or a 2D matrix in WLED.
+
+---
+
+
+## Physical Hookup & Wiring
+
+The PSI arrays are connected to the central **Dome LED Rail** via mandatory JST-XH connectors. Power is supplied by a dedicated **Mini560 Pro** buck converter in the dome.
+
+
+1. **Data In (DI)**: From Node 3 GPIO 13/12.
+2. **5V Logic**: From the Dome LED Wago Hub.
+3. **Common Ground**: Shared Common Negative trunk with Node 3 and Node 1.
+4. **Resistor**: A **470 Ohm Resistor** is recommended on the Data line to prevent signal spikes.
+
+
+---
+
+
+## Hardware Calibration
+
+To ensure the PSI logic follows the 1977 movie-accurate timing, the WLED segments must be correctly mapped to the hardware indices.
+
+
+- **Color Correction**: Adjust the RGB order to `GRB` in the WLED global settings.
+- **Segment Sync**: Map the Front PSI to Segment 0 and the Rear PSI to Segment 1 in the `node-3-segments.json` config.
+- **Thermal Policy**: Although addressable LEDs are efficient, full-brightness "All White" patterns can reach high temperatures. Ensure the dome logic stack has adequate ventilation.
+
+
+---
+
+
+[View Master Schematic](../architecture/electrical-schematic.md) | [View LED System Guide](../capabilities/led-system.md)

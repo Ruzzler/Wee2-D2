@@ -1,73 +1,73 @@
-# <i data-lucide="volume-2"></i> TPA3118 60W Mono Amplifier
+# <i data-lucide="volume-1"></i> TPA3118 Amplifier Manual
 
-> **TECHNICAL SPECIFICATIONS** | **AUDIO AMPLIFIER** | **60W MONO CLASS-D**
+> **TECHNICAL SPECIFICATIONS** | **SYSTEM: AUDIO HUB** | **MODEL: TPA3118 (MONO)**
 
-The **TPA3118** is a high-efficiency Class-D mono audio amplifier module that serves as the primary sound projection hardware for the Wee2-D2. It receives a low-level analog signal from the **DFPlayer Mini** (Node 2) and drives the internal 3.5" speaker.
 
-![TPA3118 Amplifier Module](../../assets/tpa3118-amplifier-module.jpg)
+The audio amplification for the Wee2-D2 project is handled by a TPA3118 Class-D Mono amplifier. This module is configured in PBTL (Parallel Bridge-Tied Load) mode to deliver high-volume cinematic sound through a single 4-ohm driver.
 
-## Module Overview
-
-The TPA3118 is favored for its compact footprint and low heat generation, making it ideal for the enclosed electronics bay of a droid. It operates on a wide voltage range, allowing it to run directly off the 20V battery rail for maximum output headroom.
-
-| Feature | Specification |
-| :--- | :--- |
-| **Amplifier Class** | Class D (High Efficiency) |
-| **Output Power** | 60W Mono |
-| **Operating Voltage** | 4.5V – 26V DC (**20V Optimized**) |
-| **Signal-to-Noise Ratio** | 102 dB |
-| **Output Impedance** | 4 - 8 Ohms |
-| **Protection** | Short-circuit, Over-temperature, Over-voltage |
-
-## Pinout Reference
-
-| Pin Layout | Designation | Function |
-| :---: | :--- | :--- |
-| **PVCC** | Power Input | 20V Positive from Fuse Box |
-| **GND** | Ground | Negative Bus Bar (Star Ground) |
-| **IN+** | Audio Input (+) | Analog Signal from DFPlayer (SPK_1) |
-| **IN-** | Audio Input (-) | Analog Signal from DFPlayer (SPK_2) |
-| **OUT+** | Speaker Output (+) | Positive Terminal to Pyle 3.5" Speaker |
-| **OUT-** | Speaker Output (-) | Negative Terminal to Pyle 3.5" Speaker |
-| **SDZ** | Shutdown | Pull LOW to disable (unconnected = ON) |
-| **MUTE** | Mute | Pull LOW to mute (unconnected = UNMUTED) |
-
-## Wiring Integration
-
-The audio signal is bridged from Node 2's DFPlayer to the TPA3118 using shielded twisted-pair wiring to minimize EMI from the drive motors.
-
-```mermaid
-graph LR
-    subgraph "Node 2: Sound Hub"
-        DF[DFPlayer Mini]
-    end
-
-    subgraph "Power Grid"
-        FUSE[Fuse Box 20V]
-        GND[Negative Bus Bar]
-    end
-
-    subgraph "Audio Stack"
-        AMP["TPA3118 Amplifier"]
-        SPK["3.5\" Pyle Speaker"]
-    end
-
-    DF -- "SPK_1 / Analog" --> AMP
-    DF -- "SPK_2 / Analog" --> AMP
-    FUSE -- "20V +" --> AMP
-    GND -- "GND -" --> AMP
-    AMP -- "60W Output" --> SPK
-```
-
-## Best Practices
-
-- **Heat Dissipation**: While the Class-D architecture is efficient, ensure the module's onboard heat sink has adequate airflow within the body chassis.
-- **Supply Decoupling**: Wee2-D2 uses a dedicated 470uF capacitor at the power input of the TPA3118 to stabilize the voltage during high-volume transients.
-- **Volume Logic**: To prevent clipping and thermal throttling, the Sound Hub firmware limits the software volume to **26/30**.
 
 ---
 
-**Related Documentation:**
-- [DFPlayer Mini Spec](./dfplayer-mini-spec.md)
-- [Node 2: Sound Hub](../architecture/node-2-sound-hub.md)
-- [Power Architecture](../architecture/power-architecture.md)
+
+## Hardware Specifications (Audio Focus)
+
+The **TPA3118** is a high-efficiency Class-D amplifier module. It is selected for its compact footprint and its ability to provide 60W of power while running on the 5V logic rail.
+
+
+| Parameter | Specification | Value |
+| :--- | :--- | :--- |
+| **Model** | TPA3118 (Mono) | PBTL Mode |
+| **Power Output** | 60W RMS (Max) | Class-D |
+| **Voltage** | 12V–24V (Running at 12V Boosted) | Dual Buck Opt. |
+| **Resistance** | 4–8 Ohm | (4 Ohm Opt.) |
+| **Signal In** | Line-Level (DAC) | Mono |
+
+
+---
+
+
+## Logic Integration: Node 2 (Sound Hub)
+
+The amplifier receives an analog line-level signal from the DFPlayer Mini, which is managed by **Node 2 (Sound Hub)**. Gain is controlled through the hardware potentiometer on the TPA3118 module.
+
+
+These settings are verified in the `v2.6.0-Dashboard` hardware stack.
+
+
+- **Input Feed**: DAC_L / DAC_R from DFPlayer Mini.
+- **Master Ground**: Shared Common Negative with Node 2 and the Sound Hub Logic.
+- **Power Source**: Dedicated Mini560 Pro 5V rail (boosted via secondary buck if required).
+- **Gain Config**: Set to 80% to prevent driver clipping.
+
+
+---
+
+
+## Physical Hookup & Wiring
+
+The TPA3118 is connected to the Sound Hub logic stack using standard 18AWG power wires and analog audio jumpers. Power is supplied by the central **Mini560 Pro** buck converter in the body.
+
+
+1. **Power In**: VCC (12-24V) / GND (Common Negative trunk).
+2. **Signal In**: LIN / RIN (from DFPlayer DAC pins).
+3. **Speaker Out**: L+/L- (to Pyle 3.5" Driver).
+4. **Common Ground**: Ensure the amplifier ground is tied to the central Negative Bus Bar to prevent "audio hum."
+
+
+---
+
+
+## Hardware Calibration
+
+To ensure clear sound during long playbacks, the amplifier must be heat-shielded and correctly grounded.
+
+
+- **Thermal Management**: Class-D amplifiers are efficient, but the TPA3118 will get warm under 60W loads. Ensure it is mounted with adequate airflow in the body cavity.
+- **Noise Filtering**: If you hear "hissing," verify that the DAC signal wires are shielded or kept separate from the 20V motor trunks. 
+- **Star-Grounding**: If "motor whine" is audible in the speaker, check that the amplifier ground is not in a series-loop with the FSESC ground.
+
+
+---
+
+
+[View Master Schematic](../architecture/electrical-schematic.md) | [View Audio System Guide](../capabilities/audio-system.md)

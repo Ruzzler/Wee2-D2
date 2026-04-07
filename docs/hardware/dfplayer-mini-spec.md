@@ -1,58 +1,75 @@
-# <i data-lucide="volume-2"></i> DFPlayer Mini (MP3-TF-16P)
+# <i data-lucide="music"></i> DFPlayer Mini Specification
 
-> **TECHNICAL SPECIFICATIONS** | **SERIAL MP3 PLAYER** | **NODE 1: SOUND HUB INTEGRATION**
+> **TECHNICAL SPECIFICATIONS** | **SYSTEM: AUDIO HUB** | **MODEL: DFPLAYER MINI (MP3-TF-16P)**
 
-The **DFPlayer Mini** is a specialized, serial-controlled MP3 module that serves as the "Voice" of Wee2-D2. It is managed by **Node 2 (Sound Hub)** via a low-latency UART serial link.
 
-## Module Overview
+The sound hub for the Wee2-D2 project is powered by a DFPlayer Mini (MP3-TF-16P). This module provides hardware-level MP3 decoding and is managed via a dedicated serial bus from Node 2.
 
-- **Storage**: Micro SD card (up to 32GB, **FAT32**).
-- **Control**: 9600 Baud Serial (TTL).
-- **Output**: 2x 3W Peak Analog or direct DAC pass-through to **TPA3118 Amplifier**.
-- **Visual ID**: ![DFPlayer Mini Module](../../assets/dfplayer-mini-module.jpg)
 
 ---
 
-## Pinout Reference
 
-The following pinout is used for integration into the Node 2 (Sound Hub) logic rail.
+## Hardware Specifications (Audio Focus)
 
-![DFPlayer Mini Pinout](../../assets/dfplayer-mini-pinout.png)
+The **DFPlayer Mini** is a specialized sound module that integrates a microSD slot and a low-latency serial interface. It is the primary audio source for all behavioral triggers.
 
-| Pin | Name | Role | Connection |
-| :---: | :--- | :--- | :--- |
-| **1** | **VCC** | Power In | 5V Stable Logic Rail |
-| **2** | **RX** | Data In | Node 2 (GPIO 12 / Yellow) |
-| **3** | **TX** | Data Out | Node 2 (GPIO 13 / Green) |
-| **6** | **SPK1** | Audio (+) | TPA3118 Audio In |
-| **7** | **GND** | Ground | Common Star Ground |
-| **8** | **SPK2** | Audio (-) | TPA3118 Audio In |
 
----
+| Parameter | Specification | Value |
+| :--- | :--- | :--- |
+| **Model** | MP3-TF-16P (UART) | Sound Hub |
+| **Storage** | MicroSD (FAT32) | 32GB Max |
+| **Decoding** | MP3 / WAV (Hardware) | 24-bit DAC |
+| **Voltage** | 3.2V–5.0V (Logic) | 5V Rail |
+| **Signal Out** | DAC_L / DAC_R | Line Level |
 
-## SD Card Logic & Formatting
-
-For the DFPlayer to function in the "distributed behavior" mesh, the SD card **MUST** be formatted to FAT32 and use the industrial directory structure.
-
-### Folder Mapping
-
-- `Folder 01`: **Bank 1 (Standard)** - Happy, inquisitive chirps.
-- `Folder 02`: **Bank 2 (Patrol)** - Static, processing hums.
-- `Folder 03`: **Bank 3 (High Alert)** - Red-alert alarms and screams.
-- `Folder 04`: **Bank 4 (Events)** - Specific convention/interaction SFX.
-
-### Filename Protocol
-
-Tracks must be named with a 3-digit prefix (e.g., `001_beep.mp3`) to enable rapid track-seeking by the ESPHome firmware.
 
 ---
 
-## Calibration & Diagnostics
 
-- **UART Heartbeat**: If the Node 2 logo pulses **Yellow**, it indicates the DFPlayer is disconnected or the SD card is unreadable.
-- **Volume Limit**: WEE2-D2 firmware limits the DFPlayer volume to **26/30** to prevent clipping on the TPA3118 gain stage.
-- **Isolation**: Power the DFPlayer from a clean 5V logic buck converter to prevent digital "pops" from the motor rails.
+## Logic Integration: Node 2 (Sound Hub)
 
-**Further Resources:**
-- [DFPlayer Mini Official Manual](../manuals/dfplayer-mini-manual.pdf)
-- [Node 2: Sound Hub](../architecture/node-2-sound-hub.md)
+The DFPlayer Mini is managed by **Node 2 (Sound Hub)** using a dedicated UART bus. The ESP32 provides a standard serial signal to trigger specific folders and files.
+
+
+These settings are verified in the `v2.6.0-Dashboard` firmware sequence.
+
+
+- **Master Node**: Node 2 (Sound Hub / ESP32-S3)
+- **GPIO TX**: **GPIO 43** (UART Send)
+- **GPIO RX**: **GPIO 44** (Serial Feedback)
+- **Baud Rate**: 9600 bps (standard for MP3-TF-16P)
+- **Protocol**: 1-byte Direct (Mesh Trigger) | [node-1.yaml:81](../../firmware/production/node-1-dome-motion.yaml#L81)
+
+
+---
+
+
+## Physical Hookup & Wiring
+
+The sound module is connected to Node 2 and the TPA3118 amplifier using standard jumper wires. Power is supplied by the central **Mini560 Pro** buck converter in the body logic stack.
+
+
+1. **Serial Link**: TX (Node 2) to RX (DFPlayer) | RX (Node 2) to TX (DFPlayer).
+2. **Audio Link**: DAC_L / DAC_R to TPA3118 Input.
+3. **Common Ground**: Shared GND with Node 2 and the TPA3118 Amplifier.
+4. **Resistor**: A **1K Ohm Resistor** is required on the RX line to prevent serial noise.
+
+
+---
+
+
+## Hardware Calibration
+
+To ensure audio triggers like "The Cantina Band" play predictably, the MicroSD card must be correctly organized.
+
+
+- **Folders**: Name folders `01`, `02`, etc.
+- **Files**: Name files `001.mp3`, `002.mp3`, etc.
+- **MicroSD Card**: Ensure you use a high-quality (Class 10) card to prevent audio "stutter" during high-bitrate files.
+- **Isolation**: Keep the analog audio wires separate from the 20V motor trunks to prevent electrical interference.
+
+
+---
+
+
+[View Master Schematic](../architecture/electrical-schematic.md) | [View Audio System Guide](../capabilities/audio-system.md)

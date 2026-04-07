@@ -1,48 +1,72 @@
-# <i data-lucide="battery"></i> MgcSTEM LVP-R1.5
+# <i data-lucide="battery-charging"></i> LVP Protection Manual
 
-> **TECHNICAL SPECIFICATIONS** | **VOLTAGE CUTOFF** | **40A RELAY CONTROLLER**
+> **TECHNICAL SPECIFICATIONS** | **SYSTEM: POWER PROTECTION** | **MODEL: MGCSTEM LVP-R1.5**
 
-The **MgcSTEM LVP-R1.5** (Purple PCB) is a high-current 40A relay controller. It features a large T90-series relay and a 3-button interface (**SET**, **UP**, **DOWN**).
 
-> [!NOTE]
-> A full PDF version of the manufacturer's manual is available here: [MgcSTEM Manual](./mgcstem-lvc-manual.pdf)
+The power grid for the Wee2-D2 project is protected by a MgcSTEM Low Voltage Protection (LVP-R1.5) module. This unit monitors the 20V DeWalt trunk and prevents deep discharge of the Lithium-Ion battery cells.
 
-## Mode Selection
 
-To switch between Charging and Discharging modes:
-- **Press and hold [UP] for 5 seconds**.
-- The screen will display **`IN`** (Charging) or **`OUT`** (Discharging).
-- **For Wee2-D2**: Ensure the mode is set to **`OUT`**.
+---
 
-## Programming Parameters
 
-1. **Enter Settings**: Long-press **[SET]** for 3 seconds.
-1. **Navigate**: Short-press **[SET]** to cycle through parameters.
-1. **Adjust**: Use **[UP]** and **[DOWN]** to change values.
-1. **Save & Exit**: Long-press **[SET]** for 3 seconds.
+## Hardware Specifications (Safety Focus)
 
-### Recommended Settings (Discharge Mode)
+The **MgcSTEM LVP-R1.5** is an adjustable voltage relay module. It is the primary safety-cutoff for the droid's high-current power trunk.
 
-| Parameter | Name | Description | Recommended |
-| :--- | :--- | :--- | :--- |
-| **`dn`** | Lower Limit | **Relay Opens** (Power Off) at this voltage | **17.5V (Extreme Safety)** <br> **17.0V (Standard Safe)** |
-| **`UP`** | Upper Limit | **Relay Closes** (Power On) at this voltage | **20.0V** |
-| **`OP`** | Timer | Auto-disconnect after X time (00:00 = Off) | **00:00** |
-| **`dOP`** | Delay | Re-connect delay after reaching `UP` voltage | **10 seconds** |
-| **`FOP`** | Forced Start | Ignores `dn` for X seconds during startup | **3 - 5 seconds** |
 
-> [!TIP]
-> **`FOP` (Forced Start)** is extremely useful for droids. Setting it to 3-5s prevents the board from tripping if the drive motors cause a brief voltage dip when they first start moving.
+| Parameter | Specification | Value |
+| :--- | :--- | :--- |
+| **Model** | LVP-R1.5 (Adjustable) | Power Grid |
+| **Cutoff Voltage** | **17.5V (Safety Floor)** | Battery Protection |
+| **Hysteresis** | 1.0V (Recovery) | Standard |
+| **Max Current** | 30A (Peak) / 20A (Sustained) | Trunk Protection |
+| **Voltage Range** | 6V–60V (Input) | DeWalt 20V System |
 
-## Calibration (CRL)
 
-If the voltage reading is inaccurate:
-1. Long-press **[SET]** (3s) to enter settings.
-1. While in the setting menu, **Long-press [UP] for 3 seconds**.
-1. The voltage reading will flash; adjust to match your multimeter.
-1. Short-press **[SET]** to confirm, then long-press **[SET]** (3s) to exit.
+---
 
-## Status Indicator
 
-- **Yellow/Blue LED ON**: Relay is **CLOSED** (Power is flowing to the Droid).
-- **Yellow/Blue LED OFF**: Relay is **OPEN** (Cutoff active).
+## Logic Integration: Power Grid
+
+The LVP module is physically located between the DeWalt battery and the primary **Negative Bus Bar**. It acts as a hard-wired E-Stop for the power system.
+
+
+These settings are verified in the `v2.6.0` hardware stack.
+
+
+- **Cutoff Accuracy**: ±0.1V Calibration.
+- **Recovery Strategy**: The system will automatically reconnect if the battery voltage rises above **18.5V**, though a fresh battery swap is required for reliable operation.
+- **System Protection**: [Power Architecture](../architecture/power-architecture.md)
+- **Monitoring**: [Battery Runtime Guide](../maintenance/battery-runtime-guide.md)
+
+
+---
+
+
+## Physical Hookup & Wiring
+
+The LVP module is connected to the primary 20V trunk using 12AWG high-current silicone wires and XT60 connectors.
+
+
+1. **Voltage In (VCC/GND)**: From the DeWalt Battery Mount.
+2. **Voltage Out (OUT+/OUT-)**: To the central Negative Bus Bar and Ganged Trunk.
+3. **Common Ground**: Shared ground system with the VESC motor controllers.
+
+
+---
+
+
+## Hardware Calibration
+
+To ensure the LVP system triggers correctly under the heavy torque loads of the FLD-5 hub motors, the potentiometer must be precisely tuned.
+
+
+- **Voltage Sag**: Under high-current draw (30A peak), the battery will experience a "sag" of ~1.5V. The 17.5V cutoff is calibrated to account for this instantaneous dip.
+- **Verification**: Regularly check the cutoff point using a variable DC power supply. 
+- **Thermal Policy**: Although the LVP is efficient, ensure it is mounted away from the secondary buck converters to prevent cumulative heat buildup in the body's electronics bay.
+
+
+---
+
+
+[View Master Schematic](../architecture/electrical-schematic.md) | [View Power Architecture](../architecture/power-architecture.md)

@@ -1,75 +1,70 @@
-# <i data-lucide="folder"></i> Manuals and Files
+# <i data-lucide="files"></i> Manuals & Files
 
-Here are all the manuals and configuration files for the Wee2-D2 project.
-
-
----
+> **TECHNICAL SPECIFICATIONS** | **SYSTEM: DOCUMENTATION & FILES** | **MODELS: ALL COMPONENTS**
 
 
-## 1. Technical Manuals
-
-### Hardware Data Sheets (PDF)
-
-These are the original manufacturer specifications for the core hardware.
-
-- [DFPlayer Mini (Sound Hub)](../manuals/dfplayer-mini-manual.pdf)
-- [HOTRC DS-600 Transmitter](../hardware/hotrc-ds600-manual.pdf)
-- [HOTRC F-06A PWM Receiver](../hardware/hotrc-f06a-manual.pdf)
-- [Flipsky Mini FSESC 6.7 Pro](../hardware/flipsky-fsesc-67-pro-manual.pdf)
-- [MgcSTEM LVP-R1.5 Logic](../hardware/mgcstem-lvp-r15-manual.pdf)
-
-
-### Project Documentation (Markdown)
-
-Internal documentation optimized for the Wee2-D2 architecture.
-
-- [DFPlayer Mini (Audio Hub)](../hardware/dfplayer-mini-spec.md)
-- [GrnWave PSI Logic (LEDs)](../hardware/grnwave-psi-manual.md)
-- [goBILDA Drive & Motion](../hardware/gobilda-motor-manual.md)
-- [L-faster Hub Motors](../hardware/hub-motor-manual.md)
-- [CNBTR Slip Ring Interface](../hardware/cnbtr-slip-ring-manual.md)
+This guide provides quick-access to the technical documentation and firmware configuration files for the Wee2-D2 project. These documents are verified for the `v2.6.0-Dashboard` hardware sequence.
 
 
 ---
 
 
-## 2. System Configuration Files (Firmware & Config)
+## Core Architecture & Node Manuals
 
-The latest code and settings for your droid.
-
-
-### ESPHome Firmware (YAML)
-
-- [Node 1: Dome Master](../architecture/node-1-dome-motion.md)
-- [Node 2: Sound Hub](../architecture/node-2-sound-hub.md)
-- [Node 3: LED Distribution](../architecture/node-3-led-distribution.md)
+These documents cover the high-level design of the droid and the specific pinouts for each microcontroller node.
 
 
-### VESC Motor Settings (XML)
-
-- [Left Drive Motor](../../firmware/esc-configs/left-motor-settings.xml)
-- [Right Drive Motor](../../firmware/esc-configs/right-motor-settings.xml)
-- [Left App Settings](../../firmware/esc-configs/left-app-settings.xml)
-- [Right App Settings](../../firmware/esc-configs/right-app-settings.xml)
+- [Node Mesh Architecture](../architecture/node-mesh.md)
+- [Power Architecture Core](../architecture/power-architecture.md)
+- [Node 1: Dome Master Manual](../architecture/node-1-dome-motion.md)
+- [Node 2: Sound Hub Manual](../architecture/node-2-sound-hub.md)
+- [Node 3: LED Distro Manual](../architecture/node-3-led-distribution.md)
 
 
 ---
 
 
-## 3. External Tooling & Cloud Links
+## Hardware Specifications (OEM)
 
-Direct links to external tools and cloud-based management systems.
+Cataloging the physical specifications for the industrial hardware components used in the body and dome drive.
 
-| Resource | URL / Source | Description |
+
+| Component | Manual Link | Type |
 | :--- | :--- | :--- |
-| **VESC Tool** | [Download Hub](https://vesc-project.com/vesc_tool) | Desktop interface for motor tuning. |
-| **ESPHome Web** | [Flasher Tool](https://web.esphome.io/) | Browser-based firmware injection. |
-| **WLED Install** | [Cloud Installer](https://install.wled.me/) | One-click lighting firmware setup. |
-| **WLED Project** | [Documentation](https://kno.wled.ge/) | LED pattern and preset guides. |
+| **Dome Motor** | [goBILDA 5203](../hardware/gobilda-motor-manual.md) | High-Torque Brushed |
+| **Body Drive** | [FLD-5 Hub Motor](../hardware/hub-motor-manual.md) | Brushless Direct-Drive |
+| **Power Controller**| [MgcSTEM LVP](../hardware/mgcstem-lvp-r15-manual.md)| Safety Cutoff Relay |
+| **Motor Controller**| [Flipsky 6.7 Pro](../hardware/flipsky-fsesc-67-pro-manual.md)| VESC® Compatible |
 
 
 ---
 
 
-> [!TIP]
-> **ACCESS NOTE**: All internal files (`.yaml`, `.xml`) can be downloaded directly from this repository for use in the ESPHome or VESC Desktop tools.
+## Firmware Configuration (Source Anchors)
+
+These links point to the verified configuration files used in the `v2.6.0` production deployment.
+
+
+- **Node 1 (Dome Master)**: [node-1-dome-motion.yaml](../../firmware/production/node-1-dome-motion.yaml)
+- **Node 2 (Sound Hub)**: [node-2-sound-hub.yaml](../../firmware/production/node-2-sound-hub.yaml)
+- **Drive Settings (Left)**: [left-motor-settings.xml](../../firmware/esc-configs/left-motor-settings.xml)
+- **Drive Settings (Right)**: [right-motor-settings.xml](../../firmware/esc-configs/right-motor-settings.xml)
+
+
+---
+
+
+## Structural & 3D Components
+
+Managing the physical chassis and mechanical joints for the droid's internal grid.
+
+
+- **Chassis Files**: Acclaimed 3D files created by Mr. Baddeley.
+- **Joint System**: [CNBTR Slip Ring Guide](../hardware/cnbtr-slip-ring-manual.md).
+- **Wiring Standards**: [Node Pinout Guide](../architecture/node-pinout-guide.md).
+
+
+---
+
+
+[View Status Schematic](../architecture/electrical-schematic.md) | [View Troubleshooting](troubleshooting.md)

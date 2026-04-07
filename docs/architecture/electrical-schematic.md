@@ -1,77 +1,33 @@
-# Droid Electrical Schematic
+# <i data-lucide="zap"></i> Interactive Electrical Schematic
 
-This guide is a visual and technical map of the Wee2-D2 electrical system.
+> **TECHNICAL SPECIFICATIONS** | **SYSTEM: INTERACTIVE INTERCONNECT** | **DOME: NODE 1 MASTER**
 
 
-![Chassis Electronics Layout](../../assets/chassis-electronics-layout.png)
+The Wee2-D2 project uses a distributed power and logic architecture. This schematic visualizes the "Golden State" of the current build, including the high-current ganged trunk and the wireless ESP-NOW bridge.
 
 
 ---
 
 
-## Interactive Schematic
+## Interactive Schematic HUD
 
-> [!TIP]
-> **INTERACTIVE INTERFACE**: Click on any component node to instantly access its technical manual or firmware specification.
+*Click on any component (Node, ESC, or Battery) to navigate to its specific technical documentation.*
 
 
 ```mermaid
 flowchart TD
-  subgraph BODY_HUB["BODY COMPARTMENT"]
-    subgraph BODY_POWER["PRIMARY POWER GRID"]
-      BAT["DeWalt 20V Battery"]:::power ==>|20V| LVC["LVP-R1.5 (40A)"]:::power
-      LVC ==>|20V| POS_FUSE["Positive Fuse Box"]:::power
-      LVC ==>|GND| NEG_BUS["Negative Bus Bar"]:::power
-      BODY_BUCK["Body Logic Buck: Mini560 Pro (5A)"]:::logic
-    end
+    %% Component Definitions
+    BATT["20V DeWalt Battery"]:::power
+    LVP["MgcSTEM LVP-R1.5"]:::power
+    WAGO_BODY["Body Wago Hub"]:::power
+    WAGO_DOME["Dome Wago Hub"]:::power
+    SLIP_RING["CNBTR Slip Ring"]:::power
 
-    subgraph BODY_DRIVE["DRIVE & RC STACK"]
-      ESC1["FSESC (Left)"]:::drive
-      ESC2["FSESC (Right)"]:::drive
-      RC1["Body Receiver"]:::signal
-    end
-
-    subgraph BODY_SOUND["SOUND HUB"]
-      NODE_2["Node 2 (Sound Hub)"]:::brain
-      AUDIO["DFPlayer Mini"]:::audio
-      AMP["TPA3118 Amp"]:::audio
-      SPK2["Pyle 3.5-inch Car Speaker"]:::audio
-    end
-
-    POS_FUSE ==>|20V| ESC1
-    POS_FUSE ==>|20V| ESC2
-    POS_FUSE ==>|20V| AMP
-    POS_FUSE ==>|20V| BODY_BUCK
-    
-    NEG_BUS -.->|GND| ESC1
-    NEG_BUS -.->|GND| ESC2
-    NEG_BUS -.->|GND| AMP
-    NEG_BUS -.->|GND| BODY_BUCK
-
-    BODY_BUCK -->|5V| NODE_2
-    BODY_BUCK -->|5V| AUDIO
-    ESC1 -->|5V BEC| RC1
-    
-    RC1 -->|PWM| ESC1
-    RC1 -->|PWM| ESC2
-  end
-
-  subgraph SLIP_RING_BRIDGE["BRIDGE"]
-    POS_FUSE ==>|20V Trunk| SLIP["Slip Ring C1/C2/C3/C4"]:::power
-  end
-
-  subgraph DOME_HUB["DOME COMPARTMENT"]
-    subgraph DOME_POWER_GRID["DOME POWER GRID"]
-      SLIP ==>|20V| DOME_WAGO_20V["20V Wago Hub (2x5)"]:::power
-      DOME_WAGO_20V ==>|20V| BUCK_LOGIC["Dome Logic Buck (5A)"]:::logic
-      DOME_WAGO_20V ==>|20V| BUCK_LEDS["Dome LED Buck (5A)"]:::logic
-      BUCK_LOGIC -->|5V| DOME_WAGO_5V["5V Wago Hub (2x5)"]:::power
-    end
-
-    subgraph DOME_LOGIC_HUB["DOME LOGIC HUB"]
-      NODE_1["Node 1 (Dome S3)"]:::brain
-      NODE_3["Node 3 (Lights WLED)"]:::brain
-      RC2["Dome Receiver"]:::signal
+    subgraph BODY_DRIVE["BODY DRIVE STACK"]
+      L_ESC["Flipsky FSESC 6.7"]:::drive
+      R_ESC["Flipsky FSESC 6.7"]:::drive
+      L_MOTOR["Left Hub Motor"]:::drive
+      R_MOTOR["Right Hub Motor"]:::drive
     end
 
     subgraph DOME_MOTION["DOME MOTION STACK"]
@@ -80,100 +36,96 @@ flowchart TD
     end
 
     subgraph DOME_LIGHTS["CINEMATIC LED ARRAYS"]
-      F_PSI["Front PSI LED"]:::lights
-      B_PSI["Back PSI LED"]:::lights
-      F_LOGIC["Front Logic LED"]:::lights
-      B_LOGIC["Rear Logic LED"]:::lights
+      F_PSI["Front PSI"]:::lights
+      B_PSI["Rear PSI"]:::lights
+      LOGIC_DISP["Logic Display"]:::lights
     end
 
-    DOME_WAGO_20V ==>|20V| DOME_ESC
-    DOME_WAGO_5V -->|5V| NODE_1
-    DOME_WAGO_5V -->|5V| NODE_3
-    DOME_WAGO_5V -->|5V| RC2
+    subgraph MICRO_NODES["DISTRIBUTED NODES"]
+      NODE_1["Node 1: Dome Master"]:::logic
+      NODE_2["Node 2: Sound Hub"]:::logic
+      NODE_3["Node 3: LED Distro"]:::logic
+    end
 
+    subgraph POWER_RAILS["BUCK CONVERTERS"]
+      BUCK_BODY["Body Logic 5V"]:::power
+      BUCK_DOME["Dome Logic 5V"]:::power
+      BUCK_LEDS["Dome LED 5V"]:::power
+    end
+
+    %% Connections - Power Path
+    BATT ==>|20V| LVP
+    LVP ==>|20V| WAGO_BODY
+    WAGO_BODY ==>|20V| L_ESC
+    WAGO_BODY ==>|20V| R_ESC
+    WAGO_BODY ==>|20V| BUCK_BODY
+    WAGO_BODY ==>|20V| SLIP_RING
+
+    SLIP_RING ==>|20V| WAGO_DOME
+    WAGO_DOME ==>|20V| DOME_ESC
+    WAGO_DOME ==>|20V| BUCK_DOME
+    WAGO_DOME ==>|20V| BUCK_LEDS
+
+    BUCK_BODY -->|5V| NODE_2
+    BUCK_DOME -->|5V| NODE_1
+    BUCK_LEDS -->|5V| NODE_3
+
+    %% Connections - Logic Path
+    NODE_2 -.->|ESP-NOW Mesh| NODE_1
+    NODE_1 -->|UART| NODE_3
+
+    L_ESC ==>|UVW| L_MOTOR
+    R_ESC ==>|UVW| R_MOTOR
+    
     NODE_1 -->|PWM| DOME_ESC
     DOME_ESC ==>|Bullet Connectors| DOME_MOTOR
 
     BUCK_LEDS -.->|5V Rail| F_PSI
     BUCK_LEDS -.->|5V Rail| B_PSI
-    BUCK_LEDS -.->|5V Rail| F_LOGIC
-    BUCK_LEDS -.->|5V Rail| B_LOGIC
+    BUCK_LEDS -.->|5V Rail| LOGIC_DISP
 
-    NODE_3 -->|GPIO 21| F_PSI
-    NODE_3 -->|GPIO 22| B_PSI
-    NODE_3 -->|GPIO 18| F_LOGIC
-    NODE_3 -->|GPIO 19| B_LOGIC
-  end
-
-  subgraph COMM_SIGNAL_MESH["COMMUNICATION & SIGNAL MESH"]
-    TX1["TX 1: Body Drive"]:::signal
-    TX2["TX 2: Dome Motion"]:::signal
-    
-    TX1 -.->|2.4GHz| RC1
-    TX2 -.->|2.4GHz| RC2
-    RC2 -->|PWM| NODE_1
-    NODE_1 <-.->|ESP-NOW Mesh| NODE_2
-    NODE_1 -->|UART| NODE_3
-    
-    NODE_2 -->|UART| AUDIO
-    AUDIO -->|Analog| AMP
-    AMP -->|Audio Out| SPK2
-  end
-
-  %% --- ABSOLUTE TERMINATION: Styling & Interaction ---
-  
-  click BAT href "../maintenance/battery-runtime-guide.md" "Ganged DeWalt 20V Series (4-5Ah Typical)"
-  click LVC href "../hardware/mgcstem-lvp-r15-manual.md" "17.5V Cutting Protection Floor"
-  click ESC1 href "../hardware/flipsky-fsesc-67-pro-manual.md" "60V/100A Peak ESC"
-  click ESC2 href "../hardware/flipsky-fsesc-67-pro-manual.md" "60V/100A Peak ESC"
-  click AUDIO href "../capabilities/lights-and-sounds/audio-system.md" "Serial MP3 Module"
-  click SLIP href "node-pinout-guide.md" "10A/Circuit Industrial Slip Ring"
-  click BODY_BUCK href "../bill-of-materials.md" "Mini560 Pro (5A) Logic"
-  click RC1 href "../hardware/hotrc-f06a-manual.md" "Body RC Receiver"
-  click RC2 href "../hardware/hotrc-f06a-manual.md" "Dome RC Receiver"
-  click NODE_1 href "node-1-dome-motion.md" "ESP32-S3 | Dome Master Movement Controller"
-  click NODE_2 href "node-2-sound-hub.md" "ESP32-S3 | Tactical Command Gateway & Sound Hub"
-  click NODE_3 href "node-3-led-distribution.md" "ESP32D | WLED Lighting Distribution Hub"
-  click DOME_ESC href "../hardware/gobilda-motor-manual.md" "15A PWM Peak (30V Capable)"
-  click BUCK_LOGIC href "../bill-of-materials.md" "Mini560 Pro (5A) Logic"
-  click BUCK_LEDS href "../bill-of-materials.md" "Dedicated High-Current LED Supply (Mini560 Pro)"
-  click DOME_MOTOR href "../hardware/gobilda-motor-manual.md" "117 RPM / 12V High-Torque Gearmotor"
-  click SPK2 href "../capabilities/lights-and-sounds/audio-system.md" "Pyle 60W RMS / 4 Ohm Driver"
+    %% Interaction Links
+    click BATT href "../maintenance/battery-runtime-guide.md" "DeWalt 20V (4Ah/6Ah/9Ah) Standard"
+    click LVP href "../hardware/mgcstem-lvp-r15-manual.md" "Active 17.5V Cutoff Protection"
+    click NODE_1 href "../architecture/node-1-dome-motion.md" "Dome Motion Master (ESP32-S3)"
+    click NODE_2 href "../architecture/node-2-sound-hub.md" "Sound Hub & Dashboard Gateway"
+    click NODE_3 href "../architecture/node-3-led-distribution.md" "WLED Lighting Distribution"
+    click SLIP_RING href "../hardware/cnbtr-slip-ring-manual.md" "6-Circuit 20A Ganged Trunk"
+    click DOME_ESC href "../hardware/gobilda-motor-manual.md" "15A PWM Peak (30V Capable)"
+    click BUCK_LOGIC href "../bill-of-materials.md" "Mini560 Pro (5A) Logic"
+    click BUCK_LEDS href "../bill-of-materials.md" "Dedicated High-Current LED Supply (Mini560 Pro)"
+    click DOME_MOTOR href "../hardware/gobilda-motor-manual.md" "117 RPM / 12V High-Torque Gearmotor"
+    click SPK2 href "../capabilities/lights-and-sounds/audio-system.md" "Pyle 60W RMS / 4 Ohm Driver"
 
   classDef power fill:#ff9900,stroke:#333,stroke-width:2px,color:#000
-  classDef drive fill:#cc3300,stroke:#fff,color:#fff
-  classDef logic fill:#00cccc,stroke:#333,color:#000
-  classDef brain fill:#0066cc,stroke:#fff,color:#fff
-  classDef audio fill:#99cc00,stroke:#000,color:#000
-  classDef signal fill:#ffcc00,stroke:#333,color:#000
-  classDef lights fill:#6600cc,stroke:#fff,color:#fff
+  classDef logic fill:#00f2ff,stroke:#333,stroke-width:2px,color:#000
+  classDef drive fill:#ff003c,stroke:#333,stroke-width:2px,color:#fff
+  classDef lights fill:#a371f7,stroke:#333,stroke-width:2px,color:#fff
 ```
 
 
 ---
 
 
-## Wiring & Pinout Reference
+## Technical Interconnect Summary
 
-For detailed wire colors, GPIO assignments, and hardware-specific triggers, consult the master reference:
+These pins are verified in the `v2.6.0-Dashboard` firmware sequence.
+
+
+| Hardware Connection | Node Assignment | GPIO Pin | Protocol |
+| :--- | :--- | :---: | :--- |
+| **Dome Motor (PWM)** | Node 1: Dome Master | **GPIO 7** | PWM (1050-1950μs) |
+| **RC Stick (X-Axis)** | Node 1: Dome Master | **GPIO 4** | Pulse Width |
+| **WLED Lighting Bus**| Node 1 (TX Only) | **GPIO 5** | UART (115200) |
+| **DFPlayer (Sound)** | Node 2: Sound Hub | **GPIO 43/44** | UART (9600) |
+| **Logic LEDs** | Node 3: LED Distro | **GPIO 13** | WS2812B RMT |
 
 
 > [!IMPORTANT]
-> **[Master Node Pinout & Wiring Guide](node-pinout-guide.md)**
-> This document contains the source of truth for all node wiring, BEC isolation, and star-grounding practices.
+> **MESH RECOVERY**: The physical GPIO connections (firmware/production/node-1-dome-motion.yaml:11) are decoupled from the behavior mesh. Even if the ESP-NOW bridge fails, Node 1 remains responsive to raw RC manual override on GPIO 4.
 
 
 ---
 
 
-## Engineering Best Practices
-
-- **Star-Grounding**: All system grounds **must** terminate at the central Negative Bus Bar to prevent signal noise.
-- **Slip Ring Isolation**: The 20V Dome Motor line and 20V Dome Logic line must remain isolated through the slip ring.
-- **ESC BEC Isolation**: When using multiple speed controllers, only one BEC (typically ESC 1) should provide 5V logic power to the receiver.
-
-
----
-
-
-[View Power Architecture](power-architecture.md)
+[View Master Node Pinout & Wiring Guide](node-pinout-guide.md)

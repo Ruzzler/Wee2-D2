@@ -1,82 +1,74 @@
-# <i data-lucide="settings"></i> goBILDA Drive & Motion
+# <i data-lucide="cog"></i> goBILDA Motor Manual
 
-> **TECHNICAL SPECIFICATIONS** | **DOME ROTATION** | **1X15A MOTOR CONTROLLER**
-
-This entry covers the high-torque dome rotation motor and its speed controller.
+> **TECHNICAL SPECIFICATIONS** | **SYSTEM: DOME MOTION** | **MODEL: YELLOW JACKET 5203**
 
 
----
-
-
-## goBILDA 1x15A Speed Controller
-
-The **goBILDA 1x15A** is a compact, high-reliability brushed DC motor controller used for precise dome positioning.
-
-
-![goBILDA 1x15A ESC Top](../../assets/gobilda-esc-top.png)
-![goBILDA 1x15A ESC Side](../../assets/gobilda-esc-side.png)
-
-
-### Technical Specifications
-
-| Feature | Value |
-| :--- | :--- |
-| **Weight** | 41g (1.44 oz) |
-| **Channels** | 1 |
-| **Motor Type** | Brushed DC |
-| **Control Input** | RC (1050-1950μsec PWM) |
-| **Voltage (Rec.)** | 12 - 24VDC |
-| **Voltage (Limit)** | 9 - 30VDC |
-| **Max Current** | 15A Continuous / 25A Throttle |
-| **BEC Output** | 6VDC @ 3A |
-
-
-### Wiring & Interface
-
-- **12-24V In**: Plug a battery or power supply (12-24V) into the XT30 connector. (Keyed for polarity protection).
-- **Motor**: Connects via 3.5mm bullet connectors. Brushed DC motors are reversible; if spinning in the wrong direction, swap the red and black wires.
-- **RC/Data Input**:
-  - **Receiver**: Plugs into white/red/black 3-wire connector.
-  - **Node 1 Wiring**: Connected to the **Node 1: Dome Master** data pin (GPIO 7).
-  - **Logic**: Responds proportionally to signals between 1050-1950μs.
-
-
-> [!IMPORTANT]
-> The built-in 6V BEC (3A) can power your receiver or ESP32 logic via the red wire if needed. Ensure the data pin is connected to the appropriate GPIO on the ESP32.
+The dome rotation for the Wee2-D2 project is managed by a high-torque planetary motor and a dedicated brushed PWM controller. This manual catalogs the physical configuration and logic integration for the dome drive.
 
 
 ---
 
 
-## goBILDA 5203 Yellow Jacket Motor
+## Motor Specifications (Hardware Focus)
 
-The **Yellow Jacket** series features steel planetary gears and integrated encoders.
-
-
-### Technical Specifications (50.9:1 Model)
-
-| Feature | Value |
-| :--- | :--- |
-| **Gear Ratio** | 50.9:1 |
-| **No-Load Speed** | 117 RPM @ 12V |
-| **Stall Torque** | 68.4 kg.cm |
-| **Encoder Type** | Magnetic (Hall Effect) |
-| **Encoder Voltage**| 3.3 - 5 VDC |
-| **Output Shaft** | 8mm REX® profile |
+The **Yellow Jacket 5203 Series** is a planetary gearmotor optimized for high-torque, low-speed applications. It is the primary driver for the droid's dome rotation.
 
 
-### Mounting
-
-- **Grid Pattern**: Four M4 threaded holes on a 32mm square (8mm goBILDA grid).
-- **Hardware**: M4 screws (12mm case thickness).
-- **Stacking**: Multiple controllers can be stacked using the same mounting holes.
+| Parameter | Specification | Value |
+| :--- | :--- | :--- |
+| **Model** | 5203 Series (12V Hub) | Yellow Jacket |
+| **Reduction** | 50.9:1 | Planetary Gearbox |
+| **No-Load Speed** | 117 RPM | (12V Nominal) |
+| **Stall Torque** | 22.0 kg-cm | High Output |
+| **Output Shaft** | 6mm REX® | (Structural Profile) |
 
 
 ---
 
 
-## Protection Systems
+## Logic Integration: Node 1 (Dome Master)
 
-- **Reverse Voltage**: Protection against accidental polarity reversal on input.
-- **Over-Current**: Disconnects if current exceeds safe thresholds.
-- **Thermal**: Automatic shutdown if the controller exceeds operating temperature limits.
+Motor speed and direction are managed by **Node 1 (Dome Master)** on GPIO 7. The ESP32 logic provides a standard PWM signal to the brushed motor controller.
+
+
+These settings are verified in the `v2.6.0-Dashboard` firmware sequence.
+
+
+- **Master Node**: Node 1 (Dome Master / ESP32-S3)
+- **GPIO Pin**: **GPIO 7** (firmware/production/node-1-dome-motion.yaml:11)
+- **Protocol**: Standard PWM (50Hz)
+- **PWM Range**: 1050μs (Counter-Clockwise) to 1950μs (Clockwise)
+- **Deadzone**: 1500μs (Stationary)
+
+
+---
+
+
+## Physical Hookup & Wiring
+
+The motor is connected to the brushed controller using standard bullet connectors. Power is supplied by a dedicated **Mini560 Pro** buck converter in the dome logic stack.
+
+
+1. **Drive Connection**: 3.5mm Gold Bullet Connectors (Motor to Controller).
+2. **Logic Power**: 5V Logic In (from Dome Wago Hub).
+3. **Control Wire**: PWM Signal In (from Node 1 GPIO 7).
+4. **Trunk Connection**: 20V Raw Trunk In (through Slip Ring C1/C2).
+
+
+---
+
+
+## Hardware Calibration
+
+To ensure the dome behaves predictably during animations like "The Cantina Band," the gearing must be free of debris and correctly lubricated.
+
+
+- **Gearing**: Check the 10-tooth pinion for wear. REX® profile gears should be tightened with M4 set screws.
+- **Tension**: If the dome "stutters," verify that the Mini560 Pro logic buck is providing a steady 5V. voltage drops can cause the PWM signal to drift. 
+- **Thermal Policy**: The 5203 series motor is capable of heavy duty-cycles, but the brushed controller may reach its thermal limit if stalled against a physical obstruction for >5 seconds.
+
+
+---
+
+
+[View Master Schematic](../architecture/electrical-schematic.md) | [View Power Architecture](../architecture/power-architecture.md)

@@ -261,33 +261,73 @@ main {
 
 #content h2 {
   color: var(--accent-amber);
-  margin-top: 40px;
-  margin-bottom: 20px;
+  margin-top: 2.6rem;
+  margin-bottom: 1.25rem;
   font-family: var(--font-mono);
   text-transform: uppercase;
+  font-size: 1.5rem;
+}
+
+#content h3 {
+  color: var(--accent-cyan);
+  margin-top: 2.2rem;
+  margin-bottom: 1rem;
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  font-size: 1.25rem;
+  letter-spacing: 1px;
+}
+
+#content h4 {
+  color: var(--text-primary);
+  margin-top: 1.8rem;
+  margin-bottom: 0.8rem;
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  font-size: 1.1rem;
+  border-left: 3px solid var(--accent-cyan);
+  padding-left: 12px;
 }
 
 #content p {
   line-height: 1.6;
-  margin-bottom: 20px;
+  margin-bottom: 1.5rem;
   color: var(--text-primary);
+}
+
+#content ul, #content ol {
+  margin-bottom: 1.5rem;
+  padding-left: 1.8rem;
+}
+
+#content li {
+  margin-bottom: 0.75rem;
+  line-height: 1.62;
+}
+
+#content li ul, #content li ol {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
 }
 
 #content code {
   background: rgba(0, 0, 0, 0.4);
-  padding: 2px 6px;
+  padding: 2px 8px;
   border-radius: 4px;
   font-family: var(--font-mono);
-  color: #ff79c6;
+  color: var(--accent-cyan);
+  border: 1px solid rgba(0, 242, 255, 0.1);
+  font-size: 0.9em;
 }
 
 #content pre {
   background: rgba(0, 0, 0, 0.6);
-  padding: 20px;
+  padding: 24px;
   border-radius: 8px;
   overflow-x: auto;
-  margin-bottom: 30px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  margin-bottom: 2rem;
+  border: 1px solid rgba(0, 242, 255, 0.2);
+  box-shadow: inset 0 0 20px rgba(0, 242, 255, 0.05);
 }
 
 #content table {
@@ -307,6 +347,14 @@ main {
 #content td {
   padding: 12px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  font-variant-numeric: tabular-nums;
+}
+
+#content hr {
+  margin: 2.6rem 0;
+  border: none;
+  border-top: 1px solid rgba(0, 242, 255, 0.15);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
 }
 
 /* --- HERO SECTION --- */

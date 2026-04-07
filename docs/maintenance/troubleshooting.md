@@ -1,49 +1,66 @@
-# <i data-lucide="alert-circle"></i> Troubleshooting Matrix: Wee2-D2
+# <i data-lucide="alert-triangle"></i> System Troubleshooting
 
-If your droid isn't acting right, use this table to find the problem.
+> **TECHNICAL SPECIFICATIONS** | **SYSTEM: FAULT DIAGNOSIS** | **MODEL: ALL NODES**
 
 
-| Symptom | Probable Cause | Corrective Action |
-| :--- | :--- | :--- |
-| **No Power / No Lights** | Main Fuse Blown | Check main bus bar; replace with 30A-40A fuse. |
-| **No Power / No Lights** | LVC Active | Battery voltage < 16V. Replace DeWalt battery. |
-| **Dome Won't Rotate** | Motor Signal Fault | Check GPIO 7 PWM connection; ensure goBILDA ESC is armed. |
-| **Dome Won't Rotate** | ESC Calibration | Re-calibrate goBILDA ESC throttle range. |
-| **No Audio output** | Node 2 (Sound Hub) | DFPlayer SD / TPA3118 Power | Check Node 2 UART status logs. |
-| **Dome not rotating** | Node 1 (Dome Motion) | 15A ESC / RC Binding | Verify Node 1 is receiving RC pulses. |
-| **LEDs Flickering** | Node 3 (LEDs) | Power Isolation | Check Node 3 WLED configuration limits. |
-| **Cannot Connect to IP** | DHCP Lease Expired | Check router; use static IP in `secrets.yaml`. |
-| **Sync Failure** | Wireless Bridge Fault | Check ESP-NOW MAC pairing; ensure all nodes on WiFi Channel 11. |
-| **Validation Failure** | Missing `secrets.yaml` | Automated health-check fails without a secrets file; logic is still valid. |
+This guide provides a systematic strategy for identifying and fixing common issues with the Wee2-D2 project. It covers the node mesh, power distribution, and behavioral synchronization.
 
 
 ---
 
 
-## Diagnostics Bench
+## Node Connectivity (ESP-NOW Mesh)
 
-### 1. ESPHome Logs
-
-The **ESPHome Logger** is the best way to see what's happening.
-
-1. Connect the ESP32 to your PC via USB.
-2. Open the ESPHome Dashboard.
-3. Click **Logs** on the problematic Node.
-4. **Watch for Errors**: UART timeouts, Wi-Fi disconnects, or I2C bus failures will appear in RED text.
+If the droid is not responding to dashboard triggers or sound triggers, the issue is likely within the radio mesh connection between Node 1 and Node 2.
 
 
-### 2. Wireless Bridge (ESP-NOW) Synchronization Test
-
-To verify the wireless behavioral triggers:
-
-1. Open the **Dome Master (Node 1)** Logs.
-2. Trigger a movement or behavioral script.
-3. Look for a broadcast entry: `[D][esp_now:xxx]: Broadcast behavioral EVENT_ID_XX`.
-4. Open the **Sound Hub (Node 2)** Logs and confirm it receives the event and triggers the DFPlayer: `[D][dfplayer:xxx]: Playing track XX`.
+- **No Sound**: Ensure that Node 2 (Sound Hub) is powered and within range. Node 1 sends a 1-byte trigger (firmware/production/node-1-dome-motion.yaml:230) that must be received over 2.4GHz.
+- **Heartbeat Lost**: Nodes check for a mesh signal every 5 seconds (firmware/production/node-1-dome-motion.yaml:474). Check the Node 2 dashboard to see if Node 1 is marked "Offline."
+- **EM Interference**: If the radio bridge is unstable, ensure that the Wi-Fi power output is capped at **8.5dBm** (firmware/production/node-1-dome-motion.yaml:56) to prevent noise within the aluminum dome.
 
 
-### 3. Multimeter Probe Points
+---
 
-- **VCC Rail**: Should be **18V - 21V** (Main Battery).
-- **Logic Rail**: Should be **5.0V - 5.2V** (Buck Output).
-- **Signal GND**: Continuity should exist between ALL GND pins across ALL ESP32s.
+
+## Power & Movement Faults
+
+Movement issues are typically related to voltage sag or incorrect VESC configurations. This synchronization is verified in the `v2.6.0-Dashboard` firmware sequence.
+
+
+1. **Voltage Shutdown**: If the system turns off during high-speed turns, the LVP module has likely triggered due to a voltage dip below **17.5V**. Swap for a fresh 20V battery.
+2. **Motor Stutter**: Verify the **15A Software Clamp** settings in the VESC tool. If the clamp is too restrictive, the motors will fail to overcome friction on convention carpet.
+3. **Internal Logic**: Ensure the 5V logic rails are stable. A flickering PSI logic display is often a sign of a failing Mini560 Pro buck converter.
+
+
+---
+
+
+## Diagnostic Log Access
+
+You can view the real-time technical logs for each node using the built-in web server or the serial USB port.
+
+
+- **Debug Level**: The current firmware is set to `DEBUG` for all core configurations (firmware/production/node-1-dome-motion.yaml:66).
+- **RC Logging**: To see raw RC stick inputs, check the logs for the `pulse_width` sensor on Node 1 (GPIO 4).
+- **Serial Monitor**: Use a baud rate of **115200** when connecting via USB (firmware/production/node-1-dome-motion.yaml:69).
+
+
+---
+
+
+## Common Issues Table
+
+The following table summarizes the most frequent technical roadblocks discovered during convention testing.
+
+
+| Symptom | Probable Cause | Recommended Fix |
+| :--- | :---: | :--- |
+| **No Logic LEDs** | Node 3 Serial Bus Jam | Reboot Node 1 (Dome Master) |
+| **Loud Audio Hum** | Ground Loop Issue | Check the Negative Bus Bar star-ground |
+| **Jerky Dome Rotation** | Servo Deadzone Drift | Re-calibrate Node 1 PWM levels |
+
+
+---
+
+
+[View Status Schematic](../architecture/electrical-schematic.md) | [View Calibration](calibration-guide.md)

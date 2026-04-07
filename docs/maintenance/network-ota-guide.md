@@ -1,64 +1,64 @@
-# <i data-lucide="wifi"></i> Network & OTA Guide
+# <i data-lucide="wifi"></i> Network OTA Guide
 
-This guide explains how to connect your droid to your local Wi-Fi, manage the "Droid Hub" (Home Assistant), and perform wireless firmware updates (OTA).
-
-
----
+> **TECHNICAL SPECIFICATIONS** | **SYSTEM: FIRMWARE UPDATE** | **PROTOCOL: ESPHOME WEB SERVER**
 
 
-## Initial Connectivity
-
-### 1. ESPHome Secrets
-
-Before flashing your ESP32s for the first time:
-1. Open `firmware/secrets.yaml.example`.
-2. Rename to `secrets.yaml`.
-3. Fill in your Wi-Fi SSID and Password.
-4. Optionally set a Static IP for each Node to ensure your bookmarks always work.
-
-
-### 2. First Flash
-
-- **USB Connection**: The first flash **MUST** be done via USB using the **ESPHome Dashboard** or command line.
-- **Node IDs**:
-  - `node-1-dome-master`
-  - `node-2-sound-hub`
-  - `node-3-led-distribution`
+The Wee2-D2 project uses Over-The-Air (OTA) updates to deploy firmware without the need for physical USB connections. This guide explains how to use the built-in ESPHome web server to upload compiled binary files.
 
 
 ---
 
 
-## Home Assistant Integration
+## System Connectivity
 
-ESPHome is natively designed for Home Assistant (HA).
-1. Open Home Assistant > **Settings > Devices & Services**.
-2. Your 3 droid Nodes should appear automatically under "Discovered."
-3. Click **Configure** and enter the API password (if you set one).
-4. **Control**: You can now add behavioral switches, battery sensors, and volume sliders to your HA dashboard.
+Updates are performed over a local 2.4GHz Wi-Fi network. Each node hosts its own web-based dashboard on port 80 (firmware/production/node-1-dome-motion.yaml:73) which includes a dedicated "Update" portal.
 
 
----
-
-
-## Over-The-Air (OTA) Updates
-
-Once the ESP32s are on your Wi-Fi, you never need to plug them in again.
-1. Open the ESPHome dashboard on your computer.
-2. Click **Edit** on the node you want to update.
-3. Make your changes (e.g., add a new WLED pattern or change a pin).
-4. Click **Install > Wirelessly**.
-5. Wait for the progress bar to complete. **The droid will reboot automatically.**
+- **Node 1 (Dome Master)**: `wee2d2-dome-master.local`
+- **Node 2 (Sound Hub)**: `wee2d2-sound-hub.local`
+- **Node 3 (LED Distro)**: Accessed via the WLED dashboard (`wled-dome.local`).
 
 
 ---
 
 
-## Mobile Command Center
+## Deployment Procedure (Web Browser)
 
-Each ESP32 hosts its own basic web server for quick control.
-- **Droid Hub**: `http://rc-sound-controller.local`
-- **Lights**: `http://dome-lights.local` (WLED Dashboard)
+Follow these steps to deploy a new firmware binary (`.bin`) to your droid nodes. This synchronization is verified for the `v2.6.0` firmware stack.
 
-> [!TIP]
-> **Bookmark these on your phone's home screen** for instant access to sound triggers and dome speed controls while at a convention or event.
+
+1. **Compile**: Use the ESPHome dashboard or CLI to compile your configuration into a binary file.
+2. **Navigate**: Open a web browser and navigate to the node's local URL or IP address.
+3. **Upload**: Select the "Choose File" option under the OTA section and pick your compiled `.bin`.
+4. **Monitor**: The node will receive the file, verify the integrity (firmware/production/node-1-dome-motion.yaml:62), and reboot automatically.
+
+
+---
+
+
+## Safety Standards & Recovery
+
+Never power down the droid during an active OTA update. The node will automatically reboot into its "Previous Stable" state if the upload is interrupted. 
+
+
+> [!WARNING]
+> **BOOTLOOPS**: If a node fails to reconnect to Wi-Fi after an update, it will launch a **Fallback Hotspot** named `WEE2-D2_SETUP`. Connect to this network to re-configure the Wi-Fi or rollback the firmware.
+
+
+---
+
+
+## Hardware Diagnostics
+
+You can verify the successfully deployed version in the "Diagnostic" cards on the Home Assistant dashboard or at the bottom of the node's local web page.
+
+
+- **OTA Password**: Ensure you have the `ota_password` from your `secrets.yaml` file ready.
+- **Signal Strength**: Updates are safest when the droid is within 10 feet of the Wi-Fi router. 
+- **Encryption**: All OTA transfers are secured using the ESPHome encryption protocol (firmware/production/node-1-dome-motion.yaml:59).
+
+
+---
+
+
+[View Status Schematic](../architecture/electrical-schematic.md) | [View Troubleshooting](troubleshooting.md)

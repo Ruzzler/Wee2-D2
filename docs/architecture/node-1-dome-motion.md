@@ -1,45 +1,71 @@
-# <i data-lucide="settings"></i> Node 1: Dome Motion
+# <i data-lucide="cpu"></i> Node 1: Dome Master
 
-> **TECHNICAL SPECIFICATIONS** | **ESPHome v3** | **ESP32-S3 Super Mini** | **Behavioral Master**
+> **TECHNICAL SPECIFICATIONS** | **SYSTEM: DOME MOTION MASTER** | **MODEL: ESP32-S3 SUPER MINI**
 
-| Component | Detail |
-| :--- | :--- |
-| **Node ID** | **1** |
-| **Role** | Behavioral Master & Dome Motion Controller |
-| **Source Code** | [`node-1-dome-motion.yaml`](../../firmware/production/node-1-dome-motion.yaml) |
-| **Visual ID** | ![Node 1 Master](../../assets/esp32-s3-super-mini.jpg) |
 
-## Core Features
+Node 1 is the primary behavioral controller for the Wee2-D2 project. It manages dome rotation, receives radio stick inputs from the HotRC receiver, and acts as the master for the ESP-NOW mesh communication bridge.
 
-- **Behavioral Orchestration**: Reads raw RC steering. Captures ESP-NOW dashboard triggers (`0xA0`, `0xA1`, `0xA2`) relayed from Node 2.
-- **ESP-NOW Heartbeat**: Broadcasts a 5-second `0xB0` continuous heartbeat back to the Dashboard to maintain mesh health validation.
-- **Dynamic Scripts**: Includes built-in behaviors for "Scan Patrol", "Animation Logic", and "WLED Sync Heartbeats" (via UART).
-- **Safety Interlocks**:
- - **Boot/Shutdown Stop**: Forces speed to 0% on controller power cycles.
- - **Auto-Detach**: Motor controller signal detaches after 5s of inactivity to prevent hum.
 
-## Pinout Configuration
+---
 
-| Connection | ESP32 Pin | Wire Color | Logic |
-| :--- | :---: | :--- | :--- |
-| **RC CH1 (Steer)** | GPIO 4 | Yellow | PWM Input (Pull-Down) |
-| **Wireless Link** | Ch. 11 | ESP-NOW | Mesh Heartbeat / Automation Rx |
-| **ESC PWM Out** | GPIO 7 | / White/Blue | PWM Output to goBILDA |
-| **WLED Sync** | GPIO 5 | Blue | Single Wire UART TX (JSON) |
 
-## ESP32-S3 Engineering Implementation
+## Hardware Specifications (Logic Focus)
 
-The following hardware-specific constraints are unique to the S3 Super Mini platform and were identified during the domehub integration audit:
+The **ESP32-S3 Super Mini** is selected for its compact footprint and high-speed radio performance required for real-time RC control.
 
-### 1. S3-Specific Constraints (Critical)
 
-- **RMT Memory Allocation**: The ESP32-S3 has exactly 192 RMT symbols for timing. When driving dual WS2812 strips, `rmt_symbols: 96` must be explicitly set for each strip to split hardware memory equally and prevent CPU timeout crashes.
-- **GPIO 9 Flash Conflict**: GPIO 9 is internally tied to the board's flash memory data bus. Do not use this pin for high-speed PWM or data signals as it will interfere with the bootloader.
-- **Wi-Fi Antenna Saturation**: To prevent disconnects on the compact Super Mini board, transmit power is limited to `8.5dB`.
+- **Processor**: Dual-Core ESP32-S3
+- **Voltage**: 5V Logic Rail (Mini560 Pro)
+- **GPIO Pins**: [Node Pinout Guide](../architecture/node-pinout-guide.md)
+- **Framework**: ESPHome (esp-idf)
 
-### 2. General ESPHome & Electrical Standards
 
-- **Update Intervals**: ESPHome's default 60-second update interval is overridden to `50ms` for the `pulse_width` sensor to ensure real-time RC responsiveness.
-- **Log Noise Suppression**: A `delta: 20.0` filter is applied to the RC stick sensor to ignore micro-fluctuations in the analog signal.
-- **Common Grounds**: All components in the dome MUST share a common ground reference with the ESP32 for reliable data transmission.
-- **Signal Stabilization**: `mode: INPUT_PULLDOWN` is used on the RC stick's GPIO pin to prevent floating signals and jitter.
+---
+
+
+## GPIO Pinout & Logic Assignments
+
+The Dome Master manages high-precision PWM signals for dome rotation and serial triggers for the lighting and sound subsystems.
+
+
+These settings are verified in the `v2.6.0-Dashboard` firmware sequence.
+
+
+| Assignment | GPIO Pin | Function | Citation |
+| :--- | :--- | :--- | :--- |
+| **Dome PWM** | **GPIO 7** | Motor Speed/Dir | [node-1.yaml:11](../../firmware/production/node-1-dome-motion.yaml#L11) |
+| **RC Input** | **GPIO 4** | HotRC Stick Data (X) | [node-1.yaml:12](../../firmware/production/node-1-dome-motion.yaml#L12) |
+| **WLED Data** | **GPIO 5** | Serial Out to Node 3 | [node-1.yaml:13](../../firmware/production/node-1-dome-motion.yaml#L13) |
+| **Dashboard** | **Internal** | Web API Port 80 | [node-1.yaml:73](../../firmware/production/node-1-dome-motion.yaml#L73) |
+
+
+---
+
+
+## Mesh Communication (ESP-NOW)
+
+Node 1 acts as the **Behavioral Master**. It listens for remote triggers and broadcasts 1-byte sound commands to Node 2 (Sound Hub) using the ESP-NOW protocol.
+
+
+1. **Sound Broadcast**: Sends triggers (e.g., `0x01` for Beep) wirelessly (firmware/production/node-1-dome-motion.yaml:81).
+2. **Dashboard Mesh**: Receives instruction packets from Node 2's web-dashboard and converts them into rotation or lighting events.
+3. **Safety Timeout**: If the mesh bridge is lost for >100ms, all movement is immediately paused to prevent runaway operation.
+
+
+---
+
+
+## Maintenance & Debugging
+
+You can access the real-time diagnostic logs for Node 1 over Wi-Fi (`wee2d2-dome-master.local`) or via the physical USB-C port at 115200 baud.
+
+
+- **OTA Password**: Required for wireless updates (firmware/production/node-1-dome-motion.yaml:62).
+- **Logger Level**: Set to `DEBUG` for all production configurations (firmware/production/node-1-dome-motion.yaml:66).
+- **Heartbeat**: Node 1 sends a diagnostic "keep-alive" ping every 5 seconds to maintain the mesh connection.
+
+
+---
+
+
+[View Master Schematic](electrical-schematic.md) | [View Power Architecture](power-architecture.md)
