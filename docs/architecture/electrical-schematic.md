@@ -36,6 +36,12 @@ flowchart TD
     BODY_BUCK -->|5V| NODE_2["Node 2 (Sound Hub)"]:::brain
     BODY_BUCK -->|5V| AUDIO["DFPlayer Mini"]:::audio
     ESC1 -->|5V BEC| RC1["Body Receiver"]:::signal
+
+    NODE_2 -->|UART| AUDIO
+    AUDIO -->|I2S Analog| AMP
+    AMP -->|Audio Out| SPK["Visaton 4W Speaker"]:::audio
+    RC1 -->|PWM| ESC1
+    RC1 -->|PWM| ESC2
   end
 
   subgraph SLIP_RING_BRIDGE["BRIDGE"]
@@ -51,7 +57,7 @@ flowchart TD
 
     BUCK_LEDS -->|5V| F_PSI["Front PSI Display"]:::lights
     BUCK_LEDS -->|5V| B_PSI["Back PSI Display"]:::lights
-    BUCK_LEDS -->|5V| F_LOGIC["Front logic Display"]:::lights
+    BUCK_LEDS -->|5V| F_LOGIC["Front Logic Display"]:::lights
     BUCK_LEDS -->|5V| B_LOGIC["Rear Logic Display"]:::lights
 
     BUCK_LOGIC -->|5V| DOME_WAGO_5V["5V Wago Hub (2x5)"]:::power
@@ -59,27 +65,20 @@ flowchart TD
     DOME_WAGO_5V -->|5V| NODE_3["Node 3 (Lights WLED)"]:::brain
     DOME_WAGO_5V -->|5V| NODE_1["Node 1 (Dome S3)"]:::brain
     DOME_WAGO_5V -->|5V| RC2["Dome Receiver"]:::signal
+
+    NODE_1 -->|PWM| DOME_ESC
+    NODE_3 -->|GPIO 18| F_LOGIC
+    NODE_3 -->|GPIO 19| B_LOGIC
+    NODE_3 -->|GPIO 21| F_PSI
+    NODE_3 -->|GPIO 22| B_PSI
   end
 
   subgraph INTERCONNECTS["COMMUNICATION"]
     TX1 -.->|2.4GHz| RC1
     TX2 -.->|2.4GHz| RC2
-    RC1 -->|PWM| ESC1
-    RC1 -->|PWM| ESC2
     RC2 -->|PWM| NODE_1
-    NODE_1 -->|PWM| DOME_ESC
-    
-    AUDIO -->|I2S Analog| AMP
-    AMP -->|Audio Out| SPK["Visaton 4W Speaker"]:::audio
-    
     NODE_1 <-.->|ESP-NOW Mesh| NODE_2
     NODE_1 -->|UART| NODE_3
-    NODE_2 -->|UART| AUDIO
-
-    NODE_3 -->|GPIO 18| F_LOGIC
-    NODE_3 -->|GPIO 19| B_LOGIC
-    NODE_3 -->|GPIO 21| F_PSI
-    NODE_3 -->|GPIO 22| B_PSI
   end
 
   %% --- ABSOLUTE TERMINATION: Styling & Interaction ---
