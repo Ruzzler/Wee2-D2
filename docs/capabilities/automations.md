@@ -23,7 +23,7 @@ The "Cantina Band" animation (ID 0x04) is the most complex behavioral script in 
 ### Synchronization Logic (545ms Interval)
 
 ```mermaid
-sequence_diagram
+sequenceDiagram
     participant N1 as Node 1 (Master)
     participant N2 as Node 2 (Audio)
     participant N3 as Node 3 (WLED)
@@ -60,7 +60,7 @@ sequence_diagram
 ## Operational Procedures
 
 ### Dome Speed Tuning
-The intensity of all animations is scaled by the `dome_speed_tuning` global variable. This can be adjusted via the **Neural Dashboard** (0.10 to 1.00) to account for different battery levels or floor surfaces.
+The intensity of all animations is scaled by the `dome_speed_tuning` global variable. This can be adjusted via the **Neural Dashboard** (0.10 to 1.00).
 
 ### Emergency Stop (E-Stop)
 Triggering the **Emergency Stop** (ID 0x99) immediately stops any running script, brakes the dome motor (Level 0.0), kills all audio, and sets the LED array to **Preset 0 (All Off)**.
