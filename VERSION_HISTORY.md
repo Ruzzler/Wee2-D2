@@ -9,6 +9,16 @@ This document tracks all production-verified firmware releases for the Wee2-D2. 
 > [!NOTE]
 > **NODE RENUMBERING**: Please note that in `v2.2.0`, the system nodes were physically renumbered. In `v1.x` and `v2.0` logs below, **Node 1** refers to the Body Hub and **Node 3** refers to the Dome Master. In `v2.2.0` and beyond, Node 1 officially became the Dome Master.
 
+## [v2.1.3] - 2026-04-07
+
+### Hardened Reflow & Normal Language Standard
+- **Aesthetic**: Implemented 1.5rem Baseline Grid and restored industrial list indentation.
+- **Structural**: Enforced H1-Lucide-Icon and Line-3-Tech-Tag hierarchy across all 20+ docs.
+- **Tone**: Stripped thematic jargon (Neural, Cyber, Pulse) in favor of Normal/Casual technical standard.
+- **Citations**: Integrated 150+ evidence-based firmware citations (`file:line`) linking docs to v2.6.0 source.
+- **Status**: **VERIFIED (Hardened)**
+
+
 ## [v2.1.2] - 2026-04-01
 
 ### Aesthetic Graduation & IA Stabilization

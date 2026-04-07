@@ -9,6 +9,14 @@ Welcome to the **Wee2-D2** project. This repository is a distributed microcontro
 ---
 
 
+## <i data-lucide="book-open"></i> Project Wiki
+
+The primary documentation for this project is hosted in the [Project Wiki](wiki/project-overview.md). Consult the wiki for technical specifications, node mesh architecture, and hardware manuals.
+
+
+---
+
+
 ## Project Structure
 
 The project is organized into three primary technical clusters: Architecture, Capabilities, and Hardware. This structure ensures that every droid node and hardware component is documented for the `v2.6.0-Dashboard` sequence.
