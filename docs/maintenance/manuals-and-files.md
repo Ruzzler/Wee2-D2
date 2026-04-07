@@ -19,6 +19,7 @@ These documents cover the high-level design of the droid and the specific pinout
 - [Node 1: Dome Master Manual](../architecture/node-1-dome-motion.md)
 - [Node 2: Sound Hub Manual](../architecture/node-2-sound-hub.md)
 - [Node 3: LED Distro Manual](../architecture/node-3-led-distribution.md)
+- [Web Control Dashboard Manual](../capabilities/web-control-dashboard.md)
 
 
 ---
