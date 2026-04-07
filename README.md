@@ -1,65 +1,77 @@
 # <i data-lucide="folder-git"></i> Wee2-D2
 
-> **TECHNICAL SPECIFICATIONS** | **SYSTEM: WEE2-D2** | **VERSION: v2.6.0-FINAL**
+> **TECHNICAL SPECIFICATIONS** | **SYSTEM: WEE2-D2 PROJECT** | **VERSION: v2.6.0-STABLE**
 
 
-Welcome to the **Wee2-D2** repository. This project is a distributed microcontroller mesh designed to power the acclaimed 3D files created by Mr. Baddeley. The droid uses a decentralized logic system (ESPHome) and a high-current power grid to provide cinematic movement and sound.
-
-
----
-
-
-## Project Philosophy
-
-This project is built for high-fidelity technical performance without the need for complex back-end servers. It is a **Wiki-Only** managed repository where the documentation acts as the source-of-truth for the "Golden State" firmware verified for the `v2.6.0-Dashboard` sequence.
-
-
-1. **Normal Casual Tone**: Use clear, normal, and straightforward language.
-2. **Minimalist Aesthetic**: Professional, functional design with high-fidelity typography and Lucide Icons.
-3. **Distributed Logic**: Movement (Node 1), Sound (Node 2), and Lighting (Node 3) are handled by separate nodes linked by an ESP-NOW mesh (firmware/production/node-1-dome-motion.yaml:92).
+Welcome to the **Wee2-D2** project. This repository is a distributed microcontroller mesh designed to power the acclaimed 3D files created by Mr. Baddeley. The droid uses decentralized logic (ESPHome) and a high-current power grid to provide cinematic movement, sound, and lighting visuals.
 
 
 ---
 
 
-## Getting Started: System Overview
+## Project Structure
 
-To begin working with the Wee2-D2 stack, you should first familiarize yourself with the three primary documentation clusters.
+The project is organized into three primary technical clusters: Architecture, Capabilities, and Hardware. This structure ensures that every droid node and hardware component is documented for the `v2.6.0-Dashboard` sequence.
 
 
-### 1. System Architecture
-This cluster covers the core "brain" of the droid, including the interactive schematic and the node mesh communication protocol.
+```text
+Wiki-Repository/
+├── docs/               # Technical Specifications
+│   ├── architecture/   # System Design & Mesh
+│   ├── capabilities/   # Movement & Audio Logic
+│   ├── hardware/       # Component Manuals & Specs
+│   └── maintenance/    # Calibration & Upkeep
+├── system/             # Wiki CSS & Visual Engine
+├── wiki/               # Project Overviews
+└── README.md           # This file
+```
+
+
+---
+
+
+## <i data-lucide="hard-drive"></i> Hardware Ecosystem
+
+These components are verified for architectural parity with the project's logic stack. Each link directs to a high-density manual including pinouts and wiring.
+
+
+*   **Piloting**: [HotRC DS-600](docs/hardware/hotrc-ds600-manual.md) (PWM Input to Node 1).
+*   **Drive System**: [Flipsky Mini FSESC 6.7 Pro](docs/hardware/hub-motor-manual.md) feeding L-faster Hub Motors.
+*   **Dome Motion**: [goBILDA 5203 Yellow Jacket](docs/hardware/gobilda-motor-manual.md) driven by an ESP-S3 Master.
+*   **Audio Logic**: [DFPlayer Mini](docs/hardware/dfplayer-mini-spec.md) triggered via ESP-NOW to a [TPA3118 60W Amp](docs/hardware/tpa3118-amp-manual.md).
+*   **Power Grid**: [MgcSTEM LVP-R1.5](docs/hardware/mgcstem-lvp-r15-manual.md) with a central Negative Bus Bar.
+*   **Lighting**: [GrnWave PSI Logics](docs/hardware/grnwave-psi-manual.md) and WLED array controllers.
+
+
+---
+
+
+## <i data-lucide="book-open"></i> Getting Started
+
+Follow the project documentation hierarchically to ensure a stable deployment of the droid logic.
+
+
+### 1. System Foundations
+Review the interactive schematic and the node mesh communication protocol to understand how the body and dome interact.
+- [Interactive Electrical Schematic](docs/architecture/electrical-schematic.md)
 - [Node Mesh Architecture](docs/architecture/node-mesh.md)
 - [Power Architecture](docs/architecture/power-architecture.md)
-- [Interactive Schematic](docs/architecture/electrical-schematic.md)
 
 
-### 2. Microcontroller Nodes
-This cluster catalogs the physical pinouts and specific logic for the ESP32-S3 and ESP32 hardware.
-- [Node 1: Dome Master](docs/architecture/node-1-dome-motion.md)
-- [Node 2: Sound Hub](docs/architecture/node-2-sound-hub.md)
-- [Node 3: LED Distribution](docs/architecture/node-3-led-distribution.md)
+### 2. Node Configuration
+Catalog the physical pinouts and specific logic for the ESP32-S3 and ESP32 hardware.
+- [Node Pinout & Wiring Guide](docs/architecture/node-pinout-guide.md)
+- [Installing Firmware](docs/maintenance/installing-firmware.md)
 
 
-### 3. Maintenance & Operation
-This cluster provides step-by-step guides for calibrating the drive system and managing battery runtime during conventions.
+### 3. Operation & Safety
+Consult the maintenance documentation before convention deployment to ensure battery safety and drive calibration.
 - [Battery Runtime Guide](docs/maintenance/battery-runtime-guide.md)
-- [System Calibration](docs/maintenance/calibration-guide.md)
-- [Troubleshooting](docs/maintenance/troubleshooting.md)
+- [System Calibration Guide](docs/maintenance/calibration-guide.md)
+- [Safety & Maintenance](docs/maintenance/safety-maintenance.md)
 
 
 ---
 
 
-## Engineering Standards
-
-1. **Heading Standard**: Use exactly **2 blank lines** before all secondary headers to ensure proper vertical rhythm.
-2. **Citation Standard**: All technical documentation must include evidence-based citations in the `(file:line)` format.
-3. **Lead-in Rule**: All tables and code blocks must have a descriptive lead-in sentence to prevent visual clumping.
-4. **Style Standard**: All visual styling is managed in the central [style.css](system/style.css) file.
-
-
----
-
-
-[View Full Bill of Materials](docs/bill-of-materials.md) | [View Version History](VERSION_HISTORY.md)
+[View Full Bill of Materials](docs/bill-of-materials.md) | [View Project Changelog](CHANGELOG.md)
