@@ -9,6 +9,7 @@ Locomotion is orchestrated by two **Flipsky Mini FSESC 6.7 Pro** motor controlle
 - **Continuous Rating**: 70 Amps
 - **System Voltage**: Powered directly by the raw output of the 20V battery -> 40A Low Voltage Cutoff -> Main Fuse Bus.
 - **VESC Tool Integration**: These controllers must be programmed via USB using the open-source VESC Tool software. They manage motor resistance mapping, over-current protection, and the precision start/stop braking required by heavy droids moving around convention floors.
+- **Production Configs**: [Left Motor Settings](../../firmware/esc-configs/left-motor-settings.xml) | [Right Motor Settings](../../firmware/esc-configs/right-motor-settings.xml) | [App Settings](../../firmware/esc-configs/left-app-settings.xml)
 
 ## Hub Motor Specifications
 

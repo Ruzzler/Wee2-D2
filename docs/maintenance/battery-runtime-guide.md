@@ -36,11 +36,15 @@ This represents the "Stationary" draw when the droid is on and the mesh is activ
 - **Duty Cycle**: Variable (Chatter every 15–30s).
 - **Average Load**: **~2.5 Watts**
 
-### **3. Drive System (Motors & Resistance)**
+### **3. Drive System (VESC Kinetic Peaks)**
 
-Cruising requirements for the **L-faster 200W Hub Motors** and the **goBILDA 52:1 Dome Gearmotor**.
-- **Active Drive**: High-torque movement on level convention surfaces (40% Duty Cycle). (**~21.0W**)
-- **Dome Rotation**: Persistent random sweep logic (20% Duty Cycle). (**~2.5W**)
+Recalibrated requirements based on your specific **15A Software Clamp** ($30A$ total battery draw).
+- **Current Limit Max**: 70A. (Software Clamped to **15A** for Wee2-D2).
+- **Voltage Cutoff**: Start at 16.5V for DeWalt batteries.
+- **Verified Configs**: [Motor Settings](../../firmware/esc-configs/left-motor-settings.xml) | [App Settings](../../firmware/esc-configs/left-app-settings.xml)
+- **Kinetic Peak Acceleration**: Instantaneous high-torque maneuvers. (**600W Peak / 30A**)
+- **Active Drive**: High-torque movement on level convention surfaces (40% Duty Cycle). (**~21.0W Avg**)
+- **The "7.5C" Sag Factor**: Pulling 30A from a 4Ah battery induces a **~2.5V dip**, triggering the 17.5V LVP cutoff even when at **50% charge**.
 - **Total Motion Average**: **~23.5 Watts**
 
 ---
