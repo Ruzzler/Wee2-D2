@@ -76,7 +76,7 @@ flowchart TD
 
     subgraph DOME_MOTION["DOME MOTION STACK"]
       DOME_ESC["goBILDA 1x15A ESC"]:::drive
-      DOME_MOTOR["Yellow Jacket Motor"]:::drive
+      DOME_MOTOR["Yellow Jacket Motor (5203 Series)"]:::drive
     end
 
     subgraph DOME_LIGHTS["CINEMATIC LED ARRAYS"]
@@ -92,7 +92,7 @@ flowchart TD
     DOME_WAGO_5V -->|5V| RC2
 
     NODE_1 -->|PWM| DOME_ESC
-    DOME_ESC ==>|12V-24V| DOME_MOTOR
+    DOME_ESC ==>|Bullet Connectors| DOME_MOTOR
 
     BUCK_LEDS -.->|5V Rail| F_PSI
     BUCK_LEDS -.->|5V Rail| B_PSI
