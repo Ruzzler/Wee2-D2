@@ -55,7 +55,8 @@ flowchart TD
  subgraph LOGIC_RAIL [5V LOGIC & SIGNALS]
  ESC1 -->|5V BEC| RC1["Body Receiver"]:::signal
  BODY_BUCK -->|5V| NODE_2["Node 2 (Sound Hub)"]:::brain
- NODE_2 -->|UART| AUDIO["DFPlayer Mini"]:::audio
+ BODY_BUCK -->|5V| AUDIO["DFPlayer Mini"]:::audio
+ NODE_2 -->|UART| AUDIO
  
  DOME_ESC -.->|Isolated| RC2["Dome Receiver"]:::signal
 
