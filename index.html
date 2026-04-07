@@ -1,147 +1,131 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
- <meta charset="UTF-8">
- <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <title>WEE2-D2</title>
- <link rel="preconnect" href="https://fonts.googleapis.com">
- <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
- <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Share+Tech+Mono&display=swap" rel="stylesheet">
- <link rel="stylesheet" href="system/style.css">
- <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
- <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
- <script src="https://cdn.jsdelivr.net/npm/svg-pan-zoom@3.6.1/dist/svg-pan-zoom.min.js"></script>
- <script src="https://unpkg.com/lucide@latest"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WEE2-D2</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="system/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/svg-pan-zoom@3.6.1/dist/svg-pan-zoom.min.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body>
- <div class="scan-bar"></div>
+  <div class="scan-bar"></div>
 
- <header>
- <button id="mobile-menu-toggle" aria-label="Toggle Menu">
- <span></span>
- <span></span>
- <span></span>
- </button>
- <div class="logo-container">
- <div class="logo-text">Wee2-D2 // Documentation</div>
- <div class="status-badge">System: Active</div>
- </div>
- <div class="header-info" style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-secondary);">
- COORDINATES: BADLANDS GARRISON // SECTOR 7G
- </div>
- </header>
+  <header>
+    <button id="mobile-menu-toggle" aria-label="Toggle Menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <div class="logo-container">
+      <div class="logo-text">Wee2-D2 // Documentation</div>
+      <div class="status-badge">System: Active</div>
+    </div>
+    <div class="header-info" style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-secondary);">
+      COORDINATES: BADLANDS GARRISON // SECTOR 7G
+    </div>
+  </header>
 
- <aside>
- <nav id="sidebar-nav">
- <h3>Project Documentation</h3>
- <ul>
- <li><a href="#" class="active" data-path="wiki/project-overview.md">Project Overview</a></li>
- </ul>
- 
- <h3>System Architecture</h3>
- <ul>
- <li><a href="#" data-path="docs/architecture/electrical-schematic.md">Interactive Schematic & Pinouts</a></li>
- <li><a href="#" data-path="docs/architecture/power-architecture.md">Power Distribution Network</a></li>
- </ul>
- 
- <h3>Hardware</h3>
- <ul>
- <li class="has-submenu">
- <div class="submenu-header">
- <a href="#" data-path="docs/bill-of-materials.md">Bill of Materials</a>
- <button class="submenu-toggle" aria-label="Toggle Submenu"></button>
- </div>
- <ul class="submenu">
- <li><a href="#" data-path="docs/architecture/node-1-dome-motion.md">Node 1: Dome Master</a></li>
- <li><a href="#" data-path="docs/architecture/node-2-sound-hub.md">Node 2: Sound Hub</a></li>
- <li><a href="#" data-path="docs/architecture/node-3-led-distribution.md">Node 3: LED Distribution</a></li>
- <li><a href="#" data-path="docs/hardware/gobilda-motor-manual.md">goBILDA Dome Motor & ESC</a></li>
- <li><a href="#" data-path="docs/hardware/flipsky-fsesc-67-pro-manual.md">Flipsky Drive Logic</a></li>
- <li><a href="#" data-path="docs/hardware/hub-motor-manual.md">Hub Motor</a></li>
- <li><a href="#" data-path="docs/hardware/dfplayer-mini-spec.md">DFPlayer Mini</a></li>
- <li><a href="#" data-path="docs/hardware/tpa3118-amp-manual.md">TPA3118 Amplifier</a></li>
- <li><a href="#" data-path="docs/hardware/grnwave-psi-manual.md">GrnWave PSI Hub</a></li>
- <li><a href="#" data-path="docs/capabilities/lights-and-sounds/led-system.md">WS2812B Logic Arrays</a></li>
- <li><a href="#" data-path="docs/hardware/mgcstem-lvp-r15-manual.md">LVP Protection</a></li>
- <li><a href="#" data-path="docs/hardware/hotrc-ds600-manual.md">HOTRC Controller</a></li>
- <li><a href="#" data-path="docs/hardware/hotrc-f06a-manual.md">HOTRC F-06A Receivers</a></li>
- <li><a href="#" data-path="docs/hardware/cnbtr-slip-ring-manual.md">CNBTR Slip Ring</a></li>
- </ul>
- </li>
- <li><a href="#" data-path="docs/mechanical/3d-print-assembly.md">3D Print & Assembly</a></li>
- </ul>
- 
- <h3>Capabilities & Movement</h3>
- <ul>
- <li><a href="#" data-path="docs/capabilities/lights-and-sounds/led-system.md">LED Arrays & Displays</a></li>
- <li><a href="#" data-path="docs/capabilities/lights-and-sounds/audio-system.md">Audio & Voice Triggers</a></li>
- <li><a href="#" data-path="docs/capabilities/movement/dome-rotation.md">Dome Rotation</a></li>
- <li><a href="#" data-path="docs/capabilities/movement/body-drive.md">Body Drive System</a></li>
- <li><a href="#" data-path="docs/capabilities/automations.md">Automations</a></li>
- </ul>
+  <aside>
+    <nav id="sidebar-nav">
+      <h3>Project Documentation</h3>
+      <ul>
+        <li><a href="#" class="active" data-path="wiki/project-overview.md">Project Overview</a></li>
+      </ul>
+      
+      <h3>System Architecture</h3>
+      <ul>
+        <li><a href="#" data-path="docs/architecture/electrical-schematic.md">Interactive Schematic & Pinouts</a></li>
+        <li><a href="#" data-path="docs/architecture/power-architecture.md">Power Distribution Network</a></li>
+      </ul>
+      
+      <h3>Hardware</h3>
+      <ul>
+        <li class="has-submenu">
+          <div class="submenu-header">
+            <a href="#" data-path="docs/bill-of-materials.md">Bill of Materials</a>
+            <button class="submenu-toggle" aria-label="Toggle Submenu"></button>
+          </div>
+          <ul class="submenu">
+            <li><a href="#" data-path="docs/architecture/node-1-dome-motion.md">Node 1: Dome Master</a></li>
+            <li><a href="#" data-path="docs/architecture/node-2-sound-hub.md">Node 2: Sound Hub</a></li>
+            <li><a href="#" data-path="docs/architecture/node-3-led-distribution.md">Node 3: LED Distribution</a></li>
+            <li><a href="#" data-path="docs/hardware/gobilda-motor-manual.md">goBILDA Dome Motor & ESC</a></li>
+            <li><a href="#" data-path="docs/hardware/flipsky-fsesc-67-pro-manual.md">Flipsky Drive Logic</a></li>
+            <li><a href="#" data-path="docs/hardware/hub-motor-manual.md">Hub Motor</a></li>
+            <li><a href="#" data-path="docs/hardware/dfplayer-mini-spec.md">DFPlayer Mini</a></li>
+            <li><a href="#" data-path="docs/hardware/tpa3118-amp-manual.md">TPA3118 Amplifier</a></li>
+            <li><a href="#" data-path="docs/hardware/grnwave-psi-manual.md">GrnWave PSI Hub</a></li>
+            <li><a href="#" data-path="docs/capabilities/lights-and-sounds/led-system.md">WS2812B Logic Arrays</a></li>
+            <li><a href="#" data-path="docs/hardware/mgcstem-lvp-r15-manual.md">LVP Protection</a></li>
+            <li><a href="#" data-path="docs/hardware/hotrc-ds600-manual.md">HOTRC Controller</a></li>
+            <li><a href="#" data-path="docs/hardware/hotrc-f06a-manual.md">HOTRC F-06A Receivers</a></li>
+            <li><a href="#" data-path="docs/hardware/cnbtr-slip-ring-manual.md">CNBTR Slip Ring</a></li>
+          </ul>
+        </li>
+        <li><a href="#" data-path="docs/mechanical/3d-print-assembly.md">3D Print & Assembly</a></li>
+      </ul>
+      
+      <h3>Capabilities & Movement</h3>
+      <ul>
+        <li><a href="#" data-path="docs/capabilities/lights-and-sounds/led-system.md">LED Arrays & Displays</a></li>
+        <li><a href="#" data-path="docs/capabilities/lights-and-sounds/audio-system.md">Audio & Voice Triggers</a></li>
+        <li><a href="#" data-path="docs/capabilities/movement/dome-rotation.md">Dome Rotation</a></li>
+        <li><a href="#" data-path="docs/capabilities/movement/body-drive.md">Body Drive System</a></li>
+        <li><a href="#" data-path="docs/capabilities/automations.md">Automations</a></li>
+      </ul>
 
- <h3>Microcontroller Nodes</h3>
- <ul>
- <li class="has-submenu">
- <div class="submenu-header">
- <a href="#" data-path="docs/architecture/node-mesh.md">Microcontroller Nodes</a>
- <button class="submenu-toggle" aria-label="Toggle Submenu"></button>
- </div>
- <ul class="submenu">
- <li><a href="#" data-path="docs/architecture/node-1-dome-motion.md">Node 1: Dome Motion</a></li>
- <li><a href="#" data-path="docs/architecture/node-2-sound-hub.md">Node 2: Sound Hub</a></li>
- <li><a href="#" data-path="docs/architecture/node-3-led-distribution.md">Node 3: LED Distribution</a></li>
- </ul>
- </li>
- <li><a href="#" data-path="docs/architecture/node-pinout-guide.md">Node Pinout Guide</a></li>
- <li><a href="#" data-path="docs/maintenance/installing-firmware.md">Installing Firmware</a></li>
- </ul>
- 
- <h3>Operation & Maintenance</h3>
- <ul>
- <li><a href="#" data-path="docs/maintenance/first-time-firmware-setup.md">First-Time Firmware Setup</a></li>
- <li><a href="#" data-path="docs/maintenance/calibration-guide.md">Calibration & Startup</a></li>
- <li><a href="#" data-path="docs/maintenance/battery-runtime-guide.md">Battery Runtime Guide</a></li>
- <li><a href="#" data-path="docs/maintenance/network-ota-guide.md">Network & OTA Config</a></li>
- <li><a href="#" data-path="docs/maintenance/safety-maintenance.md">Safety Protocols</a></li>
- <li><a href="#" data-path="docs/maintenance/troubleshooting.md">Troubleshooting Matrix</a></li>
- <li><a href="#" data-path="docs/maintenance/manuals-and-files.md">Manuals and Files</a></li>
- </ul>
- </nav>
- </aside>
+      <h3>Microcontroller Nodes</h3>
+      <ul>
+        <li class="has-submenu">
+          <div class="submenu-header">
+            <a href="#" data-path="docs/architecture/node-mesh.md">Microcontroller Nodes</a>
+            <button class="submenu-toggle" aria-label="Toggle Submenu"></button>
+          </div>
+          <ul class="submenu">
+            <li><a href="#" data-path="docs/architecture/node-1-dome-motion.md">Node 1: Dome Motion</a></li>
+            <li><a href="#" data-path="docs/architecture/node-2-sound-hub.md">Node 2: Sound Hub</a></li>
+            <li><a href="#" data-path="docs/architecture/node-3-led-distribution.md">Node 3: LED Distribution</a></li>
+          </ul>
+        </li>
+        <li><a href="#" data-path="docs/architecture/node-pinout-guide.md">Node Pinout Guide</a></li>
+        <li><a href="#" data-path="docs/maintenance/installing-firmware.md">Installing Firmware</a></li>
+      </ul>
+      
+      <h3>Operation & Maintenance</h3>
+      <ul>
+        <li><a href="#" data-path="docs/maintenance/first-time-firmware-setup.md">First-Time Firmware Setup</a></li>
+        <li><a href="#" data-path="docs/maintenance/calibration-guide.md">Calibration & Startup</a></li>
+        <li><a href="#" data-path="docs/maintenance/battery-runtime-guide.md">Battery Runtime Guide</a></li>
+        <li><a href="#" data-path="docs/maintenance/network-ota-guide.md">Network & OTA Config</a></li>
+        <li><a href="#" data-path="docs/maintenance/safety-maintenance.md">Safety Protocols</a></li>
+        <li><a href="#" data-path="docs/maintenance/troubleshooting.md">Troubleshooting Matrix</a></li>
+        <li><a href="#" data-path="docs/maintenance/manuals-and-files.md">Manuals and Files</a></li>
+      </ul>
+    </nav>
+  </aside>
 
- <main>
+  <main>
+    <div class="content-panel">
+      <div id="content">
+        <div class="loading-text" style="font-family: var(--font-mono); color: var(--accent-cyan);">Decrypting datastream...</div>
+      </div>
+    </div>
+  </main>
 
- <div class="content-panel">
- <div id="content">
- <div class="loading-text" style="font-family: var(--font-mono); color: var(--accent-cyan);">Decrypting datastream...</div>
- </div>
- </div>
- </main>
+  <div id="image-modal" class="image-modal">
+    <div class="modal-content">
+      <img id="modal-img" src="" alt="Technical View">
+      <div class="modal-caption" id="modal-caption"></div>
+    </div>
+    <span class="close-modal">&times;</span>
+  </div>
 
- <div id="image-modal" class="image-modal">
- <div class="modal-content">
- <img id="modal-img" src="" alt="Technical View">
- <div class="modal-caption" id="modal-caption"></div>
- </div>
- <span class="close-modal">&times;</span>
- </div>
-
- <div id="connectome-modal" class="connectome-modal">
- <div class="connectome-content">
- <div id="connectome-header">
- <div id="connectome-title">NEURAL CONNECTOME HUD</div>
- <div id="connectome-manual-link">
- <a id="full-manual-btn" href="#" style="font-family: var(--font-mono); color: var(--accent-cyan); text-decoration: none; border: 1px solid var(--accent-cyan); padding: 4px 10px; font-size: 0.7rem; border-radius: 4px;">ACCESS FULL MANUAL [EXTERNAL]</a>
- </div>
- </div>
- <div id="connectome-container">
- <!-- Rendered Mini Schematic -->
- </div>
- </div>
- <span class="close-connectome">&times;</span>
- </div>
-
- <script src="system/app.js"></script>
+  <script src="system/app.js"></script>
 </body>
 </html>
