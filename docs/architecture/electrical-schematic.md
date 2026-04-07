@@ -13,33 +13,41 @@ This document provides a high-fidelity visual and technical map of the Wee2-D2 e
 
 ```mermaid
 flowchart TD
-  subgraph TRANSMITTERS["TX INTERFACE"]
-    TX1["TX 1: Body Drive"]:::signal
-    TX2["TX 2: Dome Motion"]:::signal
-  end
-
   subgraph BODY_HUB["BODY COMPARTMENT"]
-    BAT["DeWalt 20V Battery"]:::power ==>|20V| LVC["LVP-R1.5 (40A)"]:::power
-    LVC ==>|20V| POS_FUSE["Positive Fuse Box"]:::power
-    LVC ==>|GND| NEG_BUS["Negative Bus Bar"]:::power
+    subgraph BODY_POWER["PRIMARY POWER GRID"]
+      BAT["DeWalt 20V Battery"]:::power ==>|20V| LVC["LVP-R1.5 (40A)"]:::power
+      LVC ==>|20V| POS_FUSE["Positive Fuse Box"]:::power
+      LVC ==>|GND| NEG_BUS["Negative Bus Bar"]:::power
+      BODY_BUCK["Body Logic Buck: Mini560 Pro (5A)"]:::logic
+    end
 
-    POS_FUSE ==>|20V| ESC1["FSESC (Left)"]:::drive
-    POS_FUSE ==>|20V| ESC2["FSESC (Right)"]:::drive
-    POS_FUSE ==>|20V| AMP["TPA3118 Amp"]:::audio
-    POS_FUSE ==>|20V| BODY_BUCK["Body Logic Buck: Mini560 Pro (5A)"]:::logic
+    subgraph BODY_DRIVE["DRIVE & RC STACK"]
+      ESC1["FSESC (Left)"]:::drive
+      ESC2["FSESC (Right)"]:::drive
+      RC1["Body Receiver"]:::signal
+    end
 
+    subgraph BODY_SOUND["NEURAL SOUND HUB"]
+      NODE_2["Node 2 (Sound Hub)"]:::brain
+      AUDIO["DFPlayer Mini"]:::audio
+      AMP["TPA3118 Amp"]:::audio
+      SPK["Visaton 4W Speaker"]:::audio
+    end
+
+    POS_FUSE ==>|20V| ESC1
+    POS_FUSE ==>|20V| ESC2
+    POS_FUSE ==>|20V| AMP
+    POS_FUSE ==>|20V| BODY_BUCK
+    
     NEG_BUS -.->|GND| ESC1
     NEG_BUS -.->|GND| ESC2
     NEG_BUS -.->|GND| AMP
     NEG_BUS -.->|GND| BODY_BUCK
 
-    BODY_BUCK -->|5V| NODE_2["Node 2 (Sound Hub)"]:::brain
-    BODY_BUCK -->|5V| AUDIO["DFPlayer Mini"]:::audio
-    ESC1 -->|5V BEC| RC1["Body Receiver"]:::signal
-
-    NODE_2 -->|UART| AUDIO
-    AUDIO -->|I2S Analog| AMP
-    AMP -->|Audio Out| SPK["Visaton 4W Speaker"]:::audio
+    BODY_BUCK -->|5V| NODE_2
+    BODY_BUCK -->|5V| AUDIO
+    ESC1 -->|5V BEC| RC1
+    
     RC1 -->|PWM| ESC1
     RC1 -->|PWM| ESC2
   end
@@ -49,31 +57,36 @@ flowchart TD
   end
 
   subgraph DOME_HUB["DOME COMPARTMENT"]
-    SLIP ==>|20V| DOME_WAGO_20V["20V Wago Hub (2x5)"]:::power
+    subgraph DOME_POWER_GRID["DOME POWER GRID"]
+      SLIP ==>|20V| DOME_WAGO_20V["20V Wago Hub (2x5)"]:::power
+      DOME_WAGO_20V ==>|20V| BUCK_LOGIC["Dome Logic Buck (5A)"]:::logic
+      DOME_WAGO_20V ==>|20V| BUCK_LEDS["Dome LED Buck (5A)"]:::logic
+      BUCK_LOGIC -->|5V| DOME_WAGO_5V["5V Wago Hub (2x5)"]:::power
+    end
 
-    DOME_WAGO_20V ==>|20V| DOME_ESC["goBILDA 15A ESC"]:::drive
-    DOME_WAGO_20V ==>|20V| BUCK_LOGIC["Dome Logic Buck (5A)"]:::logic
-    DOME_WAGO_20V ==>|20V| BUCK_LEDS["Dome LED Buck (5A)"]:::logic
+    subgraph DOME_LOGIC_HUB["DOME LOGIC HUB"]
+      NODE_1["Node 1 (Dome S3)"]:::brain
+      NODE_3["Node 3 (Lights WLED)"]:::brain
+      RC2["Dome Receiver"]:::signal
+    end
 
-    BUCK_LOGIC -->|5V| DOME_WAGO_5V["5V Wago Hub (2x5)"]:::power
+    subgraph DOME_MOTION["DOME MOTION STACK"]
+      DOME_ESC["goBILDA 15A ESC"]:::drive
+    end
 
-    DOME_WAGO_5V -->|5V| NODE_1["Node 1 (Dome S3)"]:::brain
-    DOME_WAGO_5V -->|5V| NODE_3["Node 3 (Lights WLED)"]:::brain
-    DOME_WAGO_5V -->|5V| RC2["Dome Receiver"]:::signal
-
-    %% Ghost Constraints (Push nodes apart to prevent line overlap)
-    DOME_WAGO_20V ~~~ DOME_WAGO_5V
-    NODE_1 ~~~ NODE_3
-    BUCK_LEDS ~~~ B_LOGIC
-
-    NODE_1 -->|PWM| DOME_ESC
-
-    subgraph DOME_LIGHTS["DOME LED ARRAYS"]
+    subgraph DOME_LIGHTS["CINEMATIC LED ARRAYS"]
       F_PSI["Front PSI LED"]:::lights
       B_PSI["Back PSI LED"]:::lights
       F_LOGIC["Front Logic LED"]:::lights
       B_LOGIC["Rear Logic LED"]:::lights
     end
+
+    DOME_WAGO_20V ==>|20V| DOME_ESC
+    DOME_WAGO_5V -->|5V| NODE_1
+    DOME_WAGO_5V -->|5V| NODE_3
+    DOME_WAGO_5V -->|5V| RC2
+
+    NODE_1 -->|PWM| DOME_ESC
 
     BUCK_LEDS -.->|5V Rail| F_PSI
     BUCK_LEDS -.->|5V Rail| B_PSI
@@ -86,16 +99,19 @@ flowchart TD
     NODE_3 -->|GPIO 19| B_LOGIC
   end
 
-  subgraph INTERCONNECTS["COMMUNICATION & SIGNAL MESH"]
+  subgraph COMM_SIGNAL_MESH["COMMUNICATION & SIGNAL MESH"]
+    TX1["TX 1: Body Drive"]:::signal
+    TX2["TX 2: Dome Motion"]:::signal
+    
     TX1 -.->|2.4GHz| RC1
     TX2 -.->|2.4GHz| RC2
     RC2 -->|PWM| NODE_1
     NODE_1 <-.->|ESP-NOW Mesh| NODE_2
     NODE_1 -->|UART| NODE_3
     
-    AUDIO -->|I2S Analog| AMP
-    AMP -->|Audio Out| SPK["Pyle 3.5-inch Car Speaker"]:::audio
     NODE_2 -->|UART| AUDIO
+    AUDIO -->|Analog| AMP
+    AMP -->|Audio Out| SPK2["Pyle 3.5-inch Car Speaker"]:::audio
   end
 
   %% --- ABSOLUTE TERMINATION: Styling & Interaction ---
