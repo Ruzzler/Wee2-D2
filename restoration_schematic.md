@@ -1,21 +1,14 @@
-![manual-hero](../../assets/chassis-electronics-layout.png)
-
-
-# <i data-lucide="zap"></i> Interactive Electrical Schematic
-
-> **TECHNICAL SPECIFICATIONS** | **SYSTEM: FULL INTERCONNECT** | **VERSION: v2.6.0-STABLE**
-
+# ⚡ Droid Electrical Schematic
 
 This document provides a high-fidelity visual and technical map of the Wee2-D2 electrical system. 
 
+![Chassis Electronics Layout](../../assets/chassis-electronics-layout.png)
 
 ---
-
 
 ## 🧠 Interactive System Architecture (Mermaid)
 > [!TIP]
 > **INTERACTIVE INTERFACE**: Click on any component node to instantly decrypt its technical manual in the databank.
-
 
 ```mermaid
 flowchart TD
@@ -98,16 +91,12 @@ flowchart TD
     classDef reserved fill:#444,stroke:#333,color:#fff
 ```
 
-
 ---
-
 
 ## 📌 Pinout Lookup Tables
 
-
 ### **MCU 1: Body Audio (ESP32-S3 Super Mini)**
 Primary controller for sounds and drive system monitoring.
-
 
 | Component | Pin (GPIO) | Mode | Notes |
 | :--- | :---: | :---: | :--- |
@@ -117,10 +106,8 @@ Primary controller for sounds and drive system monitoring.
 | **DFPlayer RX** | GPIO 16 | Input | From DFPlayer TX (Optional) |
 | **Wireless RX** | N/A | ESP-NOW | Listening for Dome triggers |
 
-
 ### **MCU 2: Lighting Controller (ESP32-Dev Board - WLED)**
 Dedicated high-density addressable LED matrix controller.
-
 
 | Component | Pin (GPIO) | Mode | Notes |
 | :--- | :---: | :---: | :--- |
@@ -131,10 +118,8 @@ Dedicated high-density addressable LED matrix controller.
 | **UDNS RX (Bus)** | 16 | Input | Serial Command In |
 | **Web UI** | N/A | WiFi | Port 80 (Pattern selection) |
 
-
 ### **MCU 3: Motion Controller (ESP32-S3 Super Mini)**
 Dedicated controller for 360° dome rotation and behavior broadcasting.
-
 
 | Component | Pin (GPIO) | Mode | Notes |
 | :--- | :---: | :---: | :--- |
@@ -144,18 +129,10 @@ Dedicated controller for 360° dome rotation and behavior broadcasting.
 | **Slip Ring C5** | N/A | Reserved | UNUSED / FUTURE EXPANSION |
 | **Slip Ring C6** | N/A | Reserved | UNUSED / FUTURE EXPANSION |
 
-
 ---
-
 
 ## 🛡️ Best Practices
 *   **Common Ground**: All ESP32 grounds, Receiver grounds, and ESC signal grounds **MUST** be tied together at a central star-ground point.
 *   **Dual Drive: Parallel Signal Isolation**: The drive system uses two Flipsky Mini 6.7 Pro ESCs. Because the remote is in **Mode 1 (Mixed)**, each ESC receives its own PWM/PPM signal independently. To prevent ground loops, **only ESC 1** provides power and a ground reference to the receiver; **ESC 2** is connected via the **Signal Pin only**.
 *   **Signal Cleanliness**: Since the dome motor is a large DC motor, ensure logic wires are positioned away from the main motor leads to prevent EMI noise.
 *   **BEC Isolation**: When using the goBILDA 15A ESC, isolate the Red (6V) wire if the logic bus is already powered by a 5V source. The Black (GND) must remain connected for signal reference.
-
-
----
-
-
-[View Power Architecture](power-architecture.md) | [View Node Pinout Guide](node-pinout-guide.md)

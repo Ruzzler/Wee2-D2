@@ -22,37 +22,64 @@ flowchart TD
     %% Component Definitions
     BATT["20V DeWalt Battery"]:::power
     LVP["MgcSTEM LVP-R1.5"]:::power
-    WAGO_BODY["Body Wago Hub"]:::power
-    WAGO_DOME["Dome Wago Hub"]:::power
-    SLIP_RING["CNBTR Slip Ring"]:::power
+    NEG_BUS["Negative Bus Bar (Star Ground)"]:::power
+    WAGO_BODY["Body Wago Hub (20V)"]:::power
+    SLIP_RING["CNBTR Slip Ring (Ganged)"]:::power
+    WAGO_DOME["Dome Wago Hub (20V)"]:::power
 
-    subgraph POWER_RAILS["BUCK CONVERTERS"]
-      BUCK_BODY["Body Logic 5V"]:::power
+    subgraph DRIVE_SYSTEM["HIGH CURRENT DRIVE"]
+      ESC_L["Flipsky FSESC (Left)"]:::drive
+      ESC_R["Flipsky FSESC (Right)"]:::drive
+      MOT_L["Hub Motor (L)"]:::drive
+      MOT_R["Hub Motor (R)"]:::drive
+    end
+
+    subgraph DOME_ACTUATORS["DOME MOTION & POWER"]
+      DOME_ESC["goBILDA 15A ESC"]:::drive
+      DOME_MOT["goBILDA motor"]:::drive
       BUCK_DOME["Dome Logic 5V"]:::power
       BUCK_LEDS["Dome LED 5V"]:::power
     end
 
+    subgraph REGULATION["LOGIC REGULATION"]
+      BUCK_BODY["Body Logic 5V"]:::power
+    end
+
     %% Connections - Power Path
     BATT ==>|20V| LVP
+    LVP ==>|20V| NEG_BUS
     LVP ==>|20V| WAGO_BODY
+    
+    WAGO_BODY ==>|20V| ESC_L
+    WAGO_BODY ==>|20V| ESC_R
     WAGO_BODY ==>|20V| BUCK_BODY
     WAGO_BODY ==>|20V| SLIP_RING
 
-    SLIP_RING ==>|20V| WAGO_DOME
+    ESC_L ==>|UVW| MOT_L
+    ESC_R ==>|UVW| MOT_R
+
+    SLIP_RING ==>|20V Ganged| WAGO_DOME
+    WAGO_DOME ==>|20V| DOME_ESC
     WAGO_DOME ==>|20V| BUCK_DOME
     WAGO_DOME ==>|20V| BUCK_LEDS
 
+    DOME_ESC ==>|DC| DOME_MOT
+
+    %% Grounding Reference (Star)
+    NEG_BUS -.- ESC_L
+    NEG_BUS -.- ESC_R
+    NEG_BUS -.- SLIP_RING
+
     %% Interaction Links
-    click BATT href "../maintenance/battery-runtime-guide.md" "DeWalt 20V (4Ah/6Ah/9Ah) Standard"
-    click LVP href "../hardware/mgcstem-lvp-r15-manual.md" "Active 17.5V Cutoff Protection"
-    click SLIP_RING href "../hardware/cnbtr-slip-ring-manual.md" "6-Circuit 20A Ganged Trunk"
-    click BUCK_LOGIC href "../bill-of-materials.md" "Mini560 Pro (5A) Logic"
-    click BUCK_LEDS href "../bill-of-materials.md" "Dedicated High-Current LED Supply (Mini560 Pro)"
+    click BATT href "../maintenance/battery-runtime-guide.md" "DeWalt 20V Standard"
+    click LVP href "../hardware/mgcstem-lvp-r15-manual.md" "Active 17.5V LVP"
+    click SLIP_RING href "../hardware/cnbtr-slip-ring-manual.md" "Ganged 4-Circuit Trunk"
+    click BUCK_BODY href "../bill-of-materials.md" "Body Logic (5A)"
+    click DOME_MOT href "../hardware/gobilda-motor-manual.md" "goBILDA Motor"
 
     classDef power fill:#ff9900,stroke:#333,stroke-width:2px,color:#000
     classDef logic fill:#00f2ff,stroke:#333,stroke-width:2px,color:#000
     classDef drive fill:#ff003c,stroke:#333,stroke-width:2px,color:#000
-    classDef lights fill:#ffb400,stroke:#333,stroke-width:2px,color:#000
 ```
 
 

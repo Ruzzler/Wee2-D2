@@ -54,16 +54,6 @@ Wireless communication between the body and dome is handled by the **ESP-NOW** b
 ---
 
 
-## Wiki-Only Governance
-
-This project is a **Wiki-Only** managed repository. The documentation is the source-of-truth for the hardware constraints and firmware settings.
-
-
-- **Neutral Standard**: Maintain a professional, straightforward, and casual tone. Avoid "thematic" jargon.
-- **Verification Rule**: Only document features that have been bench-tested and verified as functional.
-- **SOP Protocol**: Follow the standards mapping established in [AGENTS.md](../AGENTS.md).
-
-
 ---
 
 
