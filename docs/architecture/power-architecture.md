@@ -32,14 +32,14 @@ Wee2-D2 utilizes isolated voltage rails to protect sensitive logic from motor-in
 ### B. 5.1V Logic & Audio Rail
 | Component | Role | Regulation Source |
 | :--- | :--- | :--- |
-| [Node 1 (Motion)](node-1-dome-motion.md) | Dome motion processing | Mini560 Pro (5A) |
-| [Node 2 (Sound)](node-2-sound-hub.md) | Body logic & sounds | Mini560 Pro (5A) |
-| [Node 3 (LEDs)](node-3-led-distribution.md) | Dome lighting arrays | Mini560 Pro (5A) |
+| [Node 1 (Motion)](node-1-dome-motion.md) | Dome motion processing | Dome Logic Buck: Mini560 Pro (5A) |
+| [Node 2 (Sound)](node-2-sound-hub.md) | Body logic & sounds | Body Logic Buck: Mini560 Pro (5A) |
+| [Node 3 (LEDs)](node-3-led-distribution.md) | Dome lighting arrays | Dome LED Buck: Mini560 Pro (5A) |
 | [Body Receiver](node-pinout-guide.md#4-hardware-interconnects) | Body RC Input | FSESC 1 BEC (5V) |
-| [Dome Receiver](node-pinout-guide.md#4-hardware-interconnects) | Dome RC Input | Mini560 Pro (5A) - Logic |
-| [DFPlayer Mini](../hardware/dfplayer-mini-spec.md) | Audio Hub | Mini560 Pro (5A) - Logic |
-| LED Matrices (Logic) | Visual Display | Mini560 Pro (5A) - LEDs |
-| GrnWave PSIs | Circular Displays | Mini560 Pro (5A) - LEDs |
+| [Dome Receiver](node-pinout-guide.md#4-hardware-interconnects) | Dome RC Input | Dome Logic Buck: Mini560 Pro (5A) |
+| [DFPlayer Mini](../hardware/dfplayer-mini-spec.md) | Audio Hub | Body Logic Buck: Mini560 Pro (5A) |
+| LED Matrices (Logic) | Visual Display | Dome LED Buck: Mini560 Pro (5A) |
+| GrnWave PSIs | Circular Displays | Dome LED Buck: Mini560 Pro (5A) |
 
 ---
 
@@ -66,11 +66,11 @@ Every component in the droid (Nodes, ESCs, Receivers, and LED Strips) **MUST** s
 ### BEC & Buck Isolation
 To prevent ground loops and inductive spikes from motor transients, the following isolation rules are enforced:
 - **Body isolation**: Only **FSESC 1** provides BEC power to the body receiver. FSESC 2's BEC is isolated (not connected).
-- **Dome isolation**: The goBILDA 15A ESC's internal BEC is isolated. Logic power is sourced strictly from the ganged trunk via the Mini560 Pro (5A) Logic Rail.
+- **Dome isolation**: The goBILDA 15A ESC's internal BEC is isolated. Logic power is sourced strictly from the ganged trunk via the Dome Logic Buck: Mini560 Pro (5A).
 
 ### Processing Clamps
 - **Dynamic Speed Multiplier**: Node 1 provides a dashboard-adjustable speed cap (0.1 - 1.0) to ensure cinematic motion regardless of raw voltage level.
-- **Current Limiters**: Node 3 maintains an internal brightness limit of **3500mA** to protect the **Mini560 Pro (5A)** buck converters from thermal runaway.
+- **Current Limiters**: Node 3 maintains an internal brightness limit of **3500mA** to protect the Dome LED Buck: Mini560 Pro (5A) buck converters from thermal runaway.
 
 ---
 

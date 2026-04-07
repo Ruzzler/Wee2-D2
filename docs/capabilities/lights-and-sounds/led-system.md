@@ -6,7 +6,7 @@ The visual personality of Wee2-D2 is driven by high-density **WS2812B addressabl
 
 ## Power Constraints
 
-Because there are hundreds of LEDs in the dome, they have their own dedicated **Mini560 Pro (5A) Buck Converter (Buck 1)** tied to the 20V Ganged Wago Hub.
+Because there are hundreds of LEDs in the dome, they have their own dedicated **Dome LED Buck: Mini560 Pro (5A)** tied to the 20V Ganged Wago Hub.
 > [!CAUTION]
 > The LED matrices (especially the GrnWave PSIs) will instantly blow if exposed to more than 5.2V. By using the **Dual-Buck Strategy**, we isolate these high-current light sweeps from the sensitive logic pins of the ESP32.
 

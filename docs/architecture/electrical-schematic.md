@@ -28,7 +28,7 @@ flowchart TD
  POS_FUSE -->|20V| ESC1["FSESC (Left)"]:::drive
  POS_FUSE -->|20V| ESC2["FSESC (Right)"]:::drive
  POS_FUSE -->|20V| AMP["TPA3118 Amp"]:::audio
- POS_FUSE -->|20V| BODY_BUCK["Mini560 (5V Logic)"]:::logic
+ POS_FUSE -->|20V| BODY_BUCK["Body Logic Buck: Mini560 Pro (5A)"]:::logic
  POS_FUSE -->|20V| SLIP1["Slip C1/C2 (Motor)"]:::power
  POS_FUSE -->|20V| SLIP2["Slip C3/C4 (Logic)"]:::power
 
@@ -45,8 +45,8 @@ flowchart TD
  SLIP2["Slip Ring C3/C4 (Logic)"]:::power -->|20V| DOME_WAGO_20V
  
  DOME_WAGO_20V -->|20V| DOME_ESC["goBILDA 15A ESC"]:::drive
- DOME_WAGO_20V -->|20V| BUCK_LEDS["Mini560 Pro (5A): LEDs"]:::logic
- DOME_WAGO_20V -->|20V| BUCK_LOGIC["Mini560 Pro (5A): Logic"]:::logic
+ DOME_WAGO_20V -->|20V| BUCK_LEDS["Dome LED Buck: Mini560 Pro (5A)"]:::logic
+ DOME_WAGO_20V -->|20V| BUCK_LOGIC["Dome Logic Buck: Mini560 Pro (5A)"]:::logic
  
  BUCK_LEDS -->|5V| LEDS["LED Matrices"]:::lights
  BUCK_LOGIC -->|5V| DOME_WAGO_5V["5V Wago Hub (2x5)"]:::power

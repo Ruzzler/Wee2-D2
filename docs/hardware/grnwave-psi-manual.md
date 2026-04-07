@@ -12,7 +12,7 @@ The **GrnWave Circular PSI** is a high-density addressable LED display used for 
 > **5V DC ONLY**: These boards use **WS2812B-2020** micro-LEDs. They are extremely sensitive to over-voltage. Do not exceed **5.2V**.
 > - **DO NOT** power these from the 6V BEC of the goBILDA motor controller.
 > - **DO NOT** share power with 6V servos.
-> - **ALWAYS** use a high-quality 5V regulator (like the Mini560 Pro 5A).
+> - **Regulation**: All logic signals for these boards MUST come from the dedicated **Dome LED Buck: Mini560 Pro (5A)**.
 
 - **LED Type**: WS2812B-2020 (Addressable RGB with integrated IC).
 - **Pixel Count**: 76 LEDs per board.
