@@ -338,6 +338,8 @@ main {
     align-items: center;
     cursor: pointer;
     transition: all 0.3s ease;
+    flex-direction: column;
+    gap: 15px;
 }
 
 .modal-content {
@@ -500,6 +502,89 @@ main {
 .mermaid .node:hover rect, .mermaid .node:hover circle, .mermaid .node:hover polygon {
   stroke-width: 4px !important;
   box-shadow: 0 0 15px var(--accent-cyan);
+}
+
+/* --- NEURAL CONNECTOME HUD MODAL --- */
+.connectome-modal {
+    display: none;
+    position: fixed;
+    z-index: 2500;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(5, 5, 5, 0.9);
+    backdrop-filter: blur(15px);
+    justify-content: center;
+    align-items: center;
+}
+
+.connectome-content {
+    background: rgba(15, 15, 15, 0.95);
+    width: 600px;
+    max-width: 90%;
+    border: 2px solid var(--accent-cyan);
+    border-radius: 8px;
+    box-shadow: 0 0 50px rgba(0, 242, 255, 0.2);
+    padding: 30px;
+    position: relative;
+    overflow: hidden;
+}
+
+#connectome-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    border-bottom: 1px solid rgba(0, 242, 255, 0.2);
+    padding-bottom: 15px;
+}
+
+#connectome-title {
+    font-family: var(--font-mono);
+    color: var(--accent-cyan);
+    font-size: 1.1rem;
+    letter-spacing: 2px;
+}
+
+#connectome-container {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+    min-height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.close-connectome {
+    position: absolute;
+    top: 30px;
+    right: 40px;
+    color: var(--text-primary);
+    font-size: 40px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.close-connectome:hover {
+    color: var(--accent-cyan);
+    transform: rotate(90deg);
+}
+
+.connectome-content::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent-cyan), transparent);
+    animation: scan-left-right 4s linear infinite;
+}
+
+@keyframes scan-left-right {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
 }
 /* --- MOBILE MENU TOGGLE --- */
 #mobile-menu-toggle {

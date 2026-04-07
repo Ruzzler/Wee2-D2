@@ -409,4 +409,72 @@ document.addEventListener('DOMContentLoaded', () => {
  navigateToPath(defaultPath, false);
  }
  }
+
+ /* --- NEURAL CONNECTOME HUD LOGIC --- */
+ const connectomeModal = document.getElementById('connectome-modal');
+ const connectomeContainer = document.getElementById('connectome-container');
+ const fullManualBtn = document.getElementById('full-manual-btn');
+ const closeConnectome = document.querySelector('.close-connectome');
+
+ const CONNECTOME_DATA = {
+   NODE_1: {
+     title: "NODE 1: DOME MOTION MASTER",
+     manual: "docs/architecture/node-1-dome-motion.md",
+     logic: `graph TD; N1["Node 1 (Dome S3)"]:::brain; ESC["Dome ESC"]:::drive; RC["RC Receiver"]:::signal; N3["Node 3 (WLED)"]:::brain; RC -->|PWM| N1; N1 -->|PWM| ESC; N1 -->|UART| N3; classDef brain fill:#0066cc,stroke:#fff,color:#fff; classDef drive fill:#cc3300,stroke:#fff,color:#fff; classDef signal fill:#ffcc00,stroke:#333,color:#000;`
+   },
+   NODE_2: {
+     title: "NODE 2: NEURAL SOUND HUB",
+     manual: "docs/architecture/node-2-sound-hub.md",
+     logic: `graph TD; N2["Node 2 (Sound Hub)"]:::brain; DF["DFPlayer Mini"]:::audio; AMP["TPA3118 Amp"]:::audio; SPK["Pyle Speaker"]:::audio; N2 -->|UART| DF; DF -->|Analog| AMP; AMP -->|Audio| SPK; classDef brain fill:#0066cc,stroke:#fff,color:#fff; classDef audio fill:#99cc00,stroke:#000,color:#000;`
+   },
+   NODE_3: {
+     title: "NODE 3: LIGHTING DISTRIBUTION",
+     manual: "docs/architecture/node-3-led-distribution.md",
+     logic: `graph TD; N3["Node 3 (WLED)"]:::brain; F_LED["Front LEDs"]:::lights; R_LED["Rear LEDs"]:::lights; N3 -->|GPIO 18| F_LED; N3 -->|GPIO 19| R_LED; classDef brain fill:#0066cc,stroke:#fff,color:#fff; classDef lights fill:#6600cc,stroke:#fff,color:#fff;`
+   },
+   BAT: {
+     title: "DEWALT 20V POWER CORE",
+     manual: "maintenance/battery-runtime-guide.md",
+     logic: `graph TD; BAT["20V Battery"]:::power; LVC["LVP Protection"]:::power; BUS["Fuse/Bus Rail"]:::power; BAT ==>|20V| LVC; LVC ==>|20V| BUS; classDef power fill:#ff9900,stroke:#333,stroke-width:2px,color:#000;`
+   },
+   AUDIO: {
+     title: "AUDIO STACK CONSTRUCT",
+     manual: "capabilities/lights-and-sounds/audio-system.md",
+     logic: `graph LR; HUB["Node 2"]:::brain; DF["DFPlayer"]:::audio; AMP["TPA3118"]:::audio; HUB -->|UART| DF; DF -->|Analog| AMP; classDef brain fill:#0066cc,stroke:#fff,color:#fff; classDef audio fill:#99cc00,stroke:#000,color:#000;`
+   }
+ };
+
+ /**
+  * System-Global Connectome Trigger
+  * Call from Mermaid diagram via 'click nodeId call showConnectome("ID")'
+  */
+ window.showConnectome = async function(nodeId) {
+   const data = CONNECTOME_DATA[nodeId];
+   if (!data) return;
+
+   connectomeModal.style.display = 'flex';
+   document.getElementById('connectome-title').innerText = data.title;
+   fullManualBtn.onclick = (e) => {
+     e.preventDefault();
+     closeConnectomeModal();
+     navigateToPath(data.manual);
+   };
+
+   // Clean and Render
+   connectomeContainer.innerHTML = `<div class="mermaid">${data.logic}</div>`;
+   await mermaid.run({ nodes: [connectomeContainer.querySelector('.mermaid')] });
+   document.body.style.overflow = 'hidden';
+ };
+
+ function closeConnectomeModal() {
+   connectomeModal.style.display = 'none';
+   document.body.style.overflow = '';
+ }
+
+ // Close logic for Neural HUD
+ connectomeModal.addEventListener('click', (e) => {
+   if (e.target === connectomeModal || e.target === closeConnectome) {
+     closeConnectomeModal();
+   }
+ });
 });
