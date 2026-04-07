@@ -67,26 +67,16 @@ flowchart TD
     BUCK_LEDS ~~~ B_LOGIC
 
     NODE_1 -->|PWM| DOME_ESC
-
-    subgraph DOME_LIGHTS["DOME LED ARRAYS"]
-      F_PSI["Front PSI LED"]:::lights
-      B_PSI["Back PSI LED"]:::lights
-      F_LOGIC["Front Logic LED"]:::lights
-      B_LOGIC["Rear Logic LED"]:::lights
-    end
-
-    BUCK_LEDS -.->|5V Rail| F_PSI
-    BUCK_LEDS -.->|5V Rail| B_PSI
-    BUCK_LEDS -.->|5V Rail| F_LOGIC
-    BUCK_LEDS -.->|5V Rail| B_LOGIC
-
-    NODE_3 -->|GPIO 21| F_PSI
-    NODE_3 -->|GPIO 22| B_PSI
-    NODE_3 -->|GPIO 18| F_LOGIC
-    NODE_3 -->|GPIO 19| B_LOGIC
   end
 
-  subgraph INTERCONNECTS["COMMUNICATION"]
+  subgraph DOME_LED_STACK["CINEMATIC LIGHTING STACK"]
+    F_PSI["Front PSI LED"]:::lights
+    B_PSI["Back PSI LED"]:::lights
+    F_LOGIC["Front Logic LED"]:::lights
+    B_LOGIC["Rear Logic LED"]:::lights
+  end
+
+  subgraph INTERCONNECTS["COMMUNICATION & SIGNAL MESH"]
     TX1 -.->|2.4GHz| RC1
     TX2 -.->|2.4GHz| RC2
     RC2 -->|PWM| NODE_1
@@ -96,6 +86,18 @@ flowchart TD
     AUDIO -->|I2S Analog| AMP
     AMP -->|Audio Out| SPK["Pyle 3.5-inch Car Speaker"]:::audio
     NODE_2 -->|UART| AUDIO
+
+    %% Cinematic Data Mesh
+    NODE_3 -->|GPIO 21| F_PSI
+    NODE_3 -->|GPIO 22| B_PSI
+    NODE_3 -->|GPIO 18| F_LOGIC
+    NODE_3 -->|GPIO 19| B_LOGIC
+
+    %% High-Current LED Power Rail
+    BUCK_LEDS ==>|5V Rail| F_PSI
+    BUCK_LEDS ==>|5V Rail| B_PSI
+    BUCK_LEDS ==>|5V Rail| F_LOGIC
+    BUCK_LEDS ==>|5V Rail| B_LOGIC
   end
 
   %% --- ABSOLUTE TERMINATION: Styling & Interaction ---
@@ -146,4 +148,4 @@ For detailed wire colors, GPIO assignments, and hardware-specific triggers, cons
 
 ---
 
-[View Power Architecture](power-architecture.md)
+[View Power Architecture](power-architecture.md)
