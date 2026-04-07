@@ -19,18 +19,18 @@ flowchart TD
  end
 
  subgraph POWER_CORE [20V DC POWER CORE]
- BAT["DeWalt 20V Battery"]:::power --> LVC["LVP-R1.5 (40A)"]:::power
- LVC --> POS_FUSE["Positive Fuse Box"]:::power
- LVC --> NEG_BUS["Negative Bus Bar"]:::power
+ BAT["DeWalt 20V Battery"]:::power -->|20V| LVC["LVP-R1.5 (40A)"]:::power
+ LVC -->|20V| POS_FUSE["Positive Fuse Box"]:::power
+ LVC -->|GND| NEG_BUS["Negative Bus Bar"]:::power
  end
 
  subgraph HIGH_POWER [20V RAIL]
- POS_FUSE --> ESC1["FSESC (Left)"]:::drive
- POS_FUSE --> ESC2["FSESC (Right)"]:::drive
- POS_FUSE --> AMP["TPA3118 Amp"]:::audio
- POS_FUSE --> BODY_BUCK["Mini560 (5V Logic)"]:::logic
- POS_FUSE --> SLIP1["Slip C1/C2 (Motor)"]:::power
- POS_FUSE --> SLIP2["Slip C3/C4 (Logic)"]:::power
+ POS_FUSE -->|20V| ESC1["FSESC (Left)"]:::drive
+ POS_FUSE -->|20V| ESC2["FSESC (Right)"]:::drive
+ POS_FUSE -->|20V| AMP["TPA3118 Amp"]:::audio
+ POS_FUSE -->|20V| BODY_BUCK["Mini560 (5V Logic)"]:::logic
+ POS_FUSE -->|20V| SLIP1["Slip C1/C2 (Motor)"]:::power
+ POS_FUSE -->|20V| SLIP2["Slip C3/C4 (Logic)"]:::power
 
  NEG_BUS --> ESC1
  NEG_BUS --> ESC2
@@ -41,15 +41,15 @@ flowchart TD
  end
 
  subgraph DOME_DISTRIBUTION [DOME POWER]
- SLIP1["Slip Ring C1/C2 (Motor)"]:::power --> DOME_WAGO_20V["20V Wago Hub (2x5)"]:::power
- SLIP2["Slip Ring C3/C4 (Logic)"]:::power --> DOME_WAGO_20V
+ SLIP1["Slip Ring C1/C2 (Motor)"]:::power -->|20V| DOME_WAGO_20V["20V Wago Hub (2x5)"]:::power
+ SLIP2["Slip Ring C3/C4 (Logic)"]:::power -->|20V| DOME_WAGO_20V
  
- DOME_WAGO_20V --> DOME_ESC["goBILDA 15A ESC"]:::drive
- DOME_WAGO_20V --> BUCK_LEDS["Mini560 Pro (5A): LEDs"]:::logic
- DOME_WAGO_20V --> BUCK_LOGIC["Mini560 Pro (5A): Logic"]:::logic
+ DOME_WAGO_20V -->|20V| DOME_ESC["goBILDA 15A ESC"]:::drive
+ DOME_WAGO_20V -->|20V| BUCK_LEDS["Mini560 Pro (5A): LEDs"]:::logic
+ DOME_WAGO_20V -->|20V| BUCK_LOGIC["Mini560 Pro (5A): Logic"]:::logic
  
- BUCK_LEDS --> LEDS["LED Matrices"]:::lights
- BUCK_LOGIC --> DOME_WAGO_5V["5V Wago Hub (2x5)"]:::power
+ BUCK_LEDS -->|5V| LEDS["LED Matrices"]:::lights
+ BUCK_LOGIC -->|5V| DOME_WAGO_5V["5V Wago Hub (2x5)"]:::power
  end
 
  subgraph LOGIC_RAIL [5V LOGIC & SIGNALS]
@@ -59,9 +59,9 @@ flowchart TD
  
  DOME_ESC -.->|Isolated| RC2["Dome Receiver"]:::signal
 
- DOME_WAGO_5V --> NODE_3["Node 3 (Lights WLED)"]:::brain
- DOME_WAGO_5V --> NODE_1["Node 1 (Dome S3)"]:::brain
- DOME_WAGO_5V --> RC2
+ DOME_WAGO_5V -->|5V| NODE_3["Node 3 (Lights WLED)"]:::brain
+ DOME_WAGO_5V -->|5V| NODE_1["Node 1 (Dome S3)"]:::brain
+ DOME_WAGO_5V -->|5V| RC2
  end
 
  subgraph INTERCONNECTS [COMMUNICATION]
