@@ -65,36 +65,27 @@ flowchart TD
   RC2 -->|PWM| NODE_1
   NODE_1 -->|PWM| DOME_ESC
   AUDIO -->|Analog| AMP
-  NODE_1 <.->|ESP-NOW Mesh| NODE_2
+  NODE_1 <-.->|ESP-NOW Mesh| NODE_2
   NODE_1 -->|UART| NODE_3
   NODE_2 -->|UART| AUDIO
  end
 
- %% Technical Manual Links
- click BAT href "../maintenance/battery-runtime-guide.md" "Battery Guide"
- click LVC href "../hardware/mgcstem-lvp-r15-manual.md" "LVP Manual"
- click ESC1 href "../hardware/flipsky-fsesc-67-pro-manual.md" "ESC Manual"
- click ESC2 href "../hardware/flipsky-fsesc-67-pro-manual.md" "ESC Manual"
- click AUDIO href "../hardware/dfplayer-mini-spec.md" "Audio Hub Spec"
- click SLIP href "node-pinout-guide.md" "Slip Ring Pinouts"
- click BUCK_LOGIC href "../bill-of-materials.md" "BOM"
- click RC1 href "../hardware/hotrc-f06a-manual.md" "Receiver Manual"
- click RC2 href "../hardware/hotrc-f06a-manual.md" "Receiver Manual"
- click NODE_1 href "node-1-dome-motion.md" "Node 1"
- click NODE_2 href "node-2-sound-hub.md" "Node 2"
- click NODE_3 href "node-3-led-distribution.md" "Node 3"
- click DOME_ESC href "../hardware/gobilda-motor-manual.md" "Motor Manual"
- click BODY_BUCK href "../bill-of-materials.md" "BOM"
-
- %% Technical Tooltips
- tooltip BAT "Ganged DeWalt 20V Series (4-5Ah Typical)"
- tooltip LVC "17.5V Cutting Protection Floor"
- tooltip NODE_1 "ESP32-S3 | Dome Master Movement Controller"
- tooltip NODE_2 "ESP32-S3 | Neural Command Gateway & Sound Hub"
- tooltip NODE_3 "ESP32D | WLED Lighting Distribution Hub"
- tooltip SLIP "10A/Circuit Industrial Slip Ring"
- tooltip DOME_ESC "15A PWM Peak (30V Capable)"
- tooltip BUCK_LEDS "Dedicated High-Current LED Supply (Mini560 Pro)"
+ %% Technical Manual Links & Tooltips
+ click BAT href "../maintenance/battery-runtime-guide.md" "Ganged DeWalt 20V Series (4-5Ah Typical)"
+ click LVC href "../hardware/mgcstem-lvp-r15-manual.md" "17.5V Cutting Protection Floor"
+ click ESC1 href "../hardware/flipsky-fsesc-67-pro-manual.md" "60V/100A Peak ESC"
+ click ESC2 href "../hardware/flipsky-fsesc-67-pro-manual.md" "60V/100A Peak ESC"
+ click AUDIO href "../hardware/dfplayer-mini-spec.md" "Serial MP3 Module"
+ click SLIP href "node-pinout-guide.md" "10A/Circuit Industrial Slip Ring"
+ click BUCK_LOGIC href "../bill-of-materials.md" "Mini560 Pro (5A) Logic"
+ click RC1 href "../hardware/hotrc-f06a-manual.md" "Body RC Receiver"
+ click RC2 href "../hardware/hotrc-f06a-manual.md" "Dome RC Receiver"
+ click NODE_1 href "node-1-dome-motion.md" "ESP32-S3 | Dome Master Movement Controller"
+ click NODE_2 href "node-2-sound-hub.md" "ESP32-S3 | Neural Command Gateway & Sound Hub"
+ click NODE_3 href "node-3-led-distribution.md" "ESP32D | WLED Lighting Distribution Hub"
+ click DOME_ESC href "../hardware/gobilda-motor-manual.md" "15A PWM Peak (30V Capable)"
+ click BODY_BUCK href "../bill-of-materials.md" "Mini560 Pro (5A) Logic"
+ click BUCK_LEDS href "../bill-of-materials.md" "Dedicated High-Current LED Supply (Mini560 Pro)"
 
  classDef power fill:#ff9900,stroke:#333,stroke-width:2px,color:#000
  classDef drive fill:#cc3300,stroke:#fff,color:#fff
