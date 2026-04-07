@@ -1,58 +1,74 @@
 # <i data-lucide="battery"></i> Battery Runtime & Power Estimates
 
-> **POWER MANAGEMENT** | **SYSTEM: DEWALT 20V (4Ah)**
+> **POWER MANAGEMENT** | **SYSTEM: DEWALT 20V (4Ah/6Ah/9Ah)** | **LVP: 17.5V**
 
-This guide provides predicted operational durations for the Wee2-D2 based on the 4Ah 20V DeWalt battery system.
-
-## Energy Capacity (4Ah / 74Wh)
-
-The 20V DeWalt battery operates at **18.5V Nominal**. A 4Ah pack contains **74 Watt-Hours (Wh)** of raw energy. To protect the Lithium-ion cells, the [LVP-R1.5 Cutoff](../hardware/mgcstem-lvp-r15-manual.md) is set to 17.5V, leaving approximately **63Wh** of "Safe Usable" energy.
+This guide provides high-fidelity operational durations for the Wee2-D2 project, factoring in resistive line losses (I2R) and RF mesh drainage across the distributed node network.
 
 ---
 
-## Power Consumption Breakdown
+## Energy Capacity (Real-World Usable)
 
-*Real-world estimates for a "Con Day" duty cycle.*
+The 20V DeWalt battery system operates at **18.5V Nominal**. While raw Watt-Hour (Wh) ratings are calculated at the cell level, the **MgcSTEM LVP-R1.5** cutoff at **17.5V** creates a safety buffer, reducing the usable energy reservoir to protect the Li-ion chemistry.
 
-### **1. Baseline (Always-On Logic & Lights)**
-
-- **Logic Nodes**: 2x ESP32-S3 Super Minis (Nodes 1 & 2), 1x ESP32-D (Node 3), + RC Receivers.
-- **Lighting Pattern**: Front/Rear Logics + Circular PSIs @ 40% Brightness.
-- **Conversion Loss**: Buck converter overhead (15%).
-- **Estimated Load**: **11.0 Watts**
-
-### **2. Audio (Intermittent Chatter)**
-
-- **System**: DFPlayer Mini + TPA3118 Amp.
-- **Duty Cycle**: 20% (Droid chirps every 30 seconds).
-- **Estimated Load**: **2.0 Watts (Avg)**
-
-### **3. Drive Motion (2x 200W Hub Motors)**
-
-- **Conditions**: Level convention floor, slow walking pace.
-- **Duty Cycle**: 40% (Moving 24 minutes per hour).
-- **Throttling**: **15A Software Clamp** applied for endurance.
-- **Estimated Load**: **16.0 Watts (Avg)**
-
-### **4. Motion Controller (goBILDA 5203)**
-
-- **Condition**: Continuous random dome rotation.
-- **Duty Cycle**: 15%.
-- **Estimated Load**: **1.5 Watts (Avg)**
+| Pack Size | Raw Energy (18.5V Nom) | Usable Energy (17.5V LVP) | Sector Duty (Patrol) |
+| :--- | :---: | :---: | :--- |
+| **4Ah (Standard)** | 74Wh | **~60Wh** | Short Deployment |
+| **6Ah (FlexVolt)** | 111Wh | **~94Wh** | Professional Day |
+| **9Ah (FlexVolt)** | 166Wh | **~142Wh** | Endurance Duty |
 
 ---
 
-## Operational Estimates (4Ah Battery)
+## Power Consumption Breakdown (Deep-Audit)
 
-| Usage Mode | Total Average Load | Estimated Runtime |
-| :--- | :---: | :--- |
-| **Active Patrol** (Moving/Beeping) | **30.5 Watts** | **~2.0 Hours** |
-| **Booth Guard** (Static/Beeping) | **14.5 Watts** | **~4.3 Hours** |
-| **Stealth Mode** (Logic only/Dark) | **4.0 Watts** | **~15.5 Hours** |
+*Recalibrated calculations factoring in resistive losses and active logic mesh drainage.*
 
+### **1. Baseline (Always-On Signal & Logic)**
+
+This represents the "Stationary" draw when the droid is on and the mesh is active.
+- **RF Mesh Logic**: 3x ESP32 nodes (Nodes 1, 2, 3) + RC Receivers. Sustained Wi-Fi/ESP-NOW active draw. (**5.5W**)
+- **Cinematic Patterns**: Front/Rear Logics + Circular PSIs at 40% Global Brightness (Mixed pattern). (**18.0W**)
+- **Conversion & Line Loss**: Cumulative Mini560 Pro buck efficiency (90%) + I2R resistive loss through the slip ring. (**15% Overhead**)
+- **Total Baseline Average**: **~28.0 Watts**
+
+### **2. Audio System (Chatter & Processing)**
+
+- **System**: DFPlayer Mini + TPA3118 Amplifier + Pyle 3.5" Driver.
+- **Duty Cycle**: Variable (Chatter every 15–30s).
+- **Average Load**: **~2.5 Watts**
+
+### **3. Drive System (Motors & Resistance)**
+
+Cruising requirements for the **L-faster 200W Hub Motors** and the **goBILDA 52:1 Dome Gearmotor**.
+- **Active Drive**: High-torque movement on level convention surfaces (40% Duty Cycle). (**~21.0W**)
+- **Dome Rotation**: Persistent random sweep logic (20% Duty Cycle). (**~2.5W**)
+- **Total Motion Average**: **~23.5 Watts**
+
+---
+
+## Operational Estimates: Runtime Windows
+
+The following windows represent the **Active Deployment Time** remaining before the LVP system triggers an emergency shutdown.
+
+| Mode | Total Avg Load | 4Ah Runtime | 6Ah Runtime | 9Ah Runtime |
+| :--- | :---: | :---: | :---: | :---: |
+| **Active Patrol** (Moving/Beeping/Lights) | **54.0 Watts** | **~65 Min** | **~105 Min** | **~160 Min** |
+| **Booth Guard** (Static/Beeping/Lights) | **30.5 Watts** | **~115 Min** | **~185 Min** | **~280 Min** |
+| **Stealth Deck** (Logic Mesh Only) | **5.5 Watts** | **~11 Hours** | **~17 Hours** | **~25 Hours** |
+
+---
+
+## Tactical Power Advisories
+
+### 1. The "Voltage Sag" Threshold
+When the battery is below 30% Charge (approx. 18.2V), heavy torque commands to the hub motors can cause a temporary **Voltage Sag** that dips below the 17.5V LVP floor. This will trigger a sudden system shutdown even if the battery has remaining capacity. 
 > [!TIP]
-> **ENDURANCE UPGRADE**: For a full 6-hour convention day with minimal battery swaps, it is recommended to transition to a **6Ah or 9Ah** DeWalt FlexVolt pack, which provides **133Wh to 200Wh** of capacity.
+> **CON-FLOOR STRATEGY**: When at low SOC, reduce drive speed and dome rotation frequency to extend your operational window.
 
-## Battery Safety Note
+### 2. Trunk Thermal Management
+The 20V power trunk passing through the **CNBTR Slip Ring** carries the full current for the Dome Logic, LED, and Dome Motor bucks. Under full cinematic sequences, this trunk can dissipate significant heat.
+- **Cooling**: Ensure the dome's internal Mini560 Pro logic buck has adequate ventilation. 
+- **Isolation**: Keep high-current LED wiring isolated from Node 1 RX signal wires to prevent induction noise.
 
-The **MgcSTEM LVP-R1.5** will automatically cut power at **17.5V**. If your droid suddenly goes dark, please replace the battery immediately. **Do not** attempt to bypass the LVC, as discharging below 16V will cause permanent cell damage to your power tool batteries.
+---
+
+[View Master Schematic](../architecture/electrical-schematic.md) | [View BOM](../bill-of-materials.md)
