@@ -245,13 +245,208 @@ document.addEventListener('DOMContentLoaded', () => {
  } else {
  stack.push(parts[i]);
  }
+async function loadContent(path, pushHistory = true) {
+ if (pushHistory) {
+ window.history.pushState({ path: path }, '', '#' + path);
+ }
+ currentPath = path;
+ 
+ // Show hero only on Project Overview (README.md)
+ const heroSection = document.getElementById('hero');
+ if (heroSection) {
+ heroSection.style.display = (path === 'README.md') ? 'flex' : 'none';
+ }
+
+ contentDiv.innerHTML = '<div class="loading-text" style="font-family: var(--font-mono); color: var(--accent-cyan);">Decrypting datastream... [' + path + ']</div>';
+ 
+ try {
+ // Adjust path to root since app.js is now in root
+ const fullPath = './' + path + '?v=' + Date.now();
+ const response = await fetch(fullPath);
+ 
+ if (!response.ok) {
+ throw new Error('Could not access datastream: ' + response.statusText);
+ }
+ 
+ const markdown = await response.text();
+ 
+ // Render markdown or code block if it's a YAML file
+ if (path.endsWith('.yaml') || path.endsWith('.yml')) {
+ contentDiv.innerHTML = '<h1>' + path.split('/').pop() + '</h1><pre><code>' + escapeHtml(markdown) + '</code></pre>';
+ } else {
+ contentDiv.innerHTML = marked.parse(markdown);
+ 
+ // Trigger Mermaid rendering for any new diagrams
+ setTimeout(async () => {
+ try {
+ const nodes = contentDiv.querySelectorAll('.mermaid');
+ if (nodes.length === 0) return;
+
+ // Configuration for Mermaid
+ mermaid.initialize({ 
+ startOnLoad: false, 
+ theme: 'dark',
+ securityLevel: 'loose',
+ flowchart: { useMaxWidth: false, htmlLabels: true, curve: 'basis' }
+ });
+ 
+ // Run Mermaid rendering
+ await mermaid.run({ nodes: nodes });
+
+ // Define Icons Object
+ const icons = {
+ up: '<svg viewBox="0 0 16 16"><path d="M3.47 10.53a.75.75 0 001.06 0L8 7.06l3.47 3.47a.75.75 0 101.06-1.06l-4-4a.75.75 0 00-1.06 0l-4 4a.75.75 0 000 1.06z"/></svg>',
+ down: '<svg viewBox="0 0 16 16"><path d="M12.53 5.47a.75.75 0 00-1.06 0L8 8.94 4.53 5.47a.75.75 0 00-1.06 1.06l4 4a.75.75 0 001.06 0l4-4a.75.75 0 000-1.06z"/></svg>',
+ left: '<svg viewBox="0 0 16 16"><path d="M9.53 12.53a.75.75 0 01-1.06 0l-4-4a.75.75 0 010-1.06l4-4a.75.75 0 011.06 1.06L6.06 8l3.47 3.47a.75.75 0 010 1.06z"/></svg>',
+ right: '<svg viewBox="0 0 16 16"><path d="M6.47 3.47a.75.75 0 011.06 0l4 4a.75.75 0 010 1.06l-4 4a.75.75 0 01-1.06-1.06L9.94 8 6.47 4.53a.75.75 0 010-1.06z"/></svg>',
+ plus: '<svg viewBox="0 0 16 16"><path d="M7.75 2a.75.75 0 01.75.75V7h4.25a.75.75 0 010 1.5H8.5v4.25a.75.75 0 01-1.5 0V8.5H2.75a.75.75 0 010-1.5H7V2.75A.75.75 0 017.75 2z"/></svg>',
+ minus: '<svg viewBox="0 0 16 16"><path d="M2 7.75A.75.75 0 012.75 7h10.5a.75.75 0 010 1.5H2.75A.75.75 0 012 7.75z"/></svg>',
+ sync: '<svg viewBox="0 0 16 16"><path d="M1.705 8.005a.75.75 0 01.834.656 5.5 5.5 0 009.592 2.97l-1.204-1.204a.25.25 0 01.177-.427h3.646a.25.25 0 01.25.25v3.646a.25.25 0 01-.427.177l-1.38-1.38A7.001 7.001 0 011.05 8.84a.75.75 0 01.656-.834zM1.05 1.705v3.646a.25.25 0 00.25.25h3.646a.25.25 0 00.177-.427L3.744 3.793a5.5 5.5 0 019.592 2.97.75.75 0 101.498-.12 7.001 7.001 0 00-11.874-4.836l-1.38-1.38a.25.25 0 00-.427.177z"/></svg>',
+ expand: '<svg viewBox="0 0 16 16"><path d="M3.75 2a.75.75 0 01.75.75V4.5h1.75a.75.75 0 010 1.5H3.5a.75.75 0 01-.75-.75v-2.75A.75.75 0 013.75 2zM12.25 2a.75.75 0 01.75.75v2.75a.75.75 0 01-.75.75H9.75a.75.75 0 010-1.5h1.75V2.75a.75.75 0 01.75-.75zM3.75 14a.75.75 0 01-.75-.75v-2.75a.75.75 0 01.75-.75h2.75a.75.75 0 010 1.5H4.5v1.75a.75.75 0 01-.75-.75zM12.25 14a.75.75 0 01-.75-.75V11.5h-1.75a.75.75 0 010-1.5h2.75a.75.75 0 01.75.75v2.75a.75.75 0 01-.75.75z"/></svg>'
+ };
+
+ // Initialize each diagram with a custom toolbar and pan-zoom
+ nodes.forEach((container, index) => {
+ const svg = container.querySelector('svg');
+ if (!svg || container.dataset.initialized) return;
+
+ // Mark as initialized to avoid duplicates
+ container.dataset.initialized = 'true';
+
+ // 1. Initialize PAN-ZOOM
+ const pz = svgPanZoom(svg, {
+ zoomEnabled: true,
+ controlIconsEnabled: false,
+ fit: true,
+ center: true,
+ minZoom: 0.1,
+ maxZoom: 10,
+ zoomScaleSensitivity: 0.2
+ });
+
+ // 2. Create Navigation Cluster (Bottom-Right)
+ const navCluster = document.createElement('div');
+ navCluster.className = 'diagram-nav-cluster';
+ 
+ const gridItems = [
+ { type: 'spacer' },
+ { type: 'btn', icon: icons.up, title: 'Pan Up', action: () => pz.panBy({x: 0, y: -80}) },
+ { type: 'btn', icon: icons.plus, title: 'Zoom In', action: () => pz.zoomIn() },
+ { type: 'btn', icon: icons.left, title: 'Pan Left', action: () => pz.panBy({x: -80, y: 0}) },
+ { type: 'btn', icon: icons.sync, title: 'Fit to Screen', action: () => pz.reset() },
+ { type: 'btn', icon: icons.right, title: 'Pan Right', action: () => pz.panBy({x: 80, y: 0}) },
+ { type: 'spacer' },
+ { type: 'btn', icon: icons.down, title: 'Pan Down', action: () => pz.panBy({x: 0, y: 80}) },
+ { type: 'btn', icon: icons.minus, title: 'Zoom Out', action: () => pz.zoomOut() }
+ ];
+
+ gridItems.forEach(item => {
+ if (item.type === 'spacer') {
+ const spacer = document.createElement('div');
+ spacer.className = 'toolbar-spacer';
+ navCluster.appendChild(spacer);
+ } else {
+ const btn = document.createElement('button');
+ btn.className = 'toolbar-btn';
+ btn.innerHTML = item.icon;
+ btn.title = item.title;
+ btn.onclick = (e) => {
+ e.preventDefault();
+ e.stopPropagation();
+ item.action();
+ };
+ navCluster.appendChild(btn);
+ }
+ });
+
+ // 3. Create Fullscreen Button (Top-Right)
+ const fsBtn = document.createElement('button');
+ fsBtn.className = 'diagram-fs-btn';
+ fsBtn.innerHTML = icons.expand;
+ fsBtn.title = 'View Fullscreen';
+ fsBtn.onclick = (e) => {
+ e.preventDefault();
+ e.stopPropagation();
+ toggleFullscreen(container);
+ };
+
+ container.appendChild(navCluster);
+ container.appendChild(fsBtn);
+
+ // Handle resize events
+ window.addEventListener('resize', () => {
+ pz.resize();
+ pz.fit();
+ pz.center();
+ });
+ });
+ } catch (e) {
+ console.error("Mermaid Decryption Error:", e);
+ }
+ }, 300);
+ }
+ 
+ // Initialize Lucide Icons for rendered content
+ if (typeof lucide !== 'undefined') {
+ lucide.createIcons();
+ }
+
+ // Scroll to top
+ window.scrollTo({ top: 0, behavior: 'smooth' });
+
+ } catch (error) {
+ contentDiv.innerHTML = `
+ <div style="color: var(--accent-red); padding: 20px; border: 1px solid var(--accent-red);">
+ <h2 style="margin-top:0">CRITICAL ERROR: ACCESS DENIED</h2>
+ <p>${error.message}</p>
+ <p style="font-family: var(--font-mono); font-size: 0.8rem; margin-top: 10px;">
+ NOTE: Browsers block local file access (CORS) when opening file:// directly. 
+ Please run a local web server (e.g., 'npx http-server') to view the wiki properly.
+ </p>
+ </div>
+ `;
+ }
+ }
+
+ // Helper for Fullscreen Toggle
+ function toggleFullscreen(element) {
+ if (!document.fullscreenElement) {
+ element.requestFullscreen().catch(err => {
+ console.error(`Error attempting to enable fullscreen mode: ${err.message}`);
+ });
+ } else {
+ document.exitFullscreen();
+ }
+ }
+
+ /**
+ * Resolve a relative path against a base path, handling GitHub Pages subdirectories
+ */
+ function resolvePath(base, relative) {
+ // If it's a root-relative path within the Documentation project
+ if (relative.startsWith('docs/') || relative.startsWith('firmware/') || relative.startsWith('archive/') || relative.startsWith('assets/')) {
+ return relative;
+ }
+
+ // Logic for handling relative path traversal (../)
+ const stack = base.split('/');
+ const parts = relative.split('/');
+ stack.pop(); // remove current filename from stack
+ 
+ for (let i = 0; i < parts.length; i++) {
+ if (parts[i] === '.' || parts[i] === '') continue;
+ if (parts[i] === '..') {
+ if (stack.length > 0) stack.pop();
+ } else {
+ stack.push(parts[i]);
+ }
  }
  
  return stack.join('/');
  }
 
  // Helper for updating active state and navigating
- function navigateToPath(path, pushHistory = true) {
+ window.navigateToPath = function(path, pushHistory = true) {
  const allLinks = document.querySelectorAll('#sidebar-nav a');
  allLinks.forEach(l => {
  const isActive = l.getAttribute('data-path') === path;
@@ -305,8 +500,9 @@ document.addEventListener('DOMContentLoaded', () => {
  // Check both href and xlink:href (for older SVG links)
  const href = target.getAttribute('href') || target.getAttribute('xlink:href');
  
- // Only intercept relative markdown/yaml links
- if (href && !href.startsWith('http') && !href.startsWith('#')) {
+ // Guard: Only intercept relative markdown/yaml links
+ // This allows interactive callbacks like window.showConnectome to pass through
+ if (href && !href.startsWith('http') && !href.startsWith('#') && !href.startsWith('javascript:')) {
  if (href.endsWith('.md') || href.endsWith('.yaml') || href.endsWith('.yml')) {
  e.preventDefault();
  const newPath = resolvePath(currentPath, href);
@@ -407,74 +603,85 @@ document.addEventListener('DOMContentLoaded', () => {
  // Using replaceState to correctly anchor the first page into history
  window.history.replaceState({ path: defaultPath }, '', '#' + defaultPath);
  navigateToPath(defaultPath, false);
- }
- }
-
- /* --- NEURAL CONNECTOME HUD LOGIC --- */
- const connectomeModal = document.getElementById('connectome-modal');
- const connectomeContainer = document.getElementById('connectome-container');
- const fullManualBtn = document.getElementById('full-manual-btn');
- const closeConnectome = document.querySelector('.close-connectome');
-
- const CONNECTOME_DATA = {
-   NODE_1: {
-     title: "NODE 1: DOME MOTION MASTER",
-     manual: "docs/architecture/node-1-dome-motion.md",
-     logic: `graph TD; N1["Node 1 (Dome S3)"]:::brain; ESC["Dome ESC"]:::drive; RC["RC Receiver"]:::signal; N3["Node 3 (WLED)"]:::brain; RC -->|PWM| N1; N1 -->|PWM| ESC; N1 -->|UART| N3; classDef brain fill:#0066cc,stroke:#fff,color:#fff; classDef drive fill:#cc3300,stroke:#fff,color:#fff; classDef signal fill:#ffcc00,stroke:#333,color:#000;`
-   },
-   NODE_2: {
-     title: "NODE 2: NEURAL SOUND HUB",
-     manual: "docs/architecture/node-2-sound-hub.md",
-     logic: `graph TD; N2["Node 2 (Sound Hub)"]:::brain; DF["DFPlayer Mini"]:::audio; AMP["TPA3118 Amp"]:::audio; SPK["Pyle Speaker"]:::audio; N2 -->|UART| DF; DF -->|Analog| AMP; AMP -->|Audio| SPK; classDef brain fill:#0066cc,stroke:#fff,color:#fff; classDef audio fill:#99cc00,stroke:#000,color:#000;`
-   },
-   NODE_3: {
-     title: "NODE 3: LIGHTING DISTRIBUTION",
-     manual: "docs/architecture/node-3-led-distribution.md",
-     logic: `graph TD; N3["Node 3 (WLED)"]:::brain; F_LED["Front LEDs"]:::lights; R_LED["Rear LEDs"]:::lights; N3 -->|GPIO 18| F_LED; N3 -->|GPIO 19| R_LED; classDef brain fill:#0066cc,stroke:#fff,color:#fff; classDef lights fill:#6600cc,stroke:#fff,color:#fff;`
-   },
-   BAT: {
-     title: "DEWALT 20V POWER CORE",
-     manual: "maintenance/battery-runtime-guide.md",
-     logic: `graph TD; BAT["20V Battery"]:::power; LVC["LVP Protection"]:::power; BUS["Fuse/Bus Rail"]:::power; BAT ==>|20V| LVC; LVC ==>|20V| BUS; classDef power fill:#ff9900,stroke:#333,stroke-width:2px,color:#000;`
-   },
-   AUDIO: {
-     title: "AUDIO STACK CONSTRUCT",
-     manual: "capabilities/lights-and-sounds/audio-system.md",
-     logic: `graph LR; HUB["Node 2"]:::brain; DF["DFPlayer"]:::audio; AMP["TPA3118"]:::audio; HUB -->|UART| DF; DF -->|Analog| AMP; classDef brain fill:#0066cc,stroke:#fff,color:#fff; classDef audio fill:#99cc00,stroke:#000,color:#000;`
-   }
- };
-
- /**
-  * System-Global Connectome Trigger
-  * Call from Mermaid diagram via 'click nodeId call showConnectome("ID")'
-  */
- window.showConnectome = async function(nodeId) {
-   const data = CONNECTOME_DATA[nodeId];
-   if (!data) return;
-
-   connectomeModal.style.display = 'flex';
-   document.getElementById('connectome-title').innerText = data.title;
-   fullManualBtn.onclick = (e) => {
-     e.preventDefault();
-     closeConnectomeModal();
-     navigateToPath(data.manual);
-   };
-
-   // Clean and Render
-   connectomeContainer.innerHTML = `<div class="mermaid">${data.logic}</div>`;
-   await mermaid.run({ nodes: [connectomeContainer.querySelector('.mermaid')] });
-   document.body.style.overflow = 'hidden';
- };
-
- function closeConnectomeModal() {
-   connectomeModal.style.display = 'none';
-   document.body.style.overflow = '';
- }
-
- // Close logic for Neural HUD
- connectomeModal.addEventListener('click', (e) => {
-   if (e.target === connectomeModal || e.target === closeConnectome) {
-     closeConnectomeModal();
-   }
- });
+    }
+  }
 });
+
+/* --- SYSTEM-GLOBAL NEURAL CONNECTOME HUB --- */
+const CONNECTOME_DATA = {
+  NODE_1: {
+    title: "NODE 1: DOME MOTION MASTER",
+    manual: "docs/architecture/node-1-dome-motion.md",
+    logic: `graph TD; N1["Node 1 (Dome S3)"]:::brain; ESC["Dome ESC"]:::drive; RC["RC Receiver"]:::signal; N3["Node 3 (WLED)"]:::brain; RC -->|PWM| N1; N1 -->|PWM| ESC; N1 -->|UART| N3; classDef brain fill:#0066cc,stroke:#fff,color:#fff; classDef drive fill:#cc3300,stroke:#fff,color:#fff; classDef signal fill:#ffcc00,stroke:#333,color:#000;`
+  },
+  NODE_2: {
+    title: "NODE 2: NEURAL SOUND HUB",
+    manual: "docs/architecture/node-2-sound-hub.md",
+    logic: `graph TD; N2["Node 2 (Sound Hub)"]:::brain; DF["DFPlayer Mini"]:::audio; AMP["TPA3118 Amp"]:::audio; SPK["Pyle Speaker"]:::audio; N2 -->|UART| DF; DF -->|Analog| AMP; AMP -->|Audio| SPK; classDef brain fill:#0066cc,stroke:#fff,color:#fff; classDef audio fill:#99cc00,stroke:#000,color:#000;`
+  },
+  NODE_3: {
+    title: "NODE 3: LIGHTING DISTRIBUTION",
+    manual: "docs/architecture/node-3-led-distribution.md",
+    logic: `graph TD; N3["Node 3 (WLED)"]:::brain; F_LED["Front LEDs"]:::lights; R_LED["Rear LEDs"]:::lights; N3 -->|GPIO 18| F_LED; N3 -->|GPIO 19| R_LED; classDef brain fill:#0066cc,stroke:#fff,color:#fff; classDef lights fill:#6600cc,stroke:#fff,color:#fff;`
+  },
+  BAT: {
+    title: "DEWALT 20V POWER CORE",
+    manual: "docs/maintenance/battery-runtime-guide.md",
+    logic: `graph TD; BAT["20V Battery"]:::power; LVC["LVP Protection"]:::power; BUS["Fuse/Bus Rail"]:::power; BAT ==>|20V| LVC; LVC ==>|20V| BUS; classDef power fill:#ff9900,stroke:#333,stroke-width:2px,color:#000;`
+  },
+  AUDIO: {
+    title: "AUDIO STACK CONSTRUCT",
+    manual: "docs/capabilities/lights-and-sounds/audio-system.md",
+    logic: `graph LR; HUB["Node 2"]:::brain; DF["DFPlayer"]:::audio; AMP["TPA3118"]:::audio; HUB -->|UART| DF; DF -->|Analog| AMP; classDef brain fill:#0066cc,stroke:#fff,color:#fff; classDef audio fill:#99cc00,stroke:#000,color:#000;`
+  }
+};
+
+/**
+ * System-Global Connectome Trigger
+ * Fixed: Moved to primary global scope to ensure Mermaid event binding.
+ */
+window.showConnectome = async function(nodeId) {
+  const data = CONNECTOME_DATA[nodeId];
+  const modal = document.getElementById('connectome-modal');
+  const container = document.getElementById('connectome-container');
+  const fullManualBtn = document.getElementById('full-manual-btn');
+  const closeBtn = document.querySelector('.close-connectome');
+
+  if (!data || !modal || !container) return;
+
+  // Show Modal
+  modal.style.display = 'flex';
+  document.getElementById('connectome-title').innerText = data.title;
+  document.body.style.overflow = 'hidden';
+
+  // Wire deep-link
+  fullManualBtn.onclick = (e) => {
+    e.preventDefault();
+    modal.style.display = 'none';
+    document.body.style.overflow = '';
+    // Navigate using the custom handler
+    if (typeof window.navigateToPath === 'function') {
+      window.navigateToPath(data.manual);
+    } else {
+      window.location.hash = '#' + data.manual;
+    }
+  };
+
+  // Wire close logic once
+  if (!modal.dataset.listenerSet) {
+    const closeModalHandler = () => {
+      modal.style.display = 'none';
+      document.body.style.overflow = '';
+    };
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal || e.target === closeBtn) closeModalHandler();
+    });
+    modal.dataset.listenerSet = 'true';
+  }
+
+  // Render Sub-Logic
+  container.innerHTML = `<div class="mermaid">${data.logic}</div>`;
+  // Initialize Mermaid if not done, but ensure securityLevel is loose
+  mermaid.initialize({ theme: 'dark', securityLevel: 'loose' });
+  await mermaid.run({ nodes: [container.querySelector('.mermaid')] });
+};
