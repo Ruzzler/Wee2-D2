@@ -19,83 +19,136 @@ This document provides a high-fidelity visual and technical map of the Wee2-D2 e
 
 ```mermaid
 flowchart TD
-    subgraph TRANSMITTERS [HOTRC DS-600]
-        TX1["TX 1: Body Drive"]:::signal
-        TX2["TX 2: Motion Controller"]:::signal
+  subgraph BODY_HUB["BODY COMPARTMENT"]
+    subgraph BODY_POWER["PRIMARY POWER GRID"]
+      BAT["DeWalt 20V Battery"]:::power ==>|20V| LVC["LVP-R1.5 (40A)"]:::power
+      LVC ==>|20V| POS_FUSE["Positive Fuse Box"]:::power
+      LVC ==>|GND| NEG_BUS["Negative Bus Bar"]:::power
+      BODY_BUCK["Body Logic Buck: Mini560 Pro (5A)"]:::logic
     end
 
-    subgraph POWER_SOURCE [20V DC POWER CORE]
-        BAT["DeWalt 20V Battery"]:::power --> LVC["MgcSTEM LVP-R1.5 (40A)"]:::power
-        LVC --> POS_FUSE["Positive Blade Fuse Box"]:::power
-        LVC --> NEG_BUS["Negative Bus Bar (Star Ground)"]:::power
+    subgraph BODY_DRIVE["DRIVE & RC STACK"]
+      ESC1["FSESC (Left)"]:::drive
+      ESC2["FSESC (Right)"]:::drive
+      RC1["Body Receiver"]:::signal
     end
 
-    subgraph HIGH_POWER_RAIL [20V DISTRIBUTION]
-        POS_FUSE --> ESC1["Flipsky FSESC (Left)"]:::drive
-        POS_FUSE --> ESC2["Flipsky FSESC (Right)"]:::drive
-        POS_FUSE --> AMP["TPA3118 Amplifier"]:::audio
-        POS_FUSE --> SLIP1["Slip Ring C1/C2: Motor Line"]:::power
-        POS_FUSE --> SLIP2["Slip Ring C3/C4: Logic Line"]:::power
-
-        NEG_BUS --> ESC1
-        NEG_BUS --> ESC2
-        NEG_BUS --> AMP
-        NEG_BUS --> SLIP1
-        NEG_BUS --> SLIP2
+    subgraph BODY_SOUND["SOUND HUB"]
+      NODE_2["Node 2 (Sound Hub)"]:::brain
+      AUDIO["DFPlayer Mini"]:::audio
+      AMP["TPA3118 Amp"]:::audio
+      SPK2["Pyle 3.5-inch Car Speaker"]:::audio
     end
 
-    subgraph DOME_POWER [DOME POWER Via Slip Ring]
-        SLIP1 --> DOME_ESC["goBILDA 15A ESC"]:::drive
-        SLIP2 --> DOME_BUCK["Mini560 Pro Buck (5V)"]:::logic
-        DOME_BUCK --> DOME_WAGOS["2x 5-Port Wagos"]:::power
+    POS_FUSE ==>|20V| ESC1
+    POS_FUSE ==>|20V| ESC2
+    POS_FUSE ==>|20V| AMP
+    POS_FUSE ==>|20V| BODY_BUCK
+    
+    NEG_BUS -.->|GND| ESC1
+    NEG_BUS -.->|GND| ESC2
+    NEG_BUS -.->|GND| AMP
+    NEG_BUS -.->|GND| BODY_BUCK
+
+    BODY_BUCK -->|5V| NODE_2
+    BODY_BUCK -->|5V| AUDIO
+    ESC1 -->|5V BEC| RC1
+    
+    RC1 -->|PWM| ESC1
+    RC1 -->|PWM| ESC2
+  end
+
+  subgraph SLIP_RING_BRIDGE["BRIDGE"]
+    POS_FUSE ==>|20V Trunk| SLIP["Slip Ring C1/C2/C3/C4"]:::power
+  end
+
+  subgraph DOME_HUB["DOME COMPARTMENT"]
+    subgraph DOME_POWER_GRID["DOME POWER GRID"]
+      SLIP ==>|20V| DOME_WAGO_20V["20V Wago Hub (2x5)"]:::power
+      DOME_WAGO_20V ==>|20V| BUCK_LOGIC["Dome Logic Buck (5A)"]:::logic
+      DOME_WAGO_20V ==>|20V| BUCK_LEDS["Dome LED Buck (5A)"]:::logic
+      BUCK_LOGIC -->|5V| DOME_WAGO_5V["5V Wago Hub (2x5)"]:::power
     end
 
-    subgraph RECEIVER_MCU_RAIL [5V BEC LOGIC AND SIGNAL]
-        ESC1 -->|5V BEC| RC1["Body Receiver (F-06A)"]:::signal
-        RC1 -->|5V OUT| ESP1["MCU 1: Body Audio (S3)"]:::brain
-        ESP1 -->|UART| AUDIO["DFPlayer Mini"]:::audio
-        
-        DOME_ESC -.->|6V BEC ISOLATED| RC2["Dome Receiver (F-06A)"]:::signal
-
-        DOME_WAGOS --> WLED["MCU 2: Dome Lights"]:::lights
-        DOME_WAGOS --> ESP3["MCU 3: Dome Motion (S3)"]:::brain
-        DOME_WAGOS --> LOGICS["Logic Matrices and PSIs"]:::lights
+    subgraph DOME_LOGIC_HUB["DOME LOGIC HUB"]
+      NODE_1["Node 1 (Dome S3)"]:::brain
+      NODE_3["Node 3 (Lights WLED)"]:::brain
+      RC2["Dome Receiver"]:::signal
     end
 
-    subgraph SIGNAL_INTERCONNECTS [WIRELESS AND PWM]
-        TX1 -.->|2.4GHz WiFi| RC1
-        TX2 -.->|2.4GHz WiFi| RC2
-        RC1 -->|PWM| ESC1
-        RC1 -->|PWM| ESC2
-        RC1 -->|PWM| ESP1
-        RC2 -->|PWM| ESP3
-        ESP3 -->|PWM| DOME_ESC
-        AUDIO -->|Analog| AMP
-        ESP3 -.->|ESP-NOW Wireless| ESP1
-        ESP3 -.->|ESP-NOW Wireless| WLED
+    subgraph DOME_MOTION["DOME MOTION STACK"]
+      DOME_ESC["goBILDA 1x15A ESC"]:::drive
+      DOME_MOTOR["Yellow Jacket Motor (5203 Series)"]:::drive
     end
 
-    %% Direct Markdown-Relative Links for Interactivity
-    click BAT href "docs/maintenance/battery-runtime-guide.md" "Battery Guide"
-    click LVC href "docs/hardware/mgcstem-lvp-r15-manual.md" "LVC Manual"
-    click ESC1 href "docs/hardware/flipsky-fsesc-67-pro-manual.md" "Flipsky Manual"
-    click AUDIO href "docs/bill-of-materials.md" "DFPlayer Manual"
-    click SLIP1 href "docs/architecture/unified-nervous-system.md" "Slip Ring Setup"
-    click DOME_BUCK href "docs/bill-of-materials.md" "Buck Converter"
-    click RC1 href "docs/hardware/hotrc-f06a-manual.md" "Receiver Manual"
-    click ESP1 href "firmware/mcu1-body-controller/README.md" "MCU 1 Code"
-    click WLED href "docs/capabilities/lights-and-sounds/led-system.md" "LED System"
-    click ESP3 href "firmware/mcu3-motion-controller/README.md" "MCU 3 Code"
-    click DOME_ESC href "docs/capabilities/movement/dome-rotation.md" "Dome Rotation"
+    subgraph DOME_LIGHTS["CINEMATIC LED ARRAYS"]
+      F_PSI["Front PSI LED"]:::lights
+      B_PSI["Back PSI LED"]:::lights
+      F_LOGIC["Front Logic LED"]:::lights
+      B_LOGIC["Rear Logic LED"]:::lights
+    end
 
-    classDef power fill:#ff9900,stroke:#333,stroke-width:2px,color:#000
-    classDef drive fill:#cc3300,stroke:#fff,color:#fff
-    classDef logic fill:#00cccc,stroke:#333,color:#000
-    classDef brain fill:#0066cc,stroke:#fff,color:#fff
-    classDef audio fill:#99cc00,stroke:#000,color:#000
-    classDef signal fill:#ffcc00,stroke:#333,color:#000
-    classDef lights fill:#6600cc,stroke:#fff,color:#fff
-    classDef reserved fill:#444,stroke:#333,color:#fff
+    DOME_WAGO_20V ==>|20V| DOME_ESC
+    DOME_WAGO_5V -->|5V| NODE_1
+    DOME_WAGO_5V -->|5V| NODE_3
+    DOME_WAGO_5V -->|5V| RC2
+
+    NODE_1 -->|PWM| DOME_ESC
+    DOME_ESC ==>|Bullet Connectors| DOME_MOTOR
+
+    BUCK_LEDS -.->|5V Rail| F_PSI
+    BUCK_LEDS -.->|5V Rail| B_PSI
+    BUCK_LEDS -.->|5V Rail| F_LOGIC
+    BUCK_LEDS -.->|5V Rail| B_LOGIC
+
+    NODE_3 -->|GPIO 21| F_PSI
+    NODE_3 -->|GPIO 22| B_PSI
+    NODE_3 -->|GPIO 18| F_LOGIC
+    NODE_3 -->|GPIO 19| B_LOGIC
+  end
+
+  subgraph COMM_SIGNAL_MESH["COMMUNICATION & SIGNAL MESH"]
+    TX1["TX 1: Body Drive"]:::signal
+    TX2["TX 2: Dome Motion"]:::signal
+    
+    TX1 -.->|2.4GHz| RC1
+    TX2 -.->|2.4GHz| RC2
+    RC2 -->|PWM| NODE_1
+    NODE_1 <-.->|ESP-NOW Mesh| NODE_2
+    NODE_1 -->|UART| NODE_3
+    
+    NODE_2 -->|UART| AUDIO
+    AUDIO -->|Analog| AMP
+    AMP -->|Audio Out| SPK2
+  end
+
+  %% --- ABSOLUTE TERMINATION: Styling & Interaction ---
+  
+  click BAT href "../maintenance/battery-runtime-guide.md" "Ganged DeWalt 20V Series (4-5Ah Typical)"
+  click LVC href "../hardware/mgcstem-lvp-r15-manual.md" "17.5V Cutting Protection Floor"
+  click ESC1 href "../hardware/flipsky-fsesc-67-pro-manual.md" "60V/100A Peak ESC"
+  click ESC2 href "../hardware/flipsky-fsesc-67-pro-manual.md" "60V/100A Peak ESC"
+  click AUDIO href "../capabilities/lights-and-sounds/audio-system.md" "Serial MP3 Module"
+  click SLIP href "node-pinout-guide.md" "10A/Circuit Industrial Slip Ring"
+  click BODY_BUCK href "../bill-of-materials.md" "Mini560 Pro (5A) Logic"
+  click RC1 href "../hardware/hotrc-f06a-manual.md" "Body RC Receiver"
+  click RC2 href "../hardware/hotrc-f06a-manual.md" "Dome RC Receiver"
+  click NODE_1 href "node-1-dome-motion.md" "ESP32-S3 | Dome Master Movement Controller"
+  click NODE_2 href "node-2-sound-hub.md" "ESP32-S3 | Tactical Command Gateway & Sound Hub"
+  click NODE_3 href "node-3-led-distribution.md" "ESP32D | WLED Lighting Distribution Hub"
+  click DOME_ESC href "../hardware/gobilda-motor-manual.md" "15A PWM Peak (30V Capable)"
+  click BUCK_LOGIC href "../bill-of-materials.md" "Mini560 Pro (5A) Logic"
+  click BUCK_LEDS href "../bill-of-materials.md" "Dedicated High-Current LED Supply (Mini560 Pro)"
+  click DOME_MOTOR href "../hardware/gobilda-motor-manual.md" "117 RPM / 12V High-Torque Gearmotor"
+  click SPK2 href "../capabilities/lights-and-sounds/audio-system.md" "Pyle 60W RMS / 4 Ohm Driver"
+
+  classDef power fill:#ff9900,stroke:#333,stroke-width:2px,color:#000
+  classDef drive fill:#cc3300,stroke:#fff,color:#fff
+  classDef logic fill:#00cccc,stroke:#333,color:#000
+  classDef brain fill:#0066cc,stroke:#fff,color:#fff
+  classDef audio fill:#99cc00,stroke:#000,color:#000
+  classDef signal fill:#ffcc00,stroke:#333,color:#000
+  classDef lights fill:#6600cc,stroke:#fff,color:#fff
 ```
 
 
