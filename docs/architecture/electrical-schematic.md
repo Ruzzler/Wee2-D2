@@ -49,7 +49,11 @@ flowchart TD
     DOME_WAGO_20V ==>|20V| BUCK_LEDS["Dome LED Buck (5A)"]:::logic
     DOME_WAGO_20V ==>|20V| BUCK_LOGIC["Dome Logic Buck (5A)"]:::logic
 
-    BUCK_LEDS -->|5V| LEDS["LED Matrices"]:::lights
+    BUCK_LEDS -->|5V| F_PSI["Front PSI Display"]:::lights
+    BUCK_LEDS -->|5V| B_PSI["Back PSI Display"]:::lights
+    BUCK_LEDS -->|5V| F_LOGIC["Front logic Display"]:::lights
+    BUCK_LEDS -->|5V| B_LOGIC["Rear Logic Display"]:::lights
+
     BUCK_LOGIC -->|5V| DOME_WAGO_5V["5V Wago Hub (2x5)"]:::power
 
     DOME_WAGO_5V -->|5V| NODE_3["Node 3 (Lights WLED)"]:::brain
@@ -64,10 +68,18 @@ flowchart TD
     RC1 -->|PWM| ESC2
     RC2 -->|PWM| NODE_1
     NODE_1 -->|PWM| DOME_ESC
-    AUDIO -->|Analog| AMP
+    
+    AUDIO -->|I2S Analog| AMP
+    AMP -->|Audio Out| SPK["Visaton 4W Speaker"]:::audio
+    
     NODE_1 <-.->|ESP-NOW Mesh| NODE_2
     NODE_1 -->|UART| NODE_3
     NODE_2 -->|UART| AUDIO
+
+    NODE_3 -->|GPIO 18| F_LOGIC
+    NODE_3 -->|GPIO 19| B_LOGIC
+    NODE_3 -->|GPIO 21| F_PSI
+    NODE_3 -->|GPIO 22| B_PSI
   end
 
   %% --- ABSOLUTE TERMINATION: Styling & Interaction ---
@@ -87,6 +99,7 @@ flowchart TD
   click DOME_ESC href "../hardware/gobilda-motor-manual.md" "15A PWM Peak (30V Capable)"
   click BODY_BUCK href "../bill-of-materials.md" "Mini560 Pro (5A) Logic"
   click BUCK_LEDS href "../bill-of-materials.md" "Dedicated High-Current LED Supply (Mini560 Pro)"
+  click SPK href "../capabilities/lights-and-sounds/audio-system.md" "Visaton 4W Speaker"
 
   classDef power fill:#ff9900,stroke:#333,stroke-width:2px,color:#000
   classDef drive fill:#cc3300,stroke:#fff,color:#fff
