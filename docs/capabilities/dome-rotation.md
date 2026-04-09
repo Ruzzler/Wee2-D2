@@ -15,8 +15,6 @@ The dome rotated by a **goBILDA 5203 Series Yellow Jacket** planetary gearmotor.
 
 
 - **Model**: Yellow Jacket 5203 (12V Hub)
-- **Model**: Yellow Jacket 5203 (12V Hub)
-- **Drive Gear**: Pinion Gear (6mm REX Profile)
 - **Dome Gear**: 3D-Printed Internal Ring Gear
 
 
@@ -57,7 +55,7 @@ Dome rotation is secondary to safety. If a manual RC stick command is detected o
 
 ## Maintenance & Calibration
 
-Regularly check the internal ring gear for debris and ensure the 3.5mm bullet connectors are secured.
+- **Gearing**: Check the 3D-printed gears for wear.
 
 
 - **Lubrication**: A light coating of lithium grease on the 3D-printed gears will reduce domestic noise.

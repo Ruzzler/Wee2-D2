@@ -84,7 +84,6 @@ The chassis and joint systems bridge the gap between the 3D-printed exterior and
 | :--- | :--- | :---: | :--- |
 | **3D Chassis** | Mr. Baddeley Files | 1 | Acclaimed 3D files (Big Baby) |
 | **Slip Ring** | CNBTR 6-Circuit | 1 | 20A Ganged Power Trunk (Central) |
-| **Pinion Gear** | 6mm REX Profile | 1 | Dome Drive motor gear |
 
 
 ---

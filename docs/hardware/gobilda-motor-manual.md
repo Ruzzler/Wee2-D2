@@ -66,7 +66,7 @@ The motor is connected to the brushed controller using standard bullet connector
 To ensure the dome behaves predictably during animations like "The Cantina Band," the gearing must be free of debris and correctly lubricated.
 
 
-- **Gearing**: Check the pinion gear for wear. REX® profile gears should be tightened with M4 set screws.
+- **Gearing**: Check the drive gears for wear and ensure proper alignment.
 - **Tension**: If the dome "stutters," verify that the Mini560 Pro logic buck is providing a steady 5V. voltage drops can cause the PWM signal to drift. 
 - **Thermal Policy**: The 5203 series motor is capable of heavy duty-cycles, but the brushed controller may reach its thermal limit if stalled against a physical obstruction for >5 seconds.
 
