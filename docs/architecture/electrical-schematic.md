@@ -134,7 +134,7 @@ flowchart TD
   click RC1 href "../hardware/hotrc-f06a-manual.md" "Body RC Receiver"
   click RC2 href "../hardware/hotrc-f06a-manual.md" "Dome RC Receiver"
   click NODE_1 href "node-1-dome-motion.md" "ESP32-S3 | Dome Master Movement Controller"
-  click NODE_2 href "node-2-sound-hub.md" "ESP32-S3 | Tactical Command Gateway & Sound Hub"
+  click NODE_2 href "node-2-sound-hub.md" "ESP32-S3 | Web Control Dashboard & Sound Hub"
   click NODE_3 href "node-3-led-distribution.md" "ESP32D | WLED Lighting Distribution Hub"
   click DOME_ESC href "../hardware/gobilda-motor-manual.md" "15A PWM Peak (30V Capable)"
   click BUCK_LOGIC href "../bill-of-materials.md" "Mini560 Pro (5A) Logic"
@@ -158,20 +158,20 @@ flowchart TD
 ## 📌 Pinout Lookup Tables
 
 
-### **MCU 1: Body Audio (ESP32-S3 Super Mini)**
-Primary controller for sounds and drive system monitoring.
+### **Node 2: Sound Hub (ESP32-S3 Super Mini)**
+Primary controller for sounds and animation triggers.
 
 
 | Component | Pin (GPIO) | Mode | Notes |
 | :--- | :---: | :---: | :--- |
 | **Status LED** | GPIO 47 | Output | S3 Internal Neopixel (Logic) |
-| **RC CH3-5** | 4, 5, 6 | Input | Behavioral Triggers from RC1 |
+| **RC CH3-5** | 4, 5, 6 | Input | Animation Triggers from RC1 |
 | **DFPlayer TX** | GPIO 17 | Output | To DFPlayer RX |
 | **DFPlayer RX** | GPIO 16 | Input | From DFPlayer TX (Optional) |
 | **Wireless RX** | N/A | ESP-NOW | Listening for Dome triggers |
 
 
-### **MCU 2: Lighting Controller (ESP32-Dev Board - WLED)**
+### **Node 3: Lighting Hub (ESP32-Dev Board - WLED)**
 Dedicated high-density addressable LED matrix controller.
 
 
@@ -185,8 +185,8 @@ Dedicated high-density addressable LED matrix controller.
 | **Web UI** | N/A | WiFi | Port 80 (Pattern selection) |
 
 
-### **MCU 3: Motion Controller (ESP32-S3 Super Mini)**
-Dedicated controller for 360° dome rotation and behavior broadcasting.
+### **Node 1: Dome Master (ESP32-S3 Super Mini)**
+Dedicated controller for 360° dome rotation and animation broadcasting.
 
 
 | Component | Pin (GPIO) | Mode | Notes |

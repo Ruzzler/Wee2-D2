@@ -54,7 +54,7 @@ The Body F-06A receiver bypasses microcontrollers entirely.
 - **CH2 (Throttle)**: Connects directly to the Left and Right Flipsky ESC PWM inputs via a Y-Splitter.
 
 ### 2. Dome Receiver (Head)
-The Dome F-06A receiver is strictly for manual dome control, communicating through the Node 1 Behavioral Master.
+The Dome F-06A receiver is strictly for manual dome control, communicating through the **Node 1 (Dome Master)** hub.
 - **CH1 (Left/Right)**: Connects to **Node 1 (GPIO 4)** for deadband clamping and autonomous routine overrides.
 - **CH2-CH6**: Unused.
 

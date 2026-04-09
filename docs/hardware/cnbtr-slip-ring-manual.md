@@ -65,7 +65,7 @@ The slip ring is mounted within the central axis of the goBILDA dome joint. All 
 To ensure the slip ring operates without creating "electrical noise" in the dome logic, the contacts must be free of significant rotational resistance.
 
 
-- **Friction**: The teflon-coated wires are low-friction, but ensure they are not pinched by the 32mm grid mount.
+- **Friction**: The teflon-coated wires are low-friction; ensure they are not pinched during installation.
 - **Verification**: Regularly check the resistance across the ganged trunk. An increase in resistance can cause "voltage sag" in the Node 1 logic.
 - **Thermal Policy**: Although rated for 20A ganged, pulling >15A continuously can cause localized heating. monitor the slip ring temperature during long cinematic sequences.
 

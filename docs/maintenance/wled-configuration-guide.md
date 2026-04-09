@@ -3,7 +3,7 @@
 > **TECHNICAL SPECIFICATIONS** | **SYSTEM: LIGHTING CONFIGURATION** | **MODEL: WLED v0.14+**
 
 
-The cinematic lighting for the Wee2-D2 project is managed through the WLED framework on Node 3. This guide explains how to configure segments, presets, and sync triggers to align with the droid's behavioral logic.
+The cinematic lighting for the Wee2-D2 project is managed through the WLED framework on Node 3. This guide explains how to configure segments, presets, and sync triggers to align with the droid's animation logic.
 
 
 ---

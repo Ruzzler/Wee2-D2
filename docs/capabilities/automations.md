@@ -1,9 +1,9 @@
 # <i data-lucide="activity"></i> Autonomous Automations
 
-> **TECHNICAL SPECIFICATIONS** | **SYSTEM: BEHAVIORAL LOGIC** | **MODEL: AUTONOMOUS SEQUENCES**
+> **TECHNICAL SPECIFICATIONS** | **SYSTEM: ANIMATION LOGIC** | **MODEL: AUTONOMOUS SEQUENCES**
 
 
-The Wee2-D2 project uses a combination of random and triggered automations to create a living droid experience. These behaviors are managed by Node 1 (Dome Master) and are synchronized with the sound and lighting hubs.
+The Wee2-D2 project uses a combination of random and triggered automations to create a living droid experience. These **animations** are managed by **Node 1 (Dome Master)** and are synchronized with the sound and lighting hubs.
 
 
 ---
@@ -11,10 +11,10 @@ The Wee2-D2 project uses a combination of random and triggered automations to cr
 
 ## System Logic (Autonomous Master)
 
-The Wee2-D2 droid uses a **Modular Behavioral System** based on **ESPHome States** and **Wireless Triggers**. All autonomy is processed by **Node 1 (Dome Master)**, which monitors its idle state and triggers synchronized movement/AV events to maintain character realism.
+The Wee2-D2 droid uses a **Modular Animation System** based on **ESPHome States** and **Wireless Triggers**. All autonomy is processed by the **Dome Master (Node 1)**, which monitors its idle state and triggers synchronized movement/AV events to maintain character realism.
 
 
-- **Update Frequency**: **50ms** (Internal Heartbeat) for real-time behavioral response.
+- **Update Frequency**: **50ms** (Internal Heartbeat) for real-time operational response.
 - **Interval**: A random trigger is calculated every **30 to 60 seconds** (firmware/production/node-1-dome-motion.yaml:454).
 - **Inhibition**: Automations are immediately paused if a manual RC stick command is detected.
 - **Mesh Status**: Triggers are only sent if the **MAC-Address Binding** to the Sound Hub is verified.
@@ -23,10 +23,9 @@ The Wee2-D2 droid uses a **Modular Behavioral System** based on **ESPHome States
 ---
 
 
-## Behavioral Animation Library
+## Animation Library
 
 The project includes a library of verified animation sequences that coordinate dome speed, audio tracks, and **Cinematic Logic Display** presets.
-
 
 | Trigger | Movement Result | Sound CMD | Cinematic Logic |
 | :--- | :--- | :---: | :---: |

@@ -2,7 +2,7 @@
 
 > **TECHNICAL SPECIFICATIONS** | **WS2812B LOGIC** | **ADDRESSABLE MATRIX**
 
-The visual setup is powered by high-density **WS2812B addressable LED** matrices, controlled by **Node 3 (LED Distribution)** running the **WLED** framework. Synchronized visual behaviors (e.g., "High Alert" red pulsing) are triggered via UART directly from the **Dome Motion Master (Node 1)**.
+The visual setup is powered by high-density **WS2812B addressable LED** matrices, controlled by **Node 3 (Lighting Hub)** running the **WLED** framework. Synchronized visual animations (e.g., "High Alert" red pulsing) are triggered via UART directly from the **Dome Master (Node 1)**.
 
 
 ## Power Constraints
@@ -15,7 +15,7 @@ Because there are hundreds of LEDs in the dome, they have their own dedicated **
 
 ## Cinematic Lighting Presets
 
-Wee2-D2 features **15 hard-coded cinematic logic states** stored as WLED presets on Node 3. These states can be triggered manually via the [Neural Dashboard](../architecture/node-2-sound-hub.md) or automatically during behavioral animations.
+Wee2-D2 features **15 hard-coded cinematic logic states** stored as WLED presets on Node 3. These states can be triggered manually via the [Web Control Dashboard](../architecture/node-2-sound-hub.md) or automatically during droid animations.
 
 | ID | Preset Name | Visual Profile | Operational Context |
 | :---: | :--- | :--- | :--- |
@@ -70,7 +70,7 @@ The Web Dashboard sends hex IDs (0xA1) corresponding to these static presets wit
 | **2** | 1977 | Aggressive analog flicker and yellowing. |
 | **3** | High Alert | Fast red pulsing across all matrices. |
 | **4** | Cantina | Vibrant, rapid multicolored cycling. |
-| **5-15** | Expansion | Reserved for behavioral automations. |
+| **5-15** | Expansion | Reserved for Animation automations. |
 
 
 ---

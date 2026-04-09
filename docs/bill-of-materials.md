@@ -11,14 +11,14 @@ This document catalogs the verified hardware stack for the Wee2-D2 project. All 
 
 ## Microcontroller Nodes
 
-The droid uses a distributed mesh of ESP32-S3 and standard ESP32 boards (firmware/production/node-1-dome-motion.yaml:34) to handle parallel behaviors.
+The droid uses a distributed mesh of ESP32-S3 and standard ESP32 boards (firmware/production/node-1-dome-motion.yaml:34) to handle parallel animations.
 
 
 | Channel | Component | Quantity | Role |
 | :--- | :--- | :---: | :--- |
 | **Node 1** | ESP32-S3 Super Mini | 1 | Dome Motion Master / RC Bridge |
 | **Node 2** | ESP32-S3 Super Mini | 1 | Sound Hub / Dashboard Gateway |
-| **Node 3** | ESP32 DevKit V1 | 1 | LED Distribution / WLED Core |
+| **Node 3** | ESP32D DevKit | 1 | LED Distribution / WLED Core |
 | **Interface** | CP2102 Serial Adapter | 1 | Wired firmware deployment |
 
 
@@ -68,6 +68,8 @@ Cinematic output is managed through specialized LED arrays and a high-fidelity 6
 | **Amplifier** | TPA3118 60W | 1 | Mono Class-D (PBTL Mode) |
 | **Speaker** | Pyle 3.5" Driver | 1 | 60W RMS / 4 Ohm Performance |
 | **LED Logic** | GrnWave PSI/Logics | 3 | Addressable WS2812B Arrays |
+| **Radio TX** | HotRC DS-600 | 1 | 6-Channel 2.4GHz Transmitter |
+| **Radio RX** | HotRC F-06A | 2 | 6-Channel PWM Receivers |
 
 
 ---
@@ -80,9 +82,9 @@ The chassis and joint systems bridge the gap between the 3D-printed exterior and
 
 | Component | Category | Quantity | Role |
 | :--- | :--- | :---: | :--- |
-| **3D Chassis** | Mr. Baddeley Files | 1 | Acclaimed droid internal framework |
+| **3D Chassis** | Mr. Baddeley Files | 1 | Acclaimed 3D files (Big Baby) |
 | **Slip Ring** | CNBTR 6-Circuit | 1 | 20A Ganged Power Trunk (Central) |
-| **Dome Joint** | goBILDA 32mm Grid | 1 | Structural REX® profile mount |
+| **Pinion Gear** | 6mm REX Profile | 1 | Dome Drive motor gear |
 
 
 ---

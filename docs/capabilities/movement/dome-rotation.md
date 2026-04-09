@@ -1,6 +1,6 @@
 # <i data-lucide="refresh-cw"></i> Dome Rotation System
 
-Wee2-D2's 360° dome rotation is driven by a precision heavy-duty motor, interpreted exclusively by **Node 1 (Dome Motion Controller)** running ESPHome.
+Wee2-D2's 360° dome rotation is driven by a precision heavy-duty motor, interpreted exclusively by **Node 1 (Dome Master)** running ESPHome.
 
 
 ## The goBILDA Hardware
@@ -34,7 +34,7 @@ Node 1 reads this PWM signal and filters out minor "stick drift" by employing a 
 ## Master Relay Role
 
 In the **v2.6.0 Architecture**, Node 1 acts as the primary "System Dispatcher" for the dome.
-- **Listens** for ESP-NOW dashboard triggers (`0xA0`, `0xA1`) from the Neural Command Center (Node 2).
+- **Listens** for ESP-NOW dashboard triggers (`0xA0`, `0xA1`) from the **Sound Hub (Node 2)**.
 - **Triggers** the WLED board locally via UART (GPIO 5) for synchronized effects.
 
 ---

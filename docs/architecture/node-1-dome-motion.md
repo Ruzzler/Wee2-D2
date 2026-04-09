@@ -6,7 +6,7 @@
 > **TECHNICAL SPECIFICATIONS** | **SYSTEM: DOME MOTION MASTER** | **MODEL: ESP32-S3 SUPER MINI**
 
 
-Node 1 is the primary behavioral controller for the Wee2-D2 project. It manages dome rotation, receives radio stick inputs from the HotRC receiver, and acts as the master for the ESP-NOW mesh communication bridge.
+Node 1 is the primary controller for the Wee2-D2 project. It manages dome rotation, receives radio stick inputs from the HotRC receiver, and acts as the master for the ESP-NOW communication mesh.
 
 
 ---
@@ -47,7 +47,7 @@ These settings are verified in the `v2.6.0-Dashboard` firmware sequence.
 
 ## Mesh Communication (ESP-NOW)
 
-Node 1 acts as the **Behavioral Master**. It listens for remote triggers and broadcasts 1-byte sound commands to Node 2 (Sound Hub) using the ESP-NOW protocol.
+The Wee2-D2 droid uses a **Modular Animation System** based on **ESPHome States** and **Wireless Triggers**. All autonomy is processed by **Node 1 (Dome Master)**, which monitors its idle state and triggers synchronized movement/AV events to maintain character realism.
 
 
 1. **Sound Broadcast**: Sends triggers (e.g., `0x01` for Beep) wirelessly (firmware/production/node-1-dome-motion.yaml:81).

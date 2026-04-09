@@ -1,7 +1,7 @@
 ![manual-hero](../../assets/esp32d-dev-board.png)
 
 
-# <i data-lucide="lightbulb"></i> Node 3: LED Distribution
+# <i data-lucide="lightbulb"></i> Node 3: Lighting Hub
 
 > **TECHNICAL SPECIFICATIONS** | **SYSTEM: LIGHTING HUB** | **MODEL: ESP32 DEVKIT V1 / WLED**
 
@@ -46,7 +46,7 @@ These settings are verified in the `v2.6.0-Dashboard` hardware sequence.
 
 ## WLED Configuration & Sync Triggers
 
-Node 3 acts as the **Lighting Slave**. It receives JSON strings from Node 1 to instantly apply visual presets that match the current audio and motion behavior.
+Node 3 acts as the **Lighting Hub**. It receives JSON strings from Node 1 to instantly apply visual presets that match the current audio and animations.
 
 
 1. **Segment Mapping**: Managed in the local `wled-cfg.json` file. Map Front PSI to Segment 0 and Rear PSI to Segment 1.

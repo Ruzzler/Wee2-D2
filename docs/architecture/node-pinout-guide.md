@@ -11,7 +11,7 @@ This guide is the main wiring reference for the Wee2-D2 distributed node mesh. I
 
 ## 1. Node 1: Dome Motion Master (ESP32-S3 Super Mini)
 
-The **Motion Master** manages 360° dome rotation and broadcasts behavioral triggers via ESP-NOW.
+The **Dome Master** manages 360° dome rotation and broadcasts animation triggers via ESP-NOW.
 
 | ESP32 Pin | Wire Color | Role | Function |
 | :---: | :--- | :--- | :--- |
@@ -28,7 +28,7 @@ The **Motion Master** manages 360° dome rotation and broadcasts behavioral trig
 
 ## 2. Node 2: Sound Hub (ESP32-S3 Super Mini)
 
-The **Sound Hub** manages behavioral audio triggers and drive system monitoring.
+The **Sound Hub** manages animation audio triggers and drive system monitoring.
 
 | ESP32 Pin | Wire Color | Role | Function |
 | :---: | :--- | :--- | :--- |
@@ -50,7 +50,7 @@ The **Lighting Controller** runs the **Native WLED (v0.14+)** framework to drive
 | :---: | :--- | :--- | :--- |
 | **5V** | Red | Power In | 5.0V (Mini560 Buck) |
 | **GND** | Black | Ground | Common Logic Ground |
-| **GPIO 16** | Yellow/Blk | UART RX | Serial Sync In (from Node 1) |
+| **Wireless** | **ESP-NOW** | 2.4GHz | Animation sync from Dome Master |
 | **GPIO 17** | Green/Blk | UART TX | Serial Sync Out (Optional) |
 | **GPIO 18** | Yellow | Data Out | Front Logic (10x2) |
 | **GPIO 19** | Yel/Blk | Data Out | Rear Logic (12x2) |

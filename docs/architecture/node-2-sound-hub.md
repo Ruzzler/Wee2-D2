@@ -6,7 +6,7 @@
 > **TECHNICAL SPECIFICATIONS** | **SYSTEM: SOUND HUB MASTER** | **MODEL: ESP32-S3 SUPER MINI**
 
 
-Node 2 is the primary audio controller and web gateway for the Wee2-D2 project. It manages the DFPlayer Mini sound module and hosts the droid's interactive dashboard for remote behavioral control.
+Node 2 is the primary audio controller and web gateway for the Wee2-D2 project. It manages the DFPlayer Mini sound module and hosts the droid's interactive dashboard for remote animation control.
 
 
 ---

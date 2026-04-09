@@ -40,7 +40,7 @@ This represents the "Stationary" draw when the droid is on and the mesh is activ
 
 ### 2. Audio System (Chatter & Processing)
 
-The sound hub acts as the primary relay for behavioral audio triggers.
+The sound hub acts as the primary relay for animation audio triggers.
 - **System**: DFPlayer Mini + TPA3118 Amplifier + Pyle 3.5" Driver.
 - **Duty Cycle**: Variable (Chatter every 15–30s).
 - **Average Load**: **~2.5 Watts**

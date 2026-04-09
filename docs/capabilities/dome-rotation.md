@@ -3,7 +3,7 @@
 > **TECHNICAL SPECIFICATIONS** | **SYSTEM: DOME MOTION** | **MODEL: GOBILDA YELLOW JACKET**
 
 
-This guide explains the dome motion mechanics for the Wee2-D2 project. It covers the high-torque planetary motor, PWM signal scaling, and behavioral movement logic managed by Node 1.
+This guide explains the dome motion mechanics for the Wee2-D2 project. It covers the high-torque planetary motor, PWM signal scaling, and animation logic managed by Node 1.
 
 
 ---
@@ -15,9 +15,9 @@ The dome rotated by a **goBILDA 5203 Series Yellow Jacket** planetary gearmotor.
 
 
 - **Model**: Yellow Jacket 5203 (12V Hub)
-- **Drive Gear**: goBILDA 10-tooth Pinion (REX Profile)
+- **Model**: Yellow Jacket 5203 (12V Hub)
+- **Drive Gear**: Pinion Gear (6mm REX Profile)
 - **Dome Gear**: 3D-Printed Internal Ring Gear
-- **Coupling**: Structural 32mm Grid Mount
 
 
 ---
@@ -42,7 +42,7 @@ These levels are verified in the `v2.6.0-Dashboard` firmware sequence.
 ---
 
 
-## Movement Logic & Behavioral Tuning
+## Movement Logic & Animation Tuning
 
 Dome rotation is secondary to safety. If a manual RC stick command is detected on GPIO 4, all autonomous animations are immediately stopped to give the pilot full control.
 
@@ -61,7 +61,7 @@ Regularly check the internal ring gear for debris and ensure the 3.5mm bullet co
 
 
 - **Lubrication**: A light coating of lithium grease on the 3D-printed gears will reduce domestic noise.
-- **Tension**: Ensure the 32mm grid mount remains torqued; a loose mount can cause "gear slip" during high-speed tantrums.
+- **Tension**: Ensure the motor mount remains torqued to prevent "gear slip" during high-speed tantrums.
 - **Slip Ring**: Check for "binding" in the central wires which can increase rotational resistance.
 
 

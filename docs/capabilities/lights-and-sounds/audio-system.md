@@ -1,6 +1,6 @@
-# <i data-lucide="volume-2"></i> Audio & Voice Triggers
+# <i data-lucide="volume-2"></i> Animation Audio Triggers (ESP-NOW Mesh)
 
-Wee2-D2's voice and sound system uses a distributed modular stack with the **DFPlayer Mini** (MP3 Hub) and a **TPA3118 60W Amplifier**. Triggers are handled wirelessly via the **ESP-NOW** bridge.
+This guide explains the audio stack for the Wee2-D2 project. It covers the sound hub, animation audio triggers, and the high-fidelity amplification system managed by Node 2.
 
 
 ![TPA3118 Amplifier Module](../../../assets/tpa3118-amplifier-module.jpg)
@@ -11,7 +11,7 @@ Wee2-D2's voice and sound system uses a distributed modular stack with the **DFP
 
 ## How it Works: The Wireless Trigger
 
-Instead of physical wires running through the slip ring, the droid uses a **Wireless Behavioral Bridge**.
+Instead of physical wires running through the slip ring, the droid uses a **Wireless Animation Bridge**.
 
 1. **Event Capture**: The **Sound Hub (Node 2)** captures an event via the Web Dashboard or autonomous script.
 2. **Command Execution**: Node 2 executes the **Serial (UART)** command directly to the local **DFPlayer Mini**.
@@ -44,15 +44,15 @@ SD_ROOT/
 ```
 
 
-*Note: The DFPlayer supports up to 255 tracks per folder, allowing for massive behavioral variety.*
+*Note: The DFPlayer supports up to 255 tracks per folder, allowing for massive animation variety.*
 
 
 ---
 
 
-## Behavioral Animation Logic
+## Animation Selection Logic
 
-By interacting with the **Neural Command Center Dashboard**, users can trigger saved sound banks. Node 2 broadcasts the Animation ID wirelessly, which syncs the lighting patterns and the sound selection:
+By interacting with the **Web Control Dashboard**, users can trigger saved sound banks. Node 2 broadcasts the Animation ID wirelessly, which syncs the lighting patterns and the sound selection:
 
 | Animation ID | Lighting Sync (WLED) | Audio Character |
 | :--- | :--- | :--- |

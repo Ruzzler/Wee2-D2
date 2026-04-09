@@ -11,14 +11,14 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   renderer.image = ({ href, title, text }) => {
-    const resolvedHref = resolvePath(window.currentPath || 'README.md', href);
+    const resolvedHref = resolvePath(window.currentPath || 'wiki/project-overview.md', href);
     return `<img src="${resolvedHref}" alt="${text}" title="${title || ''}" class="content-image">`;
   };
 
   renderer.link = ({ href, title, text }) => {
     let resolvedHref = href;
     if (href && !href.startsWith('http') && !href.startsWith('#') && !href.startsWith('mailto:')) {
-      resolvedHref = resolvePath(window.currentPath || 'README.md', href);
+      resolvedHref = resolvePath(window.currentPath || 'wiki/project-overview.md', href);
     }
     return `<a href="${resolvedHref}" title="${title || ''}">${text}</a>`;
   };
@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (href && !href.startsWith('http') && !href.startsWith('#')) {
       if (href.endsWith('.md') || href.endsWith('.yaml') || href.endsWith('.yml')) {
         e.preventDefault();
-        const newPath = resolvePath(window.currentPath || 'README.md', href);
+        const newPath = resolvePath(window.currentPath || 'wiki/project-overview.md', href);
         navigateToPath(newPath);
       }
     }
@@ -79,17 +79,17 @@ document.addEventListener('DOMContentLoaded', () => {
   // State Management
   window.addEventListener('popstate', (e) => {
     if (e.state && e.state.path) navigateToPath(e.state.path, false);
-    else navigateToPath(window.location.hash.slice(1) || 'README.md', false);
+    else navigateToPath(window.location.hash.slice(1) || 'wiki/project-overview.md', false);
   });
 
   // Initial Load
-  const initialPath = window.location.hash.slice(1) || 'README.md';
+  const initialPath = window.location.hash.slice(1) || 'wiki/project-overview.md';
   navigateToPath(initialPath, false);
 });
 
 /* --- GLOBAL SYSTEM CORE --- */
 
-let currentPath = 'README.md';
+let currentPath = 'wiki/project-overview.md';
 
 function resolvePath(base, relative) {
   if (relative.startsWith('docs/') || relative.startsWith('firmware/') || relative.startsWith('archive/') || relative.startsWith('assets/')) return relative;
@@ -119,7 +119,7 @@ async function loadContent(path, pushHistory = true) {
   const contentDiv = document.getElementById('content');
   const heroSection = document.getElementById('hero');
 
-  if (heroSection) heroSection.style.display = (path === 'README.md') ? 'flex' : 'none';
+  if (heroSection) heroSection.style.display = (path === 'wiki/project-overview.md') ? 'flex' : 'none';
   contentDiv.innerHTML = '<div class="loading-text" style="font-family: var(--font-mono); color: var(--accent-cyan);">Decrypting datastream... [' + path + ']</div>';
 
   try {

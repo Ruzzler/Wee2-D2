@@ -4,7 +4,7 @@
 
 ![DFPlayer Mini](../../assets/soundboard-top.jpg)
 
-The **DFPlayer Mini** is the primary audio playback module for Wee2-D2. It is a compact, high-performance MP3 serial hub that interfaces directly with the Body Audio Hub (Node 1) via UART.
+The **DFPlayer Mini** is a specialized sound module that integrates a microSD slot and a low-latency serial interface. It is the primary audio source for all animation triggers.
 
 ## Technical Specifications
 
@@ -37,7 +37,7 @@ The DFPlayer Mini uses a standard 16-pin dual-inline layout.
 
 ## SD Card Structure
 
-To ensure Behavioral Sync, the SD card **MUST** be formatted as FAT32 and use the following naming convention:
+To ensure absolute synchronisation, the SD card **MUST** be formatted as FAT32 and use the following naming convention:
 
 1. **Folders**: Two-digit naming (`01`, `02`, `03`...).
 1. **Files**: Three-digit prefix (`001.mp3`, `002_beep.mp3`...).
@@ -53,5 +53,5 @@ To ensure Behavioral Sync, the SD card **MUST** be formatted as FAT32 and use th
 ---
 
 **Related Hubs:**
-- [Audio & Behavioral Guide](../../capabilities/lights-and-sounds/audio-system.md)
+- [Audio & Animation Guide](../../capabilities/lights-and-sounds/audio-system.md)
 - [Body Wiring Guide](../../architecture/body-wiring-guide.md)

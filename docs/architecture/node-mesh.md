@@ -1,12 +1,12 @@
-# <i data-lucide="share-2"></i> Node Mesh Architecture
+# <i data-lucide="share-2"></i> Wireless Node Mesh
 
-> **TECHNICAL SPECIFICATIONS** | **SYSTEM: DISTRIBUTED ESP-NOW MESH** | **PROTOCOL: 2.4GHz P2P**
+> **TECHNICAL SPECIFICATIONS** | **ESPHome + ESP-NOW** | **Distributed Logic Hub** | **PROTOCOL: 2.4GHz P2P**
 
 
 This guide explains how the droid communicates internally using a distributed messaging system.
 
 
-The droid's movement is handled by a **Decentralized Node Mesh** consisting of three primary ESP32-S3 controllers. This design handles high-amperage motor control, precision dome rotation, and cinematic AV triggers while minimizing physical wiring through the central slip ring.
+The droid's movement is handled by a **Decentralized Node Mesh** consisting of two primary ESP32-S3 controllers (Nodes 1 & 2) and a specialized ESP32 lighting node. This design handles high-amperage motor control, precision dome rotation, and cinematic AV triggers while minimizing physical wiring through the central slip ring.
 
 
 ---
@@ -14,19 +14,19 @@ The droid's movement is handled by a **Decentralized Node Mesh** consisting of t
 
 ## System Roles
 
-Synchronization is achieved using low-latency **ESP-NOW** wireless bridging across three specialized nodes. This protocol (firmware/production/node-1-dome-motion.yaml:92) ensures <10ms latency for motion-critical commands.
+Synchronization is achieved using low-latency **ESP-NOW** wireless bridging across the primary S3 nodes (1 & 2). This protocol (firmware/production/node-1-dome-motion.yaml:92) ensures <10ms latency for motion-critical commands.
 
 
 ### Node 1: Dome Motion Master (ESP32-S3)
 
-- **Role**: Master Automations and movement control.
+- **Role**: **Dome Master** (Primary). Manages all dome movement and coordinates animation logic sequences across the mesh.
 - **Hardware**: goBILDA 5203 Dome Motor, PWM Motor Controller.
 - **Logic**: Reads raw RC steering. Captures ESP-NOW dashboard triggers (`0xA0`, `0xA1`, `0xA2`) from Node 2. Broadcasts a 60-second WLED heartbeat (via UART) and 5-second radio heartbeat (firmware/production/node-1-dome-motion.yaml:115).
 
 
-### Node 2: Neural Command Center (ESP32-S3)
+### Node 2: Sound Hub (ESP32-S3)
 
-- **Role**: Dashboard Gateway and behavioral audio execution.
+- **Role**: Dashboard Gateway and animation audio execution.
 - **Hardware**: DFPlayer Mini, TPA3118 Amplifier.
 - **Logic**: Hosts the interactive Web UI. Captures user commands and securely relays them across the ESP-NOW bridge to Node 1 for final execution.
 
@@ -44,10 +44,10 @@ Synchronization is achieved using low-latency **ESP-NOW** wireless bridging acro
 
 ## The Wireless Bridge (ESP-NOW)
 
-To prevent analog audio interference and reduce the risk of slip ring data corruption, the Behavioral Mesh (Nodes 1 and 2) uses **ESP-NOW**, a high-speed 2.4GHz peer-to-peer protocol. Node 3 does not participate in the wireless mesh to maintain maximum radio bandwidth for timing-critical dome and audio triggers.
+To prevent analog audio interference and reduce the risk of slip ring data corruption, the **Wireless Node Mesh** (Nodes 1 and 2) uses **ESP-NOW**, a high-speed 2.4GHz peer-to-peer protocol. Node 3 does not participate in the wireless mesh to maintain maximum radio bandwidth for timing-critical dome and audio triggers.
 
 
-- **Update Frequency**: **50ms** (Internal Heartbeat) for real-time behavioral response.
+- **Update Frequency**: **50ms** (Internal Heartbeat) for real-time operational response.
 - **Security**: **MAC-Address Binding** (Hardware-locked in `base-config.yaml`) to prevent mesh hijacking.
 - **Zero Router Latency**: Nodes communicate directly with <10ms response times.
 - **EMI Immunity**: Moving movement data to the 2.4G spectrum eliminates the ground loops and motor interference inherent in slip rings.
@@ -76,7 +76,7 @@ The **CNBTR Slip Ring** (6-Circuit) acts as the physical bridge for the dome's h
 
 1. **Star-Grounding**: All node grounds must converge at the central Negative Bus Bar in the body to ensure a clean signal reference.
 2. **Safety Heartbeat**: If the ESP-NOW signal is lost for >100ms, receiving nodes (1 and 2) automatically enter a "Hold" state to prevent stuck audio or drive patterns (firmware/production/node-1-dome-motion.yaml:474).
-3. **Firmware Strategy**: Nodes 1 and 3 use the `esp-idf` framework within ESPHome for high-stability wireless threading.
+3. **Firmware Strategy**: Nodes 1 and 2 use the `esp-idf` framework within ESPHome for high-stability wireless threading. Node 3 runs native WLED for bit-banging LED data.
 
 
 ---

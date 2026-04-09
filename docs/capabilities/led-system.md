@@ -3,7 +3,7 @@
 > **TECHNICAL SPECIFICATIONS** | **SYSTEM: CINEMATIC LIGHTING** | **MODEL: GRNWAVE PSI / WLED**
 
 
-This guide explains the lighting architecture for the Wee2-D2 project. It covers the addressable LED arrays, WLED synchronization, and the behavioral lighting presets managed by Node 1.
+This guide explains the lighting architecture for the Wee2-D2 project. It covers the addressable LED arrays, WLED synchronization, and the animation lighting presets managed by Node 1.
 
 
 ---
@@ -23,9 +23,9 @@ The lighting system is decentralized across the dome using addressable WS2812B L
 ---
 
 
-## Behavioral Lighting Presets (UART Sync)
+## Animation Lighting Presets (UART Sync)
 
-Lighting presets are triggered by **Node 1 (Dome Master)** on the dedicated serial bus (firmware/production/node-1-dome-motion.yaml:137). These presets are synchronized with the droid's audio and movement behaviors.
+Lighting presets are triggered by **Node 1 (Dome Master)** on the dedicated serial bus (firmware/production/node-1-dome-motion.yaml:137). These presets are synchronized with the droid's audio and movement animations.
 
 
 These presets are verified in the `v2.6.0-Dashboard` firmware sequence.

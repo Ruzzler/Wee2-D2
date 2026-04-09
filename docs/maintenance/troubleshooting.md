@@ -3,7 +3,7 @@
 > **TECHNICAL SPECIFICATIONS** | **SYSTEM: FAULT DIAGNOSIS** | **MODEL: ALL NODES**
 
 
-This guide provides a systematic strategy for identifying and fixing common issues with the Wee2-D2 project. It covers the node mesh, power distribution, and behavioral synchronization.
+This guide provides a systematic strategy for identifying and fixing common issues with the Wee2-D2 project. It covers the node mesh, power distribution, and animation synchronization.
 
 
 ---

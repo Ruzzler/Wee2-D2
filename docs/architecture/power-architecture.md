@@ -58,7 +58,7 @@ flowchart TD
     ESC_L ==>|UVW| MOT_L
     ESC_R ==>|UVW| MOT_R
 
-    SLIP_RING ==>|20V Ganged| WAGO_DOME
+    SLIP_RING ==>|20V Ganged (6-Circuit)| WAGO_DOME
     WAGO_DOME ==>|20V| DOME_ESC
     WAGO_DOME ==>|20V| BUCK_DOME
     WAGO_DOME ==>|20V| BUCK_LEDS
@@ -73,7 +73,7 @@ flowchart TD
     %% Interaction Links
     click BATT href "../maintenance/battery-runtime-guide.md" "DeWalt 20V Standard"
     click LVP href "../hardware/mgcstem-lvp-r15-manual.md" "Active 17.5V LVP"
-    click SLIP_RING href "../hardware/cnbtr-slip-ring-manual.md" "Ganged 4-Circuit Trunk"
+    click SLIP_RING href "../hardware/cnbtr-slip-ring-manual.md" "Ganged 6-Circuit Trunk"
     click BUCK_BODY href "../bill-of-materials.md" "Body Logic (5A)"
     click DOME_MOT href "../hardware/gobilda-motor-manual.md" "goBILDA Motor"
 
@@ -130,7 +130,7 @@ Dedicated to the addressable LED arrays (WS2812B). This rail provides high curre
 
 ## Slip Ring Utilization (Circuits 1–6)
 
-To minimize signal noise, the project uses the **Dual-Circuit Isolation Strategy** through the slip ring. Logic-level signals (UART/PWM) are kept separate from the high-current motor trunks.
+To minimize signal noise, the project uses the **Dual-Circuit Isolation Strategy** through the central 6-circuit slip ring. Logic-level signals (UART/PWM) are bypassed via the radio mesh, while high-current trunks are ganged for maximum conductivity.
 
 
 | Circuit | Function | Current | Protocol |

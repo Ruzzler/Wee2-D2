@@ -14,7 +14,7 @@ The sound hub for the Wee2-D2 project is powered by a DFPlayer Mini (MP3-TF-16P)
 
 ## Hardware Specifications (Audio Focus)
 
-The **DFPlayer Mini** is a specialized sound module that integrates a microSD slot and a low-latency serial interface. It is the primary audio source for all behavioral triggers.
+The **DFPlayer Mini** is a specialized sound module that integrates a microSD slot and a low-latency serial interface. It is the primary audio source for all animation triggers.
 
 
 | Parameter | Specification | Value |

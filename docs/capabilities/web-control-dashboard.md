@@ -11,7 +11,7 @@
 > **Alpha Release**: This interface is currently in an experimental state. All vitals and control scripts are subject to clinical recalibration as signal stability is verified in the field.
 
 
-The **Web Control Dashboard** is the droid's primary command-and-control gateway. Hosted locally on **Node 2 (Sound Hub)**, it provides a high-fidelity, glassmorphic interface for real-time vitals monitoring, cinematic lighting control, and behavioral triggers via a specialized ESP-NOW relay mesh.
+The **Web Control Dashboard** is the droid's primary command-and-control gateway. Hosted locally on **Node 2 (Sound Hub)**, it provides a high-fidelity, glassmorphic interface for real-time vitals monitoring, cinematic lighting control, and Animation triggers via a specialized ESP-NOW relay mesh.
 
 
 ---
