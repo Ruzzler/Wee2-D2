@@ -24,7 +24,7 @@ If the droid is not responding to dashboard triggers or sound triggers, the issu
 
 ## Power & Movement Faults
 
-Movement issues are typically related to voltage sag or incorrect VESC configurations. This synchronization is verified in the `v2.6.0-Dashboard` firmware sequence.
+Movement issues are typically related to voltage sag or incorrect VESC configurations. This synchronization is verified in the `v2.12.1` firmware sequence.
 
 
 1. **Voltage Shutdown**: If the system turns off during high-speed turns, the LVP module has likely triggered due to a voltage dip below **17.5V**. Swap for a fresh 20V battery.

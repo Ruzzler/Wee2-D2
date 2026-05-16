@@ -31,7 +31,7 @@ The **ESP32-S3 Super Mini** is selected for its compact footprint and high-speed
 The Dome Master manages high-precision PWM signals for dome rotation and serial triggers for the lighting and sound subsystems.
 
 
-These settings are verified in the `v2.6.0-Dashboard` firmware sequence.
+These settings are verified in the `v2.12.1` firmware sequence.
 
 
 | Assignment | GPIO Pin | Function | Citation |

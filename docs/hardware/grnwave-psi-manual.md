@@ -34,7 +34,7 @@ The **GrnWave PSI** is a specialized addressable LED matrix. It is designed to p
 The PSI lighting is managed by **Node 3 (LED Distro)**, which follows the RMT timing protocol for WS2812 signals. Node 3 receives serial JSON triggers from **Node 1 (Dome Master)** to sync visuals with audio.
 
 
-These settings are verified in the `v2.6.0-Dashboard` hardware sequence.
+These settings are verified in the `v2.12.1` hardware sequence.
 
 
 - **Master Node**: Node 3 (LED Distro / ESP32 Dev Board)

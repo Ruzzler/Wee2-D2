@@ -24,7 +24,7 @@ Updates are performed over a local 2.4GHz Wi-Fi network. Each node hosts its own
 
 ## Deployment Procedure (Web Browser)
 
-Follow these steps to deploy a new firmware binary (`.bin`) to your droid nodes. This synchronization is verified for the `v2.6.0` firmware stack.
+Follow these steps to deploy a new firmware binary (`.bin`) to your droid nodes. This synchronization is verified for the `v2.12.1` firmware stack.
 
 
 1. **Compile**: Use the ESPHome dashboard or CLI to compile your configuration into a binary file.

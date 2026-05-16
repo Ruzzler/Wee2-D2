@@ -11,7 +11,7 @@ This guide explains how to calibrate the drive, dome, and sound systems for the 
 
 ## Drive System Calibration (VESC)
 
-To ensure the droid drives straight and handles torque correctly, a full hall-sensor calibration must be performed using the VESC Tool. This synchronization is verified in the `v2.6.0-Dashboard` firmware sequence.
+To ensure the droid drives straight and handles torque correctly, a full hall-sensor calibration must be performed using the VESC Tool. This synchronization is verified in the `v2.12.1` firmware sequence.
 
 
 1. **Hall Sensor Detection**: Connect the Flipsky 6.7 Pro to the VESC Tool. Run the "Motor Setup Wizard" to detect the Hall sensor table for the FLD-5 hub motors.

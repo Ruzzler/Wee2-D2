@@ -27,7 +27,7 @@ The droid operates on a local 2.4GHz Wi-Fi network. If you are using a local ser
 A local server can be used to manage OTA (Over-The-Air) updates more efficiently by caching the compiled `.bin` files. 
 
 
-1. **Cache**: Keep a copy of the `v2.6.0-Dashboard` binary files on your local drive.
+1. **Cache**: Keep a copy of the `v2.12.1` binary files on your local drive.
 2. **Deploy**: Navigated to the node's individual server page and upload the verified file.
 
 

@@ -3,7 +3,7 @@
 > **TECHNICAL SPECIFICATIONS** | **SYSTEM: FIRMWARE DEPLOYMENT** | **TOOL: ESPHOME DASHBOARD**
 
 
-This guide explains how to install the firmware for the Wee2-D2 project. It covers the initial USB flashing for new nodes and the Over-The-Air (OTA) update procedure for the `v2.6.0-Dashboard` firmware sequence.
+This guide explains how to install the firmware for the Wee2-D2 project. It covers the initial USB flashing for new nodes and the Over-The-Air (OTA) update procedure for the `v2.12.1` firmware sequence.
 
 
 ---
@@ -25,7 +25,7 @@ New microcontroller nodes (ESP32-S3 or ESP32) require a physical USB connection 
 
 ## OTA Updates (Wireless Bridge)
 
-Once a node is connected to the network, you can deploy updates wirelessly. This is the primary method for managing the "Golden State" configurations in the `v2.6.0` sequence.
+Once a node is connected to the network, you can deploy updates wirelessly. This is the primary method for managing the "Golden State" configurations in the `v2.12.1` sequence.
 
 
 - **Procedure**: Navigate to the node's local web-dashboard (port 80) and upload the compiled binary.

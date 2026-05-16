@@ -3,7 +3,7 @@
 
 # <i data-lucide="zap"></i> Interactive Electrical Schematic
 
-> **TECHNICAL SPECIFICATIONS** | **SYSTEM: FULL INTERCONNECT** | **VERSION: v2.6.0-STABLE**
+> **TECHNICAL SPECIFICATIONS** | **SYSTEM: FULL INTERCONNECT** | **FIRMWARE BASELINE: v2.12.1**
 
 
 This document provides a high-fidelity visual and technical map of the Wee2-D2 electrical system. 

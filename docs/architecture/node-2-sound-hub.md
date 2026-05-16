@@ -31,7 +31,7 @@ The **ESP32-S3 Super Mini** is used for its dual-core performance, allowing it t
 The Sound Hub manages a high-speed UART serial bus to trigger the MP3-TF-16P decoder and listens for mesh commands from the Dome Master.
 
 
-These settings are verified in the `v2.6.0-Dashboard` firmware sequence.
+These settings are verified in the `v2.12.1` firmware sequence.
 
 
 | Assignment | GPIO Pin | Function | Citation |

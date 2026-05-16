@@ -34,7 +34,7 @@ The **DFPlayer Mini** is a specialized sound module that integrates a microSD sl
 The DFPlayer Mini is managed by **Node 2 (Sound Hub)** using a dedicated UART bus. The ESP32 provides a standard serial signal to trigger specific folders and files.
 
 
-These settings are verified in the `v2.6.0-Dashboard` firmware sequence.
+These settings are verified in the `v2.12.1` firmware sequence.
 
 
 - **Master Node**: Node 2 (Sound Hub / ESP32-S3)

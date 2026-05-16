@@ -3,7 +3,7 @@
 > **TECHNICAL SPECIFICATIONS** | **SYSTEM: DOCUMENTATION & FILES** | **MODELS: ALL COMPONENTS**
 
 
-This guide provides quick-access to the technical documentation and firmware configuration files for the Wee2-D2 project. These documents are verified for the `v2.6.0-Dashboard` hardware sequence.
+This guide provides quick-access to the technical documentation and firmware configuration files for the Wee2-D2 project. These documents are verified for the `v2.12.1` hardware sequence.
 
 
 ---
@@ -43,7 +43,7 @@ Cataloging the physical specifications for the industrial hardware components us
 
 ## Firmware Configuration (Source Anchors)
 
-These links point to the verified configuration files used in the `v2.6.0` production deployment.
+These links point to the verified configuration files used in the `v2.12.1` production deployment.
 
 
 - **Node 1 (Dome Master)**: [node-1-dome-motion.yaml](../../firmware/production/node-1-dome-motion.yaml)

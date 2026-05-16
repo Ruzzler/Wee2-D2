@@ -34,7 +34,7 @@ The **TPA3118** is a high-efficiency Class-D amplifier module. It is selected fo
 The amplifier receives an analog line-level signal from the DFPlayer Mini, which is managed by **Node 2 (Sound Hub)**. Gain is controlled through the hardware potentiometer on the TPA3118 module.
 
 
-These settings are verified in the `v2.6.0-Dashboard` hardware stack.
+These settings are verified in the `v2.12.1` hardware stack.
 
 
 - **Input Feed**: DAC_L / DAC_R from DFPlayer Mini.

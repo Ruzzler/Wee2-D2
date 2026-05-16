@@ -1,9 +1,9 @@
 # <i data-lucide="shopping-cart"></i> Bill of Materials
 
-> **TECHNICAL SPECIFICATIONS** | **SYSTEM: HARDWARE PROCUREMENT** | **BOM v2.6.0**
+> **TECHNICAL SPECIFICATIONS** | **SYSTEM: HARDWARE PROCUREMENT** | **BOM v2.12.1**
 
 
-This document catalogs the verified hardware stack for the Wee2-D2 project. All components are selected for architectural parity with the `v2.6.0-Dashboard` firmware sequence.
+This document catalogs the verified hardware stack for the Wee2-D2 project. All components are selected for architectural parity with the `v2.12.1` firmware sequence.
 
 
 ---

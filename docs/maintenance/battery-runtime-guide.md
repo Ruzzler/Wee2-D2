@@ -26,7 +26,7 @@ The 20V DeWalt battery system operates at **18.5V Nominal**. While raw Watt-Hour
 
 ## Power Consumption Breakdown (Deep-Audit)
 
-These recalibrated calculations factor in resistive losses and active logic mesh drainage observed in the `v2.6.0-Dashboard` firmware sequence.
+These recalibrated calculations factor in resistive losses and active logic mesh drainage observed in the `v2.12.1` firmware sequence.
 
 
 ### 1. Baseline (Always-On Signal & Logic)

@@ -34,7 +34,7 @@ The **MgcSTEM LVP-R1.5** is an adjustable voltage relay module. It is the primar
 The LVP module is physically located between the DeWalt battery and the primary **Negative Bus Bar**. It acts as a hard-wired E-Stop for the power system.
 
 
-These settings are verified in the `v2.6.0` hardware stack.
+These settings are verified in the `v2.12.1` hardware stack.
 
 
 - **Cutoff Accuracy**: ±0.1V Calibration.

@@ -34,7 +34,7 @@ The **FLD-5 Series** is a brushless direct-drive motor that combines the tire an
 The hub motors are driven by two **Flipsky 6.7 Pro** motor controllers configured for FOC operation. These controllers communicate via PWM signals from Node 1 (Dome Master).
 
 
-These settings are verified in the `v2.6.0-Dashboard` firmware sequence.
+These settings are verified in the `v2.12.1` firmware sequence.
 
 
 - **Limit**: **15.0A Software Clamp** (firmware/esc-configs/left-motor-settings.xml).

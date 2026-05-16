@@ -27,7 +27,7 @@ Node 3 (LED Distro) acts as a slave to **Node 1 (Dome Master)**. It receives ser
 The project uses a standard segment mapping to ensure WLED understands the physical layout of the GrnWave PSI arrays.
 
 
-This configuration is verified in the `v2.6.0-Dashboard` production deployment.
+This configuration is verified in the `v2.12.1` production deployment.
 
 
 - **Config File**: [node-3-segments.json](../../firmware/production/node-3-segments.json)

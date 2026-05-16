@@ -31,7 +31,7 @@ The **ESP32 DevKit V1** is used for its robust RMT timing performance, ensuring 
 The LED Distro manages the high-speed data signals for the droid's cinematic arrays. It follows the RMT protocol on a dedicated serial bus.
 
 
-These settings are verified in the `v2.6.0-Dashboard` hardware sequence.
+These settings are verified in the `v2.12.1` hardware sequence.
 
 
 | Assignment | GPIO Pin | Function | Citation |

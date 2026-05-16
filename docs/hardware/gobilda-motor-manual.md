@@ -34,7 +34,7 @@ The **Yellow Jacket 5203 Series** is a planetary gearmotor optimized for high-to
 Motor speed and direction are managed by **Node 1 (Dome Master)** on GPIO 7. The ESP32 logic provides a standard PWM signal to the brushed motor controller.
 
 
-These settings are verified in the `v2.6.0-Dashboard` firmware sequence.
+These settings are verified in the `v2.12.1` firmware sequence.
 
 
 - **Master Node**: Node 1 (Dome Master / ESP32-S3)

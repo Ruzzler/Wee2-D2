@@ -39,7 +39,7 @@ Hub motors and domestic gears are subject to mechanical wear and require regular
 
 ## Firmware & Software Stability
 
-The droid relies on three ESP32 nodes to function. These nodes should be running the verified `v2.6.0-Dashboard` firmware sequence.
+The droid relies on three ESP32 nodes to function. These nodes should be running the verified `v2.12.1` firmware sequence.
 
 
 - **OTA Updates**: Only perform Over-The-Air updates when the battery is at >50% charge to prevent brownouts during the write cycle.
