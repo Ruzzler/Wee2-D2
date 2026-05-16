@@ -1,109 +1,123 @@
-# 🧵 Master Node Pinout & Wiring Guide
-> **TERMINOLOGY SYNC** | **v2.1.0-Zero-Infra Standard**
+# <i data-lucide="cable"></i> Master Node Pinout & Wiring Guide
 
-This document serves as the master wiring reference for the Wee2-D2 distributed node mesh (ESP32-S3). It integrates all verified wire colors, pin assignments, and physical orientation for the S3 Super Mini platform.
+> **TECHNICAL SPECIFICATIONS** | **SYSTEM: NODE MESH WIRING** | **VERIFIED AGAINST FIRMWARE v2.12.1**
+
+Master wiring reference for the Wee2-D2 distributed node mesh. Integrates verified wire colors, pin assignments, and physical orientation for the ESP32-S3 platform.
 
 ---
 
-## 🧠 1. Core Node 1 Pinout (Sound Hub)
-The Sound Hub (Node 1) manages all high-level Audio triggering and Drive system monitoring. The pins follow the standard S3 Super Mini layout.
+## 1. Node 2 Pinout (Sound Hub)
 
-| ESP32 Pin | Wire Color | Role | Function |
+Node 2 manages audio triggering, the web dashboard, and ESP-NOW relay. Pins follow the standard S3 Super Mini layout.
+
+| Pin | Wire Color | Role | Function |
 | :---: | :--- | :--- | :--- |
-| **5V** | 🟥 Red | Power In | 5V BEC (from ESC 1) |
-| **GND** | 🟩 Green | Ground | Common Logic Ground |
-| **GPIO 4** | ⬜ White | RC CH3 | Behavioral Trigger A |
-| **GPIO 5** | 🟩 Green | RC CH4 | Behavioral Trigger B |
-| **GPIO 6** | 🟪 Purple | RC CH5 | Bank Switch |
-| **GPIO 17** | 🟨 Yellow | DFPlayer TX | Serial Command Out |
-| **GPIO 16** | 🟩 Green | DFPlayer RX | Serial Status In (Optional) |
-| **GPIO 47** | N/A | Status LED | Internal Neopixel (Logic) |
+| **5V** | Red | Power In | 5V BEC (from ESC 1) |
+| **GND** | Black | Ground | Common Logic Ground |
+| **GPIO 4** | White | RC CH3 | Behavioural Trigger A |
+| **GPIO 5** | Green | RC CH4 | Behavioural Trigger B |
+| **GPIO 6** | Purple | RC CH5 | Bank Switch |
+| **GPIO 12** | Yellow | DY-HV20T TX | Serial command out |
+| **GPIO 13** | Green | DY-HV20T RX | Serial status in |
+| **GPIO 48** | N/A | Status LED | S3 internal NeoPixel |
 
 ---
 
-## 🔊 2. Audio Stack (DFPlayer + TPA3118)
-Audio triggers are processed via Node 1 and sent to the DFPlayer Mini. The analog signal is then amplified via the TPA3118.
+## 2. Audio Stack (DY-HV20T + TPA3118)
 
-### **DFPlayer Mini Interface**
-- **VCC/GND**: Connected to 5V Logic Rail.
-- **TX/RX**: Connected to S3 GPIO 16/17 (Crossed: TX -> RX).
-- **SPK_1/SPK_2**: Connected to **TPA3118 Input**.
+Audio triggers are processed locally on Node 2 over UART. The analog signal is amplified via the TPA3118.
 
-### **TPA3118 Amplifier**
-- **POWER**: Connected to 20V Positive Fuse Box (+).
-- **GND**: Connected to **Star Ground** (-).
-- **INPUT**: Connected to DFPlayer SPK_1/SPK_2 or DAC pads.
-- **OUTPUT**: Connected to Pyle 3.5" Speaker.
+### DY-HV20T Audio Module
+
+- **VCC/GND**: 5V logic rail (Mini560 Pro).
+- **TX/RX**: crossed to Node 2 GPIO 13/12 (DY-HV20T TX → S3 RX, DY-HV20T RX ← S3 TX).
+- **SPK_1/SPK_2**: routed to **TPA3118 input**.
+
+### TPA3118 Amplifier
+
+- **POWER**: 20V positive fuse box (+).
+- **GND**: star ground (-).
+- **INPUT**: DY-HV20T SPK_1/SPK_2 (or DAC pads).
+- **OUTPUT**: Pyle 3.5" full-range speaker.
 
 ---
 
-## 📡 3. Receiver Interface (F-06A)
-The receiver is powered directly via the **Slot 5** bridge.
+## 3. Receiver Interface (F-06A)
+
+The receiver is powered via the **Slot 5** bridge.
 
 | Wire Color | Rec Slot | ESP Pin | Role |
 | :--- | :---: | :---: | :--- |
-| **Red (5V)** | Slot 5 (+) | `VIN` | Master Logic Power |
-| **Black (GND)** | Slot 5 (-) | `GND` | Master Logic Ground |
-| **Grey/Black** | Slot 3 (S) | `GPIO 25` | CH3 Pulse Data |
-| **Blue/Black** | Slot 4 (S) | `GPIO 33` | CH4 Pulse Data |
-| **Purple/Black**| Slot 5 (S) | `GPIO 32` | CH5 Pulse Data |
+| **Red (5V)** | Slot 5 (+) | `VIN` | Logic Power |
+| **Black (GND)** | Slot 5 (-) | `GND` | Logic Ground |
+| **Grey/Black** | Slot 3 (S) | `GPIO 4` | CH3 pulse |
+| **Blue/Black** | Slot 4 (S) | `GPIO 5` | CH4 pulse |
+| **Purple/Black**| Slot 5 (S) | `GPIO 6` | CH5 pulse |
 
 ---
 
-## 🛞 4. Drive System: Parallel ESC Wiring (No CAN)
-Because the remote is in **Mode 1 (Mixed)**, each ESC needs its own logic pulse. We use the "High-Fidelity Signal" method to ensure smooth steering at high currents.
+## 4. Drive System: Parallel ESC Wiring (no CAN)
+
+Because the HOTRC DS-600 runs Mode 1 (Mixed), each ESC needs its own PWM. The "high-fidelity signal" method ensures smooth steering at high currents.
 
 | Source | Connection | ESC 1 (Left) | ESC 2 (Right) |
 | :--- | :--- | :---: | :---: |
-| **Receiver CH1** | Signal (White) | **CONNECT** | — |
-| **Receiver CH2** | Signal (White) | — | **CONNECT** |
-| **BEC Power** | Red (5V) | **CONNECT** | **ISOLATE (Red)** |
-| **Signal Reference**| Black (GND) | **CONNECT** | **CONNECT (Black)** |
+| **Receiver CH1** | Signal (white) | **CONNECT** | — |
+| **Receiver CH2** | Signal (white) | — | **CONNECT** |
+| **BEC Power** | Red (5V) | **CONNECT** | **ISOLATE** |
+| **Signal Reference** | Black (GND) | **CONNECT** | **CONNECT** |
 
 > [!IMPORTANT]
-> **Signal Jitter Prevention**: While the main power ground goes to the bus bar, keeping the small Black ground wire on ESC 2 provides a clean reference for the PWM signal, preventing "twitches" caused by motor noise.
+> **Signal Jitter Prevention**: the small black ground wire on ESC 2 provides a clean PWM reference, preventing twitches from motor noise. Main power ground goes to the bus bar.
 
 ---
 
-## 🛰️ 5. Dome Distribution: Ganged Wago Hub
-To handle the 15A+ peak loads of the dome motor and LED matrices, the slip ring circuits must be ganged at the entry Wagos.
+## 5. Dome Distribution: Ganged Wago Hub
 
-### **Positive 20V Hub (Wago A - 5 Port)**
+To handle 15A+ peak loads (dome motor + LED matrices), slip ring circuits gang at the entry Wagos.
+
+### Positive 20V Hub (Wago A, 5 Port)
+
 1. **IN**: Slip Ring Circuit 1 (20V)
-2. **IN**: Slip Ring Circuit 2 (20V) - **GANGED**
-3. **OUT**: goBILDA 15A Speed Controller (+)
-4. **OUT**: Mini560 Pro Buck 1 (LED Power)
-5. **OUT**: Mini560 Pro Buck 2 (Logic Power)
+2. **IN**: Slip Ring Circuit 2 (20V) — **GANGED**
+3. **OUT**: goBILDA 15A ESC (+)
+4. **OUT**: Mini560 Pro Buck 1 (LED power)
+5. **OUT**: Mini560 Pro Buck 2 (logic power)
 
-### **GND Star Hub (Wago B - 5 Port)**
+### Ground Star Hub (Wago B, 5 Port)
+
 1. **IN**: Slip Ring Circuit 3 (GND)
-2. **IN**: Slip Ring Circuit 4 (GND) - **GANGED**
-3. **OUT**: goBILDA 15A Speed Controller (-)
+2. **IN**: Slip Ring Circuit 4 (GND) — **GANGED**
+3. **OUT**: goBILDA 15A ESC (-)
 4. **OUT**: Mini560 Pro Buck 1 (GND)
 5. **OUT**: Mini560 Pro Buck 2 (GND)
 
 ---
 
-## 🛠️ 5. Wireless Interconnect (ESP-NOW)
-*Note: Node 1 (Body) is a wireless slave. It contains NO physical signal wires through the slip ring.*
+## 6. Wireless Interconnect (ESP-NOW)
+
+Node 2 has no physical signal wires through the slip ring — all inter-node communication is wireless.
 
 | Circuit | Role | Logic | Notes |
 | :---: | :--- | :--- | :--- |
-| **Wireless** | **ESP-NOW** | 2.4GHz | Behavioral sync from Dome Master |
-| **C5/C6** | **RESERVED** | N/A | Available for future logic / telemetry |
+| **Wireless** | ESP-NOW | 2.4GHz | Behavioural sync from Node 1 |
+| **C5/C6** | RESERVED | N/A | Available for future telemetry |
 
 ---
 
-## ⚡ 7. Dome ESC Pulse Calibration (goBILDA 15A)
-*   **Signal (White)**: Connect to **MCU 3 (GPIO 18)**.
-*   **Ground (Black)**: **MUST** be connected to the Dome Logic GND rail (Reference).
-*   **Voltage (Red)**: **ISOLATE** (Do not connect) if using the Slip Ring 5V Logic Bus.
+## 7. Dome ESC Pulse Calibration (goBILDA 15A)
+
+- **Signal (white)**: connect to **Node 1 GPIO 7**.
+- **Ground (black)**: connect to dome logic GND (reference).
+- **Voltage (red)**: **isolate** — do not connect if using slip ring 5V logic bus.
 
 ---
 
-## 📊 6. Summary Check
-- [x] Body MCU upgraded to **ESP32-S3 Super Mini**.
-- [x] **DFPlayer Mini** integrated as the primary audio source.
-- [x] **TPA3118 Amplifier** powered directly from 20V rail.
-- [x] **ESP-NOW** established as the wireless behavioral link.
-- [x] **Slip Ring C5/C6** isolated and reserved for future logic.
+## 8. Summary Check
+
+- [x] Audio module migrated from DFPlayer Mini to **DY-HV20T** (firmware v2.12.x).
+- [x] Body MCU on **ESP32-S3 Super Mini** (Node 2).
+- [x] **TPA3118** amplifier powered directly from 20V rail.
+- [x] **ESP-NOW** established as the wireless behavioural link.
+- [x] **Node 3** standardized on **ESP32-S3 Super Mini** running **WLED-MM 14.7.1**.
+- [x] Slip Ring C5/C6 isolated and reserved.
