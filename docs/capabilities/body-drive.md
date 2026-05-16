@@ -28,7 +28,7 @@ The project uses two **FLD-5 5" Hub Motors**. These are direct-drive motors that
 The drive system is managed by two **Flipsky Mini FSESC 6.7 Pro** controllers. These are configured for **FOC (Field Oriented Control)** for smooth, quiet operation.
 
 
-These settings are verified in the `v2.6.0-Dashboard` firmware sequence.
+These settings are verified against firmware `v2.12.1`.
 
 
 | Setting | Value | Function | Citation |

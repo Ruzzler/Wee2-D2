@@ -1,72 +1,105 @@
 # <i data-lucide="lightbulb"></i> Cinematic LED System
 
-> **TECHNICAL SPECIFICATIONS** | **SYSTEM: CINEMATIC LIGHTING** | **MODEL: GRNWAVE PSI / WLED**
+> **TECHNICAL SPECIFICATIONS** | **SYSTEM: CINEMATIC LIGHTING** | **MODEL: WLED-MM 14.7.1 / GRNWAVE PSI**
 
-
-This guide explains the lighting architecture for the Wee2-D2 project. It covers the addressable LED arrays, WLED synchronization, and the animation lighting presets managed by Node 1.
-
+This guide covers the LED architecture: WS2812B / GrnWave hardware, WLED preset ledger, UART JSON bridge from Node 1, and physical pin mapping. All references verified against firmware v2.12.1.
 
 ---
-
 
 ## Hardware Components (LED Hub)
 
-The lighting system is decentralized across the dome using addressable WS2812B LEDs. These lights are powered by a dedicated high-current 5.01V buck converter to prevent voltage drops during bright patterns.
+The lighting system is decentralized across the dome using addressable LEDs. Powered by a dedicated Mini560 Pro 5A buck to prevent voltage drops during bright patterns.
 
-
-- **Controller**: Node 3: LED Distro (ESP32)
-- **Framework**: WLED (v0.14+ / RMT Protocol)
-- **Primary Arrays**: GrnWave PSI logics (Addressable)
-- **Data Protocol**: UART-to-WLED Bridge (115200 Baud)
-
+- **Controller**: Node 3 — LED Hub (ESP32-S3 Super Mini)
+- **Framework**: WLED-MM 14.7.1 (RMT protocol on S3 pins)
+- **Primary Arrays**: GrnWave PSI logics + WS2812B Logic Display matrices
+- **Data Protocol**: UART JSON bridge from Node 1 (115200 baud)
 
 ---
 
+## Power Constraints
 
-## Animation Lighting Presets (UART Sync)
+> [!CAUTION]
+> The GrnWave PSI matrices will fail if exposed to more than 5.2V. The dual-buck strategy isolates high-current LED sweeps from ESP32 logic pins.
 
-Lighting presets are triggered by **Node 1 (Dome Master)** on the dedicated serial bus (firmware/production/node-1-dome-motion.yaml:137). These presets are synchronized with the droid's audio and movement animations.
+A dedicated Mini560 Pro 5A buck on the 20V ganged Wago hub serves only the dome LED rail.
 
-
-These presets are verified in the `v2.6.0-Dashboard` firmware sequence.
-
-
-| Preset ID | Animation Name | Visual Profile | Citation |
-| :--- | :--- | :--- | :--- |
-| **P0** | **All Off** | All LEDs are powered down | [node-1.yaml:385](../../firmware/production/node-1-dome-motion.yaml#L385) |
-| **P1** | **1977 Idle** | Standard movie-accurate logic | [node-1.yaml:382](../../firmware/production/node-1-dome-motion.yaml#L382) |
-| **P3** | **Full Alert** | Rapid Red/Blue logic flash | [node-1.yaml:384](../../firmware/production/node-1-dome-motion.yaml#L384) |
-| **P10** | **Disco Mode** | Rainbow-cycling party vibe | [node-1.yaml:391](../../firmware/production/node-1-dome-motion.yaml#L391) |
-| **P14** | **Celebration** | Gold/White high-speed flash | [node-1.yaml:395](../../firmware/production/node-1-dome-motion.yaml#L395) |
-
+**Firmware-level guard:** all `set_dome_color` / `set_light_color` calls clamp `bri` to ≤ 76 (≤30%) before sending to WLED, enforcing the CLAUDE.md hard safety constraint at the per-frame ceiling (WLED ABL remains the secondary current guard).
 
 ---
 
+## Cinematic Lighting Presets
 
-## Logic Flow & Connectivity
+Wee2-D2 ships **15 hard-coded cinematic logic states** stored as WLED presets on Node 3. These can be triggered manually via the [Web Control Dashboard](web-control-dashboard.md) or automatically during animations.
 
-The Lighting Hub (Node 3) receives serial JSON strings from Node 1. This method ensures that the lighting stays perfectly in sync with the audio track being played by Node 2.
+| ID | Preset Name | Visual Profile | Operational Context |
+| :---: | :--- | :--- | :--- |
+| **0** | All Off | Total blackout | Power save / stealth |
+| **1** | 1977 Idle | Classic blue/teal scroll | Standard operation |
+| **2** | Neural Proc | Rapid cyan logic pulse | Thinking / calculating |
+| **3** | Alert Red | Synchronized red logic flash | Emergency / combat |
+| **4** | Legacy Mode | Static 1977 colors | Low power |
+| **5** | Front Only | Front logic only (20 px) | Component test |
+| **6** | Rear Only | Rear logic only (24 px) | Component test |
+| **7** | PSI Scan | Dual-PSI alternating pulse | Sensor sweep |
+| **8** | Data Transfer | High-speed white logic jitter | Link established |
+| **9** | Leia Message | Dim blue logic flicker | Holo-projection playback |
+| **10** | Disco Mode | RGB rainbow cycle | Dance / celebration |
+| **11** | Stealth | Dimmed single-pixel logic | Night ops |
+| **12** | Startup Seq | Cascading logic wipe | System boot |
+| **13** | Malfunction | Random red/orange static | System error |
+| **14** | Celebration | Gold/white shimmer | Victory / taunt |
+| **15** | Imperial March | Slow red logic fade | Opposing force detected |
 
-
-1. **Trigger Origin**: Node 1 detects an animation event (e.g., "The Cantina Band").
-2. **Serial Broadcast**: Node 1 pushes a JSON string (e.g., `{"on":true,"ps":10}`) down the physical UART wire (GPIO 5).
-3. **Execution**: Node 3 (WLED) receives the command at 115200 baud and instantly applies the preset.
-
+Canonical preset definitions live in `Firmware/wee2d2-firmware/firmware/wled/presets.json`.
 
 ---
 
+## Physical LED Mapping
 
-## Troubleshooting & Management
+LEDs split across four data lines off Node 3:
 
-Ensure the Node 1 and Node 3 **grounds** are tied together at the central Wago hub. Without a shared ground reference, the serial serial communication (UART) will become unreliable.
-
-
-- **Flickering**: If you see random flickering, check the Node 3 buck converter output. Under-voltage can cause the addressable LEDs to reset. 
-- **Lag**: The 115200 baud bus is very fast. If lighting lag occurs, it is likely due to the WLED board entering a "Deep Sleep" or the `FS` library failing on Node 1.
-- **Heartbeat**: Node 1 sends a diagnostic "keep-alive" ping every 60 seconds (firmware/production/node-1-dome-motion.yaml:462) to keep the line active.
-
+| Display | Type | Configuration | GPIO | Wire Color |
+| :--- | :--- | :--- | :---: | :--- |
+| **Front Logic** | WS2812B | 10x2 matrix (20 px) | 18 | Green |
+| **Rear Logic** | WS2812B | 12x2 matrix (24 px) | 19 | White |
+| **Front PSI** | GrnWave | Circular (76 px) | 21 | Yellow |
+| **Rear PSI** | GrnWave | Circular (76 px) | 22 | Yel/Blk |
 
 ---
 
+## WLED 2D Setup
+
+To get cinematic animations, the WLED interface uses 2D matrix segments.
+
+1. Even though the Rear Logic is physically split into two square windows, treating it as one consecutive 10x2 strip in WLED lets scanning animations flow across both.
+2. The GrnWave PSIs are mapped by concentric rings (Outer, Inner, Core) to allow layered breathing and strobing.
+
+---
+
+## Trigger Flow (UART JSON Bridge)
+
+1. **Trigger Origin**: Node 1 detects an animation event (e.g. "Cantina Band").
+2. **JSON Push**: Node 1 sends a JSON string (e.g. `{"on":true,"ps":10}`) down the UART wire to Node 3 (115200 baud).
+3. **Execution**: Node 3 (WLED) receives the command and instantly applies the preset.
+
+This keeps lighting in sync with the audio track playing on Node 2.
+
+---
+
+## Troubleshooting
+
+- **Flickering**: check the Node 3 buck output. Under-voltage causes addressable LEDs to reset.
+- **Lag**: the 115200 baud bus is fast — lag usually means WLED entered a power-save state or Node 1's JSON serializer stalled.
+- **Heartbeat**: Node 1 sends a diagnostic ping every 60 s to keep the line active.
+- **Ground**: ensure Node 1 and Node 3 grounds tie at the central Wago hub. Without a shared reference, the UART line becomes unreliable.
+
+---
+
+**Relevant Hardware & Code:**
+- [Node 3: LED Distribution](../architecture/node-3-led-distribution.md)
+- [Node Pinout Guide](../architecture/node-pinout-guide.md)
+- [GrnWave PSI Hub](../hardware/grnwave-psi-manual.md)
+- [WLED Configuration Guide](../maintenance/wled-configuration-guide.md)
 
 [View Master Schematic](../architecture/electrical-schematic.md) | [View Power Architecture](../architecture/power-architecture.md)

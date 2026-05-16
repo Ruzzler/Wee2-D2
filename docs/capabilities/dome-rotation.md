@@ -26,15 +26,15 @@ The dome rotated by a **goBILDA 5203 Series Yellow Jacket** planetary gearmotor.
 The dome motor is managed by a brushed PWM controller receiving signals from **Node 1 (Dome Master)** on GPIO 7. These levels are calibrated for the hotRC DS-600 radio system.
 
 
-These levels are verified in the `v2.6.0-Dashboard` firmware sequence.
+These levels are verified against firmware `v2.12.1`.
 
 
 | PWM Parameter | Signal Level | Function | Citation |
 | :--- | :--- | :--- | :--- |
-| **GPIO Pin** | **GPIO 7** | Dome PWM Output | [node-1.yaml:11](../../firmware/production/node-1-dome-motion.yaml#L11) |
-| **Min Level** | **0.05** | Counter-Clockwise Max | [node-1.yaml:152](../../firmware/production/node-1-dome-motion.yaml#L152) |
-| **Idle Level** | **0.075** | Deadzone (Stationary) | [node-1.yaml:153](../../firmware/production/node-1-dome-motion.yaml#L153) |
-| **Max Level** | **0.1** | Clockwise Max | [node-1.yaml:154](../../firmware/production/node-1-dome-motion.yaml#L154) |
+| **GPIO Pin** | **GPIO 7** | Dome PWM Output | `firmware/node-1-dome.yaml` |
+| **Min Level** | **0.05** | Counter-Clockwise Max | `firmware/node-1-dome.yaml` |
+| **Idle Level** | **0.075** | Deadzone (Stationary) | `firmware/node-1-dome.yaml` |
+| **Max Level** | **0.1** | Clockwise Max | `firmware/node-1-dome.yaml` |
 
 
 ---
@@ -47,7 +47,7 @@ Dome rotation is secondary to safety. If a manual RC stick command is detected o
 
 1. **Idle Bobbing**: When the droid is idle, Node 1 executes random, slow-speed "scans" to create a living appearance.
 2. **Angry Tantrum**: Rapid clockwise/counter-clockwise snaps are triggered by the sound hub relative to audio triggers.
-3. **Smooth Stops**: A **0.8s transition length** (firmware/production/node-1-dome-motion.yaml:155) is applied to prevent the dome from "jerking" when reaching the limit of the internal slip ring.
+3. **Smooth Stops**: A **0.8s transition length** is applied to prevent the dome from "jerking" when reaching the limit of the internal slip ring. See `firmware/node-1-dome.yaml`.
 
 
 ---
