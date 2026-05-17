@@ -15,7 +15,7 @@ To ensure the droid drives straight and handles torque correctly, a full hall-se
 
 
 1. **Hall Sensor Detection**: Connect the Flipsky 6.7 Pro to the VESC Tool. Run the "Motor Setup Wizard" to detect the Hall sensor table for the FLD-5 hub motors.
-2. **Current Limits**: Verify that the **15A Software Clamp** is applied to prevent battery sag (firmware/esc-configs/left-motor-settings.xml).
+2. **Current Limits**: Verify that the **15A Software Clamp** is applied to prevent battery sag.
 3. **Neutral Deadzone**: Calibrate the PPM signal to ensure a 1500μs center-point for stationary operation.
 
 
@@ -27,7 +27,7 @@ To ensure the droid drives straight and handles torque correctly, a full hall-se
 The dome motor is a brushed PWM system. Calibration is handled by adjusting the pulse-width levels in the **Node 1 (Dome Master)** configuration.
 
 
-- **Center Point**: 1500μs (firmware/production/node-1-dome-motion.yaml:153)
+- **Center Point**: 1500μs
 - **Range (CW)**: 1950μs Max Speed
 - **Range (CCW)**: 1050μs Max Speed
 - **Transition**: Adjust the `transition_length` for smooth start/stop behavior.
@@ -41,7 +41,7 @@ The dome motor is a brushed PWM system. Calibration is handled by adjusting the 
 The RC receiver (HotRC DS-600) provides raw PWM signals to GPIO 4 on Node 1. Tuning these filters prevents jitter during stationary operation.
 
 
-- **Deadzone Filter**: 20.0 (firmware/production/node-1-dome-motion.yaml:168)
+- **Deadzone Filter**: 20.0
 - **Signal Delta**: 20.0μs
 - **Multiplier**: 1000000 (Pulse Width Calculation)
 

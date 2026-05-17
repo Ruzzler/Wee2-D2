@@ -1,13 +1,15 @@
-# <i data-lucide="volume-2"></i> DY-HV20T Audio Module
-
-> **TECHNICAL SPECIFICATIONS** | **SYSTEM: AUDIO MODULE** | **MODEL: DY-HV20T (20W STEREO MP3)** | **VERIFIED AGAINST FIRMWARE v2.12.1**
-
-The **DY-HV20T** is the audio playback module deployed on Node 2 from firmware v2.12.x onward. It replaces the legacy DFPlayer Mini, which was retired due to UART reliability issues and limited path control. The DY-HV20T plays MP3 files directly from a microSD card by filesystem path (uppercase only) over a 9600-baud UART link.
-
 ![manual-hero](../../assets/dy-hv20t-module.svg)
 
-> [!NOTE]
-> Pinout diagram above is an SVG placeholder until a hardware photo is taken. Pin labels reflect the actual module silkscreen + wiring to Node 2.
+
+# <i data-lucide="volume-2"></i> DY-HV20T Audio Module
+
+> **TECHNICAL SPECIFICATIONS** | **SYSTEM: AUDIO MODULE** | **MODEL: DY-HV20T (20W STEREO MP3)**
+
+The **DY-HV20T** is the audio playback module deployed in the body of Wee2-D2. It plays MP3 files from a microSD card, controlled by Node 2 over a small serial connection, and sends its line-level output into the [TPA3118 60W amplifier](tpa3118-amp-manual.md) which drives the speaker.
+
+The DY-HV20T replaced the earlier DFPlayer Mini once the droid grew past about a hundred sound files — see "Why DY-HV20T over DFPlayer" below.
+
+> The pinout diagram above is an SVG placeholder until a hardware photo is taken. Pin labels match the actual module silkscreen.
 
 ---
 
@@ -15,15 +17,13 @@ The **DY-HV20T** is the audio playback module deployed on Node 2 from firmware v
 
 | Spec | Value |
 | :--- | :--- |
-| **Output** | 20W stereo (also runs in mono via SPK_1/SPK_2 to TPA3118 input) |
-| **Storage** | microSD card (FAT32, uppercase paths) |
-| **Audio Format** | MP3 / WAV |
-| **Control** | UART (9600 baud, 8N1) |
-| **Protocol** | DY-series serial frame: `0xAA` sync + command byte + payload + 8-bit checksum |
-| **SD Trigger** | "Play by filesystem path" (`0xAA 0x08 <length> <path>`) — superior to DFPlayer's folder/track index model |
-| **Volume Range** | 0–30 (firmware caps at **26** per CLAUDE.md hard safety constraint) |
-| **Power** | 5V VCC, common ground with Node 2 |
-| **Footprint** | Drop-in for DFPlayer Mini PCB cutout |
+| **Output** | 20W stereo (also feeds the TPA3118 in mono via SPK_1 / SPK_2) |
+| **Storage** | microSD card (FAT32) |
+| **Audio formats** | MP3, WAV |
+| **Control interface** | Serial (UART) from Node 2 |
+| **Volume range** | 0 – 30 (firmware caps at **26** for speaker safety) |
+| **Supply** | 5V VCC, common ground with Node 2 |
+| **Footprint** | Drop-in replacement for DFPlayer Mini PCB cutout |
 
 ---
 
@@ -33,96 +33,48 @@ The **DY-HV20T** is the audio playback module deployed on Node 2 from firmware v
 | :--- | :--- | :--- |
 | **VCC** | 5V logic rail (Mini560 Pro) | Shared with Node 2 |
 | **GND** | Star ground | Shared with Node 2 + TPA3118 |
-| **RX** | **Node 2 GPIO 12** (`sfx_tx_pin`) | Serial commands inbound, 9600 baud |
-| **TX** | **Node 2 GPIO 13** (`sfx_rx_pin`) | Status / busy line inbound to Node 2 |
+| **RX** | Node 2 GPIO 12 | Serial commands inbound |
+| **TX** | Node 2 GPIO 13 | Status / busy line back to Node 2 |
 | **SPK_1** | TPA3118 input (+) | Line-level analog audio |
 | **SPK_2** | TPA3118 input (-) | Line-level analog audio |
 
-```
-         ESP32-S3 Super Mini (Node 2)
-         ┌──────────────────┐
-         │ GPIO 12 (UART TX)│──────> DY-HV20T RX
-         │ GPIO 13 (UART RX)│<────── DY-HV20T TX
-         │ 5V               │──────> DY-HV20T VCC
-         │ GND              │──────> DY-HV20T GND
-         └──────────────────┘
-
-         DY-HV20T
-         ┌──────────────────┐
-         │ VCC ──── 5V       │
-         │ GND ──── GND      │
-         │ RX  <─── GPIO 12  │  (commands)
-         │ TX  ───> GPIO 13  │  (status)
-         │ SPK+ ────────────>│──> TPA3118 Input (+)
-         │ SPK- ────────────>│──> TPA3118 Input (-)
-         └──────────────────┘
-```
-
 ---
 
-## Protocol Quick Reference
+## SD Card Layout
 
-The firmware uses a "Specified Path Playback" frame to call MP3s directly by their uppercase SD path.
+The card uses 15 named folders — one per emotional category — with files inside each folder following a 4-digit naming scheme. The full sound inventory is curated in `sdcard/SD_CARD_LEDGER.md` in the firmware repository.
 
-| Frame | Bytes | Purpose |
-| :--- | :--- | :--- |
-| Device Select (SD) | `0xAA 0x0B 0x01 <ck>` | Select SD card as source (boot priority 900) |
-| Set Volume | `0xAA 0x13 <vol> <ck>` | Volume 0–30 (firmware clamps to ≤26) |
-| Play by Path | `0xAA 0x08 <len> "/FOLDER/FILE.MP3" <ck>` | Direct filesystem playback |
-| Stop | `0xAA 0x10 <ck>` | Stop current track |
-
-Path frames are constructed by `firmware/include/dy_path_helper.h`. The `g_force_uppercase` global (default ON) enforces uppercase filenames before transmission — the DY-HV20T silently fails on lowercase paths.
-
----
-
-## SD Card Layout (Canonical)
-
-The card has **15 named folders** + a Master Asset Ledger maintained at `Firmware/wee2d2-firmware/sdcard/SD_CARD_LEDGER.md`. Total ~307 files as of v2.12.1.
-
-| Folder | Subcategory | Count |
+| Folder | Contents | Approx count |
 | :--- | :--- | :---: |
-| `/ALR/` | Alarm | 11 |
-| `/CHA/` | Character Voice (Johnny 5, RoboCop) | 10 |
-| `/CRI/` | Critical Event | 3 |
-| `/HAP/` | Happy / Chirp / Excited | 20 |
-| `/HUM/` | Ambient Hum | 25 |
-| `/MSC/` | SFX-Short, Misc-Chatter, Jingle, Holiday, Droid-Voice | 59 |
-| `/MUS/` | Music (SW, Party-Pop, TV-Theme, R2-Custom) | 23 |
-| `/NAR/` | Scene Quote, Hologram | 2 |
-| `/PRO/` | Processing | 15 |
-| `/QUO/` | Movie Quote | 47 |
-| `/RAZ/` | Mockery | 23 |
-| `/SAD/` | Sad Tone | 20 |
-| `/SCR/` | Scream / Panic | 4 |
-| `/SNT/` | Sentence | 20 |
-| `/WHS/` | Whistle | 25 |
+| `/ALR/` | Alarms | 11 |
+| `/CHA/` | Character voices (Johnny 5, RoboCop) | 10 |
+| `/CRI/` | Critical events | 3 |
+| `/HAP/` | Happy chirps, excited | 20 |
+| `/HUM/` | Ambient hums | 25 |
+| `/MSC/` | Misc SFX, droid voice, jingles, holiday | 59 |
+| `/MUS/` | Music (SW, party-pop, TV themes, R2-custom) | 23 |
+| `/NAR/` | Scene quotes, hologram messages | 2 |
+| `/PRO/` | Processing sounds | 15 |
+| `/QUO/` | Movie quotes | 47 |
+| `/RAZ/` | Mockery / razz | 23 |
+| `/SAD/` | Sad tones | 20 |
+| `/SCR/` | Screams / panic | 4 |
+| `/SNT/` | Sentences | 20 |
+| `/WHS/` | Whistles | 25 |
 
-**Naming convention**: `/FOLDER/PFX0001.MP3` — 3-letter folder prefix + 4-digit sequence. Source-of-truth for additions is the ledger; firmware references files via the same uppercase paths.
+Roughly **307 sound files** total as of the current production loadout.
 
----
-
-## Boot Sequence
-
-The Node 2 ESPHome boot handler runs at **priority 900** to ensure the DY-HV20T is initialized before any sound trigger can fire:
-
-1. `on_boot:` priority 900 fires.
-2. Frame: `0xAA 0x0B 0x01 <ck>` — Device Select (SD).
-3. Short delay.
-4. Frame: `0xAA 0x13 <audio_volume> <ck>` — apply saved volume (clamped to ≤ 26).
-5. Module is now ready for `play_by_path` triggers via ESP-NOW relay or local script.
-
-If the module misses this sequence (power dropout, late SD insert), the dashboard will show audio commands succeeding at the protocol layer but silent at the speaker — the first thing to check is that boot priority 900 ran cleanly.
+The droid uses these folder names directly — the firmware looks up files by their full filesystem path rather than by an index number, which is why adding a new sound only requires dropping the file in the right folder + adding it to the ledger.
 
 ---
 
 ## Safety Limits
 
-| Constraint | Value | Why |
-| :--- | :--- | :--- |
-| **Max volume** | 26 / 30 | Protects the 3.5" Pyle driver via TPA3118 gain headroom. Clamped at the Volume slider, on every ESP-NOW relay, and at the BLE bridge. |
-| **Uppercase paths** | Required | DY-HV20T silently rejects lowercase filenames. `g_force_uppercase` enforces. |
-| **5V supply only** | — | Module is not 3.3V-tolerant on VCC; logic lines are 3.3V-compatible. |
-| **Boot priority 900** | — | Must initialize before any caller can request playback. |
+| Constraint | Why |
+| :--- | :--- |
+| **Volume capped at 26 / 30** | Protects the 3.5" Pyle speaker from over-driving through the TPA3118 amplifier. The cap is enforced everywhere a volume command can come from — dashboard slider, app, BLE bridge, RC volume-up button. |
+| **5V VCC required** | The module is not 3.3V-tolerant on its power pin (though its logic-level lines are 3.3V-compatible). |
+| **Uppercase filenames** | The module expects uppercase paths on the SD card. The firmware enforces this automatically when calling files. |
 
 ---
 
@@ -130,19 +82,17 @@ If the module misses this sequence (power dropout, late SD insert), the dashboar
 
 | | DFPlayer Mini | DY-HV20T |
 | :--- | :--- | :--- |
-| **Path control** | Folder/track index (e.g., "play folder 3 file 7") | Filesystem path ("play /HAP/HAP0001.MP3") |
-| **Re-numbering risk** | Adding a file to folder 3 reshuffles every index | Path is stable forever |
-| **UART reliability** | Intermittent at 9600 baud under load | Stable at 9600 baud |
-| **Output** | Mono 3W (needs external amp anyway) | 20W stereo (still feeds TPA3118 for the 60W path) |
-| **SD path discipline** | Tolerant of mixed case | Strict uppercase |
+| **Addressing** | "Play folder 3, file 7" — indexed | "Play /HAP/HAP0001.MP3" — named |
+| **Adding new sounds** | Inserting a file in folder 3 re-shuffles every index, breaks references | Path is stable — drop the file in, done |
+| **Output** | Mono 3W | 20W stereo |
+| **UART stability** | Intermittent under load | Reliable |
+| **Footprint** | — | Drop-in compatible |
 
-The path-based model is what made the firmware's per-folder reaction routing (`0xA3` codes folder-aligned, not sequential) practical to maintain. Adding a new "happy" sound in the legacy DFPlayer era required updating index tables on the firmware side; with the DY-HV20T the ledger is the only source of truth.
+The path-based model is what made the droid's sound library scale past ~100 files without becoming a maintenance burden.
 
 ---
 
-**Relevant Code:**
-- `Firmware/wee2d2-firmware/firmware/node-2-sound.yaml` (UART config, boot priority, volume clamp)
-- `Firmware/wee2d2-firmware/firmware/include/dy_path_helper.h` (frame builder + uppercase enforcement)
-- `Firmware/wee2d2-firmware/sdcard/SD_CARD_LEDGER.md` (canonical sound inventory)
-
-[View Audio System Guide](../capabilities/audio-system.md) | [View TPA3118 Amplifier Manual](tpa3118-amp-manual.md) | [View Node 2: Sound Hub](../architecture/node-2-sound-hub.md)
+**Relevant docs:**
+- [Audio System Guide](../capabilities/audio-system.md) — how audio fits in the droid's behaviour
+- [TPA3118 Amplifier Manual](tpa3118-amp-manual.md) — the amp downstream of the module
+- [Node 2: Sound Hub](../architecture/node-2-sound-hub.md) — the board that drives this module

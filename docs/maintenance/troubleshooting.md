@@ -14,9 +14,9 @@ This guide provides a systematic strategy for identifying and fixing common issu
 If the droid is not responding to dashboard triggers or sound triggers, the issue is likely within the radio mesh connection between Node 1 and Node 2.
 
 
-- **No Sound**: Ensure that Node 2 (Sound Hub) is powered and within range. Node 1 sends a 1-byte trigger (firmware/production/node-1-dome-motion.yaml:230) that must be received over 2.4GHz.
-- **Heartbeat Lost**: Nodes check for a mesh signal every 5 seconds (firmware/production/node-1-dome-motion.yaml:474). Check the Node 2 dashboard to see if Node 1 is marked "Offline."
-- **EM Interference**: If the radio bridge is unstable, ensure that the Wi-Fi power output is capped at **8.5dBm** (firmware/production/node-1-dome-motion.yaml:56) to prevent noise within the aluminum dome.
+- **No Sound**: Ensure that Node 2 (Sound Hub) is powered and within range. Node 1 sends a 1-byte trigger that must be received over 2.4GHz.
+- **Heartbeat Lost**: Nodes check for a mesh signal every 5 seconds. Check the Node 2 dashboard to see if Node 1 is marked "Offline."
+- **EM Interference**: If the radio bridge is unstable, ensure that the Wi-Fi power output is capped at **8.5dBm** to prevent noise within the aluminum dome.
 
 
 ---
@@ -40,9 +40,9 @@ Movement issues are typically related to voltage sag or incorrect VESC configura
 You can view the real-time technical logs for each node using the built-in web server or the serial USB port.
 
 
-- **Debug Level**: The current firmware is set to `DEBUG` for all core configurations (firmware/production/node-1-dome-motion.yaml:66).
+- **Debug Level**: The current firmware is set to `DEBUG` for all core configurations.
 - **RC Logging**: To see raw RC stick inputs, check the logs for the `pulse_width` sensor on Node 1 (GPIO 4).
-- **Serial Monitor**: Use a baud rate of **115200** when connecting via USB (firmware/production/node-1-dome-motion.yaml:69).
+- **Serial Monitor**: Use a baud rate of **115200** when connecting via USB.
 
 
 ---

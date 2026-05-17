@@ -14,7 +14,7 @@ This guide lists the mandatory safety and maintenance procedures for the Wee2-D2
 The droid's power source is a high-current 20V Lithium-Ion battery. The electrical trunk must be inspected regularly to ensure all connections are tight and free of thermal damage.
 
 
-1. **Voltage Range**: The DeWalt battery system operates at **20V (18.5V Nom)**. Ensure the MgcSTEM LVP module is set to a **17.5V safety cutoff** (firmware/production/node-1-dome-motion.yaml:425).
+1. **Voltage Range**: The DeWalt battery system operates at **20V (18.5V Nom)**. Ensure the MgcSTEM LVP module is set to a **17.5V safety cutoff**.
 2. **Terminal Inspection**: Check the central Negative Bus Bar and Wago hubs for loose wires. High-current loads (30A peak) from the FLD-5 motors can cause localized heat if a terminal is loose.
 3. **Emergency Shutdown**: If you smell "burning" or see smoke, immediately pull the battery from the body mount. The system does not have a software e-stop for electrical short-circuits.
 
@@ -43,7 +43,7 @@ The droid relies on three ESP32 nodes to function. These nodes should be running
 
 
 - **OTA Updates**: Only perform Over-The-Air updates when the battery is at >50% charge to prevent brownouts during the write cycle.
-- **Mesh Integrity**: If the droid behaves erratically, reboot Node 1 (Dome Master) to re-establish the ESP-NOW handshake (firmware/production/node-1-dome-motion.yaml:474).
+- **Mesh Integrity**: If the droid behaves erratically, reboot Node 1 (Dome Master) to re-establish the ESP-NOW handshake.
 - **Log Review**: Use the `wee2d2-dome-master.local` web dashboard to check for recurring technical errors in the system logs.
 
 

@@ -31,7 +31,7 @@ The MarcDuino system is the industry-standard cinematic astromech behaviour voca
 | **:SE14** | Scan | Slow sweeping motion → Radar pings → Sequential logic wipe | ESB: Hoth Ice Plains |
 | **:SE15** | Stealth | SE01 motion + light only, **no audio** | Night ops |
 
-Mapping to our shipping production scripts in v2.12.1: `perf_idle`, `perf_angry`, `perf_dance`, `perf_cantina`, `perf_birthday`, `perf_imperial`. Reactions: `react_wolf_whistle`, `react_razz`, `react_annoyed`, `react_thinking`, `react_excited`. The MarcDuino set above is the **target vocabulary**; we currently ship roughly half.
+Mapping to what's shipping today: **6 performances** (Idle, Angry, Dance, Cantina, Birthday, Imperial March) and **5 reactions** (Wolf Whistle, Razz, Annoyed, Thinking, Excited). The MarcDuino set above is the **target vocabulary** — we currently ship roughly half.
 
 ---
 
@@ -118,14 +118,8 @@ All five are explicitly offline by design. Anything requiring a network round-tr
 
 ---
 
-## 6. Animation Framework Tie-In
+## 6. Behaviour Framework Tie-In
 
-All of the above is authored on top of the **T0/T1/T2 Animation Framework** (firmware v2.9.0+). Tier rules:
+All of the above sits on top of the droid's three-tier behaviour model: short **life micros** (idle twitches), medium **reactions** (one-shot crowd responses), and long **performances** (choreographed routines). Mood (Neutral / Happy / Grumpy / Focused / Scared / Majestic / Sleepy) shapes what the droid favours in idle moments; the idle escalation ladder (fresh → settled → bored → restless → self-amusement) makes the droid increasingly seek attention the longer it is left alone.
 
-- **T0** (life / micro) — never holds the animation lock. Used for breathing/idle behaviour between higher-tier events.
-- **T1** (reactions, 2–6 s) — locks `is_animating` for up to 5 s.
-- **T2** (performances, 20–190 s) — locks for full duration + 5 s watchdog buffer.
-
-See [Animation Framework](docs/capabilities/animation-framework.md) for the full contract — wrapper scripts, mood system (Neutral / Happy / Grumpy / Focused / Scared / Majestic / Sleepy), idle escalation ladder (fresh → settled → bored → restless → self-amusement), and music cue auto-choreography (`play_cued_section` reading per-song JSON cue sheets).
-
-New behaviours added to fulfill this roadmap must declare their tier explicitly and use the wrapper scripts (`start_perf` / `end_perf` / `start_react` / `end_react`) — never poke the lock globals directly.
+See [Behaviour & Personality](docs/capabilities/animation-framework.md) for the full operator-facing description. Engineering detail on how to add new behaviours lives in the firmware repo, not here — the wiki documents what the droid does, not how the firmware is structured internally.

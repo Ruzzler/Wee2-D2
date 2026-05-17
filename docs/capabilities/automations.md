@@ -15,7 +15,7 @@ The Wee2-D2 droid uses a **Modular Animation System** based on **ESPHome States*
 
 
 - **Update Frequency**: **50ms** (Internal Heartbeat) for real-time operational response.
-- **Interval**: A random trigger is calculated every **30 to 60 seconds** (firmware/production/node-1-dome-motion.yaml:454).
+- **Interval**: A random trigger is calculated every **30 to 60 seconds**.
 - **Inhibition**: Automations are immediately paused if a manual RC stick command is detected.
 - **Mesh Status**: Triggers are only sent if the **MAC-Address Binding** to the Sound Hub is verified.
 
@@ -45,7 +45,7 @@ To ensure pilot safety and hardware longevity, the automations system includes a
 
 
 1. **Manual Takeover**: If the HotRC stick moves >5% from center, the autonomous script is killed instantly.
-2. **Battery Sag**: If the 20V trunk drops below **17.5V**, all heavy animations (Tantrum/Dance) are disabled to save power for the logic rails. (firmware/production/node-1-dome-motion.yaml:425).
+2. **Battery Sag**: If the 20V trunk drops below **17.5V**, all heavy animations (Tantrum/Dance) are disabled to save power for the logic rails..
 3. **Connectivity Fail**: If the mesh bridge between Node 1 and Node 2 is lost, the droid enters a "Safe Stationary" mode.
 
 

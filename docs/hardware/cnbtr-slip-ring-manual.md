@@ -37,7 +37,7 @@ To minimize signal noise and maximize current carrying capacity, the slip ring u
 These settings are verified in the [Power Architecture](../architecture/power-architecture.md).
 
 
-- **Ganged Positive Trunk**: Circuit 1 + Circuit 2 (firmware/production/node-1-dome-motion.yaml:24).
+- **Ganged Positive Trunk**: Circuit 1 + Circuit 2.
 - **Ganged Negative Trunk**: Circuit 3 + Circuit 4 (Common GND).
 - **Reserved Logic**: Circuit 5 + Circuit 6 (Currently idle for future expansion).
 - **Noise Isolation**: The radio mesh (ESP-NOW) eliminates the need for logic-level pins through the slip ring, preventing EMI interference.

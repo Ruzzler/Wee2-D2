@@ -1,38 +1,36 @@
 # <i data-lucide="smartphone"></i> App & Kiosk Ecosystem
 
-> **TECHNICAL SPECIFICATIONS** | **CONTROL SURFACES: WEB, APK, KIOSK** | **TRANSPORT: BLE + HTTP**
+> **TECHNICAL SPECIFICATIONS** | **CONTROL SURFACES: WEB, APK, KIOSK**
 
-Wee2-D2 has three control surfaces beyond the hard-wired HOTRC remotes and the on-node web dashboards: a browser PWA, a sideloaded Android APK, and a tablet kiosk. This document describes how each fits the system. The source code for all three lives in separate sibling repos under the workspace root.
+Wee2-D2 has three control surfaces beyond the hard-wired HOTRC remotes and the built-in web dashboard: a browser app, a sideloaded Android app, and a public-facing tablet kiosk. This page covers what each surface is for and where they each live.
 
 ---
 
-## Surfaces At a Glance
+## At a Glance
 
-| Surface | Repo | Form | Transport | Audience |
-| :--- | :--- | :--- | :--- | :--- |
-| **PWA (web app)** | [`../wee2d2-app/`](https://github.com/Ruzzler/wee2d2-app) | Vanilla HTML + ES modules, no build step | Web Bluetooth → Node 4 BLE bridge | Operator on a desktop or Android Chrome |
-| **Android APK** | [`../wee2d2-capacitor/`](https://github.com/Ruzzler/wee2d2-capacitor) | Capacitor wrap of the PWA | `@capacitor-community/bluetooth-le` → Node 4 | Operator on a Pixel (home-screen icon, sub-2s reconnect) |
-| **Public Kiosk** | [`../wee2d2-kiosk/`](https://github.com/Ruzzler/wee2d2-kiosk) | Static HTML kiosk prototype | (none — mocked for now) | Convention attendees on a tablet |
+| Surface | Form | Connection | Audience |
+| :--- | :--- | :--- | :--- |
+| **PWA (web app)** | Browser-based, no install | Bluetooth via the BLE bridge | Operator on a desktop or Android Chrome |
+| **Android APK** | Installed app on the operator's Pixel | Bluetooth via the BLE bridge | Operator on a phone (home-screen icon, sub-2s reconnect) |
+| **Public Kiosk** | Browser-based, tablet-mounted | (none — mocked for now) | Convention attendees |
 
-The PWA and APK share the same code. The Capacitor wrap is just a native shell + plugin glue; the source of truth for UI and protocol lives in `wee2d2-app/`.
+The PWA and the APK share the same code. The Android version is just a native wrapper around the web app to deliver a more reliable Bluetooth reconnect experience on phones.
 
 ---
 
 ## Web App (PWA)
 
-The browser app talks to the Wee2-D2 over Web Bluetooth via the **Node 4 BLE bridge** in the firmware. It is the source of truth for the operator UI and the BLE wire protocol mirror.
+The browser app talks to the droid over Bluetooth via the [BLE Bridge](ble-bridge.md). It's the source of truth for the operator UI.
 
 ### Features
 
-- Smart Connect (silent rebind first, device picker only on first pair or unreachable bridge)
-- One-tap EMERGENCY STOP
-- STATUS card driven by `0xB0` heartbeat (5 s, `node1_online` flag) + `0xB1` telemetry (anim_id / step / total / last_react_id) from Node 1, both dual-unicast to Node 4. See [BLE Bridge](ble-bridge.md) for the 6-byte status payload spec.
-- 11 reaction buttons
-- 8 animations + RETURN TO IDLE banner
-- 15 lighting presets across ALL / ZONES / SCENES tabs
-- Dome speed slider (one BLE write per release)
-- Mid-session reconnect with exponential backoff
-- Command queue (FIFO) preventing concurrent BLE write drops
+- One-tap **EMERGENCY STOP**
+- **Status card**: Node 1 online indicator, current animation, current step, last reaction
+- **11 reaction buttons** (Wolf Whistle, Razz, Annoyed, Thinking, Excited, etc.)
+- **8 animation triggers** + RETURN TO IDLE banner
+- **15 lighting presets** organized by category
+- **Dome speed slider** (live, one tap to release)
+- **Mid-session reconnect** with backoff if the link briefly drops
 
 ### Browser Support
 
@@ -43,122 +41,45 @@ The browser app talks to the Wee2-D2 over Web Bluetooth via the **Node 4 BLE bri
 | Firefox | no | no |
 | Safari (incl. iOS) | no | no |
 
-Web Bluetooth is required. Firefox and Safari do not implement it. iOS is not on the roadmap.
-
-### Local Dev
-
-```powershell
-cd wee2d2-app
-python -m http.server 8000
-```
-
-Open `http://localhost:8000` in Chrome → **Connect** → pick `wee2d2-bridge` from the device picker.
-
-For phone use, the PWA needs HTTPS hosting (GitHub Pages, ngrok, Cloudflare Tunnel, or self-hosted TLS) — Chrome refuses Web Bluetooth over plain HTTP outside of `localhost`. The Capacitor APK sidesteps this entirely.
-
-### Slice 1B Feature Parity (current)
-
-The Slice 1B BLE bridge landed in firmware v2.12.0 (refined in v2.12.1), adding Volume, Sound, and Display Mode commands to bring the app to parity with the Node 2 web dashboard.
+iOS is not on the roadmap.
 
 ---
 
-## Android APK (Capacitor)
+## Android APK (Wee2-D2 native app)
 
-`wee2d2-capacitor/` is the native shell that turns the PWA into a sideloaded APK for the operator's Pixel. It exists because bench testing on 2026-05-10 confirmed stable Chrome Web Bluetooth can't deliver a reliable cold-cache reconnect — `gatt.connect()` after `getDevices()` fails with `NetworkError: Bluetooth Device is no longer in range` because the BLE stack doesn't scan during the call. Native Android BLE via `@capacitor-community/bluetooth-le` has none of these limits.
+The native Android app exists because Bluetooth reconnect on stable browser Chrome is not reliable enough for at-venue use. The native version delivers the "tap home-screen icon → connected in under 2 seconds → no device picker" experience that operators actually need.
 
-### Architecture
-
-```
-wee2d2-capacitor/
-├── capacitor.config.json   # webDir: ../wee2d2-app  (one-way dependency)
-├── package.json            # @capacitor/* + @capacitor-community/bluetooth-le
-└── android/                # generated by `npx cap add android`
-    └── app/src/main/
-        ├── AndroidManifest.xml  # BLUETOOTH_SCAN/CONNECT permissions
-        └── assets/public/       # auto-populated from ../wee2d2-app on `cap sync`
-```
-
-The PWA at `../wee2d2-app/` is authoritative — this repo is just the native wrapper. Never edit inside `android/app/src/main/assets/public/`; those files are overwritten on every `npx cap sync`.
-
-### Dev Loop
-
-```powershell
-# 1. Edit anything in ../wee2d2-app/
-# 2. Sync the change into the Android assets
-cd wee2d2-capacitor
-npx cap sync android
-
-# 3. Open Android Studio
-npx cap open android
-
-# 4. ▶ Run (Shift+F10) — installs + launches on Pixel.
-```
-
-### Prerequisites
-
-- Node.js ≥ 20
-- Android Studio with Android SDK Platform 35
-- `adb` on PATH
-- Pixel (or other Android 12+ device) with USB debugging
+The native app is functionally identical to the PWA — same buttons, same controls — just packaged as an installable app that Android can launch directly and that has proper Bluetooth permissions.
 
 ---
 
 ## Public Interaction Kiosk
 
-`wee2d2-kiosk/` is a tablet-facing prototype designed to run on a console-mounted tablet at convention appearances. It presents a thematic "Astromech Diagnostic Terminal" experience to attendees.
+A tablet-mounted prototype designed for convention appearances. It presents a thematic "Astromech Diagnostic Terminal" experience to passing attendees so they can interact with the droid without needing the operator to hand over the actual remote.
 
-Current state is a **mocked prototype** — features simulate droid interactions but do not yet wire through to the BLE bridge or the Node 2 web server. Treat it as a UX reference for the eventual integration.
+Current state is a **mocked prototype** — features simulate droid interactions but do not yet wire through to the BLE bridge or the web dashboard. Treat it as a UX reference for the eventual full integration.
 
 ### Mocked Features
-
-- **Astromech Translator** — attendee types a question, kiosk returns a stylized R2 response
-- **System Diagnostics** — fake "tests" against dome / lights / motivators
+- **Astromech Translator** — type a question, get a stylized R2 response
+- **System Diagnostics** — themed "tests" against dome / lights / motivators
 - **Holographic Data** — themed "restricted" messages
 - **Mood Matrix** — real-time personality vital animation
 
 ### Deployment
-
-Static HTML/CSS/JS. Open `index.html` on a tablet browser. Recommended settings:
-
+Open `index.html` on a tablet browser. Recommended:
 - Guided Access / Kiosk Mode to lock the browser
 - Add to Home Screen as a PWA for fullscreen
 - Landscape orientation
 
-### Aesthetic
-
-Cyan-neon accents on deep-navy background with glassmorphism. Intentionally distinct from the operator dashboards so attendees know it is a public-facing surface.
-
 ---
 
-## Cross-Repo Authority Chain
+## Long-Term: Configuration-Free Installation
 
-```
-Firmware/wee2d2-firmware/
-  └── docs/BLE-PROTOCOL-SPEC.md          ← BLE wire format SOURCE OF TRUTH
-  └── docs/BLE-COMMAND-CATALOG.md        ← Command code SOURCE OF TRUTH
-        │
-        │ (mirrored, never reverse)
-        ▼
-wee2d2-app/
-  └── protocol.js                        ← BLE protocol mirror
-        │
-        │ (one-way include, never edit downstream)
-        ▼
-wee2d2-capacitor/
-  └── android/app/src/main/assets/public/  ← Generated, never hand-edit
-```
-
-When the firmware adds a new BLE command, the spec doc lands first, then the app's `protocol.js` mirror, then a `cap sync` to publish the change into the APK assets. The kiosk is currently outside this chain (mocked).
-
----
-
-## How the Wiki Documents These Repos
-
-The Wiki holds the **builder-facing** story (this page + the operational dashboards). The detailed engineering protocols — transport refactor reasoning, BLE command catalog, plugin choice rationale — live in each repo's own `AGENTS.md` and `CLAUDE.md`. When a Wiki reader needs the implementation detail, link out to the relevant repo; do not mirror those engineering docs here.
+Today, setting up the app means hosting the PWA on HTTPS (for browser Bluetooth permissions) or sideloading the Android APK. The long-term direction is a one-tap install path with no developer setup required. The PWA already lives in a public-facing repo; the APK delivery channel is the next thing to harden.
 
 ---
 
 **See also:**
-- [Web Control Dashboard](../capabilities/web-control-dashboard.md) — on-Node-2 web UI
-- [Node Mesh Architecture](node-mesh.md) — ESP-NOW topology that the BLE bridge sits on top of
-- [Animation Framework](../capabilities/animation-framework.md) — what the buttons actually trigger
+- [BLE App Control](ble-bridge.md) — how the app talks to the droid
+- [Web Control Dashboard](../capabilities/web-control-dashboard.md) — on-droid web UI (separate from the app)
+- [Behaviour & Personality](../capabilities/animation-framework.md) — what the buttons actually trigger

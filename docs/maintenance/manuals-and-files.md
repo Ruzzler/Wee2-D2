@@ -46,10 +46,10 @@ Cataloging the physical specifications for the industrial hardware components us
 These links point to the verified configuration files used in the `v2.12.1` production deployment.
 
 
-- **Node 1 (Dome Master)**: [node-1-dome-motion.yaml](../../firmware/production/node-1-dome-motion.yaml)
-- **Node 2 (Sound Hub)**: [node-2-sound-hub.yaml](../../firmware/production/node-2-sound-hub.yaml)
-- **Drive Settings (Left)**: [left-motor-settings.xml](../../firmware/esc-configs/left-motor-settings.xml)
-- **Drive Settings (Right)**: [right-motor-settings.xml](../../firmware/esc-configs/right-motor-settings.xml)
+- **Node 1 (Dome Master)**: [node-1-dome-motion.yaml](../../node-1-dome-motion.yaml)
+- **Node 2 (Sound Hub)**: [node-2-sound-hub.yaml](../../node-2-sound-hub.yaml)
+- **Drive Settings (Left)**: left-motor-settings.xml
+- **Drive Settings (Right)**: right-motor-settings.xml
 
 
 ---

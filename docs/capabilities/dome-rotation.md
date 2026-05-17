@@ -29,12 +29,12 @@ The dome motor is managed by a brushed PWM controller receiving signals from **N
 These levels are verified against firmware `v2.12.1`.
 
 
-| PWM Parameter | Signal Level | Function | Citation |
-| :--- | :--- | :--- | :--- |
-| **GPIO Pin** | **GPIO 7** | Dome PWM Output | `firmware/node-1-dome.yaml` |
-| **Min Level** | **0.05** | Counter-Clockwise Max | `firmware/node-1-dome.yaml` |
-| **Idle Level** | **0.075** | Deadzone (Stationary) | `firmware/node-1-dome.yaml` |
-| **Max Level** | **0.1** | Clockwise Max | `firmware/node-1-dome.yaml` |
+| PWM Parameter | Signal Level | Function |
+| :--- | :--- | :--- |
+| **GPIO Pin** | **GPIO 7** | Dome PWM output |
+| **Min Level** | **0.05** | Counter-clockwise max |
+| **Idle Level** | **0.075** | Deadzone (stationary) |
+| **Max Level** | **0.1** | Clockwise max |
 
 
 ---
@@ -47,7 +47,7 @@ Dome rotation is secondary to safety. If a manual RC stick command is detected o
 
 1. **Idle Bobbing**: When the droid is idle, Node 1 executes random, slow-speed "scans" to create a living appearance.
 2. **Angry Tantrum**: Rapid clockwise/counter-clockwise snaps are triggered by the sound hub relative to audio triggers.
-3. **Smooth Stops**: A **0.8s transition length** is applied to prevent the dome from "jerking" when reaching the limit of the internal slip ring. See `firmware/node-1-dome.yaml`.
+3. **Smooth Stops**: A **0.8s transition length** is applied to prevent the dome from "jerking" when reaching the limit of the internal slip ring.
 
 
 ---

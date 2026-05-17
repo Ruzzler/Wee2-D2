@@ -11,7 +11,7 @@ The Wee2-D2 project uses Over-The-Air (OTA) updates to deploy firmware without t
 
 ## System Connectivity
 
-Updates are performed over a local 2.4GHz Wi-Fi network. Each node hosts its own web-based dashboard on port 80 (firmware/production/node-1-dome-motion.yaml:73) which includes a dedicated "Update" portal.
+Updates are performed over a local 2.4GHz Wi-Fi network. Each node hosts its own web-based dashboard on port 80 which includes a dedicated "Update" portal.
 
 
 - **Node 1 (Dome Master)**: `wee2d2-dome-master.local`
@@ -30,7 +30,7 @@ Follow these steps to deploy a new firmware binary (`.bin`) to your droid nodes.
 1. **Compile**: Use the ESPHome dashboard or CLI to compile your configuration into a binary file.
 2. **Navigate**: Open a web browser and navigate to the node's local URL or IP address.
 3. **Upload**: Select the "Choose File" option under the OTA section and pick your compiled `.bin`.
-4. **Monitor**: The node will receive the file, verify the integrity (firmware/production/node-1-dome-motion.yaml:62), and reboot automatically.
+4. **Monitor**: The node will receive the file, verify the integrity, and reboot automatically.
 
 
 ---
@@ -55,7 +55,7 @@ You can verify the successfully deployed version in the "Diagnostic" cards on th
 
 - **OTA Password**: Ensure you have the `ota_password` from your `secrets.yaml` file ready.
 - **Signal Strength**: Updates are safest when the droid is within 10 feet of the Wi-Fi router. 
-- **Encryption**: All OTA transfers are secured using the ESPHome encryption protocol (firmware/production/node-1-dome-motion.yaml:59).
+- **Encryption**: All OTA transfers are secured using the ESPHome encryption protocol.
 
 
 ---

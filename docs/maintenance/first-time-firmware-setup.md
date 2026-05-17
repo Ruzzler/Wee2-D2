@@ -46,7 +46,7 @@ Once the MAC addresses are stored in your secrets file and the blank firmware is
 
 1. Click **"Edit"** on your new node in the Dashboard.
 1. Erase the default code that ESPHome generated.
-1. Copy and paste the entire YAML configuration from the repository (e.g., `firmware/production/node-2-sound-hub.yaml`).
+1. Copy and paste the entire YAML configuration from the repository (e.g., `node-2-sound-hub.yaml`).
 1. Hit **"Install"** in the top right corner. Because the device is now online, it will install wirelessly!
 
 > [!TIP]

@@ -16,7 +16,7 @@ Node 3 (LED Distro) acts as a slave to **Node 1 (Dome Master)**. It receives ser
 
 1. **Primary Segment**: Front PSI Matrix (48 LEDs).
 2. **Secondary Segment**: Rear PSI Matrix (48 LEDs).
-3. **Logic Sync**: UART-synced to Node 1 at 115200 baud (firmware/production/node-1-dome-motion.yaml:137).
+3. **Logic Sync**: UART-synced to Node 1 at 115200 baud.
 
 
 ---
@@ -30,8 +30,8 @@ The project uses a standard segment mapping to ensure WLED understands the physi
 This configuration is verified in the `v2.12.1` production deployment.
 
 
-- **Config File**: [node-3-segments.json](../../firmware/production/node-3-segments.json)
-- **Presets**: [wled-presets.json](../../firmware/production/wled-presets.json)
+- **Config File**: [node-3-segments.json](../../node-3-segments.json)
+- **Presets**: [wled-presets.json](../../wled-presets.json)
 - **Mapping**: Front PSI (Segment 0) | Rear PSI (Segment 1).
 - **LED Order**: GRB (Standard WS2812B).
 

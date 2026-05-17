@@ -1,167 +1,123 @@
-# <i data-lucide="film"></i> Animation Framework
+# <i data-lucide="film"></i> Behaviour & Personality
 
-> **TECHNICAL SPECIFICATIONS** | **SYSTEM: T0/T1/T2 TIERED ANIMATION** | **VERIFIED AGAINST FIRMWARE v2.12.1**
+> **TECHNICAL SPECIFICATIONS** | **WHAT THE DROID DOES, WHY, AND WHEN**
 
-This guide is a builder-facing overview of the animation framework that originates on **Node 1 (Dome Brain)**. It mirrors the engineering reference at `Firmware/wee2d2-firmware/docs/animation/ANIMATION-ENGINE.md` — read that file for the full implementation contract.
-
-The framework was introduced in firmware v2.9.0 (tier model, wrappers, watchdog, idle escalation, mood system) and has shipped without breaking changes through v2.12.1.
+This page describes how Wee2-D2 behaves day to day — what idle looks like, what reactions and performances are, how moods influence the next action, and how the droid recovers from being interrupted. If you want the internal engineering reference, see `Firmware/wee2d2-firmware/docs/animation/ANIMATION-ENGINE.md` in the firmware repo.
 
 ---
 
-## Three-Tier Model (T0 / T1 / T2)
+## The Three Behaviour Tiers
 
-Every motion the droid makes belongs to one of three tiers. Mixing them up is the most common authoring mistake.
+Every motion the droid makes belongs to one of three tiers. Think of them like sentences (short / medium / long) — each tier serves a different purpose.
 
-| Tier | Name | Typical length | Holds `is_animating` lock? | Purpose |
-| :---: | :--- | :--- | :--- | :--- |
-| **T0** | Life / micro | 0.3 – 3 s | Never | Breathing, idle twitches, glue between higher-tier events |
-| **T1** | Reaction | 2 – 6 s | Yes, 5 s cap | One-shot crowd response (whistle, razz, curious) |
-| **T2** | Performance | 20 – 190 s | Yes, full run + 5 s buffer | Choreographed routines (Imperial, Cantina, music perfs) |
+| Tier | Length | Purpose | Example |
+| :--- | :--- | :--- | :--- |
+| **Life / micro** | Under 3 seconds | Idle chatter, breathing twitches, ambient sweeps | A small head turn while waiting |
+| **Reaction** | 2 – 6 seconds | One-shot crowd response | Wolf whistle at a passerby, razz at a kid teasing the droid |
+| **Performance** | 20 – 190 seconds | Choreographed routine, often music-synced | Cantina theme, Imperial March, birthday song |
 
-### Lock Contract
-
-Only T1 and T2 set `is_animating = true`. They do this via the entry wrappers (`start_react` / `start_perf`), which also arm a watchdog deadline. T0 life animations **must never** touch `is_animating` — they run in the negative space between higher-tier events.
-
-A 2-second watchdog interval force-releases a stuck lock. The watchdog is a safety net, not a design feature; a script that relies on it to recover is broken.
+Reactions and performances are "loud" — they take over the dome for their duration. Life micros are "quiet" — they happen in the gaps between bigger events to keep the droid feeling alive instead of frozen.
 
 ---
 
-## Wrapper Scripts (the only correct entry/exit)
+## What Ships Today
 
-These live near the top of `script:` in `node-1-dome.yaml`. Always go through them rather than poking globals.
+| Performances (long-form) |
+| :--- |
+| Idle, Angry, Dance, Cantina, Birthday, Imperial March |
 
-| Wrapper | Purpose |
-| :--- | :--- |
-| `start_perf(anim_id, total_phases, duration_ms)` | Sets `is_animating`, arms watchdog, fires `relay_anim_telemetry` so Node 2 + WLED know a perf started. |
-| `end_perf(mood, mood_duration_ms)` | Sets `droid_mood`, stamps `last_event_type = 1`, resets idle ladder, releases lock. |
-| `start_react(anim_id)` | Like `start_perf` but with a fixed 5 s watchdog — reactions are short and predictable. |
-| `end_react(mood, mood_duration_ms)` | Like `end_perf` but stamps `last_event_type = 2` so the ambient loop picks a recovery behaviour. |
-| `release_animation_lock` | Zeroes the lock + watchdog. Never call directly — it's the tail of the end-wrappers and the e-stop handlers. |
-| `mark_event(event_type)` | Records `last_event_ms` / `last_event_type` / resets idle ladder. Used by e-stop (type 3) and RC stick takeover (type 4). |
-| `reset_servo` | Writes `0.0` to `dome_motor` + 30 ms delay. Insurance against leftover PWM from a cancelled move. |
-| `unit_variant(max_variants)` | Rolls `g_variant_choice` for sub-choreography branching. |
-| `react_followup` | 30 % chance mood-keyed combo move — Happy → shimmy, Grumpy → suspicious, Scared → twitch, etc. |
+| Reactions (short bursts) |
+| :--- |
+| Wolf whistle, Razz, Annoyed, Thinking, Excited |
 
----
+| Life animations (background loop) |
+| :--- |
+| Auto-chirp, self-scan, attention-seek, self-amusement, mood-keyed micro-moves |
 
-## Action Unit Primitives
-
-Action units are the verbs of the droid's vocabulary. Performances chain them, reactions pick one or two, life animations pick one and wrap it in mood-appropriate audio.
-
-Current inventory (all in `script:` on Node 1):
-
-- `unit_look` / `unit_micro_look` — turn L/R
-- `unit_shimmy` — quick L-R-L-R dome wiggle
-- `unit_groove` — wider rhythmic sweep for music
-- `unit_sweep_ramp` — smooth arc sweep
-- `unit_nod` — up-down (if dome tilt is wired)
-- `unit_twitch` — one-frame jolt
-- `unit_shiver` — multi-frame rapid micro-twitch
-- `unit_suspicious` — slow head turn, hold, opposite
-- `unit_strut` — cocky sweep + hold
-- `unit_droop` — slow decay to centre (Sleepy)
-- `unit_rubberneck` — exaggerated wide look
-- `unit_victory` — twin-peak punctuation move
-- `unit_chortle_body` — gentle chuckle shake
-- ~6 more specialty units
-
-Action units that might run after a cancelled move call `reset_servo` at entry as cheap insurance.
+More are planned — see the [Behavioral Research Roadmap](../../BEHAVIORAL_RESEARCH_ROADMAP.md).
 
 ---
 
-## Mood System
+## Moods
 
-`droid_mood` is the slow-changing emotional state set by `end_perf` / `end_react`. It decays via a global interval that clears the field when `mood_expiry_ms` is reached.
+The droid carries a mood after every reaction and performance. Mood decides what ambient sounds and life animations it favours next. Each mood lasts roughly 30 s – 2 min depending on what triggered it (a Cantina performance leaves a longer happy afterglow; a quick razz fades fast).
 
-| Value | Name | Ambient sound byte | Notes |
-| :---: | :--- | :---: | :--- |
-| 0 | Neutral | `0x1A` (pool mix) | Default at boot |
-| 1 | Happy | `0x1B` (HAP/SNT/WHS) | Bright chirps, excited |
-| 2 | Grumpy | `0x1C` (RAZ/SAD) | Razz-dominant |
-| 3 | Focused | `0x1D` (PRO/HUM) | Processing sounds |
-| 4 | Scared | `0x1E` (CRI/ALR/SCR) | Alarm + scream |
-| 5 | Majestic | `0x1F` (HUM/SNT) | Long tones |
-| 6 | Sleepy | `0x20` (HUM/SAD) | Added v2.9.0 — mostly HUM drones |
+| Mood | Vibe | Ambient flavour |
+| :--- | :--- | :--- |
+| **Neutral** | Default at boot | Mixed chirps |
+| **Happy** | Excited, bright | Chirps, sentences, whistles |
+| **Grumpy** | Annoyed, dismissive | Razzes, sad tones |
+| **Focused** | Thinking, calculating | Processing sounds, hums |
+| **Scared** | Alarmed, jumpy | Cries, alarms, screams |
+| **Majestic** | Proud, regal | Long hums, sentences |
+| **Sleepy** | Winding down | Mostly hums, sad tones |
 
-`main_ambient_loop` reads `droid_mood` + `idle_escalation_level` + `last_event_type` and picks a mood-keyed ambient sound, a mood-appropriate life animation, and a delay between 12 s (restless) and 60 s (sleepy).
+When a mood ends naturally, the droid drifts back to Neutral.
 
 ---
 
 ## Idle Escalation Ladder
 
-A 10-second ticker raises `idle_escalation_level` as the droid is left alone.
+The longer the droid is left alone, the more it starts seeking attention. A timer in the background quietly raises an "idle level" the longer nothing happens:
 
-| Level | Age threshold | Name | Behaviour |
-| :---: | :--- | :--- | :--- |
-| 0 | 0 s | fresh | Mood-keyed life anim, longer pauses |
-| 1 | > 30 s | settled | Same as fresh, slightly shorter pauses |
-| 2 | > 90 s | bored | 40 % chance of `life_long_idle_attention_seek` |
-| 3 | > 180 s | restless | More frequent interrupts, shorter delays |
-| 4 | > 300 s | self-amusement | 25 % chance of `life_long_idle_self_amusement` |
+| Time alone | Level | What changes |
+| :--- | :--- | :--- |
+| 0 s | **Fresh** | Just finished an interaction — calm life animations, longer pauses between |
+| > 30 s | **Settled** | Same character, slightly tighter pauses |
+| > 90 s | **Bored** | ~40% chance of a deliberate attention-seek move (look around, soft whistle) |
+| > 180 s | **Restless** | More frequent interrupts, shorter delays between life animations |
+| > 300 s | **Self-amusement** | ~25% chance of an extended "playing alone" routine |
 
-Any T1/T2 event resets the ladder to 0 via the wrappers.
-
-Event types recorded in `last_event_type`:
-
-| Value | Event | Recovery hook |
-| :---: | :--- | :--- |
-| 0 | boot / fresh | — |
-| 1 | performance ended | `life_post_perf_catch_breath` |
-| 2 | reaction ended | mood-keyed recovery |
-| 3 | e-stop | `life_post_estop_uncertain` |
-| 4 | RC stick takeover | — |
+Any reaction or performance — RC button, app tap, dashboard click — resets the timer back to **Fresh**. The droid is rewarding you for interacting with it.
 
 ---
 
-## Music Cue Auto-Choreography
+## Music Performances
 
-The firmware ships per-song cue sheets at `Firmware/wee2d2-firmware/docs/animation/ANIMATION-CUES/` (23 files at v2.12.1). Each file lists beat-aligned sections with amplitude, color, and WLED preset. The `play_cued_section(duration_ms, r, g, b, preset_id, amplitude, step_num)` script on Node 1 translates each section into:
+Music-synced performances follow the beat of the actual song. Sections of the song have a characteristic "intensity" and the droid picks a movement style to match:
 
-1. A WLED preset push.
-2. A movement unit chosen by amplitude:
-   - `amplitude < 0.25` → `unit_micro_look`
-   - `amplitude < 0.55` → `unit_shimmy`
-   - `amplitude >= 0.55` → `unit_groove`
-3. A hold for `duration_ms`.
+- **Low-intensity sections** (verse intros, calm bridges): subtle head turns
+- **Mid sections** (groove, verse body): rhythmic shimmies
+- **High sections** (chorus, drops): wider grooves with full sweep range
 
-Building a new music perf is a five-step recipe — see the master engineering reference for the canonical YAML template.
+The droid also pushes a matching colour preset to the lighting at each section boundary. This is how, for example, the Cantina performance feels timed to the song instead of generic dome wiggling.
 
----
-
-## Building a Reaction (T1) — Builder Recap
-
-1. Pick an `anim_id` in the 6–31 range (reserve `0x20+` for new ambient bytes).
-2. Pick a sound byte. Named bytes live in `0x06–0x13`. New v2.9.0 bytes: `0x0E/0x0F/0x11/0x12/0x13` (curious / dismissive / proud / confused / sleepy).
-3. **Add the Node 2 ESP-NOW switch case** so the sound byte actually plays. Forgetting this is the most common failure — the reaction looks fine on Node 1 but is silent at the speaker.
-4. Write `react_<name>` on Node 1, wrapping body in `start_react` / `end_react` and chaining `react_followup` at the tail.
-5. Wire dashboards on both nodes (local + relay).
-6. Optionally add to the RC CH3 cycle list for stick-triggered access.
-
-### Mood Duration Guide
-
-- Happy (1) — 45–90 s
-- Grumpy (2) — 30–45 s
-- Focused (3) — 45–60 s
-- Scared (4) — 15–30 s (fear fades fast)
-- Majestic (5) — 90 s + (pride lingers)
-- Sleepy (6) — 120 s + (takes a while to wake up)
+The library of beat-mapped songs lives in the firmware repository. Adding a new music performance is currently a developer task — eventually this will be configurable from the app.
 
 ---
 
-## Why This Framework Exists
+## Reaction Afterglow
 
-The tier model prevents two classes of bug that plagued earlier firmware:
+After a reaction, the droid has a 30% chance of chaining a mood-appropriate follow-up move (a "shimmy" after Happy, "suspicious look" after Grumpy, etc). This is what stops reactions from feeling like one-and-done button presses — the droid feels like it's reacting to its own reaction.
 
-1. **Concurrent moves stomping each other.** Pre-framework, a music perf could be interrupted mid-phrase by an idle twitch. The `is_animating` lock + tier rules guarantee that only one T1/T2 owns the dome at a time.
-2. **Silent stalls.** Pre-framework, a script that errored mid-phase left the lock set forever. The watchdog deadline guarantees the droid always recovers within 2 s of a script's stated `duration_ms + 5 s` buffer.
+---
 
-The mood + idle ladder layer was added so the droid feels alive between events without authoring per-mood per-tier behaviour matrices by hand.
+## Safety: Watchdog & Stuck-State Recovery
+
+If something causes a performance or reaction to get stuck mid-run (rare), an internal safety net automatically releases the droid back to idle within 2 seconds past its expected end time. You will never have to power-cycle to get the droid moving again after a glitched animation.
+
+Hard stops (E-Stop button on the RC, E-Stop on the app or dashboard) cut the current behaviour immediately and put the droid into a "recovering" state for a few seconds, where it picks a calm life animation as it settles. This is on purpose — slamming back to idle would feel mechanical.
+
+---
+
+## How This Connects To What You'll Use
+
+| You touch this | And this is what's running underneath |
+| :--- | :--- |
+| RC stick (dome left/right) | Direct override — interrupts whatever T0/T1/T2 was playing |
+| RC button: Perf Cycle | Steps through performances one at a time |
+| RC button: Random Reaction | Fires a random reaction from the list above |
+| RC button: E-Stop | Hard stops everything immediately |
+| Dashboard / App: Animation button | Triggers a specific performance by name |
+| Dashboard / App: Reaction button | Triggers a specific reaction by name |
+| Dashboard / App: Sound button | Direct sound playback (independent of behaviour layer) |
+| Just leave the droid alone | Idle escalation ladder kicks in — droid starts asking for attention |
 
 ---
 
 **See also:**
-- [Autonomous Automations](automations.md) — high-level cue table
-- [Audio System](audio-system.md) — ESP-NOW byte → sound mapping
-- [LED System](led-system.md) — WLED preset ledger
-- Engineering reference (firmware repo): `Firmware/wee2d2-firmware/docs/animation/ANIMATION-ENGINE.md`
-- Music cue files (firmware repo): `Firmware/wee2d2-firmware/docs/animation/ANIMATION-CUES/`
+- [Autonomous Automations](automations.md)
+- [Audio System](audio-system.md)
+- [LED System](led-system.md)
+- [Web Control Dashboard](web-control-dashboard.md)
+- [App & Kiosk Ecosystem](../architecture/app-ecosystem.md)

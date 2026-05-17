@@ -31,12 +31,12 @@ The drive system is managed by two **Flipsky Mini FSESC 6.7 Pro** controllers. T
 These settings are verified against firmware `v2.12.1`.
 
 
-| Setting | Value | Function | Citation |
-| :--- | :--- | :--- | :--- |
-| **Motor Current Max** | **15.0 A** | Soft Current Clamp | [left-motor.xml](../../firmware/esc-configs/left-motor-settings.xml) |
-| **Brake Current Max** | **15.0 A** | Aggressive Braking | [left-motor.xml](../../firmware/esc-configs/left-motor-settings.xml) |
-| **Battery Cutoff Start** | **16.5 V** | Safety Voltage Floor | [left-motor.xml](../../firmware/esc-configs/left-motor-settings.xml) |
-| **Battery Cutoff End** | **15.0 V** | Critical Minimum | [left-motor.xml](../../firmware/esc-configs/left-motor-settings.xml) |
+| Setting | Value | Function |
+| :--- | :--- | :--- |
+| **Motor Current Max** | **15.0 A** | Soft current clamp |
+| **Brake Current Max** | **15.0 A** | Aggressive braking |
+| **Battery Cutoff Start** | **16.5 V** | Safety voltage floor |
+| **Battery Cutoff End** | **15.0 V** | Critical minimum |
 
 
 ---

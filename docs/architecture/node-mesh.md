@@ -14,14 +14,14 @@ The droid's movement is handled by a **Decentralized Node Mesh** consisting of t
 
 ## System Roles
 
-Synchronization is achieved using low-latency **ESP-NOW** wireless bridging across the primary S3 nodes (1 & 2). This protocol (firmware/production/node-1-dome-motion.yaml:92) ensures <10ms latency for motion-critical commands.
+Synchronization is achieved using low-latency **ESP-NOW** wireless bridging across the primary S3 nodes (1 & 2). This protocol ensures <10ms latency for motion-critical commands.
 
 
 ### Node 1: Dome Motion Master (ESP32-S3)
 
 - **Role**: **Dome Master** (Primary). Manages all dome movement and coordinates animation logic sequences across the mesh.
 - **Hardware**: goBILDA 5203 Dome Motor, PWM Motor Controller.
-- **Logic**: Reads raw RC steering. Captures ESP-NOW dashboard triggers (`0xA0`, `0xA1`, `0xA2`) from Node 2. Broadcasts a 60-second WLED heartbeat (via UART) and 5-second radio heartbeat (firmware/production/node-1-dome-motion.yaml:115).
+- **Logic**: Reads RC steering input. Receives dashboard triggers relayed from Node 2 (animation triggers, lighting overrides, dome speed). Pushes lighting presets to Node 3 over a wired link and broadcasts a 5-second heartbeat so Node 2 can show "online / offline" status on the dashboard.
 
 
 ### Node 2: Sound Hub (ESP32-S3)
@@ -35,8 +35,8 @@ Synchronization is achieved using low-latency **ESP-NOW** wireless bridging acro
 
 - **Role**: Cinematic visual output.
 - **Hardware**: Addressable LED matrices (WS2812B/PSI Logic).
-- **Sync**: A **UART-synced** node that receives serial JSON triggers from **Node 1 (Dome Master)** on the dedicated logic bus (firmware/production/node-1-dome-motion.yaml:137). 
-- **Framework**: Native WLED (v0.14+).
+- **Sync**: A **UART-synced** node that receives serial JSON triggers from **Node 1 (Dome Master)** on the dedicated logic bus. 
+- **Framework**: Stock WLED 0.15.4.
 
 
 ---
@@ -48,7 +48,7 @@ To prevent analog audio interference and reduce the risk of slip ring data corru
 
 
 - **Update Frequency**: **50ms** (Internal Heartbeat) for real-time operational response.
-- **Security**: **MAC-Address Binding** (Hardware-locked in `base-config.yaml`) to prevent mesh hijacking.
+- **Security**: MAC-address binding — only the droid's own boards can join the mesh.
 - **Zero Router Latency**: Nodes communicate directly with <10ms response times.
 - **EMI Immunity**: Moving movement data to the 2.4G spectrum eliminates the ground loops and motor interference inherent in slip rings.
 - **Scalability**: New nodes (e.g., foot sensors or Cinematic Logic Displays) can be added to the mesh without pulling additional wires through the central joint.
@@ -75,8 +75,8 @@ The **CNBTR Slip Ring** (6-Circuit) acts as the physical bridge for the dome's h
 ## Engineering Standards
 
 1. **Star-Grounding**: All node grounds must converge at the central Negative Bus Bar in the body to ensure a clean signal reference.
-2. **Safety Heartbeat**: If the ESP-NOW signal is lost for >100ms, receiving nodes (1 and 2) automatically enter a "Hold" state to prevent stuck audio or drive patterns (firmware/production/node-1-dome-motion.yaml:474).
-3. **Firmware Strategy**: Nodes 1 and 2 use the `esp-idf` framework within ESPHome for high-stability wireless threading. Node 3 runs native WLED for bit-banging LED data.
+2. **Safety Heartbeat**: If the ESP-NOW signal is lost for >100ms, receiving nodes (1 and 2) automatically enter a "Hold" state to prevent stuck audio or drive patterns.
+3. **Firmware Strategy**: Nodes 1 and 2 run custom firmware for the droid's behaviour. Node 3 runs stock WLED for LED data — no custom code on Node 3.
 
 
 ---

@@ -3,7 +3,7 @@
 > **POWER MANAGEMENT** | **SYSTEM: DEWALT 20V (4Ah/6Ah/9Ah)** | **LVP: 17.5V**
 
 
-This guide provides high-fidelity power estimates for the Wee2-D2 project. It factors in resistive line losses (I2R) and RF mesh drainage across the distributed node network (firmware/production/node-1-dome-motion.yaml:478).
+This guide provides high-fidelity power estimates for the Wee2-D2 project. It factors in resistive line losses (I2R) and RF mesh drainage across the distributed node network.
 
 
 ---
@@ -51,7 +51,7 @@ The sound hub acts as the primary relay for animation audio triggers.
 Recalibrated requirements based on your specific **15A Software Clamp** ($30A$ total battery draw).
 - **Current Limit Max**: 70A. (Software Clamped to **15A** for Wee2-D2 in `left-motor-settings.xml`).
 - **Voltage Cutoff**: Start at 16.5V for DeWalt batteries.
-- **Verified Configs**: [Motor Settings](../../firmware/esc-configs/left-motor-settings.xml) | [App Settings](../../firmware/esc-configs/left-app-settings.xml)
+- **Verified Configs**: Motor Settings | App Settings
 - **Kinetic Peak Acceleration**: Instantaneous high-torque maneuvers. (**600W Peak / 30A**)
 - **Active Drive**: High-torque movement on level convention surfaces (40% Duty Cycle). (**~21.0W Avg**)
 - **The "7.5C" Sag Factor**: Pulling 30A from a 4Ah battery induces a **~2.5V dip**, triggering the 17.5V LVP cutoff even when at **50% charge**.

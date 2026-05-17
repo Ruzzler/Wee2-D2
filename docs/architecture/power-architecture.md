@@ -115,13 +115,13 @@ This rail powers the Sound Hub (Node 2) and the DY-HV20T audio module. It is iso
 
 ### 2. The Dome Logic Rail
 This rail powers the Dome Master (Node 1) and the dome rotation controller.
-- **Output**: 5.0V @ 5A Peak (firmware/production/node-1-dome-motion.yaml:24)
+- **Output**: 5.0V @ 5A Peak
 - **Signal**: Powers the GPIO 7 PWM signal for the dome motor.
 
 
 ### 3. The Dome LED Rail
 Dedicated to the addressable LED arrays (WS2812B). This rail provides high current for bright visual patterns.
-- **Output**: 5.01V @ 5A Peak (firmware/production/node-1-dome-motion.yaml:137)
+- **Output**: 5.01V @ 5A Peak
 - **Reflow**: This rail is physically decoupled from the Node 1 logic rail to prevent "voltage brownouts" during bright flashes.
 
 
@@ -145,7 +145,7 @@ To minimize signal noise, the project uses the **Dual-Circuit Isolation Strategy
 
 ## Safety Standards & LVC
 
-The project includes an **Active Low Voltage Cutoff (LVP)** system that monitors the trunk voltage. If the battery dips below **17.5V**, the system enters a "Safe Shutdown" mode (firmware/production/node-1-dome-motion.yaml:425).
+The project includes an **Active Low Voltage Cutoff (LVP)** system that monitors the trunk voltage. If the battery dips below **17.5V**, the system enters a "Safe Shutdown" mode.
 
 
 - **Protection**: Prevents deep discharge of Li-ion batteries.

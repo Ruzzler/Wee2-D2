@@ -38,7 +38,7 @@ These settings are verified in the `v2.12.1` firmware sequence.
 
 
 - **Master Node**: Node 1 (Dome Master / ESP32-S3)
-- **GPIO Pin**: **GPIO 7** (firmware/production/node-1-dome-motion.yaml:11)
+- **GPIO Pin**: **GPIO 7**
 - **Protocol**: Standard PWM (50Hz)
 - **PWM Range**: 1050μs (Counter-Clockwise) to 1950μs (Clockwise)
 - **Deadzone**: 1500μs (Stationary)

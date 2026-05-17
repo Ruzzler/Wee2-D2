@@ -3,89 +3,59 @@
 
 # <i data-lucide="cpu"></i> Node 1: Dome Brain
 
-> **TECHNICAL SPECIFICATIONS** | **SYSTEM: DOME MOTION + ANIMATION FRAMEWORK** | **MODEL: ESP32-S3 DEVKITC-1 (N4R2)** | **FIRMWARE: ESPHome v2.12.1**
+> **TECHNICAL SPECIFICATIONS** | **ROLE: AUTONOMY + DOME MOTION** | **BOARD: ESP32-S3 DEVKITC-1 (N4R2)**
 
 
-Node 1 is the autonomy and motion master for the Wee2-D2 project. It hosts the [Animation Framework](../capabilities/animation-framework.md), drives the dome motor over PWM, reads the HOTRC stick + button channels, bridges to Node 3 over UART JSON for lighting presets, and is the ESP-NOW relay receiver for dashboard commands from Node 2.
-
-
----
-
-
-## Hardware Specifications
-
-- **Board**: ESP32-S3 **DevKitC-1 N4R2** (4 MB flash, 2 MB PSRAM)
-- **MAC**: `1C:DB:D4:84:61:8C`
-- **Voltage**: 5V from goBILDA ESC BEC (5.1V)
-- **Framework**: ESPHome `esp-idf`
-- **Physical location**: dome (on the dome motor platform)
-- **USB**: USB-C with serial console (accessible through dome hatch for OTA fallback)
+Node 1 is the "brain" of Wee2-D2. It originates every animation the droid plays, drives the dome motor, reads the RC stick + buttons, talks to the LED hub, and coordinates with the sound hub. If the droid is doing anything autonomous, Node 1 is what's driving it.
 
 
 ---
 
 
-## GPIO Pinout
+## At a Glance
 
-| Assignment | GPIO | Direction | Function |
-| :--- | :---: | :--- | :--- |
-| **Dome Servo/ESC** | 7 | OUTPUT (PWM, 50 Hz) | To goBILDA 15A ESC signal wire |
-| **RC Stick (Dome L/R)** | 4 | INPUT (PWM) | HOTRC Receiver CH1 |
-| **RC CH3 (Performance Cycle)** | 1 | INPUT (RC pulse) | Cycle through perfs |
-| **RC CH4 (Random Reaction)** | 6 | INPUT (RC pulse) | Trigger random reaction |
-| **RC CH5 (E-Stop)** | 2 | INPUT (RC pulse) | Hard-stop relay |
-| **WLED Command Bus (TX)** | 5 | OUTPUT (UART TX) | To Node 3 GPIO 3 @ 115200 baud |
-| **Slip UART TX (reserved)** | 10 | OUTPUT (TX2) | To Node 2 GPIO 11 — pending wiring |
-| **Slip UART RX (reserved)** | 11 | INPUT (RX2) | From Node 2 GPIO 10 — pending wiring |
-| **Status LED** | 47 | OUTPUT | Internal NeoPixel |
+- **Board**: ESP32-S3 DevKitC-1 (N4R2 — 4 MB flash, 2 MB PSRAM)
+- **Powered from**: 5V BEC on the dome motor controller
+- **Communicates with**: Node 2 (wireless, bidirectional) + Node 3 (wired, one-way)
+- **Physical location**: inside the dome, on the dome motor platform
 
 
 ---
 
 
-## Communication Model
+## What's Wired to Which Pin
 
-- **ESP-NOW peer**: Node 2 (`1C:DB:D4:84:73:6C` production; `1C:DB:D4:84:77:70` test board)
-- **Transmits to Node 2**:
-  - `0x01` — idle chirp request
-  - `0x08 <path>` — Specified Path Playback (v2.9.0 standard)
-  - `0xB0` — 5-second heartbeat (drives dashboard status card)
-  - `0x99` — stop audio
-- **Receives from Node 2** (dashboard relay):
-  - `0xA0 <anim_id>` — performance trigger (`0x01`–`0x05`, `0x10`, `0xFF` = e-stop)
-  - `0xA1 <preset_id>` — lighting preset override (0–15)
-  - `0xA2 <speed_x100>` — dome speed tuning (10–100 = 0.10–1.00)
-  - `0xA3 <react_id>` — reaction trigger (folder-aligned, see [Animation Framework](../capabilities/animation-framework.md))
-- **UART out to Node 3**: one-way JSON @ 115200 baud (lighting preset push + 60 s heartbeat)
+| GPIO | What's connected | Role |
+| :---: | :--- | :--- |
+| **GPIO 7** | Dome motor PWM signal | Drives the goBILDA 15A speed controller |
+| **GPIO 4** | RC stick (CH1) | Dome left / right from the radio |
+| **GPIO 1** | RC button (CH3) | Cycle to next performance |
+| **GPIO 6** | RC button (CH4) | Random reaction |
+| **GPIO 2** | RC button (CH5) | E-Stop |
+| **GPIO 5** | LED hub command line | One-way wired link to Node 3 |
+| **GPIO 47** | On-board status LED | Heartbeat / state indicator |
 
 
 ---
 
 
-## Animation Framework
+## What It Does
 
-Node 1 originates every animation. Tier model:
-
-- **T0** — life / micro (idle twitches, ambient sweeps, never locks)
-- **T1** — reactions (5 s cap, locks `is_animating`)
-- **T2** — performances (20–190 s, locks with watchdog buffer)
-
-See [Animation Framework](../capabilities/animation-framework.md) for the full tier contract, wrapper scripts, mood system, idle escalation ladder, and music cue auto-choreography.
-
-Production performances (as of v2.12.1): `perf_idle`, `perf_angry`, `perf_dance`, `perf_cantina`, `perf_birthday`, `perf_imperial`. Production reactions: `react_wolf_whistle`, `react_razz`, `react_annoyed`, `react_thinking`, `react_excited`.
+- **Picks the next behaviour.** Reads idle level, current mood, what just happened, and chooses between a calm life animation, a more intense attention-seek, or holds for the next operator input.
+- **Drives the dome motor.** All dome motion routes through Node 1, whether it's an RC stick override, a performance choreography step, or a small idle wiggle.
+- **Pushes lighting presets to Node 3.** Whenever the active animation changes its lighting need, Node 1 pushes the preset over the wired link to Node 3.
+- **Relays operator commands to Node 2.** When you tap a sound button on the dashboard or app, that command arrives via Node 2, gets relayed to Node 1, and Node 1 plays its part (motion + lighting) while Node 2 plays the sound.
+- **Watches for stuck states.** A built-in watchdog automatically recovers if an animation gets stuck mid-run.
 
 
 ---
 
 
-## Safety Limits
+## Safety
 
-| Constraint | Value | Source |
-| :--- | :--- | :--- |
-| **RC transient mute on boot** | 10-pulse window | Boot priority 900 in firmware |
-| **Mesh bridge timeout** | > 100 ms loss → motion pause | `safety` ESPHome block |
-| **WLED `bri` clamp** | ≤ 76 (≤ 30%) | `set_dome_color` / `set_light_color` helpers (v2.12.1) |
-| **Animation watchdog** | 2 s ticker force-releases stuck `is_animating` | `release_animation_lock` |
+- **RC transient mute on boot** — the first few RC pulses after power-on are ignored to prevent a stale "stick is moving" reading from triggering an unwanted motion.
+- **Mesh dropout pause** — if Node 1 loses contact with Node 2 for more than ~100 ms, dome motion pauses until the link recovers.
+- **Brightness clamp on lighting commands** — Node 1 caps any lighting brightness it sends to Node 3 at the safe ~30% maximum before sending.
 
 
 ---
@@ -93,14 +63,12 @@ Production performances (as of v2.12.1): `perf_idle`, `perf_angry`, `perf_dance`
 
 ## Maintenance & Debug
 
-- **Wireless logs**: `wee2d2-dome-master.local` over Wi-Fi
-- **Wired logs**: USB-C @ 115200 baud
-- **OTA password**: required for wireless updates
-- **Heartbeat**: 5 s ping to Node 2 — dashboard `Node 1 online` flag goes red if missed > 15 s
-- **Logger level**: `DEBUG` in production (visible verbose state for field troubleshooting)
+- **Wireless log access**: `wee2d2-dome-master.local` on your local Wi-Fi (current setup; eventually moving to a config-less workflow).
+- **USB-C** is accessible through the dome hatch for wired log access and OTA fallback.
+- **Heartbeat indicator**: Node 1 pings Node 2 every 5 s; if the dashboard's "Node 1 online" badge goes red, Node 1 lost power or crashed.
 
 
 ---
 
 
-[View Animation Framework](../capabilities/animation-framework.md) | [View Master Schematic](electrical-schematic.md) | [View Power Architecture](power-architecture.md)
+[View Behaviour & Personality](../capabilities/animation-framework.md) | [View Master Schematic](electrical-schematic.md) | [View Power Architecture](power-architecture.md)

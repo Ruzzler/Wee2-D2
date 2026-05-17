@@ -37,7 +37,7 @@ The hub motors are driven by two **Flipsky 6.7 Pro** motor controllers configure
 These settings are verified in the `v2.12.1` firmware sequence.
 
 
-- **Limit**: **15.0A Software Clamp** (firmware/esc-configs/left-motor-settings.xml).
+- **Limit**: **15.0A Software Clamp**.
 - **Control**: FOC (Field Oriented Control).
 - **Communication**: PPM (Pulse Position Modulation) at 50Hz.
 - **Safety**: 16.5V Battery Cutoff (High-current protection for DeWalt packs).
