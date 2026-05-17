@@ -26,7 +26,7 @@ The browser app talks to the Wee2-D2 over Web Bluetooth via the **Node 4 BLE bri
 
 - Smart Connect (silent rebind first, device picker only on first pair or unreachable bridge)
 - One-tap EMERGENCY STOP
-- STATUS card driven by `0xB0` heartbeat from Node 1 (5 s interval)
+- STATUS card driven by `0xB0` heartbeat (5 s, `node1_online` flag) + `0xB1` telemetry (anim_id / step / total / last_react_id) from Node 1, both dual-unicast to Node 4. See [BLE Bridge](ble-bridge.md) for the 6-byte status payload spec.
 - 11 reaction buttons
 - 8 animations + RETURN TO IDLE banner
 - 15 lighting presets across ALL / ZONES / SCENES tabs

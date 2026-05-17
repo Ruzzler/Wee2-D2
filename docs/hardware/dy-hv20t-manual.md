@@ -4,8 +4,10 @@
 
 The **DY-HV20T** is the audio playback module deployed on Node 2 from firmware v2.12.x onward. It replaces the legacy DFPlayer Mini, which was retired due to UART reliability issues and limited path control. The DY-HV20T plays MP3 files directly from a microSD card by filesystem path (uppercase only) over a 9600-baud UART link.
 
+![manual-hero](../../assets/dy-hv20t-module.svg)
+
 > [!NOTE]
-> A dedicated DY-HV20T hardware photo is pending. The BOM currently uses the DFPlayer Mini placeholder image — same form-factor footprint, different chipset.
+> Pinout diagram above is an SVG placeholder until a hardware photo is taken. Pin labels reflect the actual module silkscreen + wiring to Node 2.
 
 ---
 

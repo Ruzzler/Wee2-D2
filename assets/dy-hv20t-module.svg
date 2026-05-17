@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 280" role="img" aria-label="DY-HV20T audio module pinout diagram" font-family="'Share Tech Mono', 'Inter', monospace">
+  <defs>
+    <linearGradient id="board" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0d3a3f"/>
+      <stop offset="1" stop-color="#082b30"/>
+    </linearGradient>
+    <linearGradient id="chip" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#222b30"/>
+      <stop offset="1" stop-color="#0c1418"/>
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <rect width="480" height="280" fill="#020a0d"/>
+
+  <!-- title -->
+  <text x="240" y="28" text-anchor="middle" fill="#00f2ff" font-size="16" letter-spacing="3">DY-HV20T  /  20W STEREO MP3 MODULE</text>
+  <text x="240" y="48" text-anchor="middle" fill="#7aa6ad" font-size="10" letter-spacing="2">UART 9600 BAUD  •  SD PATH PLAYBACK  •  5V VCC</text>
+
+  <!-- board outline -->
+  <rect x="100" y="70" width="280" height="170" rx="6" fill="url(#board)" stroke="#00f2ff" stroke-width="1.2" filter="url(#glow)"/>
+
+  <!-- left pin headers -->
+  <g fill="#c8d4d7" font-size="9" text-anchor="end">
+    <rect x="100" y="92" width="10" height="6" fill="#d4af37"/>
+    <text x="92" y="98">VCC  (5V)</text>
+    <rect x="100" y="112" width="10" height="6" fill="#d4af37"/>
+    <text x="92" y="118">GND</text>
+    <rect x="100" y="132" width="10" height="6" fill="#d4af37"/>
+    <text x="92" y="138">RX  &lt;-  N2 GPIO 12</text>
+    <rect x="100" y="152" width="10" height="6" fill="#d4af37"/>
+    <text x="92" y="158">TX  -&gt;  N2 GPIO 13</text>
+    <rect x="100" y="172" width="10" height="6" fill="#d4af37"/>
+    <text x="92" y="178">IO0 / IO1</text>
+    <rect x="100" y="192" width="10" height="6" fill="#d4af37"/>
+    <text x="92" y="198">BUSY</text>
+  </g>
+
+  <!-- right pin headers -->
+  <g fill="#c8d4d7" font-size="9">
+    <rect x="370" y="92" width="10" height="6" fill="#d4af37"/>
+    <text x="388" y="98">SPK_1  -&gt;  TPA3118 IN+</text>
+    <rect x="370" y="112" width="10" height="6" fill="#d4af37"/>
+    <text x="388" y="118">SPK_2  -&gt;  TPA3118 IN-</text>
+    <rect x="370" y="132" width="10" height="6" fill="#d4af37"/>
+    <text x="388" y="138">DAC_L  (line)</text>
+    <rect x="370" y="152" width="10" height="6" fill="#d4af37"/>
+    <text x="388" y="158">DAC_R  (line)</text>
+    <rect x="370" y="172" width="10" height="6" fill="#d4af37"/>
+    <text x="388" y="178">CON3</text>
+    <rect x="370" y="192" width="10" height="6" fill="#d4af37"/>
+    <text x="388" y="198">CON4</text>
+  </g>
+
+  <!-- main IC -->
+  <rect x="170" y="100" width="140" height="60" rx="3" fill="url(#chip)" stroke="#00f2ff" stroke-width="0.6"/>
+  <text x="240" y="128" text-anchor="middle" fill="#00f2ff" font-size="10">DY-HV20T</text>
+  <text x="240" y="144" text-anchor="middle" fill="#7aa6ad" font-size="8">MP3 / WAV  /  SD PATH</text>
+
+  <!-- SD card slot -->
+  <rect x="170" y="180" width="90" height="40" rx="2" fill="#0c1a1d" stroke="#7aa6ad" stroke-width="0.6"/>
+  <text x="215" y="196" text-anchor="middle" fill="#7aa6ad" font-size="7" letter-spacing="2">microSD</text>
+  <text x="215" y="208" text-anchor="middle" fill="#c8d4d7" font-size="7">FAT32 / UPPERCASE</text>
+
+  <!-- mini speaker block -->
+  <circle cx="330" cy="200" r="14" fill="#0c1a1d" stroke="#7aa6ad" stroke-width="0.6"/>
+  <circle cx="330" cy="200" r="6" fill="#00f2ff" opacity="0.25"/>
+  <text x="330" y="232" text-anchor="middle" fill="#7aa6ad" font-size="7">SPK OUT</text>
+
+  <!-- footer -->
+  <text x="240" y="266" text-anchor="middle" fill="#456569" font-size="8" letter-spacing="2">WEE2-D2 WIKI  /  DIAGRAM (PHOTO PENDING)</text>
+</svg>

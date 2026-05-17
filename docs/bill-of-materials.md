@@ -69,7 +69,7 @@ Cinematic output runs through specialized LED arrays + a 60W Class-D audio chain
 
 | Category | Component | Qty | Specification | Visual ID |
 | :--- | :--- | :---: | :--- | :---: |
-| **Audio Module** | [DY-HV20T](hardware/dy-hv20t-manual.md) | 1 | 9600-baud UART, plays MP3 by SD path (firmware v2.12.x; replaced legacy DFPlayer Mini) | ![DY-HV20T](../assets/dfplayer-mini-module.jpg) |
+| **Audio Module** | [DY-HV20T](hardware/dy-hv20t-manual.md) | 1 | 9600-baud UART, plays MP3 by SD path (firmware v2.12.x; replaced legacy DFPlayer Mini) | ![DY-HV20T](../assets/dy-hv20t-module.svg) |
 | **Amplifier** | [TPA3118 60W](hardware/tpa3118-amp-manual.md) | 1 | Mono Class-D in PBTL mode | ![TPA3118](../assets/tpa3118-amplifier-module.jpg) |
 | **Speaker** | [Pyle 3.5" Driver](capabilities/audio-system.md) | 1 | 60W RMS, 4 Ohm full-range | ![Pyle Speaker](../assets/pyle-3.5-speaker.webp) |
 | **Logic Display** | [WS2812B Logic Arrays](capabilities/led-system.md) | 2 | Front 10x2 (20 px), rear 12x2 (24 px); Node 3 GPIO 18/19 | ![Logic Array](../assets/ws2812b-logic-arrays.webp) |
@@ -109,7 +109,7 @@ The chassis is built from the acclaimed 3D files by Mr. Baddeley. Slip ring sits
 
 > [!NOTE]
 > For wiring detail and signal paths, see the [Interactive Electrical Schematic](architecture/electrical-schematic.md) and the [Node Pinout Guide](architecture/node-pinout-guide.md).
-> The audio module image still shows the legacy DFPlayer Mini board as a placeholder — a DY-HV20T photo is pending on the next hardware-photo refresh.
+> The audio module is shown as a labeled SVG pinout diagram (`assets/dy-hv20t-module.svg`) until a hardware photo is taken.
 > Node 3 runs **stock WLED 0.15.4** on a **classic ESP32D** (not the S3 Mini used on Nodes 1 + 2). See the [Node 3 LED Hub page](architecture/node-3-led-distribution.md) for full WLED config.
 
 
