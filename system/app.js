@@ -124,7 +124,12 @@ async function loadContent(path, pushHistory = true) {
 
   try {
     const response = await fetch('./' + path + '?v=' + Date.now());
-    if (!response.ok) throw new Error('CORS or Connection Denial: ' + response.statusText);
+    if (response.status === 404) {
+      contentDiv.innerHTML = `<div class="alert alert-warning"><strong>PAGE NOT FOUND</strong><br>No document at <code>${escapeHtml(path)}</code>. Use the sidebar to navigate, or <a href="#" data-path="wiki/project-overview.md">return to the Project Overview</a>.</div>`;
+      document.title = 'Page Not Found — Wee2-D2';
+      return;
+    }
+    if (!response.ok) throw new Error(`Failed to load ${path} (HTTP ${response.status} ${response.statusText})`);
     const markdown = await response.text();
 
     if (path.endsWith('.yaml') || path.endsWith('.yml')) {
@@ -133,12 +138,21 @@ async function loadContent(path, pushHistory = true) {
       contentDiv.innerHTML = marked.parse(markdown);
       setTimeout(() => renderMermaid(contentDiv), 100);
     }
-    
+
+    updatePageTitle(contentDiv, path);
+
     if (typeof lucide !== 'undefined') lucide.createIcons();
     window.scrollTo({ top: 0, behavior: 'smooth' });
   } catch (error) {
-    contentDiv.innerHTML = `<div class="alert alert-warning"><strong>ACCESS DENIED</strong><br>${error.message}</div>`;
+    contentDiv.innerHTML = `<div class="alert alert-warning"><strong>LOAD ERROR</strong><br>${escapeHtml(error.message)}</div>`;
   }
+}
+
+function updatePageTitle(container, path) {
+  const h1 = container.querySelector('h1');
+  let title = h1 ? h1.textContent.trim() : path.split('/').pop().replace(/\.md$/, '').replace(/-/g, ' ');
+  title = title.replace(/\s+/g, ' ').trim();
+  document.title = title ? `${title} — Wee2-D2` : 'Wee2-D2 — Astromech Build Documentation';
 }
 
 async function renderMermaid(container) {
