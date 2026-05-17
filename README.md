@@ -40,7 +40,7 @@ Wiki-Repository/
 
 Companion repositories:
 
-- **Firmware** — `Firmware/wee2d2-firmware/` (ESPHome + WLED-MM, source of truth for droid behaviour at `v2.12.1`)
+- **Firmware** — `Firmware/wee2d2-firmware/` (ESPHome + stock WLED 0.15.4, source of truth for droid behaviour at `v2.12.1`)
 - **Web App / PWA** — [`wee2d2-app`](https://github.com/Ruzzler/wee2d2-app) (Web Bluetooth control panel)
 - **Android APK Wrap** — [`wee2d2-capacitor`](https://github.com/Ruzzler/wee2d2-capacitor) (Capacitor wrap of the PWA)
 - **Public Kiosk** — [`wee2d2-kiosk`](https://github.com/Ruzzler/wee2d2-kiosk) (attendee-facing tablet prototype)
@@ -57,9 +57,9 @@ Each link directs to a high-density manual including pinouts and wiring.
 - **Piloting**: [HotRC DS-600](docs/hardware/hotrc-ds600-manual.md) (PWM input to Node 1 and Node 2)
 - **Drive System**: [Flipsky Mini FSESC 6.7 Pro](docs/hardware/flipsky-fsesc-67-pro-manual.md) driving 2x L-faster FLD-5 [hub motors](docs/hardware/hub-motor-manual.md)
 - **Dome Motion**: [goBILDA 5203 Yellow Jacket](docs/hardware/gobilda-motor-manual.md) on Node 1 GPIO 7
-- **Audio**: DY-HV20T audio module (replaced legacy DFPlayer Mini in firmware v2.12.x) → [TPA3118 60W Amp](docs/hardware/tpa3118-amp-manual.md) → Pyle 3.5" speaker
+- **Audio**: [DY-HV20T audio module](docs/hardware/dy-hv20t-manual.md) (replaced legacy DFPlayer Mini in firmware v2.12.x) → [TPA3118 60W Amp](docs/hardware/tpa3118-amp-manual.md) → Pyle 3.5" speaker
 - **Power Grid**: [MgcSTEM LVP-R1.5](docs/hardware/mgcstem-lvp-r15-manual.md) with a central negative bus bar
-- **Lighting**: [GrnWave PSI Logics](docs/hardware/grnwave-psi-manual.md) + WS2812B Logic Display matrices driven by Node 3 (WLED-MM 14.7.1)
+- **Lighting**: [GrnWave PSI Logics](docs/hardware/grnwave-psi-manual.md) + WS2812B Logic Display matrices driven by Node 3 (stock WLED 0.15.4 on classic ESP32D, 196 LEDs total)
 
 
 ---

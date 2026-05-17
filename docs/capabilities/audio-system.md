@@ -98,6 +98,6 @@ In Ambient Mode (Bank 1), Node 2 fires random tracks from folder `03` every 15â€
 **Relevant Hardware & Code:**
 - [Node 2: Sound Hub](../architecture/node-2-sound-hub.md)
 - [TPA3118 Amplifier](../hardware/tpa3118-amp-manual.md)
-- [DY-HV20T Audio Module](../hardware/dfplayer-mini-spec.md)
+- [DY-HV20T Audio Module](../hardware/dy-hv20t-manual.md)
 
 [View Master Schematic](../architecture/electrical-schematic.md) | [View Battery Runtime Guide](../maintenance/battery-runtime-guide.md)

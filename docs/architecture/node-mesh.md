@@ -27,7 +27,7 @@ Synchronization is achieved using low-latency **ESP-NOW** wireless bridging acro
 ### Node 2: Sound Hub (ESP32-S3)
 
 - **Role**: Dashboard Gateway and animation audio execution.
-- **Hardware**: DFPlayer Mini, TPA3118 Amplifier.
+- **Hardware**: DY-HV20T audio module, TPA3118 Amplifier.
 - **Logic**: Hosts the interactive Web UI. Captures user commands and securely relays them across the ESP-NOW bridge to Node 1 for final execution.
 
 

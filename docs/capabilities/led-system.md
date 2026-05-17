@@ -1,6 +1,6 @@
 # <i data-lucide="lightbulb"></i> Cinematic LED System
 
-> **TECHNICAL SPECIFICATIONS** | **SYSTEM: CINEMATIC LIGHTING** | **MODEL: WLED-MM 14.7.1 / GRNWAVE PSI**
+> **TECHNICAL SPECIFICATIONS** | **SYSTEM: CINEMATIC LIGHTING** | **MODEL: WLED 0.15.4 / GRNWAVE PSI**
 
 This guide covers the LED architecture: WS2812B / GrnWave hardware, WLED preset ledger, UART JSON bridge from Node 1, and physical pin mapping. All references verified against firmware v2.12.1.
 
@@ -10,10 +10,12 @@ This guide covers the LED architecture: WS2812B / GrnWave hardware, WLED preset 
 
 The lighting system is decentralized across the dome using addressable LEDs. Powered by a dedicated Mini560 Pro 5A buck to prevent voltage drops during bright patterns.
 
-- **Controller**: Node 3 — LED Hub (ESP32-S3 Super Mini)
-- **Framework**: WLED-MM 14.7.1 (RMT protocol on S3 pins)
+- **Controller**: Node 3 — LED Hub (ESP32D DevKit, classic ESP32)
+- **Framework**: WLED 0.15.4 (vid `2508020`, stock — not WLED-MM, not WLED-AC)
 - **Primary Arrays**: GrnWave PSI logics + WS2812B Logic Display matrices
-- **Data Protocol**: UART JSON bridge from Node 1 (115200 baud)
+- **Total LEDs**: 196 across 4 segments (76 + 76 + 20 + 24)
+- **Data Protocol**: UART JSON bridge from Node 1 (115200 baud) on Node 3 GPIO 3 (RX0)
+- **Global brightness cap**: 77/255 (~30%) — enforced by WLED config AND per-frame in Node 1 helpers
 
 ---
 
@@ -59,12 +61,12 @@ Canonical preset definitions live in `Firmware/wee2d2-firmware/firmware/wled/pre
 
 LEDs split across four data lines off Node 3:
 
-| Display | Type | Configuration | GPIO | Wire Color |
+| Display | Type | Configuration | GPIO | Segment (indices) |
 | :--- | :--- | :--- | :---: | :--- |
-| **Front Logic** | WS2812B | 10x2 matrix (20 px) | 18 | Green |
-| **Rear Logic** | WS2812B | 12x2 matrix (24 px) | 19 | White |
-| **Front PSI** | GrnWave | Circular (76 px) | 21 | Yellow |
-| **Rear PSI** | GrnWave | Circular (76 px) | 22 | Yel/Blk |
+| **Front PSI** | GrnWave | Circular (76 px) | 16 | Seg 0 (0–75) |
+| **Rear PSI** | GrnWave | Circular (76 px) | 17 | Seg 1 (76–151) |
+| **Front Logic** | WS2812B | 10x2 matrix (20 px) | 18 | Seg 2 (152–171) |
+| **Rear Logic** | WS2812B | 12x2 matrix (24 px) | 19 | Seg 3 (172–195) |
 
 ---
 

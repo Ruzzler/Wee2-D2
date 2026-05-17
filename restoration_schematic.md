@@ -53,7 +53,7 @@ flowchart TD
 
         DOME_ESC -.->|6V BEC ISOLATED| RC2["Dome Receiver (F-06A)"]:::signal
 
-        DOME_WAGOS -->|5V| NODE3["Node 3: LED Hub (S3 Mini, WLED-MM)"]:::lights
+        DOME_WAGOS -->|5V| NODE3["Node 3: LED Hub (ESP32D, WLED 0.15.4)"]:::lights
         DOME_WAGOS -->|5V| NODE1["Node 1: Dome Brain (S3 DevKitC-1)"]:::brain
         DOME_WAGOS -->|5V| LOGICS["Logic Display + PSI Matrices"]:::lights
     end
@@ -74,7 +74,7 @@ flowchart TD
     click BAT href "docs/maintenance/battery-runtime-guide.md" "Battery Guide"
     click LVC href "docs/hardware/mgcstem-lvp-r15-manual.md" "LVC Manual"
     click ESC1 href "docs/hardware/flipsky-fsesc-67-pro-manual.md" "Flipsky Manual"
-    click AUDIO href "docs/hardware/dfplayer-mini-spec.md" "Audio Module Manual"
+    click AUDIO href "docs/hardware/dy-hv20t-manual.md" "DY-HV20T Manual"
     click SLIP1 href "docs/hardware/cnbtr-slip-ring-manual.md" "Slip Ring Manual"
     click DOME_BUCK href "docs/bill-of-materials.md" "Buck Converter"
     click RC1 href "docs/hardware/hotrc-f06a-manual.md" "Receiver Manual"
@@ -102,11 +102,14 @@ Primary autonomy controller. Drives the dome motor and originates every animatio
 
 | Component | Pin (GPIO) | Mode | Notes |
 | :--- | :---: | :---: | :--- |
-| **Dome Motor** | GPIO 7 | PWM Output | To goBILDA 15A ESC |
-| **RC CH1 (Steering)** | GPIO 4 | Input | From Receiver 2 |
-| **UART to WLED** | GPIO 5 | Output | JSON preset push (115200 baud) |
-| **ESP-NOW** | N/A | Wireless | Bidirectional relay with Node 2 |
-| **Status LED** | GPIO 48 | Output | S3 internal NeoPixel |
+| **Dome Motor** | 7 | PWM Output | To goBILDA 15A ESC (50 Hz) |
+| **RC CH1 (Stick)** | 4 | Input (PWM) | From Receiver 2 |
+| **RC CH3 (Perf Cycle)** | 1 | Input (RC) | Performance cycle button |
+| **RC CH4 (Random React)** | 6 | Input (RC) | Random reaction button |
+| **RC CH5 (E-Stop)** | 2 | Input (RC) | Hard-stop relay |
+| **UART to WLED** | 5 | Output (UART TX) | JSON preset push @ 115200 baud |
+| **ESP-NOW** | — | Wireless | Bidirectional relay with Node 2 |
+| **Status LED** | 47 | Output | S3 internal NeoPixel |
 
 ### Node 2: Sound Hub (ESP32-S3 Super Mini)
 
@@ -114,24 +117,26 @@ DY-HV20T audio driver, web dashboard host, BLE bridge endpoint, ESP-NOW relay TX
 
 | Component | Pin (GPIO) | Mode | Notes |
 | :--- | :---: | :---: | :--- |
-| **DY-HV20T TX** | GPIO 12 | Output | Audio module RX |
-| **DY-HV20T RX** | GPIO 13 | Input | Audio module TX |
-| **RC CH3-5** | 4, 5, 6 | Input | Behavioural triggers |
-| **ESP-NOW** | N/A | Wireless | Bidirectional relay with Node 1 |
-| **BLE** | N/A | Wireless | Slice 1B command bridge from app |
-| **Status LED** | GPIO 48 | Output | S3 internal NeoPixel |
+| **DY-HV20T TX** | 12 | Output (UART TX) | Audio module RX @ 9600 baud |
+| **DY-HV20T RX** | 13 | Input (UART RX) | Audio module TX @ 9600 baud |
+| **RC CH3 (Vol Up)** | 5 | Input (RC) | Volume increment |
+| **RC CH4 (E-Stop)** | 4 | Input (RC) | Hard-stop relay |
+| **RC CH5 (Vol Down)** | 6 | Input (RC) | Volume decrement |
+| **ESP-NOW** | — | Wireless | Bidirectional relay with Node 1 |
+| **BLE** | — | Wireless | Slice 1B command bridge from app |
+| **Status LED** | 47 | Output | S3 internal NeoPixel |
 
-### Node 3: LED Hub (ESP32-S3 Super Mini, WLED-MM 14.7.1)
+### Node 3: LED Hub (ESP32D DevKit, classic ESP32 running WLED 0.15.4)
 
-Dedicated 4-strip LED controller. No firmware authored here — runs upstream WLED with project-specific `cfg.json` + `presets.json` + `ledmap.json`.
+Dedicated 4-strip LED controller. No firmware authored here — runs stock WLED 0.15.4 with project-specific `cfg.json` + `presets.json` + `ledmap.json`.
 
 | Component | Pin (GPIO) | Mode | Notes |
 | :--- | :---: | :---: | :--- |
-| **Front Logic Display** | 18 | Output | WS2812B, 10x2 matrix |
-| **Rear Logic Display** | 19 | Output | WS2812B, 12x2 matrix |
-| **Front PSI** | 21 | Output | GrnWave addressable ring |
-| **Rear PSI** | 22 | Output | GrnWave addressable ring |
-| **UART RX** | 16 | Input | JSON presets from Node 1 |
+| **Front PSI** | 16 | Output | GrnWave 76 px ring — Seg 0 |
+| **Rear PSI** | 17 | Output | GrnWave 76 px ring — Seg 1 |
+| **Front Logic Display** | 18 | Output | WS2812B 10x2 matrix (20 px) — Seg 2 |
+| **Rear Logic Display** | 19 | Output | WS2812B 12x2 matrix (24 px) — Seg 3 |
+| **UART RX** | 3 (RX0) | Input | JSON presets from Node 1 @ 115200 baud |
 | **Web UI** | N/A | Wi-Fi | Port 80 (preset selection) |
 
 ---

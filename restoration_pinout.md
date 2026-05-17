@@ -12,14 +12,14 @@ Node 2 manages audio triggering, the web dashboard, and ESP-NOW relay. Pins foll
 
 | Pin | Wire Color | Role | Function |
 | :---: | :--- | :--- | :--- |
-| **5V** | Red | Power In | 5V BEC (from ESC 1) |
+| **5V** | Red | Power In | 5V Mini560 Pro buck |
 | **GND** | Black | Ground | Common Logic Ground |
-| **GPIO 4** | White | RC CH3 | Behavioural Trigger A |
-| **GPIO 5** | Green | RC CH4 | Behavioural Trigger B |
-| **GPIO 6** | Purple | RC CH5 | Bank Switch |
-| **GPIO 12** | Yellow | DY-HV20T TX | Serial command out |
-| **GPIO 13** | Green | DY-HV20T RX | Serial status in |
-| **GPIO 48** | N/A | Status LED | S3 internal NeoPixel |
+| **GPIO 4** | — | RC CH4 | E-Stop relay |
+| **GPIO 5** | — | RC CH3 | Volume Up |
+| **GPIO 6** | — | RC CH5 | Volume Down |
+| **GPIO 12** | Yellow | DY-HV20T TX | Serial command out @ 9600 baud |
+| **GPIO 13** | Green | DY-HV20T RX | Serial status in @ 9600 baud |
+| **GPIO 47** | — | Status LED | S3 internal NeoPixel |
 
 ---
 
@@ -119,5 +119,5 @@ Node 2 has no physical signal wires through the slip ring — all inter-node com
 - [x] Body MCU on **ESP32-S3 Super Mini** (Node 2).
 - [x] **TPA3118** amplifier powered directly from 20V rail.
 - [x] **ESP-NOW** established as the wireless behavioural link.
-- [x] **Node 3** standardized on **ESP32-S3 Super Mini** running **WLED-MM 14.7.1**.
+- [x] **Node 3** standardized on **ESP32-S3 Super Mini** running **WLED 0.15.4**.
 - [x] Slip Ring C5/C6 isolated and reserved.

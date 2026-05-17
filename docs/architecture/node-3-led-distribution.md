@@ -1,73 +1,124 @@
 ![manual-hero](../../assets/esp32d-dev-board.png)
 
 
-# <i data-lucide="lightbulb"></i> Node 3: Lighting Hub
+# <i data-lucide="lightbulb"></i> Node 3: LED Hub
 
-> **TECHNICAL SPECIFICATIONS** | **SYSTEM: LIGHTING HUB** | **MODEL: ESP32 DEVKIT V1 / WLED**
-
-
-Node 3 is the dedicated lighting controller for the Wee2-D2 project. It runs the WLED framework and manages all addressable visuals, including the GrnWave PSI logics and status displays.
+> **TECHNICAL SPECIFICATIONS** | **SYSTEM: LIGHTING HUB** | **MODEL: ESP32D DEVKIT (CLASSIC ESP32)** | **FIRMWARE: WLED 0.15.4 (vid 2508020)**
 
 
----
-
-
-## Hardware Specifications (Logic Focus)
-
-The **ESP32 DevKit V1** is used for its robust RMT timing performance, ensuring that the WS2812B signals remain clear and flicker-free even during high-brightness animations.
-
-
-- **Processor**: Single-Core ESP32D (WROOM)
-- **Voltage**: 5V Logic Rail (Mini560 Pro)
-- **GPIO Pins**: [Node Pinout Guide](../architecture/node-pinout-guide.md)
-- **Framework**: WLED (v0.14+ / RMT Protocol)
+Node 3 is the dedicated lighting controller for the Wee2-D2 project. It runs **stock WLED 0.15.4** (not WLED-MM, not WLED-AC) on a classic single-core **ESP32D** DevKit board. Node 3 receives JSON preset commands from Node 1 over a one-way UART JSON bridge — no firmware is authored here. All behaviour comes from upstream WLED plus the project's curated `cfg.json` / `presets.json` / `ledmap.json`.
 
 
 ---
 
 
-## GPIO Pinout & Logic Assignments
+## Hardware Specifications
 
-The LED Distro manages the high-speed data signals for the droid's cinematic arrays. It follows the RMT protocol on a dedicated serial bus.
-
-
-These settings are verified in the `v2.12.1` hardware sequence.
-
-
-| Assignment | GPIO Pin | Function | Citation |
-| :--- | :--- | :--- | :--- |
-| **Logic Matrix** | **GPIO 13** | Main LED Logic Array | [LED Guide](../capabilities/led-system.md) |
-| **PSI Lights** | **GPIO 12** | PSI Status Indicators | [PSI Manual](../hardware/grnwave-psi-manual.md) |
-| **Sync Input** | **GPIO 3** | Serial In from Node 1 | [UART Sync Guide](../capabilities/led-system.md) |
+- **Board**: ESP32D DevKit (classic ESP32 WROOM, single-core)
+- **Firmware**: WLED 0.15.4 (build id `2508020`)
+- **IP**: `192.168.0.39` (DHCP; may change)
+- **Voltage**: 5V VIN (dedicated Mini560 Pro 5A buck)
+- **Physical location**: dome (above slip ring)
 
 
 ---
 
 
-## WLED Configuration & Sync Triggers
+## GPIO Pinout
 
-Node 3 acts as the **Lighting Hub**. It receives JSON strings from Node 1 to instantly apply visual presets that match the current audio and animations.
+| Assignment | GPIO | Direction | Function |
+| :--- | :---: | :--- | :--- |
+| **Front PSI** | 16 | OUTPUT (DATA) | 76x WS2812B — Segment 0 (indices 0–75) |
+| **Rear PSI** | 17 | OUTPUT (DATA) | 76x WS2812B — Segment 1 (indices 76–151) |
+| **Front Logic Display** | 18 | OUTPUT (DATA) | 20x WS2812B — Segment 2 (indices 152–171) |
+| **Rear Logic Display** | 19 | OUTPUT (DATA) | 24x WS2812B — Segment 3 (indices 172–195) |
+| **UART RX (JSON in)** | 3 (RX0) | INPUT (UART RX) | From Node 1 GPIO 5 @ 115200 baud |
 
-
-1. **Segment Mapping**: Managed in the local `wled-cfg.json` file. Map Front PSI to Segment 0 and Rear PSI to Segment 1.
-2. **Serial Receiver**: Listens at 115200 baud for instructions (e.g., `{"on":true,"ps":1}`).
-3. **Preset Sync**: Ensures that a "Cantina Band" sound event instantly triggers a corresponding lighting preset.
-
-
----
-
-
-## Maintenance & Debugging
-
-You can access the lighting node's diagnostic dashboard wirelessly (`wled-dome.local`) or via the physical micro-USB port.
-
-
-- **Dashboard Access**: Required for adjusting segment brightness and RGB order (GRB).
-- **Signal Integrity**: If the lighting is flickering, verify that the 5V logic rail is stable. Voltage drops below 4.5V will cause the addressable LEDs to reset. 
-- **Baud Rate**: Ensure the Node 1 serial bus is set to **115200** to prevent lighting lag.
+Total: **196 addressable LEDs** across 4 segments.
 
 
 ---
 
 
-[View Status Schematic](electrical-schematic.md) | [View LED System Guide](../capabilities/led-system.md)
+## WLED Configuration Snapshot
+
+| Setting | Value |
+| :--- | :--- |
+| **Max power** | 3500 mA |
+| **LED type** | WS2812B (type 22 in WLED) |
+| **Global brightness cap** | 77 / 255 (~30%) — matches CLAUDE.md hard safety constraint |
+| **FPS** | 42 |
+| **Presets** | 15 (see `Firmware/wee2d2-firmware/firmware/wled/presets.json`) |
+| **AudioReactive** | Disabled (prevents GPIO conflicts with the UART RX pin) |
+| **UART baud** | 115200 (`"baud": 1152` in WLED config = 115200 / 100) |
+| **Handler** | Default WLED Serial0 JSON parser on RX0 (GPIO 3) |
+
+The brightness cap is enforced at two layers: WLED's `bri` ceiling (77/255) AND a per-frame clamp inside Node 1's `set_dome_color` / `set_light_color` helpers (`bri ≤ 76` before the JSON push goes out — added in firmware v2.12.1).
+
+
+---
+
+
+## LED Segment Map
+
+```
+Index:  0 ─────── 75 │ 76 ────── 151 │ 152 ── 171 │ 172 ── 195
+Strip:  Front PSI    │ Rear PSI      │ Front Logic│ Rear Logic
+GPIO:   16           │ 17            │ 18         │ 19
+Count:  76           │ 76            │ 20         │ 24
+```
+
+
+---
+
+
+## Trigger Flow
+
+1. Node 1 detects an animation event (e.g. "Cantina Band").
+2. Node 1 pushes a JSON frame down the UART wire to Node 3 GPIO 3: `{"on":true,"ps":10}\r\n`.
+3. WLED's default Serial0 parser applies the preset instantly.
+4. Node 1 sends a `{"v":true}\r\n` heartbeat every 60 s as a keep-alive (WLED's reply is ignored).
+
+Beat-sync color strobes use a richer frame: `{"on":true,"bri":128,"seg":[{"id":0,"col":[[R,G,B]],"fx":0}]}\r\n`.
+
+
+---
+
+
+## Wiring
+
+```
+          ESP32D DevKit
+          ┌────────────────┐
+          │ GPIO 16 (DATA) │──────> Front PSI (76 LEDs)
+          │ GPIO 17 (DATA) │──────> Rear PSI (76 LEDs)
+          │ GPIO 18 (DATA) │──────> Front Logic Display (20 LEDs)
+          │ GPIO 19 (DATA) │──────> Rear Logic Display (24 LEDs)
+          │                │
+Node 1 ──>│ GPIO 3 (RX0)   │  UART RX @ 115200 baud
+          │                │
+   5V ──> │ VIN            │
+  GND ──> │ GND            │
+          └────────────────┘
+
+LED Power (separate from logic):
+  20V Battery ──> Mini560 Buck ──> 5V @ 5A ──> LED strip VCC rails
+  All LED GND tied to common ground bus
+```
+
+
+---
+
+
+## Maintenance & Debug
+
+- **Web UI**: browse to `192.168.0.39` (or the current DHCP lease) for segment tuning, preset editing, palette work.
+- **Serial monitor**: micro-USB on the ESP32D DevKit. UART RX (GPIO 3) is shared with USB-Serial so a connected USB cable may interfere with Node 1's JSON commands — keep USB unplugged during operation.
+- **Flickering**: under-voltage on the LED rail (Mini560 sag). Verify 5V holds steady under full-brightness load.
+- **Lag**: usually means the JSON frame from Node 1 was dropped — check Node 1's TX heartbeat is firing every 60 s.
+
+
+---
+
+
+[View LED System Guide](../capabilities/led-system.md) | [View WLED Configuration Guide](../maintenance/wled-configuration-guide.md) | [View Master Schematic](electrical-schematic.md)

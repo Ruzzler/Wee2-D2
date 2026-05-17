@@ -35,7 +35,7 @@ flowchart TD
 
     subgraph BODY_SOUND["SOUND HUB"]
       NODE_2["Node 2 (Sound Hub)"]:::brain
-      AUDIO["DFPlayer Mini"]:::audio
+      AUDIO["DY-HV20T Audio"]:::audio
       AMP["TPA3118 Amp"]:::audio
       SPK2["Pyle 3.5-inch Car Speaker"]:::audio
     end
@@ -165,23 +165,25 @@ Primary controller for sounds and animation triggers.
 | Component | Pin (GPIO) | Mode | Notes |
 | :--- | :---: | :---: | :--- |
 | **Status LED** | GPIO 47 | Output | S3 Internal Neopixel (Logic) |
-| **RC CH3-5** | 4, 5, 6 | Input | Animation Triggers from RC1 |
-| **DFPlayer TX** | GPIO 17 | Output | To DFPlayer RX |
-| **DFPlayer RX** | GPIO 16 | Input | From DFPlayer TX (Optional) |
-| **Wireless RX** | N/A | ESP-NOW | Listening for Dome triggers |
+| **RC CH3 (Vol Up)** | GPIO 5 | Input | Volume increment |
+| **RC CH4 (E-Stop)** | GPIO 4 | Input | Hard-stop relay |
+| **RC CH5 (Vol Down)** | GPIO 6 | Input | Volume decrement |
+| **DY-HV20T TX** | GPIO 12 | Output | To DY-HV20T RX @ 9600 baud |
+| **DY-HV20T RX** | GPIO 13 | Input | From DY-HV20T TX @ 9600 baud |
+| **Wireless** | N/A | ESP-NOW | Bidirectional with Node 1 |
 
 
-### **Node 3: Lighting Hub (ESP32-Dev Board - WLED)**
-Dedicated high-density addressable LED matrix controller.
+### **Node 3: LED Hub (ESP32D DevKit, stock WLED 0.15.4)**
+Dedicated 4-strip addressable LED controller. No firmware authored — stock WLED.
 
 
 | Component | Pin (GPIO) | Mode | Notes |
 | :--- | :---: | :---: | :--- |
-| **Front Logic (10x2)** | 18 | Output | Yellow Wire |
-| **Rear Logic (12x2)** | 19 | Output | Yellow/Black Striped |
-| **Front PSI** | 21 | Output | Green Wire |
-| **Back PSI** | 22 | Output | White Wire |
-| **UDNS RX (Bus)** | 16 | Input | Serial Command In |
+| **Front PSI** | 16 | Output | GrnWave 76 px ring — Seg 0 |
+| **Rear PSI** | 17 | Output | GrnWave 76 px ring — Seg 1 |
+| **Front Logic (10x2)** | 18 | Output | WS2812B 20 px — Seg 2 |
+| **Rear Logic (12x2)** | 19 | Output | WS2812B 24 px — Seg 3 |
+| **UART JSON RX** | 3 (RX0) | Input | From Node 1 GPIO 5 @ 115200 baud |
 | **Web UI** | N/A | WiFi | Port 80 (Pattern selection) |
 
 

@@ -3,72 +3,97 @@
 
 # <i data-lucide="cpu"></i> Node 2: Sound Hub
 
-> **TECHNICAL SPECIFICATIONS** | **SYSTEM: SOUND HUB MASTER** | **MODEL: ESP32-S3 SUPER MINI**
+> **TECHNICAL SPECIFICATIONS** | **SYSTEM: SOUND HUB / DASHBOARD** | **MODEL: ESP32-S3 SUPER MINI** | **FIRMWARE: ESPHome v2.12.1**
 
 
-Node 2 is the primary audio controller and web gateway for the Wee2-D2 project. It manages the DFPlayer Mini sound module and hosts the droid's interactive dashboard for remote animation control.
-
-
----
-
-
-## Hardware Specifications (Logic Focus)
-
-The **ESP32-S3 Super Mini** is used for its dual-core performance, allowing it to handle real-time ESP-NOW radio mesh triggers while simultaneously running the glassmorphic dashboard web-server.
-
-
-- **Processor**: Dual-Core ESP32-S3
-- **Voltage**: 5V Logic Rail (Mini560 Pro)
-- **GPIO Pins**: [Node Pinout Guide](../architecture/node-pinout-guide.md)
-- **Framework**: ESPHome (esp-idf)
+Node 2 is the audio controller, web dashboard host, BLE bridge endpoint, and ESP-NOW relay TX for the Wee2-D2 project. It drives the [DY-HV20T audio module](../hardware/dy-hv20t-manual.md) over UART, runs the Neural Command Center dashboard, monitors Node 1 heartbeats, and relays operator commands from the dashboard or the BLE bridge back to Node 1.
 
 
 ---
 
 
-## GPIO Pinout & Logic Assignments
+## Hardware Specifications
 
-The Sound Hub manages a high-speed UART serial bus to trigger the MP3-TF-16P decoder and listens for mesh commands from the Dome Master.
-
-
-These settings are verified in the `v2.12.1` firmware sequence.
-
-
-| Assignment | GPIO Pin | Function | Citation |
-| :--- | :--- | :--- | :--- |
-| **DFPlayer TX** | **GPIO 43** | Serial Out to Audio Hub | [node-2.yaml:43](../../firmware/production/node-2-sound-hub.yaml#L43) |
-| **DFPlayer RX** | **GPIO 44** | Serial In from Audio Hub | [node-2.yaml:44](../../firmware/production/node-2-sound-hub.yaml#L44) |
-| **Status LED** | **GPIO 15** | Onboard Diagnostics | [node-2.yaml:70](../../firmware/production/node-2-sound-hub.yaml#L70) |
-| **Dashboard** | **Internal** | Web API Port 80 | [node-2.yaml:73](../../firmware/production/node-2-sound-hub.yaml#L73) |
+- **Processor**: Dual-core ESP32-S3 (Super Mini board)
+- **Voltage**: 5V logic rail (Mini560 Pro 5A)
+- **Framework**: ESPHome `esp-idf`
+- **Production MAC**: `1C:DB:D4:84:73:6C`
+- **Physical location**: body / lower chassis (near DY-HV20T + TPA3118)
 
 
 ---
 
 
-## Web Gateway & Dashboard Logic
+## GPIO Pinout
 
-Node 2 acts as the **Dashboard Master**. It generates the web-based UI that allows the pilot to trigger manual animations, adjust dome speed, and manage audio presets.
-
-
-1. **Trigger Handling**: When a button is pushed on the dashboard, Node 2 pushes a radio broadcast back to Node 1 over the 2.4GHz mesh.
-2. **Audio Sync**: If Node 2 receives a `0x01` broadcast trigger from Node 1, it instantly sends the corresponding serial command to the DFPlayer Mini.
-3. **Safety Timeout**: If the mesh bridge is lost, Node 2 entries a "Stationary" state to prevent audio/lighting desync.
-
-
----
-
-
-## Maintenance & Debugging
-
-You can access the sound hub's diagnostic logs wirelessly (`wee2d2-sound-hub.local`) or via the physical USB-C port at 115200 baud.
-
-
-- **OTA Password**: Required for wireless updates (firmware/production/node-2-sound-hub.yaml:62).
-- **Audio Lag**: If you experience delays in sound playback, check the signal strength between the body logic stack and the Wi-Fi router. 
-- **Baud Rate**: Ensure the DFPlayer is communicating at **9600 bps** as verified in the [Audio System Guide](../capabilities/audio-system.md).
+| Assignment | GPIO | Direction | Function |
+| :--- | :---: | :--- | :--- |
+| **DY-HV20T TX** | 12 | OUTPUT (UART TX) | Serial commands out @ 9600 baud |
+| **DY-HV20T RX** | 13 | INPUT (UART RX) | Status / busy line in @ 9600 baud |
+| **RC CH3 (Volume Up)** | 5 | INPUT (RC pulse) | Pulse-from-radio bank A |
+| **RC CH4 (E-Stop)** | 4 | INPUT (RC pulse) | Hard-stop relay |
+| **RC CH5 (Volume Down)** | 6 | INPUT (RC pulse) | Pulse-from-radio bank C |
+| **Slip UART TX (reserved)** | 10 | OUTPUT (TX2) | To Node 1 GPIO 11 — pending wiring |
+| **Slip UART RX (reserved)** | 11 | INPUT (RX2) | From Node 1 GPIO 10 — pending wiring |
+| **Status LED** | 47 | OUTPUT | Internal NeoPixel |
 
 
 ---
 
 
-[View Master Schematic](electrical-schematic.md) | [View Power Architecture](power-architecture.md)
+## Communication Model
+
+- **ESP-NOW peer**: Node 1 (`1C:DB:D4:84:61:8C`).
+- **Receives from Node 1**:
+  - `0x01` — idle chirp request (random `/HAP/`)
+  - `0x08 <path>` — Specified Path Playback (v2.9.0 standard)
+  - `0xB0` — 5-second heartbeat (drives the dashboard `node1_last_seen_ms` + status card)
+  - `0x99` — stop audio
+- **Transmits to Node 1** (dashboard relay):
+  - `0xA0 <anim_id>` — performance trigger (`0x01`–`0x05`, `0x10`, `0xFF` = e-stop)
+  - `0xA1 <preset_id>` — lighting preset override (0–15)
+  - `0xA2 <speed_x100>` — dome speed tuning (10–100 = 0.10–1.00)
+  - `0xA3 <react_id>` — reaction trigger (`0x06` = wolf whistle, `0x07` = razz, `0x08` = annoyed, `0x09` = thinking, `0x0A` = excited). Codes are **folder-aligned**, not sequential.
+- **BLE bridge** (Node 4): Slice 1B commands relayed to Node 2 over BLE for app control: `0x14 Volume`, `0x15 Sound`, `0x16 Display Mode`.
+
+
+---
+
+
+## Web Endpoints
+
+- `/dash` — Neural Command Center dashboard (HTML served from flash PROGMEM)
+- `/status` — JSON: Node 2 Wi-Fi info + Node 1 heartbeat freshness
+- `/events` — Server-Sent Events state stream (ESPHome default)
+- `/button/{slug}/press`, `/number/{id}/set?value=N`, `/select/{id}/set?option=X` — entity control
+
+
+---
+
+
+## Audio Stack
+
+- **Module**: [DY-HV20T](../hardware/dy-hv20t-manual.md) (UART, 9600 baud, plays MP3 by uppercase SD path)
+- **Amplifier**: [TPA3118 60W mono](../hardware/tpa3118-amp-manual.md) in PBTL mode
+- **Speaker**: Pyle 3.5" full-range
+- **Volume cap**: 26 / 30 (hard safety constraint at the slider, ESP-NOW relay, AND BLE bridge)
+- **Boot priority**: 900 — Device Select (SD) frame + saved volume restore before any sound trigger can fire
+- **Path discipline**: uppercase enforced by `g_force_uppercase` global; DY-HV20T silently rejects lowercase paths
+
+
+---
+
+
+## Maintenance & Debug
+
+- **Wireless logs**: `wee2d2-sound-hub.local` over Wi-Fi
+- **Wired logs**: USB-C @ 115200 baud
+- **OTA password**: required for wireless updates
+- **Audio silent but commands succeed**: verify the boot-priority-900 init sequence ran (Device Select + volume) — most common failure mode after a power blip
+- **Mesh bridge lost**: dashboard heartbeat card goes stale after 15 s; Node 1 keeps running autonomously
+
+
+---
+
+
+[View DY-HV20T Manual](../hardware/dy-hv20t-manual.md) | [View Audio System](../capabilities/audio-system.md) | [View Master Schematic](electrical-schematic.md)

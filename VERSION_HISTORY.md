@@ -1,6 +1,6 @@
 # <i data-lucide="history"></i> Firmware Version History
 
-> **REPOSITORY OF RECORD** | **SYSTEM: ESPHOME + WLED-MM**
+> **REPOSITORY OF RECORD** | **SYSTEM: ESPHOME + STOCK WLED 0.15.4**
 
 This document tracks production-verified firmware releases for the Wee2-D2 droid. Only versions listed as **VERIFIED** should be deployed.
 

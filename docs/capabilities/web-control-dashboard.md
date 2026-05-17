@@ -33,10 +33,10 @@ Unlike standard IoT interfaces that require a central router, the Wee2-D2 dashbo
 
 The interface is partitioned into logical modules to maximize operational efficiency during droid deployment.
 
-### 🔊 Sound & Feedback Grid
-The dashboard provides a direct interface to the **DFPlayer Mini** sound folders.
-- **Dynamic Folders (1-12)**: Access to the happy, sad, and procedural quote banks.
-- **Music Library (Folder 13)**: Direct triggers for the Star Wars Theme and Cantina tracks.
+### Sound & Feedback Grid
+The dashboard provides a direct interface to the **DY-HV20T** sound folders (uppercase paths into `/HAP/`, `/ALR/`, etc; see the [SD Card Ledger](https://github.com/Ruzzler/wee2d2-firmware/blob/main/sdcard/SD_CARD_LEDGER.md)).
+- **Mood Banks**: `/HAP/`, `/SAD/`, `/RAZ/`, `/PRO/`, `/SNT/`, `/QUO/`, `/WHS/`, `/CRI/`, `/ALR/`, `/HUM/`, `/SCR/`, `/MSC/`, `/CHA/`, `/NAR/` — 14 named subcategories (`/MUS/` houses music tracks).
+- **Music Library** (`/MUS/`): Direct triggers for Star Wars themes, party-pop, TV themes, R2-custom tracks.
 - **Special Effects (Folder 14)**: Droid startup, short circuits, and motivator failure sequences.
 
 ### 💡 Lighting & Cinematic Presets

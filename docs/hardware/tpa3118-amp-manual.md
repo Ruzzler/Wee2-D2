@@ -31,13 +31,13 @@ The **TPA3118** is a high-efficiency Class-D amplifier module. It is selected fo
 
 ## Logic Integration: Node 2 (Sound Hub)
 
-The amplifier receives an analog line-level signal from the DFPlayer Mini, which is managed by **Node 2 (Sound Hub)**. Gain is controlled through the hardware potentiometer on the TPA3118 module.
+The amplifier receives an analog line-level signal from the DY-HV20T audio module, which is managed by **Node 2 (Sound Hub)**. Gain is controlled through the hardware potentiometer on the TPA3118 module.
 
 
 These settings are verified in the `v2.12.1` hardware stack.
 
 
-- **Input Feed**: DAC_L / DAC_R from DFPlayer Mini.
+- **Input Feed**: SPK_1 / SPK_2 from DY-HV20T audio module.
 - **Master Ground**: Shared Common Negative with Node 2 and the Sound Hub Logic.
 - **Power Source**: Dedicated Mini560 Pro 5V rail (boosted via secondary buck if required).
 - **Gain Config**: Set to 80% to prevent driver clipping.
@@ -52,7 +52,7 @@ The TPA3118 is connected to the Sound Hub logic stack using standard 18AWG power
 
 
 1. **Power In**: VCC (12-24V) / GND (Common Negative trunk).
-2. **Signal In**: LIN / RIN (from DFPlayer DAC pins).
+2. **Signal In**: LIN / RIN (from DY-HV20T SPK_1 / SPK_2 pins).
 3. **Speaker Out**: L+/L- (to Pyle 3.5" Driver).
 4. **Common Ground**: Ensure the amplifier ground is tied to the central Negative Bus Bar to prevent "audio hum."
 

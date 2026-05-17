@@ -20,7 +20,7 @@ The droid runs a distributed mesh of ESP32-S3 boards. Inter-node sync is wireles
 | :--- | :--- | :---: | :--- | :---: |
 | **Node 1 — Dome Brain** | [ESP32-S3 DevKitC-1 (N4R2)](architecture/node-1-dome-motion.md) | 1 | Animation framework, dome PWM, ESP-NOW relay, WLED UART bridge | ![S3 DevKit](../assets/esp32-s3-super-mini.jpg) |
 | **Node 2 — Sound Hub** | [ESP32-S3 Super Mini](architecture/node-2-sound-hub.md) | 1 | DY-HV20T audio, web dashboard, BLE bridge, heartbeat monitor | ![S3 Mini](../assets/esp32-s3-super-mini.jpg) |
-| **Node 3 — LED Hub** | [ESP32-S3 Super Mini](architecture/node-3-led-distribution.md) | 1 | WLED-MM 14.7.1, 4 LED strips (PSI + Logic Display) | ![S3 Mini](../assets/esp32-s3-super-mini.jpg) |
+| **Node 3 — LED Hub** | [ESP32D DevKit (classic)](architecture/node-3-led-distribution.md) | 1 | Stock WLED 0.15.4, 4 LED strips (196 px total) | ![ESP32D](../assets/esp32d-dev-board.png) |
 | **Interface** | CP2102 Serial Adapter | 1 | Wired flashing fallback | — |
 
 
@@ -69,11 +69,11 @@ Cinematic output runs through specialized LED arrays + a 60W Class-D audio chain
 
 | Category | Component | Qty | Specification | Visual ID |
 | :--- | :--- | :---: | :--- | :---: |
-| **Audio Module** | [DY-HV20T](capabilities/audio-system.md) | 1 | UART-controlled MP3 module on Node 2 (firmware v2.12.x; replaced legacy DFPlayer Mini) | ![DY-HV20T](../assets/dfplayer-mini-module.jpg) |
+| **Audio Module** | [DY-HV20T](hardware/dy-hv20t-manual.md) | 1 | 9600-baud UART, plays MP3 by SD path (firmware v2.12.x; replaced legacy DFPlayer Mini) | ![DY-HV20T](../assets/dfplayer-mini-module.jpg) |
 | **Amplifier** | [TPA3118 60W](hardware/tpa3118-amp-manual.md) | 1 | Mono Class-D in PBTL mode | ![TPA3118](../assets/tpa3118-amplifier-module.jpg) |
 | **Speaker** | [Pyle 3.5" Driver](capabilities/audio-system.md) | 1 | 60W RMS, 4 Ohm full-range | ![Pyle Speaker](../assets/pyle-3.5-speaker.webp) |
-| **Logic Display** | [WS2812B Logic Arrays](capabilities/led-system.md) | 2 | Addressable matrices (front 10x2, rear 12x2) | ![Logic Array](../assets/ws2812b-logic-arrays.webp) |
-| **PSI** | [GrnWave PSI Logics](hardware/grnwave-psi-manual.md) | 2 | 76x WS2812B-2020 per ring (5V only) | ![GrnWave PSI](../assets/grnwave-psi-logic.jpg) |
+| **Logic Display** | [WS2812B Logic Arrays](capabilities/led-system.md) | 2 | Front 10x2 (20 px), rear 12x2 (24 px); Node 3 GPIO 18/19 | ![Logic Array](../assets/ws2812b-logic-arrays.webp) |
+| **PSI** | [GrnWave PSI Logics](hardware/grnwave-psi-manual.md) | 2 | 76x WS2812B-2020 per ring (5V only); Node 3 GPIO 16/17 | ![GrnWave PSI](../assets/grnwave-psi-logic.jpg) |
 
 
 ---
@@ -109,7 +109,8 @@ The chassis is built from the acclaimed 3D files by Mr. Baddeley. Slip ring sits
 
 > [!NOTE]
 > For wiring detail and signal paths, see the [Interactive Electrical Schematic](architecture/electrical-schematic.md) and the [Node Pinout Guide](architecture/node-pinout-guide.md).
-> The audio module image still shows the legacy DFPlayer Mini board — a DY-HV20T photo is pending on the next hardware-photo refresh.
+> The audio module image still shows the legacy DFPlayer Mini board as a placeholder — a DY-HV20T photo is pending on the next hardware-photo refresh.
+> Node 3 runs **stock WLED 0.15.4** on a **classic ESP32D** (not the S3 Mini used on Nodes 1 + 2). See the [Node 3 LED Hub page](architecture/node-3-led-distribution.md) for full WLED config.
 
 
 [View Master Schematic](architecture/electrical-schematic.md) | [View Node Pinout Guide](architecture/node-pinout-guide.md) | [View Battery Runtime Guide](maintenance/battery-runtime-guide.md)

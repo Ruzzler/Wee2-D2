@@ -108,7 +108,7 @@ The power grid uses three specialized **Mini560 Pro** buck converters to stabili
 
 
 ### 1. The Body Logic Rail
-This rail powers the Sound Hub (Node 2) and the DFPlayer Mini. It is isolated from the motor rails to prevent audio popping.
+This rail powers the Sound Hub (Node 2) and the DY-HV20T audio module. It is isolated from the motor rails to prevent audio popping.
 - **Output**: 5.0V @ 5A Peak
 - **Location**: Mounted near the central Negative Bus Bar.
 
