@@ -473,12 +473,25 @@ main {
     box-shadow: 0 0 25px rgba(0, 242, 255, 0.3);
 }
 
-/* Limit images in tables to be thumbnails */
+/* Thumbnails in tables (e.g. BOM "Visual ID" column) */
 #content table img {
-    max-height: 120px;
+    display: block;
+    max-height: 72px;
+    max-width: 96px;
     width: auto;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    height: auto;
+    margin: 0 auto;
+    object-fit: contain;
+    border: 1px solid rgba(0, 242, 255, 0.18);
     border-radius: 4px;
+    box-shadow: 0 0 6px rgba(0, 242, 255, 0.06);
+    background: rgba(0, 0, 0, 0.25);
+    padding: 2px;
+}
+
+#content table img:hover {
+    border-color: var(--accent-cyan);
+    box-shadow: 0 0 12px rgba(0, 242, 255, 0.35);
 }
 
 /* Scrollbar */
