@@ -43,7 +43,6 @@ Companion repositories:
 - **Firmware** — `Firmware/wee2d2-firmware/` (ESPHome + stock WLED 0.15.4, source of truth for droid behaviour at `v2.12.1`)
 - **Web App / PWA** — [`wee2d2-app`](https://github.com/Ruzzler/wee2d2-app) (Web Bluetooth control panel)
 - **Android APK Wrap** — [`wee2d2-capacitor`](https://github.com/Ruzzler/wee2d2-capacitor) (Capacitor wrap of the PWA)
-- **Public Kiosk** — [`wee2d2-kiosk`](https://github.com/Ruzzler/wee2d2-kiosk) (attendee-facing tablet prototype)
 
 
 ---
@@ -87,7 +86,7 @@ Catalog the physical pinouts and per-node logic.
 Understand the animation engine and the control surfaces.
 - [Animation Framework](docs/capabilities/animation-framework.md)
 - [Autonomous Automations](docs/capabilities/automations.md)
-- [App & Kiosk Ecosystem](docs/architecture/app-ecosystem.md)
+- [App & Kiosk Ecosystem](docs/capabilities/dashboard-and-app.md)
 
 
 ### 4. Operation & Safety

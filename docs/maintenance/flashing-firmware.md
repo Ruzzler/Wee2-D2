@@ -74,4 +74,4 @@ These are all known and on the long-term roadmap.
 **See also:**
 - [Network & OTA Configuration](network-ota-guide.md)
 - [First-Time Firmware Setup](first-time-firmware-setup.md) (developer workflow)
-- [Web Control Dashboard](../capabilities/web-control-dashboard.md) (operator UI once flashed)
+- [Web Control Dashboard](../capabilities/dashboard-and-app.md) (operator UI once flashed)

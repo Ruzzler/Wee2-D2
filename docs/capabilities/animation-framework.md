@@ -119,5 +119,5 @@ Hard stops (E-Stop button on the RC, E-Stop on the app or dashboard) cut the cur
 - [Autonomous Automations](automations.md)
 - [Audio System](audio-system.md)
 - [LED System](led-system.md)
-- [Web Control Dashboard](web-control-dashboard.md)
-- [App & Kiosk Ecosystem](../architecture/app-ecosystem.md)
+- [Web Control Dashboard](dashboard-and-app.md)
+- [App & Kiosk Ecosystem](../capabilities/dashboard-and-app.md)
