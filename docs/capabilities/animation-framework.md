@@ -34,7 +34,7 @@ Reactions and performances are "loud" — they take over the dome for their dura
 | :--- |
 | Auto-chirp, self-scan, attention-seek, self-amusement, mood-keyed micro-moves |
 
-More are planned — see the [Behavioral Research Roadmap](../../BEHAVIORAL_RESEARCH_ROADMAP.md).
+More are planned. The MarcDuino industry-standard astromech vocabulary (`:SE00`–`:SE15`) is the long-term reference target; the droid currently ships roughly half of it.
 
 ---
 
