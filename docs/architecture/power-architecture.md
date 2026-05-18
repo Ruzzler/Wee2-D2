@@ -58,7 +58,7 @@ flowchart TD
     ESC_L ==>|UVW| MOT_L
     ESC_R ==>|UVW| MOT_R
 
-    SLIP_RING ==>|20V Ganged (6-Circuit)| WAGO_DOME
+    SLIP_RING ==>|20V Ganged 6-Circuit| WAGO_DOME
     WAGO_DOME ==>|20V| DOME_ESC
     WAGO_DOME ==>|20V| BUCK_DOME
     WAGO_DOME ==>|20V| BUCK_LEDS
