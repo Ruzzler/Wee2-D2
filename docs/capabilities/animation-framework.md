@@ -2,7 +2,7 @@
 
 > **TECHNICAL SPECIFICATIONS** | **WHAT THE DROID DOES, WHY, AND WHEN**
 
-This page describes how Wee2-D2 behaves day to day — what idle looks like, what reactions and performances are, how moods influence the next action, and how the droid recovers from being interrupted. If you want the internal engineering reference, see `Firmware/wee2d2-firmware/docs/animation/ANIMATION-ENGINE.md` in the firmware repo.
+This page describes how Wee2-D2 behaves day to day — what idle looks like, what reactions and performances are, how moods influence the next action, and how the droid recovers from being interrupted. The internal engineering reference lives in the firmware repository (separate, not yet public).
 
 ---
 
@@ -119,5 +119,4 @@ Hard stops (E-Stop button on the RC, E-Stop on the app or dashboard) cut the cur
 - [Autonomous Automations](automations.md)
 - [Audio System](audio-system.md)
 - [LED System](led-system.md)
-- [Web Control Dashboard](dashboard-and-app.md)
-- [App & Kiosk Ecosystem](../capabilities/dashboard-and-app.md)
+- [Dashboard & App](dashboard-and-app.md)

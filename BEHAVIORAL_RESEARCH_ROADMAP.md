@@ -58,7 +58,7 @@ To simulate distress on a 160° dome without stripping gears, Node 1 implements 
 
 Personality is defined by the emotional sound bank. Wee2-D2 uses the **DY-HV20T** audio module (replaced legacy DFPlayer Mini in firmware v2.12.x) reading directly from microSD by uppercase filesystem path. No folder/track index brittleness; the ledger is the source of truth.
 
-Canonical ledger: `Firmware/wee2d2-firmware/sdcard/SD_CARD_LEDGER.md`. As of v2.12.1, **15 named folders, ~307 files**.
+The canonical sound inventory lives alongside the firmware. As of v2.12.1, **15 named folders, ~307 files**.
 
 | Folder | Subcategory | Count |
 | :--- | :--- | :---: |

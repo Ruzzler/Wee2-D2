@@ -3,46 +3,52 @@
 
 # <i data-lucide="folder-git"></i> Wee2-D2
 
-> **TECHNICAL SPECIFICATIONS** | **SYSTEM: WEE2-D2 PROJECT** | **FIRMWARE BASELINE: v2.12.1**
+> **TECHNICAL SPECIFICATIONS** | **CUSTOM ESP32-S3 R2 ASTROMECH** | **BUILDER DOCUMENTATION**
 
 
-Welcome to the official repository for **Wee2-D2**, a custom-built, active-duty astromech built in 2025 for use with the **Badlands Droid Builders** and the **501st Legion's Badlands Garrison**. This repository documents the custom **Electrical Architecture**, **firmware** configurations, and custom hardware documentation engineered to bring the droid's decentralized logic to life. The project supports the acclaimed 3D files created by Mr. Baddeley.
+**Wee2-D2** is a custom-built, active-duty astromech droid built in 2025 for use with the Badlands Droid Builders and the 501st Legion's Badlands Garrison. This repository is the public builder documentation — schematics, BOM, hardware manuals, wiring, and operator guides. The droid's firmware lives in a separate repository.
 
-
----
-
-
-## <i data-lucide="book-open"></i> Project Wiki
-
-The primary documentation for this project is hosted at the [Project Wiki](https://ruzzler.github.io/Wee2-D2/). Consult the wiki for technical specifications, node mesh architecture, animation framework, app ecosystem, and hardware manuals.
+The chassis is built from the acclaimed 3D files by Mr. Baddeley.
 
 
 ---
 
 
-## Project Structure
+## <i data-lucide="external-link"></i> Live Wiki
 
-This repository tracks the user-facing wiki. Firmware and control-surface apps live in sibling repositories under the same workspace.
+The documentation in this repo is rendered live at:
 
+**[https://ruzzler.github.io/Wee2-D2/](https://ruzzler.github.io/Wee2-D2/)**
+
+That is the intended way to read these docs — the sidebar, schematic, image lightbox, and search-friendly URLs work there. Reading the raw Markdown on GitHub also works but skips the rendering.
+
+
+---
+
+
+## What's Inside
 
 ```text
 Wiki-Repository/
-├── docs/               # Technical Specifications
-│   ├── architecture/   # System design, mesh, app ecosystem
-│   ├── capabilities/   # Movement, audio, LED, animation framework
-│   ├── hardware/       # Component manuals & specs
-│   └── maintenance/    # Calibration, OTA, troubleshooting, safety
-├── system/             # Wiki CSS & SPA renderer (vanilla, no build)
-├── wiki/               # Project overview
-├── firmware/           # FROZEN mirror of canonical firmware repo (read-only)
-└── README.md           # This file
+├── docs/
+│   ├── architecture/      # System design, mesh, schematic, node pages
+│   ├── capabilities/      # What the droid does — sound, lights, behaviour, dashboard
+│   ├── hardware/          # Component manuals + specs
+│   └── maintenance/       # Calibration, OTA updates, flashing, troubleshooting, safety
+├── assets/                # Hardware photos + module diagrams (SVG / WebP / JPG / PNG)
+├── system/                # SPA renderer (vanilla JS + CSS, no build step)
+├── wiki/                  # Project overview
+├── index.html             # SPA entry point
+├── restoration_*.md       # Build journal
+├── CHANGELOG.md           # Wiki release history
+└── README.md              # This file
 ```
 
-Companion repositories:
+Companion projects (separate repositories):
 
-- **Firmware** — `Firmware/wee2d2-firmware/` (ESPHome + stock WLED 0.15.4, source of truth for droid behaviour at `v2.12.1`)
-- **Web App / PWA** — [`wee2d2-app`](https://github.com/Ruzzler/wee2d2-app) (Web Bluetooth control panel)
-- **Android APK Wrap** — [`wee2d2-capacitor`](https://github.com/Ruzzler/wee2d2-capacitor) (Capacitor wrap of the PWA)
+- **Firmware** — ESPHome firmware that runs on the droid. Currently private; will be published when ready for community distribution.
+- **Web App (PWA)** — Web Bluetooth control panel.
+- **Android APK** — Capacitor wrap of the web app for at-venue use.
 
 
 ---
@@ -50,50 +56,33 @@ Companion repositories:
 
 ## <i data-lucide="hard-drive"></i> Hardware Ecosystem
 
-Each link directs to a high-density manual including pinouts and wiring.
+Each link is a high-density manual with pinouts and wiring.
 
-
-- **Piloting**: [HotRC DS-600](docs/hardware/hotrc-ds600-manual.md) (PWM input to Node 1 and Node 2)
-- **Drive System**: [Flipsky Mini FSESC 6.7 Pro](docs/hardware/flipsky-fsesc-67-pro-manual.md) driving 2x L-faster FLD-5 [hub motors](docs/hardware/hub-motor-manual.md)
-- **Dome Motion**: [goBILDA 5203 Yellow Jacket](docs/hardware/gobilda-motor-manual.md) on Node 1 GPIO 7
-- **Audio**: [DY-HV20T audio module](docs/hardware/dy-hv20t-manual.md) (replaced legacy DFPlayer Mini in firmware v2.12.x) → [TPA3118 60W Amp](docs/hardware/tpa3118-amp-manual.md) → Pyle 3.5" speaker
-- **Power Grid**: [MgcSTEM LVP-R1.5](docs/hardware/mgcstem-lvp-r15-manual.md) with a central negative bus bar
-- **Lighting**: [GrnWave PSI Logics](docs/hardware/grnwave-psi-manual.md) + WS2812B Logic Display matrices driven by Node 3 (stock WLED 0.15.4 on classic ESP32D, 196 LEDs total)
+- **Piloting**: [HOTRC DS-600 transmitter](docs/hardware/hotrc-ds600-manual.md) + [F-06A receivers](docs/hardware/hotrc-f06a-manual.md)
+- **Drive**: [Flipsky Mini FSESC 6.7 Pro](docs/hardware/flipsky-fsesc-67-pro-manual.md) driving 2x [L-faster FLD-5 hub motors](docs/hardware/hub-motor-manual.md)
+- **Dome motion**: [goBILDA 5203 Yellow Jacket](docs/hardware/gobilda-motor-manual.md) on Node 1 GPIO 7
+- **Audio**: [DY-HV20T audio module](docs/hardware/dy-hv20t-manual.md) → [TPA3118 60W amplifier](docs/hardware/tpa3118-amp-manual.md) → Pyle 3.5" speaker
+- **Power**: [MgcSTEM LVP-R1.5 LVC](docs/hardware/mgcstem-lvp-r15-manual.md) on a 20V DeWalt trunk with a central star ground bus
+- **Lighting**: [GrnWave PSI rings](docs/hardware/grnwave-psi-manual.md) + WS2812B Logic Display matrices, driven by Node 3 (classic ESP32D running stock WLED 0.15.4, 196 LEDs total)
+- **Slip ring**: [CNBTR 6-circuit](docs/hardware/cnbtr-slip-ring-manual.md) ganged for high-current trunk + future telemetry headroom
 
 
 ---
 
 
-## <i data-lucide="book-open"></i> Getting Started
+## <i data-lucide="map"></i> Where to Start
 
-Follow the documentation hierarchically for a stable deployment.
+If you're considering building one:
+1. **[Interactive Electrical Schematic](docs/architecture/electrical-schematic.md)** — full system map with click-through to component manuals
+2. **[Bill of Materials](docs/bill-of-materials.md)** — every part with images + links
+3. **[3D Print & Assembly](docs/mechanical/3d-print-assembly.md)** — chassis build notes
 
-
-### 1. System Foundations
-Understand how the body and dome interact.
-- [Interactive Electrical Schematic](docs/architecture/electrical-schematic.md)
-- [Node Mesh Architecture](docs/architecture/node-mesh.md)
-- [Power Architecture](docs/architecture/power-architecture.md)
-
-
-### 2. Node Configuration
-Catalog the physical pinouts and per-node logic.
-- [Node Pinout & Wiring Guide](docs/architecture/node-pinout-guide.md)
-- [First-Time Firmware Setup](docs/maintenance/first-time-firmware-setup.md)
-
-
-### 3. Behaviour & Control
-Understand the animation engine and the control surfaces.
-- [Animation Framework](docs/capabilities/animation-framework.md)
-- [Autonomous Automations](docs/capabilities/automations.md)
-- [App & Kiosk Ecosystem](docs/capabilities/dashboard-and-app.md)
-
-
-### 4. Operation & Safety
-Consult before convention deployment.
-- [Battery Runtime Guide](docs/maintenance/battery-runtime-guide.md)
-- [System Calibration Guide](docs/maintenance/calibration-guide.md)
-- [Safety & Maintenance](docs/maintenance/safety-maintenance.md)
+If you have one built and want to know how to use it:
+1. **[Dashboard & App](docs/capabilities/dashboard-and-app.md)** — operator control surfaces
+2. **[Behaviour & Personality](docs/capabilities/animation-framework.md)** — what the droid does autonomously
+3. **[Flashing the Firmware](docs/maintenance/flashing-firmware.md)** — installation path (today vs future)
+4. **[Battery Runtime Guide](docs/maintenance/battery-runtime-guide.md)** — endurance estimates
+5. **[Calibration & Safety](docs/maintenance/calibration-guide.md)** — pre-deployment checklist
 
 
 ---

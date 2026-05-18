@@ -59,7 +59,7 @@ Sounds live on a microSD card in 15 named folders. Each folder represents an emo
 | `/SNT/` | Sentences | 20 |
 | `/WHS/` | Whistles | 25 |
 
-Roughly **307 sound files** total. The canonical inventory + attribution lives in `Firmware/wee2d2-firmware/sdcard/SD_CARD_LEDGER.md`.
+Roughly **307 sound files** total. The canonical inventory + attribution is maintained alongside the firmware.
 
 ---
 

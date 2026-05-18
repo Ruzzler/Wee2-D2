@@ -1,64 +1,56 @@
-# <i data-lucide="wifi"></i> Network OTA Guide
+# <i data-lucide="wifi"></i> Network & OTA Updates
 
-> **TECHNICAL SPECIFICATIONS** | **SYSTEM: FIRMWARE UPDATE** | **PROTOCOL: ESPHOME WEB SERVER**
+> **TECHNICAL SPECIFICATIONS** | **WIRELESS FIRMWARE UPDATES** | **NODE WEB INTERFACES**
 
+Once Wee2-D2 has been flashed once and joined a Wi-Fi network, all subsequent firmware updates happen wirelessly — no USB cable, no opening the chassis. This page covers the OTA update flow from an operator perspective.
 
-The Wee2-D2 project uses Over-The-Air (OTA) updates to deploy firmware without the need for physical USB connections. This guide explains how to use the built-in ESPHome web server to upload compiled binary files.
-
-
----
-
-
-## System Connectivity
-
-Updates are performed over a local 2.4GHz Wi-Fi network. Each node hosts its own web-based dashboard on port 80 which includes a dedicated "Update" portal.
-
-
-- **Node 1 (Dome Master)**: `wee2d2-dome-master.local`
-- **Node 2 (Sound Hub)**: `wee2d2-sound-hub.local`
-- **Node 3 (LED Distro)**: Accessed via the WLED dashboard (`wled-dome.local`).
-
+For initial flashing (the developer workflow + future one-tap path), see [Flashing the Firmware](flashing-firmware.md).
 
 ---
 
+## Where Each Board Lives on the Network
 
-## Deployment Procedure (Web Browser)
+Each board hosts a small web interface for status + OTA upload, reachable on the local network.
 
-Follow these steps to deploy a new firmware binary (`.bin`) to your droid nodes. This synchronization is verified for the `v2.12.1` firmware stack.
+| Board | mDNS hostname |
+| :--- | :--- |
+| Node 1 — Dome Brain | `wee2d2-dome-master.local` |
+| Node 2 — Sound Hub | `wee2d2-sound-hub.local` |
+| Node 3 — LED Hub | `wled-dome.local` (WLED's own UI) |
 
-
-1. **Compile**: Use the ESPHome dashboard or CLI to compile your configuration into a binary file.
-2. **Navigate**: Open a web browser and navigate to the node's local URL or IP address.
-3. **Upload**: Select the "Choose File" option under the OTA section and pick your compiled `.bin`.
-4. **Monitor**: The node will receive the file, verify the integrity, and reboot automatically.
-
-
----
-
-
-## Safety Standards & Recovery
-
-Never power down the droid during an active OTA update. The node will automatically reboot into its "Previous Stable" state if the upload is interrupted. 
-
-
-> [!WARNING]
-> **BOOTLOOPS**: If a node fails to reconnect to Wi-Fi after an update, it will launch a **Fallback Hotspot** named `WEE2-D2_SETUP`. Connect to this network to re-configure the Wi-Fi or rollback the firmware.
-
+If mDNS is blocked on your network (some guest Wi-Fi setups), look up each board's DHCP-assigned IP address in your router and use that instead.
 
 ---
 
+## Updating a Board
 
-## Hardware Diagnostics
+1. Browse to the board's hostname (or IP) in any modern browser.
+2. Scroll to the **OTA Update** section.
+3. Click "Choose File" and pick the new `.bin` for that board.
+4. The board accepts the upload, verifies it, and reboots into the new firmware.
 
-You can verify the successfully deployed version in the "Diagnostic" cards on the Home Assistant dashboard or at the bottom of the node's local web page.
-
-
-- **OTA Password**: Ensure you have the `ota_password` from your `secrets.yaml` file ready.
-- **Signal Strength**: Updates are safest when the droid is within 10 feet of the Wi-Fi router. 
-- **Encryption**: All OTA transfers are secured using the ESPHome encryption protocol.
-
+**Do not power-cycle the droid during an OTA upload.** If an upload is interrupted mid-stream, the board automatically rolls back to its previous working firmware on next boot — but you'll have to start the upload over.
 
 ---
 
+## Recovery from a Failed Update
 
-[View Status Schematic](../architecture/electrical-schematic.md) | [View Troubleshooting](troubleshooting.md)
+If a board fails to rejoin Wi-Fi after an update (rare, usually means the build had a config mistake), it launches a fallback access point named `WEE2-D2_SETUP`. Connect to that AP, browse to `http://192.168.4.1`, and you can either reconfigure Wi-Fi or roll back to the previous firmware.
+
+The fallback AP is built in — you cannot get a droid into a bricked state via OTA alone. Worst case: connect to the AP and recover.
+
+---
+
+## Range & Signal
+
+Updates work best when the droid is within ~10 feet of the Wi-Fi router. The OTA transfer is small (around 1 MB) but the board needs a stable connection through the full upload. If the operator dashboard shows weak signal, move closer before starting the update.
+
+---
+
+## Where to Get `.bin` Files
+
+Today, `.bin` files are produced from the firmware repository on the operator's local build machine. The long-term plan is to publish pre-compiled binaries on a release page so builders can download and OTA directly — see [Flashing the Firmware](flashing-firmware.md) for the roadmap.
+
+---
+
+[View Troubleshooting](troubleshooting.md) | [View Master Schematic](../architecture/electrical-schematic.md)

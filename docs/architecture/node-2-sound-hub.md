@@ -6,7 +6,7 @@
 > **TECHNICAL SPECIFICATIONS** | **ROLE: AUDIO + WEB DASHBOARD + APP RELAY** | **BOARD: ESP32-S3 SUPER MINI**
 
 
-Node 2 is the audio + UI hub. It drives the [DY-HV20T audio module](../hardware/dy-hv20t-manual.md), hosts the [web control dashboard](../capabilities/dashboard-and-app.md), receives operator commands from the [mobile app](dashboard-and-app.md) via the BLE bridge, and acts as a relay back to Node 1 for anything that needs the dome to react.
+Node 2 is the audio + UI hub. It drives the [DY-HV20T audio module](../hardware/dy-hv20t-manual.md), hosts the [web dashboard](../capabilities/dashboard-and-app.md), receives operator commands from the mobile app via the BLE bridge, and acts as a relay back to Node 1 for anything that needs the dome to react.
 
 
 ---
@@ -71,4 +71,4 @@ Node 2 is the audio + UI hub. It drives the [DY-HV20T audio module](../hardware/
 ---
 
 
-[View DY-HV20T Manual](../hardware/dy-hv20t-manual.md) | [View Audio System](../capabilities/audio-system.md) | [View Web Control Dashboard](../capabilities/dashboard-and-app.md) | [View BLE App Control](dashboard-and-app.md)
+[View DY-HV20T Manual](../hardware/dy-hv20t-manual.md) | [View Audio System](../capabilities/audio-system.md) | [View Dashboard & App](../capabilities/dashboard-and-app.md)

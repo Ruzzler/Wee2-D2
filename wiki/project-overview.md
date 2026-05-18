@@ -2,9 +2,9 @@
 
 # <i data-lucide="layout"></i> Project Overview
 
-Welcome to the official repository for **Wee2-D2**. I built this droid in 2025 as an active-duty astromech for the **Badlands Droid Builders** and the **501st Legion's Badlands Garrison**, frequently deploying it to community events. The chassis was 3D printed using the acclaimed 3D files created by Mr. Baddeley.
+Welcome to the official builder documentation for **Wee2-D2**. I built this droid in 2025 as an active-duty astromech for the **Badlands Droid Builders** and the **501st Legion's Badlands Garrison**, frequently deploying it to community events. The chassis is built from the acclaimed 3D files created by Mr. Baddeley.
 
-This repository tracks the subsequent electrical architecture, firmware configurations, and custom hardware documentation I use to bring the droid's decentralized control system to life.
+This wiki tracks the electrical architecture, hardware decisions, and operator-facing features of the droid. The firmware that runs on the droid is maintained in a separate repository.
 
 ---
 
@@ -26,11 +26,11 @@ Detailed guides for the droid's main systems, including **LED Display Matrices**
 
 ### 4. Microcontroller Nodes
 
-Technical deep-dives into the three hubs that run the droid (**Node 1, 2, and 3**), including their GPIO pinouts and firmware deployment guides.
+Per-board pages for the three control hubs (**Node 1 dome brain**, **Node 2 sound hub**, **Node 3 LED hub**), including their wiring and what each one is responsible for.
 
 ### 5. Operation & Maintenance
 
-The maintenance section covering **Calibration**, **OTA Network Updates**, **Safety Protocols**, and a repair roadmap.
+How to operate the droid day to day — **Dashboard & App** controls, **Calibration**, **OTA updates**, **Safety Protocols**, and troubleshooting.
 
 ---
 

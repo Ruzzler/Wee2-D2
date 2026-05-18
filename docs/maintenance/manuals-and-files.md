@@ -1,71 +1,69 @@
-# <i data-lucide="files"></i> Manuals & Files
+# <i data-lucide="files"></i> Manuals & Files Index
 
-> **TECHNICAL SPECIFICATIONS** | **SYSTEM: DOCUMENTATION & FILES** | **MODELS: ALL COMPONENTS**
+> **TECHNICAL SPECIFICATIONS** | **DOCUMENTATION INDEX** | **QUICK-ACCESS LINKS**
 
-
-This guide provides quick-access to the technical documentation and firmware configuration files for the Wee2-D2 project. These documents are verified for the `v2.12.1` hardware sequence.
-
+Quick-access index for the wiki's reference manuals and architecture pages. Use this as a jump page when you know the topic but not the exact file location.
 
 ---
 
+## Core Architecture
 
-## Core Architecture & Node Manuals
-
-These documents cover the high-level design of the droid and the specific pinouts for each microcontroller node.
-
-
+- [Interactive Electrical Schematic](../architecture/electrical-schematic.md)
 - [Node Mesh Architecture](../architecture/node-mesh.md)
-- [Power Architecture Core](../architecture/power-architecture.md)
-- [Node 1: Dome Master Manual](../architecture/node-1-dome-motion.md)
-- [Node 2: Sound Hub Manual](../architecture/node-2-sound-hub.md)
-- [Node 3: LED Distro Manual](../architecture/node-3-led-distribution.md)
-- [Web Control Dashboard Manual](../capabilities/dashboard-and-app.md)
-
+- [Power Architecture](../architecture/power-architecture.md)
+- [Node Pinout Guide](../architecture/node-pinout-guide.md)
+- [Node 1 — Dome Brain](../architecture/node-1-dome-motion.md)
+- [Node 2 — Sound Hub](../architecture/node-2-sound-hub.md)
+- [Node 3 — LED Hub](../architecture/node-3-led-distribution.md)
 
 ---
 
+## Hardware Manuals
 
-## Hardware Specifications (OEM)
-
-Cataloging the physical specifications for the industrial hardware components used in the body and dome drive.
-
-
-| Component | Manual Link | Type |
+| Component | Manual | Type |
 | :--- | :--- | :--- |
-| **Dome Motor** | [goBILDA 5203](../hardware/gobilda-motor-manual.md) | High-Torque Brushed |
-| **Body Drive** | [FLD-5 Hub Motor](../hardware/hub-motor-manual.md) | Brushless Direct-Drive |
-| **Power Controller**| [MgcSTEM LVP](../hardware/mgcstem-lvp-r15-manual.md)| Safety Cutoff Relay |
-| **Motor Controller**| [Flipsky 6.7 Pro](../hardware/flipsky-fsesc-67-pro-manual.md)| VESC® Compatible |
-
-
----
-
-
-## Firmware Configuration (Source Anchors)
-
-These links point to the verified configuration files used in the `v2.12.1` production deployment.
-
-
-- **Node 1 (Dome Master)**: [node-1-dome-motion.yaml](../../node-1-dome-motion.yaml)
-- **Node 2 (Sound Hub)**: [node-2-sound-hub.yaml](../../node-2-sound-hub.yaml)
-- **Drive Settings (Left)**: left-motor-settings.xml
-- **Drive Settings (Right)**: right-motor-settings.xml
-
+| Dome motor | [goBILDA 5203](../hardware/gobilda-motor-manual.md) | High-torque brushed planetary |
+| Body drive | [FLD-5 Hub Motor](../hardware/hub-motor-manual.md) | Brushless direct-drive |
+| Body ESC | [Flipsky 6.7 Pro](../hardware/flipsky-fsesc-67-pro-manual.md) | VESC-compatible |
+| Power protection | [MgcSTEM LVP-R1.5](../hardware/mgcstem-lvp-r15-manual.md) | Low-voltage cutoff |
+| Audio module | [DY-HV20T](../hardware/dy-hv20t-manual.md) | UART MP3 player |
+| Amplifier | [TPA3118](../hardware/tpa3118-amp-manual.md) | 60 W Class-D mono |
+| LED PSI | [GrnWave PSI](../hardware/grnwave-psi-manual.md) | Addressable ring matrix |
+| Transmitter | [HOTRC DS-600](../hardware/hotrc-ds600-manual.md) | 6-channel 2.4 GHz |
+| Receiver | [HOTRC F-06A](../hardware/hotrc-f06a-manual.md) | 6-channel PWM |
+| Slip ring | [CNBTR 6-circuit](../hardware/cnbtr-slip-ring-manual.md) | Ganged 20 V trunk |
 
 ---
 
+## Capabilities
 
-## Structural & 3D Components
-
-Managing the physical chassis and mechanical joints for the droid's internal grid.
-
-
-- **Chassis Files**: Acclaimed 3D files created by Mr. Baddeley.
-- **Joint System**: [CNBTR Slip Ring Guide](../hardware/cnbtr-slip-ring-manual.md).
-- **Wiring Standards**: [Node Pinout Guide](../architecture/node-pinout-guide.md).
-
+- [Behaviour & Personality](../capabilities/animation-framework.md)
+- [Autonomous Automations](../capabilities/automations.md)
+- [Audio System](../capabilities/audio-system.md)
+- [LED System](../capabilities/led-system.md)
+- [Dome Rotation](../capabilities/dome-rotation.md)
+- [Body Drive](../capabilities/body-drive.md)
+- [Dashboard & App](../capabilities/dashboard-and-app.md)
 
 ---
 
+## Operation & Maintenance
 
-[View Status Schematic](../architecture/electrical-schematic.md) | [View Troubleshooting](troubleshooting.md)
+- [Flashing the Firmware](flashing-firmware.md)
+- [Network & OTA Updates](network-ota-guide.md)
+- [Calibration & Startup](calibration-guide.md)
+- [Battery Runtime Guide](battery-runtime-guide.md)
+- [Safety & Maintenance](safety-maintenance.md)
+- [Troubleshooting Matrix](troubleshooting.md)
+- [WLED Configuration Guide](wled-configuration-guide.md)
+
+---
+
+## Structural & 3D
+
+- **Chassis**: Acclaimed 3D files by Mr. Baddeley ("Big Baby" series).
+- [3D Print & Assembly Guide](../mechanical/3d-print-assembly.md)
+
+---
+
+[View Bill of Materials](../bill-of-materials.md) | [View Schematic](../architecture/electrical-schematic.md) | [View Project Changelog](../../CHANGELOG.md)

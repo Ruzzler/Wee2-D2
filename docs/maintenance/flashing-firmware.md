@@ -8,12 +8,12 @@ This page describes how to get the droid's firmware onto its boards. The long-te
 
 ## Where We're Going (Future)
 
-The plan is to distribute pre-compiled `.bin` files for all four boards:
+The plan is to distribute pre-compiled `.bin` files for every board on the droid:
 
 - Node 1 — Dome Brain
 - Node 2 — Sound Hub
-- Node 3 — LED Hub (stock WLED, already easy to flash via the WLED installer)
-- Node 4 — BLE Bridge
+- Node 3 — LED Hub (stock WLED — already easy to flash via the WLED installer)
+- BLE bridge (the small dedicated controller behind the [Dashboard & App](../capabilities/dashboard-and-app.md))
 
 Once the per-build settings (Wi-Fi credentials, MAC addresses for the wireless mesh, OTA password) can be configured at flash time rather than baked into source, a builder will be able to:
 
@@ -29,13 +29,9 @@ No code. No `secrets.yaml`. No ESPHome install. No YAML edits.
 
 ## Where We Are Today
 
-Currently, flashing requires the developer workflow — clone the firmware repository, configure secrets, compile, upload. This is documented in the firmware repository's own README for builders who want to track development or contribute changes:
+Today, flashing the custom-firmware boards (Node 1 + Node 2 + the BLE bridge) requires the developer workflow — clone the firmware repository, configure local secrets, compile, upload. The firmware repository is currently **private**; it will be published when it's ready for community distribution. Node 3 is already a no-developer-needed install via the WLED browser flasher (see below).
 
-- Firmware repo: `Firmware/wee2d2-firmware/` in the workspace, public source-of-truth lives at <https://github.com/Ruzzler/wee2d2-firmware> (once the operator publishes it).
-- Tooling: ESPHome 2026.2+ and Python 3.9+.
-- Per-build inputs: a `secrets.yaml` file with your Wi-Fi credentials and the MAC addresses of your physical boards (the wireless mesh needs to know which board is which).
-
-If you're following along with the developer workflow, work from the firmware repo's README — this wiki intentionally does not duplicate that content because it changes more often than wiki cadence can keep up with.
+If you have access to the firmware repository, all build instructions live in its own README — this wiki does not duplicate that content because the build workflow changes faster than wiki cadence can keep up with.
 
 ---
 
@@ -48,7 +44,7 @@ The LED hub (Node 3) runs **stock WLED 0.15.4**, which has an excellent first-pa
 3. Click Install → pick the correct ESP32 board variant.
 4. Done.
 
-After flashing, the cinematic presets specific to Wee2-D2 are loaded from a JSON file via the WLED web UI's Config → Presets page. The preset JSON lives in the firmware repository.
+After flashing, the cinematic presets specific to Wee2-D2 are loaded from a JSON file via the WLED web UI's Config → Presets page. The preset file is provided alongside the firmware build.
 
 ---
 
@@ -72,6 +68,5 @@ These are all known and on the long-term roadmap.
 ---
 
 **See also:**
-- [Network & OTA Configuration](network-ota-guide.md)
-- [First-Time Firmware Setup](first-time-firmware-setup.md) (developer workflow)
-- [Web Control Dashboard](../capabilities/dashboard-and-app.md) (operator UI once flashed)
+- [Network & OTA Configuration](network-ota-guide.md) — wireless update flow once the droid is on Wi-Fi
+- [Dashboard & App](../capabilities/dashboard-and-app.md) — operator UI once the droid is flashed

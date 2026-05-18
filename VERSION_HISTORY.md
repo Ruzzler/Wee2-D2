@@ -4,7 +4,7 @@
 
 This document tracks production-verified firmware releases for the Wee2-D2 droid. Only versions listed as **VERIFIED** should be deployed.
 
-The canonical firmware repository is at `Firmware/wee2d2-firmware/`. This file mirrors the firmware `CHANGELOG.md` at a builder-friendly level of detail.
+The droid's firmware is managed in a separate (currently private) repository. This file mirrors the firmware changelog at a builder-friendly level of detail.
 
 ---
 
@@ -52,7 +52,7 @@ The canonical firmware repository is at `Firmware/wee2d2-firmware/`. This file m
 - **Idle escalation ladder**: 5 levels (fresh → settled → bored → restless → self-amusement) with mood-keyed life animations.
 - **Music cue auto-choreography**: `play_cued_section` consumes per-song JSON cue sheets and routes to movement units by amplitude band.
 - **Sleepy mood added** with `0x20` (HUM/SAD) ambient byte.
-- **Status**: **VERIFIED** — see `Firmware/wee2d2-firmware/docs/animation/ANIMATION-ENGINE.md` for the canonical engineering reference, or the builder-facing summary at [Animation Framework](docs/capabilities/animation-framework.md).
+- **Status**: **VERIFIED** — see the builder-facing summary at [Behaviour & Personality](docs/capabilities/animation-framework.md).
 
 ## [v2.7.10] - 2026-04-10
 
@@ -112,7 +112,7 @@ Pre-ESP-NOW versions running the legacy UDNS UART serial bus (115200 baud). Incl
 
 To prevent droid downtime, follow the procedure documented in the firmware repo's `AGENTS.md` release protocol:
 
-1. Update `Firmware/wee2d2-firmware/CHANGELOG.md` with the new section.
+1. Update the firmware repository's `CHANGELOG.md` with the new section.
 2. Bump `fw_version` in both entry YAMLs (lockstep).
 3. Update `AGENTS.md` header baseline + `README.md` + `docs/AGENT-INDEX.md` footer.
 4. Tag the commit: `git tag -a vX.Y.Z -m "..."`.
