@@ -28,13 +28,81 @@ Node 3 is the dedicated lighting controller. It runs **stock WLED** (the popular
 
 | GPIO | What's connected | Role |
 | :---: | :--- | :--- |
-| **GPIO 16** | Front PSI strip | 76 LEDs |
-| **GPIO 17** | Rear PSI strip | 76 LEDs |
+| **GPIO 17** | Front PSI strip | 76 LEDs |
+| **GPIO 16** | Rear PSI strip | 76 LEDs |
 | **GPIO 18** | Front Logic Display | 20 LEDs (10x2 matrix) |
 | **GPIO 19** | Rear Logic Display | 24 LEDs (12x2 matrix) |
 | **GPIO 3 (RX0)** | Command line from Node 1 | Wired one-way input |
 
 Total **196 addressable LEDs** across 4 strips.
+
+
+---
+
+
+## Physical LED Layout
+
+How the LEDs are physically arranged and wired on each panel. Index numbers
+are 1-based (LED 1 = the strip's data-in end). The Update Center's Lights tab
+mirrors these shapes so a live effect appears where the LEDs actually are.
+
+
+### Front PSI / Rear PSI — round GrnWave boards (76 LEDs each)
+
+Each PSI is a round, high-density **GrnWave** board that drops into a 3.5"
+sensor port. The LEDs are packed in an offset (hex-style) pattern filling the
+disc; the index runs as a spiral — **D1 on the outer edge, spiralling inward to
+D76 near the centre**.
+
+```
+            ·  ·  ·  ·  ·
+         ·  ·  ·  ·  ·  ·  ·
+       ·  ·  ·  ·  ·  ·  ·  ·        round disc, 76 LEDs
+      ·  ·  ·  · (··) ·  ·  ·  ·      outer ring = low indices
+       ·  ·  ·  ·  ·  ·  ·  ·         centre      = high indices
+         ·  ·  ·  ·  ·  ·  ·          (D1 → D76 spirals inward)
+            ·  ·  ·  ·  ·
+```
+
+Real board (with per-LED labels D1–D76): see
+[`assets/grnwave-psi-logic.jpg`](../../assets/grnwave-psi-logic.jpg).
+
+
+### Front Logic — GPIO 18 — 20 LEDs · ONE strip · TWO 5×2 windows
+
+The front logic is **two separate windows**, but wired as a single continuous
+20-LED strip (easier to wire). Data enters at LED 1 in the **right window,
+bottom-right**, snakes right-to-left across the bottom of both windows, then
+left-to-right across the top.
+
+```
+          LEFT WINDOW                RIGHT WINDOW
+  top     11  12  13  14  15         16  17  18  19  20
+  bot     10   9   8   7   6          5   4   3   2   1   ◄── data in (LED 1)
+
+  path: 1→5 (right win bottom, R→L) ─► 6→10 (left win bottom, R→L)
+        ─► up ─► 11→15 (left win top, L→R) ─► 16→20 (right win top, L→R)
+```
+
+
+### Rear Logic — GPIO 19 — 24 LEDs · ONE 12×2 window
+
+One wide window. Data enters at LED 1, **top-left**, runs left-to-right across
+the top, drops down, then runs right-to-left across the bottom.
+
+```
+  top      1   2   3   4   5   6   7   8   9  10  11  12   ◄── data in (LED 1)
+  bot     24  23  22  21  20  19  18  17  16  15  14  13
+
+  path: 1→12 (top, L→R) ─► down ─► 13→24 (bottom, R→L)
+```
+
+
+> **Note for differing builds:** the Update Center stores this arrangement per
+> droid (preview only — never sent to the controller). In its Lights → Physical
+> layout editor the shapes above are: PSI = `spiral`, Front Logic =
+> `grid 10x2 g2 br` (two windows, start bottom-right), Rear Logic =
+> `grid 12x2` (start top-left).
 
 
 ---
