@@ -55,14 +55,18 @@ disc; the index runs as a spiral — **D1 on the outer edge, spiralling inward t
 D76 near the centre**.
 
 ```
-            ·  ·  ·  ·  ·
-         ·  ·  ·  ·  ·  ·  ·
-       ·  ·  ·  ·  ·  ·  ·  ·        round disc, 76 LEDs
-      ·  ·  ·  · (··) ·  ·  ·  ·      outer ring = low indices
-       ·  ·  ·  ·  ·  ·  ·  ·         centre      = high indices
-         ·  ·  ·  ·  ·  ·  ·          (D1 → D76 spirals inward)
-            ·  ·  ·  ·  ·
+              ·  ·  ·  ·  ·
+           ·  ·  ·  ·  ·  ·  ·
+         ·  ·  ·  ·  ·  ·  ·  ·  ·
+        ·  ·  ·  ·  ·  ·  ·  ·  ·  ·
+        ·  ·  ·  ·  ·  ·  ·  ·  ·  ·
+        ·  ·  ·  ·  ·  ·  ·  ·  ·  ·
+         ·  ·  ·  ·  ·  ·  ·  ·  ·
+           ·  ·  ·  ·  ·  ·  ·
+              ·  ·  ·  ·  ·
 ```
+
+*Round disc · 76 LEDs · index spirals from D1 (outer edge) inward to D76 (centre).*
 
 Real board (with per-LED labels D1–D76): see
 [`assets/grnwave-psi-logic.jpg`](../../assets/grnwave-psi-logic.jpg).
