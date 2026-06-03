@@ -43,7 +43,7 @@ Total **196 addressable LEDs** across 4 strips.
 ## Physical LED Layout
 
 How the LEDs are physically arranged and wired on each panel. Index numbers
-are 1-based (LED 1 = the strip's data-in end). The Update Center's Lights tab
+are 1-based (LED 1 = the strip's data-in end). The Droid Workshop's Lights tab
 mirrors these shapes so a live effect appears where the LEDs actually are.
 
 
@@ -102,7 +102,7 @@ the top, drops down, then runs right-to-left across the bottom.
 ```
 
 
-> **Note for differing builds:** the Update Center stores this arrangement per
+> **Note for differing builds:** the Droid Workshop stores this arrangement per
 > droid (preview only — never sent to the controller). In its Lights → Physical
 > layout editor the shapes above are: PSI = `spiral`, Front Logic =
 > `grid 10x2 g2 br` (two windows, start bottom-right), Rear Logic =
